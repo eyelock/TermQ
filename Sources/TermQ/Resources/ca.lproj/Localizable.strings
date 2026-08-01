@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Voleu sincronitzar i forçar el push?";
 "stacks.sync.confirm.message %ld %@" = "Sincronitzar força el push de %ld branques i actualitza la pila a GitHub: %@\n\nQualsevol altra persona que treballi en aquestes branques haurà de restablir-les.";
 "stacks.sync.confirm.button" = "Sincronitza i envia";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Fusiona la pila…";
+"stacks.merge.stack.title" = "Voleu fusionar la pila?";
+"stacks.merge.stack.message %ld" = "Fusiona %ld pull requests a la branca base.";
+"stacks.merge.stack.confirm %ld" = "Fusiona %ld PR";
+"stacks.merge.stack.method %@" = "Mètode de fusió: %@ (el per defecte d'aquest repositori)";
+"stacks.merge.stack.irreversible" = "Això no es pot desfer des del TermQ.";
+"stacks.merge.stack.done %ld" = "S'han fusionat %ld pull requests.";
+"stacks.merge.stack.loading" = "S'està comprovant la revisió i l'estat de CI…";
+"stacks.merge.stack.not.submitted" = "Aquesta pila encara no s'ha enviat a GitHub.";
+"stacks.merge.blocked.draft" = "Esborrany";
+"stacks.merge.blocked.closed" = "Tancada";
+"stacks.merge.blocked.merged" = "Ja fusionada";
+"stacks.merge.blocked.by %@" = "%@ bloqueja tot el que hi ha a sobre, així que la pila sencera no es pot fusionar des d'aquí. Obriu-la a GitHub per fusionar fins a aquest punt.";
+"stacks.merge.open.on.github" = "Obre la pila a GitHub";
+"stacks.review.approved" = "Aprovada";
+"stacks.review.changes.requested" = "Canvis sol·licitats";
+"stacks.review.required" = "Cal revisió";
+"stacks.checks.passing" = "Comprovacions correctes";
+"stacks.checks.failing" = "Comprovacions fallides";
+"stacks.checks.pending" = "Comprovacions en curs";
+"stacks.link.stack" = "Enllaça PR en una pila…";
+"stacks.link.stack.title" = "Enllaça PR en una pila";
+"stacks.link.stack.will.create %ld" = "Crea %ld pull requests noves a GitHub.";
+"stacks.link.stack.existing" = "existent";
+"stacks.link.stack.new" = "crearà una PR";
+"stacks.link.stack.confirm %ld" = "Enllaça %ld branques";
+"stacks.link.stack.done" = "Branques enllaçades en una pila.";
+"stacks.checkout.stack %ld" = "Extreu tota la pila (%ld branques)";
+"stacks.checkout.stack.done %ld" = "S'han extret %ld branques apilades.";

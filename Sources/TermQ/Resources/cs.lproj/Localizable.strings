@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Synchronizovat a vynutit push?";
 "stacks.sync.confirm.message %ld %@" = "Synchronizace vynutí push %ld větví a aktualizuje zásobník na GitHubu: %@\n\nKdokoli další, kdo na těchto větvích pracuje, je bude muset resetovat.";
 "stacks.sync.confirm.button" = "Synchronizovat a odeslat";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Sloučit zásobník…";
+"stacks.merge.stack.title" = "Sloučit zásobník?";
+"stacks.merge.stack.message %ld" = "Sloučí %ld pull requestů do základní větve.";
+"stacks.merge.stack.confirm %ld" = "Sloučit %ld PR";
+"stacks.merge.stack.method %@" = "Způsob sloučení: %@ (výchozí pro tento repozitář)";
+"stacks.merge.stack.irreversible" = "Tohle už z TermQ nevrátíš zpět.";
+"stacks.merge.stack.done %ld" = "Sloučeno %ld pull requestů.";
+"stacks.merge.stack.loading" = "Kontrola recenzí a stavu CI…";
+"stacks.merge.stack.not.submitted" = "Tento zásobník ještě nebyl odeslán na GitHub.";
+"stacks.merge.blocked.draft" = "Koncept";
+"stacks.merge.blocked.closed" = "Zavřený";
+"stacks.merge.blocked.merged" = "Už sloučený";
+"stacks.merge.blocked.by %@" = "%@ blokuje všechno nad sebou, takže celý zásobník odsud sloučit nejde. Otevři ho na GitHubu a sluč až po toto místo.";
+"stacks.merge.open.on.github" = "Otevřít zásobník na GitHubu";
+"stacks.review.approved" = "Schváleno";
+"stacks.review.changes.requested" = "Vyžádány změny";
+"stacks.review.required" = "Vyžadována recenze";
+"stacks.checks.passing" = "Kontroly prošly";
+"stacks.checks.failing" = "Kontroly selhávají";
+"stacks.checks.pending" = "Kontroly běží";
+"stacks.link.stack" = "Propojit PR do zásobníku…";
+"stacks.link.stack.title" = "Propojit PR do zásobníku";
+"stacks.link.stack.will.create %ld" = "Vytvoří %ld nových pull requestů na GitHubu.";
+"stacks.link.stack.existing" = "existující";
+"stacks.link.stack.new" = "vytvoří PR";
+"stacks.link.stack.confirm %ld" = "Propojit %ld větví";
+"stacks.link.stack.done" = "Větve propojeny do zásobníku.";
+"stacks.checkout.stack %ld" = "Načíst celý zásobník (%ld větví)";
+"stacks.checkout.stack.done %ld" = "Načteno %ld větví zásobníku.";

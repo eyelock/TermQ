@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Segerak dan force-push?";
 "stacks.sync.confirm.message %ld %@" = "Penyegerakan akan force-push %ld cabang dan mengemas kini tindanan di GitHub: %@\n\nSesiapa lain yang bekerja pada cabang ini perlu membuat reset.";
 "stacks.sync.confirm.button" = "Segerak dan hantar";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Gabungkan tindanan…";
+"stacks.merge.stack.title" = "Gabungkan tindanan?";
+"stacks.merge.stack.message %ld" = "Menggabungkan %ld pull request ke cabang asas.";
+"stacks.merge.stack.confirm %ld" = "Gabungkan %ld PR";
+"stacks.merge.stack.method %@" = "Kaedah gabungan: %@ (lalai repositori ini)";
+"stacks.merge.stack.irreversible" = "Ini tidak boleh dibatalkan dari TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull request digabungkan.";
+"stacks.merge.stack.loading" = "Menyemak ulasan dan status CI…";
+"stacks.merge.stack.not.submitted" = "Tindanan ini belum dihantar ke GitHub.";
+"stacks.merge.blocked.draft" = "Draf";
+"stacks.merge.blocked.closed" = "Ditutup";
+"stacks.merge.blocked.merged" = "Sudah digabungkan";
+"stacks.merge.blocked.by %@" = "%@ menghalang semua yang di atasnya, jadi seluruh tindanan tidak boleh digabungkan dari sini. Buka di GitHub untuk menggabungkan sehingga titik itu.";
+"stacks.merge.open.on.github" = "Buka tindanan di GitHub";
+"stacks.review.approved" = "Diluluskan";
+"stacks.review.changes.requested" = "Perubahan diminta";
+"stacks.review.required" = "Ulasan diperlukan";
+"stacks.checks.passing" = "Semakan lulus";
+"stacks.checks.failing" = "Semakan gagal";
+"stacks.checks.pending" = "Semakan sedang berjalan";
+"stacks.link.stack" = "Pautkan PR menjadi tindanan…";
+"stacks.link.stack.title" = "Pautkan PR menjadi tindanan";
+"stacks.link.stack.will.create %ld" = "Mencipta %ld pull request baharu di GitHub.";
+"stacks.link.stack.existing" = "sedia ada";
+"stacks.link.stack.new" = "akan mencipta PR";
+"stacks.link.stack.confirm %ld" = "Pautkan %ld cabang";
+"stacks.link.stack.done" = "Cabang dipautkan menjadi tindanan.";
+"stacks.checkout.stack %ld" = "Checkout seluruh tindanan (%ld cabang)";
+"stacks.checkout.stack.done %ld" = "%ld cabang tindanan di-checkout.";

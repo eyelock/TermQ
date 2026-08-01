@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "Sinkronizirati uz prisilni push?";
 "stacks.sync.confirm.message %ld %@" = "Sinkronizacija prisilno pusha %ld grana i ažurira stog na GitHubu: %@\n\nSvatko drugi tko radi na tim granama morat će ih resetirati.";
 "stacks.sync.confirm.button" = "Sinkroniziraj i pošalji";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Spoji stog…";
+"stacks.merge.stack.title" = "Spojiti stog?";
+"stacks.merge.stack.message %ld" = "Spaja %ld pull requestova u osnovnu granu.";
+"stacks.merge.stack.confirm %ld" = "Spoji %ld PR-ova";
+"stacks.merge.stack.method %@" = "Način spajanja: %@ (zadano za ovaj repozitorij)";
+"stacks.merge.stack.irreversible" = "Ovo se iz TermQ-a ne može poništiti.";
+"stacks.merge.stack.done %ld" = "Spojeno %ld pull requestova.";
+"stacks.merge.stack.loading" = "Provjera recenzija i stanja CI-ja…";
+"stacks.merge.stack.not.submitted" = "Ovaj stog još nije poslan na GitHub.";
+"stacks.merge.blocked.draft" = "Skica";
+"stacks.merge.blocked.closed" = "Zatvoren";
+"stacks.merge.blocked.merged" = "Već spojen";
+"stacks.merge.blocked.by %@" = "%@ blokira sve iznad sebe, pa se cijeli stog odavde ne može spojiti. Otvori ga na GitHubu da spojiš do te točke.";
+"stacks.merge.open.on.github" = "Otvori stog na GitHubu";
+"stacks.review.approved" = "Odobreno";
+"stacks.review.changes.requested" = "Tražene promjene";
+"stacks.review.required" = "Potrebna recenzija";
+"stacks.checks.passing" = "Provjere prolaze";
+"stacks.checks.failing" = "Provjere ne prolaze";
+"stacks.checks.pending" = "Provjere su u tijeku";
+"stacks.link.stack" = "Poveži PR-ove u stog…";
+"stacks.link.stack.title" = "Poveži PR-ove u stog";
+"stacks.link.stack.will.create %ld" = "Stvara %ld novih pull requestova na GitHubu.";
+"stacks.link.stack.existing" = "postojeći";
+"stacks.link.stack.new" = "stvorit će PR";
+"stacks.link.stack.confirm %ld" = "Poveži %ld grana";
+"stacks.link.stack.done" = "Grane povezane u stog.";
+"stacks.checkout.stack %ld" = "Dohvati cijeli stog (%ld grana)";
+"stacks.checkout.stack.done %ld" = "Dohvaćeno %ld grana stoga.";

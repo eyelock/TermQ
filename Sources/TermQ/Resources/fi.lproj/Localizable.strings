@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "Synkronoidaanko ja pakotetaanko push?";
 "stacks.sync.confirm.message %ld %@" = "Synkronointi pakottaa %ld haaran pushin ja päivittää pinon GitHubissa: %@\n\nMuiden näitä haaroja työstävien on nollattava ne.";
 "stacks.sync.confirm.button" = "Synkronoi ja pushaa";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Yhdistä pino…";
+"stacks.merge.stack.title" = "Yhdistetäänkö pino?";
+"stacks.merge.stack.message %ld" = "Yhdistää %ld pull requestia perushaaraan.";
+"stacks.merge.stack.confirm %ld" = "Yhdistä %ld PR:ää";
+"stacks.merge.stack.method %@" = "Yhdistämistapa: %@ (tämän repositorion oletus)";
+"stacks.merge.stack.irreversible" = "Tätä ei voi perua TermQ:sta.";
+"stacks.merge.stack.done %ld" = "%ld pull requestia yhdistetty.";
+"stacks.merge.stack.loading" = "Tarkistetaan katselmoinnit ja CI-tila…";
+"stacks.merge.stack.not.submitted" = "Tätä pinoa ei ole vielä lähetetty GitHubiin.";
+"stacks.merge.blocked.draft" = "Luonnos";
+"stacks.merge.blocked.closed" = "Suljettu";
+"stacks.merge.blocked.merged" = "Jo yhdistetty";
+"stacks.merge.blocked.by %@" = "%@ estää kaiken yläpuolellaan, joten koko pinoa ei voi yhdistää täältä. Avaa se GitHubissa yhdistääksesi siihen asti.";
+"stacks.merge.open.on.github" = "Avaa pino GitHubissa";
+"stacks.review.approved" = "Hyväksytty";
+"stacks.review.changes.requested" = "Muutoksia pyydetty";
+"stacks.review.required" = "Katselmointi vaaditaan";
+"stacks.checks.passing" = "Tarkistukset läpäisty";
+"stacks.checks.failing" = "Tarkistukset epäonnistuvat";
+"stacks.checks.pending" = "Tarkistukset käynnissä";
+"stacks.link.stack" = "Linkitä PR:t pinoksi…";
+"stacks.link.stack.title" = "Linkitä PR:t pinoksi";
+"stacks.link.stack.will.create %ld" = "Luo %ld uutta pull requestia GitHubiin.";
+"stacks.link.stack.existing" = "olemassa";
+"stacks.link.stack.new" = "luo PR:n";
+"stacks.link.stack.confirm %ld" = "Linkitä %ld haaraa";
+"stacks.link.stack.done" = "Haarat linkitetty pinoksi.";
+"stacks.checkout.stack %ld" = "Hae koko pino (%ld haaraa)";
+"stacks.checkout.stack.done %ld" = "Haettu %ld pinottua haaraa.";

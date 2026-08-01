@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "同步並強制推送？";
 "stacks.sync.confirm.message %ld %@" = "同步會強制推送 %ld 個分支，並更新 GitHub 上嘅堆疊：%@\n\n其他喺呢啲分支上工作緊嘅人需要重設。";
 "stacks.sync.confirm.button" = "同步並推送";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "合併堆疊…";
+"stacks.merge.stack.title" = "合併堆疊？";
+"stacks.merge.stack.message %ld" = "將 %ld 個拉取請求合併到基礎分支。";
+"stacks.merge.stack.confirm %ld" = "合併 %ld 個 PR";
+"stacks.merge.stack.method %@" = "合併方式：%@（呢個儲存庫嘅預設值）";
+"stacks.merge.stack.irreversible" = "呢個操作喺 TermQ 入面無法復原。";
+"stacks.merge.stack.done %ld" = "已合併 %ld 個拉取請求。";
+"stacks.merge.stack.loading" = "正在檢查審查同 CI 狀態…";
+"stacks.merge.stack.not.submitted" = "呢個堆疊仲未提交去 GitHub。";
+"stacks.merge.blocked.draft" = "草稿";
+"stacks.merge.blocked.closed" = "已關閉";
+"stacks.merge.blocked.merged" = "已合併";
+"stacks.merge.blocked.by %@" = "%@ 阻擋咗上面嘅所有嘢，所以喺呢度無法合併成個堆疊。請喺 GitHub 上面開啟，合併到嗰個位置為止。";
+"stacks.merge.open.on.github" = "喺 GitHub 上開啟堆疊";
+"stacks.review.approved" = "已核准";
+"stacks.review.changes.requested" = "已要求修改";
+"stacks.review.required" = "需要審查";
+"stacks.checks.passing" = "檢查通過";
+"stacks.checks.failing" = "檢查失敗";
+"stacks.checks.pending" = "檢查進行中";
+"stacks.link.stack" = "將 PR 連結成堆疊…";
+"stacks.link.stack.title" = "將 PR 連結成堆疊";
+"stacks.link.stack.will.create %ld" = "將會喺 GitHub 上建立 %ld 個新嘅拉取請求。";
+"stacks.link.stack.existing" = "已存在";
+"stacks.link.stack.new" = "將會建立 PR";
+"stacks.link.stack.confirm %ld" = "連結 %ld 個分支";
+"stacks.link.stack.done" = "已將分支連結成堆疊。";
+"stacks.checkout.stack %ld" = "簽出成個堆疊（%ld 個分支）";
+"stacks.checkout.stack.done %ld" = "已簽出 %ld 個堆疊分支。";

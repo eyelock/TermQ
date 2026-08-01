@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Sinkronkan dan force-push?";
 "stacks.sync.confirm.message %ld %@" = "Sinkronisasi akan force-push %ld branch dan memperbarui tumpukan di GitHub: %@\n\nSiapa pun yang sedang bekerja di branch ini harus melakukan reset.";
 "stacks.sync.confirm.button" = "Sinkronkan dan kirim";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Gabungkan tumpukan…";
+"stacks.merge.stack.title" = "Gabungkan tumpukan?";
+"stacks.merge.stack.message %ld" = "Menggabungkan %ld pull request ke branch dasar.";
+"stacks.merge.stack.confirm %ld" = "Gabungkan %ld PR";
+"stacks.merge.stack.method %@" = "Metode penggabungan: %@ (bawaan repositori ini)";
+"stacks.merge.stack.irreversible" = "Ini tidak bisa dibatalkan dari TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull request digabungkan.";
+"stacks.merge.stack.loading" = "Memeriksa ulasan dan status CI…";
+"stacks.merge.stack.not.submitted" = "Tumpukan ini belum dikirim ke GitHub.";
+"stacks.merge.blocked.draft" = "Draf";
+"stacks.merge.blocked.closed" = "Ditutup";
+"stacks.merge.blocked.merged" = "Sudah digabungkan";
+"stacks.merge.blocked.by %@" = "%@ memblokir semua yang di atasnya, jadi seluruh tumpukan tidak bisa digabungkan dari sini. Buka di GitHub untuk menggabungkan sampai titik itu.";
+"stacks.merge.open.on.github" = "Buka tumpukan di GitHub";
+"stacks.review.approved" = "Disetujui";
+"stacks.review.changes.requested" = "Perubahan diminta";
+"stacks.review.required" = "Perlu ulasan";
+"stacks.checks.passing" = "Pemeriksaan lulus";
+"stacks.checks.failing" = "Pemeriksaan gagal";
+"stacks.checks.pending" = "Pemeriksaan berjalan";
+"stacks.link.stack" = "Tautkan PR menjadi tumpukan…";
+"stacks.link.stack.title" = "Tautkan PR menjadi tumpukan";
+"stacks.link.stack.will.create %ld" = "Membuat %ld pull request baru di GitHub.";
+"stacks.link.stack.existing" = "sudah ada";
+"stacks.link.stack.new" = "akan membuat PR";
+"stacks.link.stack.confirm %ld" = "Tautkan %ld branch";
+"stacks.link.stack.done" = "Branch ditautkan menjadi tumpukan.";
+"stacks.checkout.stack %ld" = "Checkout seluruh tumpukan (%ld branch)";
+"stacks.checkout.stack.done %ld" = "%ld branch tumpukan di-checkout.";

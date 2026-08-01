@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "동기화하고 강제 푸시할까요?";
 "stacks.sync.confirm.message %ld %@" = "동기화하면 %ld개 브랜치가 강제 푸시되고 GitHub의 스택이 업데이트됩니다: %@\n\n이 브랜치에서 작업 중인 다른 사람은 리셋해야 합니다.";
 "stacks.sync.confirm.button" = "동기화 후 푸시";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "스택 병합…";
+"stacks.merge.stack.title" = "스택을 병합할까요?";
+"stacks.merge.stack.message %ld" = "풀 리퀘스트 %ld개를 베이스 브랜치에 병합합니다.";
+"stacks.merge.stack.confirm %ld" = "PR %ld개 병합";
+"stacks.merge.stack.method %@" = "병합 방식: %@ (이 저장소의 기본값)";
+"stacks.merge.stack.irreversible" = "이 작업은 TermQ에서 되돌릴 수 없습니다.";
+"stacks.merge.stack.done %ld" = "풀 리퀘스트 %ld개를 병합했습니다.";
+"stacks.merge.stack.loading" = "리뷰와 CI 상태를 확인하는 중…";
+"stacks.merge.stack.not.submitted" = "이 스택은 아직 GitHub에 제출되지 않았습니다.";
+"stacks.merge.blocked.draft" = "초안";
+"stacks.merge.blocked.closed" = "닫힘";
+"stacks.merge.blocked.merged" = "이미 병합됨";
+"stacks.merge.blocked.by %@" = "%@이(가) 그 위의 모든 것을 막고 있어 여기서는 스택 전체를 병합할 수 없습니다. 그 지점까지 병합하려면 GitHub에서 여세요.";
+"stacks.merge.open.on.github" = "GitHub에서 스택 열기";
+"stacks.review.approved" = "승인됨";
+"stacks.review.changes.requested" = "변경 요청됨";
+"stacks.review.required" = "리뷰 필요";
+"stacks.checks.passing" = "검사 통과";
+"stacks.checks.failing" = "검사 실패";
+"stacks.checks.pending" = "검사 진행 중";
+"stacks.link.stack" = "PR을 스택으로 연결…";
+"stacks.link.stack.title" = "PR을 스택으로 연결";
+"stacks.link.stack.will.create %ld" = "GitHub에 새 풀 리퀘스트 %ld개를 만듭니다.";
+"stacks.link.stack.existing" = "기존";
+"stacks.link.stack.new" = "PR을 생성합니다";
+"stacks.link.stack.confirm %ld" = "브랜치 %ld개 연결";
+"stacks.link.stack.done" = "브랜치를 스택으로 연결했습니다.";
+"stacks.checkout.stack %ld" = "스택 전체 체크아웃 (%ld개 브랜치)";
+"stacks.checkout.stack.done %ld" = "스택 브랜치 %ld개를 체크아웃했습니다.";

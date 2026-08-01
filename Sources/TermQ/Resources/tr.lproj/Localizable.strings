@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "Senkronize edilip zorla push yapılsın mı?";
 "stacks.sync.confirm.message %ld %@" = "Senkronizasyon %ld dalı zorla push eder ve GitHub'daki yığını günceller: %@\n\nBu dallarda çalışan herkesin sıfırlama yapması gerekir.";
 "stacks.sync.confirm.button" = "Senkronize et ve gönder";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Yığını birleştir…";
+"stacks.merge.stack.title" = "Yığın birleştirilsin mi?";
+"stacks.merge.stack.message %ld" = "%ld pull request'i temel dala birleştirir.";
+"stacks.merge.stack.confirm %ld" = "%ld PR'ı birleştir";
+"stacks.merge.stack.method %@" = "Birleştirme yöntemi: %@ (bu deponun varsayılanı)";
+"stacks.merge.stack.irreversible" = "Bu, TermQ'dan geri alınamaz.";
+"stacks.merge.stack.done %ld" = "%ld pull request birleştirildi.";
+"stacks.merge.stack.loading" = "İnceleme ve CI durumu kontrol ediliyor…";
+"stacks.merge.stack.not.submitted" = "Bu yığın henüz GitHub'a gönderilmedi.";
+"stacks.merge.blocked.draft" = "Taslak";
+"stacks.merge.blocked.closed" = "Kapalı";
+"stacks.merge.blocked.merged" = "Zaten birleştirilmiş";
+"stacks.merge.blocked.by %@" = "%@ üstündeki her şeyi engelliyor, bu yüzden yığının tamamı buradan birleştirilemez. O noktaya kadar birleştirmek için GitHub'da aç.";
+"stacks.merge.open.on.github" = "Yığını GitHub'da aç";
+"stacks.review.approved" = "Onaylandı";
+"stacks.review.changes.requested" = "Değişiklik istendi";
+"stacks.review.required" = "İnceleme gerekli";
+"stacks.checks.passing" = "Kontroller geçiyor";
+"stacks.checks.failing" = "Kontroller başarısız";
+"stacks.checks.pending" = "Kontroller çalışıyor";
+"stacks.link.stack" = "PR'ları bir yığına bağla…";
+"stacks.link.stack.title" = "PR'ları bir yığına bağla";
+"stacks.link.stack.will.create %ld" = "GitHub'da %ld yeni pull request oluşturur.";
+"stacks.link.stack.existing" = "mevcut";
+"stacks.link.stack.new" = "PR oluşturacak";
+"stacks.link.stack.confirm %ld" = "%ld dalı bağla";
+"stacks.link.stack.done" = "Dallar bir yığına bağlandı.";
+"stacks.checkout.stack %ld" = "Yığının tamamını çek (%ld dal)";
+"stacks.checkout.stack.done %ld" = "%ld yığın dalı çekildi.";

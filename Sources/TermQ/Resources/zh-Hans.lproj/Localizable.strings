@@ -1470,3 +1470,34 @@
 "stacks.sync.confirm.title" = "同步并强制推送？";
 "stacks.sync.confirm.message %ld %@" = "同步会强制推送 %ld 个分支，并更新 GitHub 上的堆叠：%@\n\n其他正在这些分支上工作的人需要重置。";
 "stacks.sync.confirm.button" = "同步并推送";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "合并堆叠…";
+"stacks.merge.stack.title" = "合并堆叠？";
+"stacks.merge.stack.message %ld" = "将 %ld 个拉取请求合并到基础分支。";
+"stacks.merge.stack.confirm %ld" = "合并 %ld 个 PR";
+"stacks.merge.stack.method %@" = "合并方式：%@（此仓库的默认值）";
+"stacks.merge.stack.irreversible" = "此操作无法在 TermQ 中撤销。";
+"stacks.merge.stack.done %ld" = "已合并 %ld 个拉取请求。";
+"stacks.merge.stack.loading" = "正在检查评审与 CI 状态…";
+"stacks.merge.stack.not.submitted" = "此堆叠尚未提交到 GitHub。";
+"stacks.merge.blocked.draft" = "草稿";
+"stacks.merge.blocked.closed" = "已关闭";
+"stacks.merge.blocked.merged" = "已合并";
+"stacks.merge.blocked.by %@" = "%@ 阻塞了其上方的所有内容，因此无法在此合并整个堆叠。请在 GitHub 上打开，合并到该处为止。";
+"stacks.merge.open.on.github" = "在 GitHub 上打开堆叠";
+"stacks.review.approved" = "已批准";
+"stacks.review.changes.requested" = "已请求修改";
+"stacks.review.required" = "需要评审";
+"stacks.checks.passing" = "检查通过";
+"stacks.checks.failing" = "检查失败";
+"stacks.checks.pending" = "检查进行中";
+"stacks.link.stack" = "将 PR 链接为堆叠…";
+"stacks.link.stack.title" = "将 PR 链接为堆叠";
+"stacks.link.stack.will.create %ld" = "将在 GitHub 上创建 %ld 个新的拉取请求。";
+"stacks.link.stack.existing" = "已存在";
+"stacks.link.stack.new" = "将创建 PR";
+"stacks.link.stack.confirm %ld" = "链接 %ld 个分支";
+"stacks.link.stack.done" = "已将分支链接为堆叠。";
+"stacks.checkout.stack %ld" = "检出整个堆叠（%ld 个分支）";
+"stacks.checkout.stack.done %ld" = "已检出 %ld 个堆叠分支。";

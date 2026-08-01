@@ -1476,3 +1476,34 @@
 "stacks.sync.confirm.title" = "Đồng bộ và force-push?";
 "stacks.sync.confirm.message %ld %@" = "Đồng bộ sẽ force-push %ld nhánh và cập nhật chồng trên GitHub: %@\n\nNhững người khác đang làm việc trên các nhánh này sẽ phải reset.";
 "stacks.sync.confirm.button" = "Đồng bộ và đẩy";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Gộp chồng…";
+"stacks.merge.stack.title" = "Gộp chồng?";
+"stacks.merge.stack.message %ld" = "Gộp %ld pull request vào nhánh cơ sở.";
+"stacks.merge.stack.confirm %ld" = "Gộp %ld PR";
+"stacks.merge.stack.method %@" = "Cách gộp: %@ (mặc định của kho này)";
+"stacks.merge.stack.irreversible" = "Không thể hoàn tác việc này từ TermQ.";
+"stacks.merge.stack.done %ld" = "Đã gộp %ld pull request.";
+"stacks.merge.stack.loading" = "Đang kiểm tra đánh giá và trạng thái CI…";
+"stacks.merge.stack.not.submitted" = "Chồng này chưa được gửi lên GitHub.";
+"stacks.merge.blocked.draft" = "Bản nháp";
+"stacks.merge.blocked.closed" = "Đã đóng";
+"stacks.merge.blocked.merged" = "Đã gộp";
+"stacks.merge.blocked.by %@" = "%@ chặn mọi thứ phía trên nó, nên không thể gộp toàn bộ chồng từ đây. Mở trên GitHub để gộp đến điểm đó.";
+"stacks.merge.open.on.github" = "Mở chồng trên GitHub";
+"stacks.review.approved" = "Đã duyệt";
+"stacks.review.changes.requested" = "Yêu cầu chỉnh sửa";
+"stacks.review.required" = "Cần đánh giá";
+"stacks.checks.passing" = "Kiểm tra đạt";
+"stacks.checks.failing" = "Kiểm tra thất bại";
+"stacks.checks.pending" = "Đang kiểm tra";
+"stacks.link.stack" = "Liên kết PR thành chồng…";
+"stacks.link.stack.title" = "Liên kết PR thành chồng";
+"stacks.link.stack.will.create %ld" = "Tạo %ld pull request mới trên GitHub.";
+"stacks.link.stack.existing" = "đã có";
+"stacks.link.stack.new" = "sẽ tạo PR";
+"stacks.link.stack.confirm %ld" = "Liên kết %ld nhánh";
+"stacks.link.stack.done" = "Đã liên kết các nhánh thành chồng.";
+"stacks.checkout.stack %ld" = "Lấy toàn bộ chồng (%ld nhánh)";
+"stacks.checkout.stack.done %ld" = "Đã lấy %ld nhánh trong chồng.";

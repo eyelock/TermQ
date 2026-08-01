@@ -1469,3 +1469,34 @@
 "stacks.sync.confirm.title" = "Sync and Force-Push?";
 "stacks.sync.confirm.message %ld %@" = "Syncing force-pushes %ld branches and updates the stack on GitHub: %@\n\nAnyone else working on these branches will need to reset.";
 "stacks.sync.confirm.button" = "Sync and Push";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Merge Stack…";
+"stacks.merge.stack.title" = "Merge Stack?";
+"stacks.merge.stack.message %ld" = "Merges %ld pull requests into the base branch.";
+"stacks.merge.stack.confirm %ld" = "Merge %ld PRs";
+"stacks.merge.stack.method %@" = "Merge method: %@ (this repository's default)";
+"stacks.merge.stack.irreversible" = "This cannot be undone from TermQ.";
+"stacks.merge.stack.done %ld" = "Merged %ld pull requests.";
+"stacks.merge.stack.loading" = "Checking review and CI state…";
+"stacks.merge.stack.not.submitted" = "This stack has not been submitted to GitHub yet.";
+"stacks.merge.blocked.draft" = "Draft";
+"stacks.merge.blocked.closed" = "Closed";
+"stacks.merge.blocked.merged" = "Already merged";
+"stacks.merge.blocked.by %@" = "%@ blocks everything above it, so the whole stack cannot be merged from here. Open it on GitHub to merge up to that point.";
+"stacks.merge.open.on.github" = "Open Stack on GitHub";
+"stacks.review.approved" = "Approved";
+"stacks.review.changes.requested" = "Changes requested";
+"stacks.review.required" = "Review required";
+"stacks.checks.passing" = "Checks pass";
+"stacks.checks.failing" = "Checks failing";
+"stacks.checks.pending" = "Checks running";
+"stacks.link.stack" = "Link PRs into a Stack…";
+"stacks.link.stack.title" = "Link PRs into a Stack";
+"stacks.link.stack.will.create %ld" = "Creates %ld new pull requests on GitHub.";
+"stacks.link.stack.existing" = "existing";
+"stacks.link.stack.new" = "will create a PR";
+"stacks.link.stack.confirm %ld" = "Link %ld branches";
+"stacks.link.stack.done" = "Branches linked into a stack.";
+"stacks.checkout.stack %ld" = "Check Out Whole Stack (%ld branches)";
+"stacks.checkout.stack.done %ld" = "Checked out %ld stacked branches.";

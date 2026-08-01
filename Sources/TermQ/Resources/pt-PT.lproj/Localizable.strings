@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Sincronizar e forçar o push?";
 "stacks.sync.confirm.message %ld %@" = "Sincronizar força o push de %ld ramos e atualiza a pilha no GitHub: %@\n\nQuem estiver a trabalhar nestes ramos terá de os repor.";
 "stacks.sync.confirm.button" = "Sincronizar e enviar";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Integrar pilha…";
+"stacks.merge.stack.title" = "Integrar a pilha?";
+"stacks.merge.stack.message %ld" = "Integra %ld pull requests no ramo base.";
+"stacks.merge.stack.confirm %ld" = "Integrar %ld PR";
+"stacks.merge.stack.method %@" = "Método de integração: %@ (predefinição deste repositório)";
+"stacks.merge.stack.irreversible" = "Isto não pode ser anulado a partir do TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests integradas.";
+"stacks.merge.stack.loading" = "A verificar revisões e estado da CI…";
+"stacks.merge.stack.not.submitted" = "Esta pilha ainda não foi enviada para o GitHub.";
+"stacks.merge.blocked.draft" = "Rascunho";
+"stacks.merge.blocked.closed" = "Fechada";
+"stacks.merge.blocked.merged" = "Já integrada";
+"stacks.merge.blocked.by %@" = "%@ bloqueia tudo o que está acima, por isso a pilha inteira não pode ser integrada aqui. Abra-a no GitHub para integrar até esse ponto.";
+"stacks.merge.open.on.github" = "Abrir a pilha no GitHub";
+"stacks.review.approved" = "Aprovada";
+"stacks.review.changes.requested" = "Alterações pedidas";
+"stacks.review.required" = "Revisão necessária";
+"stacks.checks.passing" = "Verificações aprovadas";
+"stacks.checks.failing" = "Verificações falhadas";
+"stacks.checks.pending" = "Verificações em curso";
+"stacks.link.stack" = "Ligar PR numa pilha…";
+"stacks.link.stack.title" = "Ligar PR numa pilha";
+"stacks.link.stack.will.create %ld" = "Cria %ld novas pull requests no GitHub.";
+"stacks.link.stack.existing" = "existente";
+"stacks.link.stack.new" = "vai criar um PR";
+"stacks.link.stack.confirm %ld" = "Ligar %ld ramos";
+"stacks.link.stack.done" = "Ramos ligados numa pilha.";
+"stacks.checkout.stack %ld" = "Obter a pilha inteira (%ld ramos)";
+"stacks.checkout.stack.done %ld" = "Obtidos %ld ramos empilhados.";

@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "同期して強制プッシュしますか？";
 "stacks.sync.confirm.message %ld %@" = "同期すると %ld 個のブランチが強制プッシュされ、GitHub 上のスタックが更新されます: %@\n\nこれらのブランチで作業している他の人はリセットが必要になります。";
 "stacks.sync.confirm.button" = "同期してプッシュ";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "スタックをマージ…";
+"stacks.merge.stack.title" = "スタックをマージしますか？";
+"stacks.merge.stack.message %ld" = "%ld 件のプルリクエストをベースブランチにマージします。";
+"stacks.merge.stack.confirm %ld" = "%ld 件のPRをマージ";
+"stacks.merge.stack.method %@" = "マージ方法: %@（このリポジトリの既定）";
+"stacks.merge.stack.irreversible" = "この操作は TermQ からは取り消せません。";
+"stacks.merge.stack.done %ld" = "%ld 件のプルリクエストをマージしました。";
+"stacks.merge.stack.loading" = "レビューと CI の状態を確認しています…";
+"stacks.merge.stack.not.submitted" = "このスタックはまだ GitHub に送信されていません。";
+"stacks.merge.blocked.draft" = "ドラフト";
+"stacks.merge.blocked.closed" = "クローズ済み";
+"stacks.merge.blocked.merged" = "マージ済み";
+"stacks.merge.blocked.by %@" = "%@ がその上のすべてをブロックしているため、スタック全体をここからマージできません。そこまでマージするには GitHub で開いてください。";
+"stacks.merge.open.on.github" = "GitHub でスタックを開く";
+"stacks.review.approved" = "承認済み";
+"stacks.review.changes.requested" = "変更が要求されています";
+"stacks.review.required" = "レビューが必要";
+"stacks.checks.passing" = "チェック成功";
+"stacks.checks.failing" = "チェック失敗";
+"stacks.checks.pending" = "チェック実行中";
+"stacks.link.stack" = "PR をスタックにリンク…";
+"stacks.link.stack.title" = "PR をスタックにリンク";
+"stacks.link.stack.will.create %ld" = "GitHub に %ld 件の新しいプルリクエストを作成します。";
+"stacks.link.stack.existing" = "既存";
+"stacks.link.stack.new" = "PR を作成します";
+"stacks.link.stack.confirm %ld" = "%ld 件のブランチをリンク";
+"stacks.link.stack.done" = "ブランチをスタックにリンクしました。";
+"stacks.checkout.stack %ld" = "スタック全体をチェックアウト（%ld ブランチ）";
+"stacks.checkout.stack.done %ld" = "%ld 件のスタックブランチをチェックアウトしました。";

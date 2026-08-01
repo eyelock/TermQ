@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Συγχρονισμός με αναγκαστικό push;";
 "stacks.sync.confirm.message %ld %@" = "Ο συγχρονισμός κάνει αναγκαστικό push σε %ld κλάδους και ενημερώνει τη στοίβα στο GitHub: %@\n\nΌποιος άλλος εργάζεται σε αυτούς τους κλάδους θα χρειαστεί να κάνει επαναφορά.";
 "stacks.sync.confirm.button" = "Συγχρονισμός και αποστολή";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Συγχώνευση στοίβας…";
+"stacks.merge.stack.title" = "Συγχώνευση στοίβας;";
+"stacks.merge.stack.message %ld" = "Συγχωνεύει %ld pull request στον βασικό κλάδο.";
+"stacks.merge.stack.confirm %ld" = "Συγχώνευση %ld PR";
+"stacks.merge.stack.method %@" = "Μέθοδος συγχώνευσης: %@ (προεπιλογή του αποθετηρίου)";
+"stacks.merge.stack.irreversible" = "Αυτό δεν αναιρείται από το TermQ.";
+"stacks.merge.stack.done %ld" = "Συγχωνεύτηκαν %ld pull request.";
+"stacks.merge.stack.loading" = "Έλεγχος αξιολογήσεων και κατάστασης CI…";
+"stacks.merge.stack.not.submitted" = "Αυτή η στοίβα δεν έχει σταλεί ακόμη στο GitHub.";
+"stacks.merge.blocked.draft" = "Πρόχειρο";
+"stacks.merge.blocked.closed" = "Κλειστό";
+"stacks.merge.blocked.merged" = "Ήδη συγχωνευμένο";
+"stacks.merge.blocked.by %@" = "Το %@ μπλοκάρει ό,τι βρίσκεται από πάνω του, οπότε η στοίβα δεν μπορεί να συγχωνευτεί από εδώ. Άνοιξέ την στο GitHub για συγχώνευση μέχρι εκείνο το σημείο.";
+"stacks.merge.open.on.github" = "Άνοιγμα στοίβας στο GitHub";
+"stacks.review.approved" = "Εγκρίθηκε";
+"stacks.review.changes.requested" = "Ζητήθηκαν αλλαγές";
+"stacks.review.required" = "Απαιτείται αξιολόγηση";
+"stacks.checks.passing" = "Οι έλεγχοι περνούν";
+"stacks.checks.failing" = "Οι έλεγχοι αποτυγχάνουν";
+"stacks.checks.pending" = "Οι έλεγχοι εκτελούνται";
+"stacks.link.stack" = "Σύνδεση PR σε στοίβα…";
+"stacks.link.stack.title" = "Σύνδεση PR σε στοίβα";
+"stacks.link.stack.will.create %ld" = "Δημιουργεί %ld νέα pull request στο GitHub.";
+"stacks.link.stack.existing" = "υπάρχον";
+"stacks.link.stack.new" = "θα δημιουργήσει PR";
+"stacks.link.stack.confirm %ld" = "Σύνδεση %ld κλάδων";
+"stacks.link.stack.done" = "Οι κλάδοι συνδέθηκαν σε στοίβα.";
+"stacks.checkout.stack %ld" = "Λήψη ολόκληρης της στοίβας (%ld κλάδοι)";
+"stacks.checkout.stack.done %ld" = "Ελήφθησαν %ld κλάδοι στοίβας.";

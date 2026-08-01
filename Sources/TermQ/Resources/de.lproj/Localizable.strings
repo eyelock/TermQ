@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Synchronisieren und Force-Push?";
 "stacks.sync.confirm.message %ld %@" = "Beim Synchronisieren werden %ld Branches per Force-Push übertragen und der Stapel auf GitHub aktualisiert: %@\n\nAlle anderen, die an diesen Branches arbeiten, müssen zurücksetzen.";
 "stacks.sync.confirm.button" = "Synchronisieren und pushen";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Stapel zusammenführen…";
+"stacks.merge.stack.title" = "Stapel zusammenführen?";
+"stacks.merge.stack.message %ld" = "Führt %ld Pull Requests in den Basis-Branch zusammen.";
+"stacks.merge.stack.confirm %ld" = "%ld PRs zusammenführen";
+"stacks.merge.stack.method %@" = "Merge-Methode: %@ (Standard dieses Repositorys)";
+"stacks.merge.stack.irreversible" = "Das lässt sich aus TermQ nicht rückgängig machen.";
+"stacks.merge.stack.done %ld" = "%ld Pull Requests zusammengeführt.";
+"stacks.merge.stack.loading" = "Review- und CI-Status werden geprüft…";
+"stacks.merge.stack.not.submitted" = "Dieser Stapel wurde noch nicht an GitHub übermittelt.";
+"stacks.merge.blocked.draft" = "Entwurf";
+"stacks.merge.blocked.closed" = "Geschlossen";
+"stacks.merge.blocked.merged" = "Bereits zusammengeführt";
+"stacks.merge.blocked.by %@" = "%@ blockiert alles darüber, deshalb kann der ganze Stapel nicht von hier aus zusammengeführt werden. Öffne ihn auf GitHub, um bis zu diesem Punkt zusammenzuführen.";
+"stacks.merge.open.on.github" = "Stapel auf GitHub öffnen";
+"stacks.review.approved" = "Genehmigt";
+"stacks.review.changes.requested" = "Änderungen angefordert";
+"stacks.review.required" = "Review erforderlich";
+"stacks.checks.passing" = "Prüfungen bestanden";
+"stacks.checks.failing" = "Prüfungen fehlgeschlagen";
+"stacks.checks.pending" = "Prüfungen laufen";
+"stacks.link.stack" = "PRs zu einem Stapel verknüpfen…";
+"stacks.link.stack.title" = "PRs zu einem Stapel verknüpfen";
+"stacks.link.stack.will.create %ld" = "Erstellt %ld neue Pull Requests auf GitHub.";
+"stacks.link.stack.existing" = "vorhanden";
+"stacks.link.stack.new" = "erstellt einen PR";
+"stacks.link.stack.confirm %ld" = "%ld Branches verknüpfen";
+"stacks.link.stack.done" = "Branches zu einem Stapel verknüpft.";
+"stacks.checkout.stack %ld" = "Ganzen Stapel auschecken (%ld Branches)";
+"stacks.checkout.stack.done %ld" = "%ld gestapelte Branches ausgecheckt.";

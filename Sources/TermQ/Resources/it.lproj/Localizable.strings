@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Sincronizzare e forzare il push?";
 "stacks.sync.confirm.message %ld %@" = "La sincronizzazione forza il push di %ld branch e aggiorna la pila su GitHub: %@\n\nChiunque altro lavori su questi branch dovrà reimpostarli.";
 "stacks.sync.confirm.button" = "Sincronizza e invia";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Unisci la pila…";
+"stacks.merge.stack.title" = "Unire la pila?";
+"stacks.merge.stack.message %ld" = "Unisce %ld pull request nel branch di base.";
+"stacks.merge.stack.confirm %ld" = "Unisci %ld PR";
+"stacks.merge.stack.method %@" = "Metodo di merge: %@ (predefinito di questo repository)";
+"stacks.merge.stack.irreversible" = "Questa operazione non è annullabile da TermQ.";
+"stacks.merge.stack.done %ld" = "Unite %ld pull request.";
+"stacks.merge.stack.loading" = "Controllo di revisioni e stato CI…";
+"stacks.merge.stack.not.submitted" = "Questa pila non è ancora stata inviata a GitHub.";
+"stacks.merge.blocked.draft" = "Bozza";
+"stacks.merge.blocked.closed" = "Chiusa";
+"stacks.merge.blocked.merged" = "Già unita";
+"stacks.merge.blocked.by %@" = "%@ blocca tutto ciò che sta sopra, quindi l'intera pila non può essere unita da qui. Aprila su GitHub per unire fino a quel punto.";
+"stacks.merge.open.on.github" = "Apri la pila su GitHub";
+"stacks.review.approved" = "Approvata";
+"stacks.review.changes.requested" = "Modifiche richieste";
+"stacks.review.required" = "Revisione necessaria";
+"stacks.checks.passing" = "Controlli superati";
+"stacks.checks.failing" = "Controlli falliti";
+"stacks.checks.pending" = "Controlli in corso";
+"stacks.link.stack" = "Collega PR in una pila…";
+"stacks.link.stack.title" = "Collega PR in una pila";
+"stacks.link.stack.will.create %ld" = "Crea %ld nuove pull request su GitHub.";
+"stacks.link.stack.existing" = "esistente";
+"stacks.link.stack.new" = "creerà una PR";
+"stacks.link.stack.confirm %ld" = "Collega %ld branch";
+"stacks.link.stack.done" = "Branch collegati in una pila.";
+"stacks.checkout.stack %ld" = "Effettua il checkout dell'intera pila (%ld branch)";
+"stacks.checkout.stack.done %ld" = "Checkout di %ld branch impilati.";

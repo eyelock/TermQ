@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Sincronizezi cu push forțat?";
 "stacks.sync.confirm.message %ld %@" = "Sincronizarea forțează push-ul a %ld ramuri și actualizează stiva pe GitHub: %@\n\nOricine altcineva lucrează pe aceste ramuri va trebui să le reseteze.";
 "stacks.sync.confirm.button" = "Sincronizează și trimite";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Îmbină stiva…";
+"stacks.merge.stack.title" = "Îmbini stiva?";
+"stacks.merge.stack.message %ld" = "Îmbină %ld pull request-uri în ramura de bază.";
+"stacks.merge.stack.confirm %ld" = "Îmbină %ld PR-uri";
+"stacks.merge.stack.method %@" = "Metodă de îmbinare: %@ (implicita acestui depozit)";
+"stacks.merge.stack.irreversible" = "Asta nu poate fi anulată din TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull request-uri îmbinate.";
+"stacks.merge.stack.loading" = "Se verifică recenziile și starea CI…";
+"stacks.merge.stack.not.submitted" = "Această stivă nu a fost încă trimisă pe GitHub.";
+"stacks.merge.blocked.draft" = "Ciornă";
+"stacks.merge.blocked.closed" = "Închis";
+"stacks.merge.blocked.merged" = "Deja îmbinat";
+"stacks.merge.blocked.by %@" = "%@ blochează tot ce e deasupra, așa că stiva întreagă nu poate fi îmbinată de aici. Deschide-o pe GitHub ca să îmbini până în acel punct.";
+"stacks.merge.open.on.github" = "Deschide stiva pe GitHub";
+"stacks.review.approved" = "Aprobat";
+"stacks.review.changes.requested" = "Modificări cerute";
+"stacks.review.required" = "Recenzie necesară";
+"stacks.checks.passing" = "Verificări trecute";
+"stacks.checks.failing" = "Verificări eșuate";
+"stacks.checks.pending" = "Verificări în curs";
+"stacks.link.stack" = "Leagă PR-uri într-o stivă…";
+"stacks.link.stack.title" = "Leagă PR-uri într-o stivă";
+"stacks.link.stack.will.create %ld" = "Creează %ld pull request-uri noi pe GitHub.";
+"stacks.link.stack.existing" = "existent";
+"stacks.link.stack.new" = "va crea un PR";
+"stacks.link.stack.confirm %ld" = "Leagă %ld ramuri";
+"stacks.link.stack.done" = "Ramuri legate într-o stivă.";
+"stacks.checkout.stack %ld" = "Extrage toată stiva (%ld ramuri)";
+"stacks.checkout.stack.done %ld" = "S-au extras %ld ramuri din stivă.";

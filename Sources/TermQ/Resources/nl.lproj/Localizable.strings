@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Synchroniseren en force-pushen?";
 "stacks.sync.confirm.message %ld %@" = "Synchroniseren force-pusht %ld branches en werkt de stapel op GitHub bij: %@\n\nIedereen die aan deze branches werkt, moet resetten.";
 "stacks.sync.confirm.button" = "Synchroniseren en pushen";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Stapel samenvoegen…";
+"stacks.merge.stack.title" = "Stapel samenvoegen?";
+"stacks.merge.stack.message %ld" = "Voegt %ld pull requests samen in de basisbranch.";
+"stacks.merge.stack.confirm %ld" = "%ld PR's samenvoegen";
+"stacks.merge.stack.method %@" = "Samenvoegmethode: %@ (standaard van deze repository)";
+"stacks.merge.stack.irreversible" = "Dit kan niet ongedaan worden gemaakt vanuit TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests samengevoegd.";
+"stacks.merge.stack.loading" = "Review- en CI-status controleren…";
+"stacks.merge.stack.not.submitted" = "Deze stapel is nog niet naar GitHub verzonden.";
+"stacks.merge.blocked.draft" = "Concept";
+"stacks.merge.blocked.closed" = "Gesloten";
+"stacks.merge.blocked.merged" = "Al samengevoegd";
+"stacks.merge.blocked.by %@" = "%@ blokkeert alles erboven, dus de hele stapel kan hier niet worden samengevoegd. Open hem op GitHub om tot dat punt samen te voegen.";
+"stacks.merge.open.on.github" = "Stapel op GitHub openen";
+"stacks.review.approved" = "Goedgekeurd";
+"stacks.review.changes.requested" = "Wijzigingen gevraagd";
+"stacks.review.required" = "Review vereist";
+"stacks.checks.passing" = "Controles geslaagd";
+"stacks.checks.failing" = "Controles mislukt";
+"stacks.checks.pending" = "Controles bezig";
+"stacks.link.stack" = "PR's tot een stapel koppelen…";
+"stacks.link.stack.title" = "PR's tot een stapel koppelen";
+"stacks.link.stack.will.create %ld" = "Maakt %ld nieuwe pull requests aan op GitHub.";
+"stacks.link.stack.existing" = "bestaand";
+"stacks.link.stack.new" = "maakt een PR aan";
+"stacks.link.stack.confirm %ld" = "%ld branches koppelen";
+"stacks.link.stack.done" = "Branches gekoppeld tot een stapel.";
+"stacks.checkout.stack %ld" = "Hele stapel uitchecken (%ld branches)";
+"stacks.checkout.stack.done %ld" = "%ld gestapelde branches uitgecheckt.";

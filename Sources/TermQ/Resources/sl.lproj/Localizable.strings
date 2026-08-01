@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "Sinhroniziraj s prisilnim pushem?";
 "stacks.sync.confirm.message %ld %@" = "Sinhronizacija prisilno pusha %ld vej in posodobi sklad na GitHubu: %@\n\nVsi drugi, ki delajo na teh vejah, jih bodo morali ponastaviti.";
 "stacks.sync.confirm.button" = "Sinhroniziraj in pošlji";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Združi sklad…";
+"stacks.merge.stack.title" = "Združiti sklad?";
+"stacks.merge.stack.message %ld" = "Združi %ld pull requestov v osnovno vejo.";
+"stacks.merge.stack.confirm %ld" = "Združi %ld PR-jev";
+"stacks.merge.stack.method %@" = "Način združevanja: %@ (privzeto za ta repozitorij)";
+"stacks.merge.stack.irreversible" = "Tega iz TermQ ni mogoče razveljaviti.";
+"stacks.merge.stack.done %ld" = "Združenih %ld pull requestov.";
+"stacks.merge.stack.loading" = "Preverjanje pregledov in stanja CI…";
+"stacks.merge.stack.not.submitted" = "Ta sklad še ni bil poslan na GitHub.";
+"stacks.merge.blocked.draft" = "Osnutek";
+"stacks.merge.blocked.closed" = "Zaprt";
+"stacks.merge.blocked.merged" = "Že združen";
+"stacks.merge.blocked.by %@" = "%@ blokira vse nad seboj, zato celotnega sklada od tu ni mogoče združiti. Odpri ga na GitHubu in združi do te točke.";
+"stacks.merge.open.on.github" = "Odpri sklad na GitHubu";
+"stacks.review.approved" = "Odobreno";
+"stacks.review.changes.requested" = "Zahtevane spremembe";
+"stacks.review.required" = "Potreben pregled";
+"stacks.checks.passing" = "Preverjanja uspešna";
+"stacks.checks.failing" = "Preverjanja neuspešna";
+"stacks.checks.pending" = "Preverjanja tečejo";
+"stacks.link.stack" = "Poveži PR-je v sklad…";
+"stacks.link.stack.title" = "Poveži PR-je v sklad";
+"stacks.link.stack.will.create %ld" = "Ustvari %ld novih pull requestov na GitHubu.";
+"stacks.link.stack.existing" = "obstoječ";
+"stacks.link.stack.new" = "ustvaril bo PR";
+"stacks.link.stack.confirm %ld" = "Poveži %ld vej";
+"stacks.link.stack.done" = "Veje povezane v sklad.";
+"stacks.checkout.stack %ld" = "Prevzemi celoten sklad (%ld vej)";
+"stacks.checkout.stack.done %ld" = "Prevzetih %ld vej sklada.";

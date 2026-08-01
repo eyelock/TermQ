@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Synkroniser og tving push?";
 "stacks.sync.confirm.message %ld %@" = "Synkronisering tvinger push af %ld grene og opdaterer stakken på GitHub: %@\n\nAlle andre, der arbejder på grenene, skal nulstille.";
 "stacks.sync.confirm.button" = "Synkroniser og push";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Flet stakken…";
+"stacks.merge.stack.title" = "Flet stakken?";
+"stacks.merge.stack.message %ld" = "Fletter %ld pull requests ind i basisgrenen.";
+"stacks.merge.stack.confirm %ld" = "Flet %ld PR'er";
+"stacks.merge.stack.method %@" = "Fletmetode: %@ (dette repositorys standard)";
+"stacks.merge.stack.irreversible" = "Dette kan ikke fortrydes fra TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests flettet.";
+"stacks.merge.stack.loading" = "Tjekker gennemgang og CI-status…";
+"stacks.merge.stack.not.submitted" = "Denne stak er endnu ikke sendt til GitHub.";
+"stacks.merge.blocked.draft" = "Kladde";
+"stacks.merge.blocked.closed" = "Lukket";
+"stacks.merge.blocked.merged" = "Allerede flettet";
+"stacks.merge.blocked.by %@" = "%@ blokerer alt ovenover, så hele stakken kan ikke flettes herfra. Åbn den på GitHub for at flette op til det punkt.";
+"stacks.merge.open.on.github" = "Åbn stakken på GitHub";
+"stacks.review.approved" = "Godkendt";
+"stacks.review.changes.requested" = "Ændringer ønsket";
+"stacks.review.required" = "Gennemgang påkrævet";
+"stacks.checks.passing" = "Tjek bestået";
+"stacks.checks.failing" = "Tjek fejler";
+"stacks.checks.pending" = "Tjek kører";
+"stacks.link.stack" = "Sammenkæd PR'er til en stak…";
+"stacks.link.stack.title" = "Sammenkæd PR'er til en stak";
+"stacks.link.stack.will.create %ld" = "Opretter %ld nye pull requests på GitHub.";
+"stacks.link.stack.existing" = "eksisterende";
+"stacks.link.stack.new" = "opretter en PR";
+"stacks.link.stack.confirm %ld" = "Sammenkæd %ld grene";
+"stacks.link.stack.done" = "Grene sammenkædet til en stak.";
+"stacks.checkout.stack %ld" = "Tjek hele stakken ud (%ld grene)";
+"stacks.checkout.stack.done %ld" = "%ld stablede grene tjekket ud.";
