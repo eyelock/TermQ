@@ -274,6 +274,43 @@ final class GitHubStackProviderIntegrationTests: XCTestCase {
         XCTAssertTrue(branches.contains("feat-a"), "a refusal must not have deleted anything")
     }
 
+    // MARK: - Stacks unavailable
+
+    /// Exit 9 — "stacked PRs not enabled for this repository".
+    ///
+    /// This was long assumed to need a specially-configured repository, and so went
+    /// untested. It does not: gh-stack raises it whenever `GET /repos/{o}/{r}/stacks`
+    /// fails, and a remote naming a repository the token cannot read fails with the 404
+    /// it treats as "not enabled". A random name is used rather than a fixed one so the
+    /// repository can never come into existence and quietly turn this test green.
+    ///
+    /// Unlike its neighbours this one does reach the network. No extra guard is needed:
+    /// `probe()` reports ready only when `gh auth status` succeeds, and `setUp` already
+    /// skips the whole suite unless it does.
+    func testStacksUnavailable_isReportedAsAFixablePrecondition() async throws {
+        try await git(
+            [
+                "remote", "set-url", "origin",
+                "https://github.com/eyelock/termq-exit9-\(UUID().uuidString.lowercased()).git",
+            ], in: repo)
+        try await checkoutNewBranch("feat-a", change: "l1\nA\nl3\n")
+
+        do {
+            try await GitHubStackProvider()
+                .linkStack(branches: ["main", "feat-a"], base: nil, in: repo)
+            XCTFail("expected a refusal when the stacks endpoint is unreachable")
+        } catch let error as StackProviderError {
+            guard case .preconditionFailed(let detail) = error else {
+                return XCTFail("exit 9 must be fixable, not a raw command failure: \(error)")
+            }
+            // gh-stack writes progress to stderr even without a TTY, so the raw output is
+            // "Checking existing stacks...\n⚠ Stacked PRs are not enabled...". Asserting
+            // equality — not `contains` — is the point: it pins that neither the progress
+            // line nor the glyph reaches the alert.
+            XCTAssertEqual(detail, "Stacked PRs are not enabled for this repository")
+        }
+    }
+
     // MARK: - Helpers
 
     @discardableResult

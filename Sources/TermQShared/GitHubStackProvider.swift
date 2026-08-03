@@ -566,7 +566,7 @@ public struct GitHubStackProvider: StackProvider, Sendable {
     /// sniffing in that provider). Codes not listed here fall through to
     /// `.commandFailed`, which carries the code and stderr for display.
     static func mapExitCode(_ result: StackProcessResult, command: String) -> StackProviderError {
-        let detail = result.stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+        let detail = userFacingDetail(result.stderr)
         switch result.exitCode {
         case 2:  // not in a stack / stack not found
             return .preconditionFailed(
@@ -823,6 +823,46 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         guard result.exitCode == 0 else {
             throw mapExitCode(result, command: command)
         }
+    }
+}
+
+// MARK: - Error message presentation
+
+extension GitHubStackProvider {
+    /// Status glyphs gh-stack prefixes its result lines with. Meaningful in a terminal,
+    /// noise in an alert that already renders as an error.
+    private static let statusGlyphs: Set<Character> = ["✗", "⚠", "✓", "!"]
+
+    /// Reduce gh-stack's stderr to the part worth showing the user.
+    ///
+    /// The extension writes progress to stderr even without a TTY, so a real failure
+    /// arrives as `"Checking existing stacks...\n⚠ Stacked PRs are not enabled..."`.
+    /// Passing that straight through puts a progress line inside an error alert.
+    ///
+    /// Only *leading* chatter is dropped. gh-stack's trailing advice ("Merge up to #4
+    /// with ...") carries no glyph and is frequently the most useful line in the message.
+    static func userFacingDetail(_ stderr: String) -> String {
+        let lines =
+            stderr
+            .split(separator: "\n", omittingEmptySubsequences: false)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+        // Progress only ever precedes the outcome, so drop from the front until a line
+        // either carries a glyph or stops looking like progress.
+        let meaningful = lines.drop { line in
+            guard let first = line.first, !statusGlyphs.contains(first) else { return false }
+            return line.hasSuffix("...") || line.hasSuffix("…")
+        }
+        // Returning empty when nothing survives is deliberate: callers fall back to their
+        // own wording, which beats showing a bare "Checking existing stacks...".
+        return
+            meaningful
+            .map { line -> String in
+                guard let first = line.first, statusGlyphs.contains(first) else { return line }
+                return String(line.dropFirst()).trimmingCharacters(in: .whitespaces)
+            }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n")
     }
 }
 

@@ -921,6 +921,58 @@ final class GitHubStackExitCodeTests: XCTestCase {
             error.errorDescription, "can only add branches to the top of the stack")
     }
 
+    // The stderr in the next three cases is copied byte-for-byte from a live gh-stack
+    // v0.1.0 run against a repository whose remote the token cannot read, which is what
+    // the extension reports as "stacks not enabled". Invented fixtures missed the
+    // progress line entirely.
+
+    func testProgressChatter_isStrippedFromTheMessage() {
+        // `gh stack link` exit 9. Without stripping, the alert opens with "Checking
+        // existing stacks..." — a progress line presented to the user as the error.
+        let error = GitHubStackProvider.mapExitCode(
+            result(
+                9,
+                stderr: "Checking existing stacks...\n"
+                    + "⚠ Stacked PRs are not enabled for this repository\n"),
+            command: "gh stack link")
+        XCTAssertEqual(
+            error.errorDescription, "Stacked PRs are not enabled for this repository")
+    }
+
+    func testStatusGlyphIsStripped_whenThereIsNoProgressLine() {
+        // `gh stack merge 1` exit 9 — same failure, no chatter ahead of it.
+        let error = GitHubStackProvider.mapExitCode(
+            result(9, stderr: "⚠ Stacked PRs are not enabled for this repository\n"),
+            command: "gh stack merge")
+        XCTAssertEqual(
+            error.errorDescription, "Stacked PRs are not enabled for this repository")
+    }
+
+    func testTrailingAdviceIsKept() {
+        // gh-stack's follow-up line has no glyph and is the most actionable part of the
+        // message, so only *leading* chatter may be dropped.
+        let error = GitHubStackProvider.mapExitCode(
+            result(
+                2,
+                stderr: "✗ current branch \"feat-one\" is not part of a stack\n"
+                    + "Checkout an existing stack using `gh stack checkout`\n"),
+            command: "gh stack rebase")
+        XCTAssertEqual(
+            error.errorDescription,
+            "current branch \"feat-one\" is not part of a stack\n"
+                + "Checkout an existing stack using `gh stack checkout`")
+    }
+
+    func testProgressOnly_fallsBackToTheGenericMessage() {
+        // If gh-stack ever fails after printing nothing but progress, the caller's
+        // wording is better than a bare "Checking existing stacks...".
+        let error = GitHubStackProvider.mapExitCode(
+            result(9, stderr: "Checking existing stacks...\n"), command: "gh stack link")
+        XCTAssertEqual(
+            error.errorDescription,
+            "Stacked pull requests are not available for this repository.")
+    }
+
     func testUnknownCode_fallsThroughWithItsOutput() {
         let error = GitHubStackProvider.mapExitCode(
             result(1, stderr: "boom"), command: "gh stack sync")
