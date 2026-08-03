@@ -751,7 +751,13 @@ public struct GitHubStackProvider: StackProvider, Sendable {
                     checkedOutElsewhere: branch.checkedOutElsewhere, parent: branch.parent,
                     children: branch.children, needsRestack: needsRestack,
                     changeRequest: branch.changeRequest, push: branch.push,
-                    isQueued: branch.isQueued))
+                    isQueued: branch.isQueued,
+                    // Every field must be carried across explicitly, and this one is easy
+                    // to miss: it is the last parameter and it is defaulted, so omitting
+                    // it compiles and silently blanks the stack number on every branch —
+                    // which hides Merge Stack and Check Out Whole Stack entirely, since
+                    // both gate on it being present.
+                    remoteStackID: branch.remoteStackID))
         }
         return result
     }

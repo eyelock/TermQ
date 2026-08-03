@@ -364,6 +364,36 @@ final class GitHubStackProviderIntegrationTests: XCTestCase {
         XCTAssertTrue(branches.contains("feat-a"), "a refusal must not have deleted anything")
     }
 
+    /// Regression: `applyNeedsRestack` rebuilds every branch that has a parent, and
+    /// `remoteStackID` is both the LAST parameter and defaulted — so omitting it compiled
+    /// cleanly and blanked the stack number on every branch of every graph. Merge Stack and
+    /// Check Out Whole Stack both gate on that value being present, so the two headline
+    /// operations of this backend were unreachable in the sidebar while every unit test
+    /// stayed green. A live run found it.
+    func testApplyNeedsRestack_preservesTheRemoteStackNumber() async throws {
+        try await checkoutNewBranch("feat-a", change: "l1\nA\nl3\n")
+        try await GitHubStackProvider().initialize(repo: repo, trunk: "main")
+
+        // The trunk short-circuits (no parent), so feat-a is the branch that proves it:
+        // it is the one that goes through the rebuild.
+        let input = [
+            StackBranch(
+                name: "main", isCurrent: false, checkedOutElsewhere: nil, parent: nil,
+                children: ["feat-a"], needsRestack: false, changeRequest: nil, push: nil,
+                isQueued: false, remoteStackID: "42"),
+            StackBranch(
+                name: "feat-a", isCurrent: true, checkedOutElsewhere: nil, parent: "main",
+                children: [], needsRestack: false, changeRequest: nil, push: nil,
+                isQueued: false, remoteStackID: "42"),
+        ]
+
+        let output = await GitHubStackProvider.applyNeedsRestack(input, repo: repo)
+
+        XCTAssertEqual(
+            output.map(\.remoteStackID), ["42", "42"],
+            "restack detection must not drop the stack number it was handed")
+    }
+
     // MARK: - Stacks unavailable
 
     /// Exit 9 — "stacked PRs not enabled for this repository".
