@@ -15,7 +15,7 @@ import XCTest
 /// - Partial scroll region (`DECSTBM`, e.g. `ESC[4;34r`): lines are shifted
 ///   within the region and `yBase`/`yDisp` do not move, so the absolute rows
 ///   come to hold different text. SwiftTerm translates the anchors to match
-///   (eyelock fork, upstream PR pending), keeping the selection on its text.
+///   (upstream since SwiftTerm #616), keeping the selection on its text.
 ///   Copilot CLI scrolls its transcript this way, reserving its tab bar and
 ///   prompt rows.
 final class TerminalSelectionScrollBehaviorTests: XCTestCase {

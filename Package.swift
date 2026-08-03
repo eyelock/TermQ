@@ -27,17 +27,13 @@ let package = Package(
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
-        // Pinned 2026-07-10 HEAD. Adds since the 2026-06-10 pin: CoreGraphics renderer dirty-region
-        // clear (fixes restricted-region artifacts, #582), immediate local-input rendering (#553),
-        // full-width (CJK) glyph centering (#578), DECRST 1005/1006/1015/1016 no longer disabling
-        // mouse tracking (#571), Mac word-mode drag selection seed-word fix (#576).
-        // Temporarily on the eyelock fork: upstream does not translate selection
-        // anchors when rows move in place (a DECSTBM region scroll, ESC M, CSI L
-        // or CSI M), so a selection made while a full-screen TUI streams output
-        // drifts onto other text. GitHub Copilot CLI hits this on every line.
-        // Fork commit 98087c67 is upstream 58915b1 plus that fix; revert to the
-        // upstream pin once the change is merged there.
-        .package(url: "https://github.com/eyelock/SwiftTerm.git", revision: "98087c67bacb925773d285accd7995771c64ab9d"),
+        // Pinned 2026-08-03 HEAD. Adds since the 2026-07-10 pin: in-place selection
+        // translation (#616), mouse motion row and focus reporting fixes (#590), Korean
+        // IME transaction fix (#563), line-accurate scroll wheel (#600), flipped mouse
+        // reporting toggle (#601), CircularList precondition checks (#609), Powerline
+        // separators as cell geometry (#605), hyperlink GC and TinyAtom thread safety
+        // (#611), implicit-link backtracking fix (#613).
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "25ba06fd0d04c478db64c95387507c9e429f8eb5"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),
