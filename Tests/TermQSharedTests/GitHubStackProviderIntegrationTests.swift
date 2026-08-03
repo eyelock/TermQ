@@ -233,6 +233,96 @@ final class GitHubStackProviderIntegrationTests: XCTestCase {
         XCTAssertNil(resolved, "the banner must clear once the rebase completes")
     }
 
+    /// The other way out of a conflict. `continueOperation` above was covered from the
+    /// start while this was not, which is the wrong way round: abort is what the user
+    /// reaches for when they cannot resolve the conflict, so it runs on the worse day.
+    func testAbortOperation_leavesTheConflictedRestackFullyUnwound() async throws {
+        let provider = GitHubStackProvider()
+        try await checkoutNewBranch("feat-a", change: "l1\nA\nl3\n")
+        try await provider.initialize(repo: repo, trunk: "main")
+        let headBeforeRestack = try await git(["rev-parse", "feat-a"], in: repo)
+
+        try await git(["checkout", "--quiet", "main"], in: repo)
+        try await commitAll(message: "trunk moves", contents: "l1\nTRUNK\nl3\n")
+        try await git(["push", "--quiet", "origin", "main"], in: repo)
+        try await git(["checkout", "--quiet", "feat-a"], in: repo)
+
+        do {
+            try await provider.restack(scope: .stack, in: repo)
+            XCTFail("expected the restack to stop on a conflict")
+        } catch {
+            // Precondition for the abort, not the assertion under test.
+        }
+        let paused = await provider.pausedOperation(repo: repo)
+        XCTAssertEqual(paused?.kind, .restack, "the rebase must actually be paused")
+
+        try await provider.abortOperation(in: repo)
+
+        let cleared = await provider.pausedOperation(repo: repo)
+        XCTAssertNil(cleared, "aborting must clear the sidebar's conflict banner")
+        // A half-unwound abort would strand the user mid-rebase with no banner telling
+        // them so, which is worse than the conflict they were escaping.
+        let headAfterAbort = try await git(["rev-parse", "feat-a"], in: repo)
+        XCTAssertEqual(
+            headAfterAbort, headBeforeRestack, "feat-a must return to its pre-restack commit")
+        let branch = try await git(["rev-parse", "--abbrev-ref", "HEAD"], in: repo)
+        XCTAssertEqual(
+            branch.trimmingCharacters(in: .whitespacesAndNewlines), "feat-a",
+            "the abort must leave the original branch checked out, not a detached HEAD")
+        let status = try await git(["status", "--porcelain"], in: repo)
+        XCTAssertTrue(
+            status.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+            "no conflict markers or staged leftovers may survive the abort")
+    }
+
+    /// Unlike its siblings this one is deliberately NOT `gh stack`: the extension's own
+    /// `switch` is a full-screen picker, so the provider shells out to plain git. That
+    /// makes it worth pinning that it moves HEAD at all.
+    func testSwitchBranch_movesHeadWithinTheStack() async throws {
+        let provider = GitHubStackProvider()
+        try await checkoutNewBranch("feat-a", change: "l1\nA\nl3\n")
+        try await provider.initialize(repo: repo, trunk: "main")
+        try await provider.createBranch(name: "feat-b", target: nil, in: repo)
+        try await commitAll(message: "b", contents: "l1\nA\nl3\nB\n")
+
+        try await provider.switchBranch(to: "feat-a", in: repo)
+        var head = try await git(["rev-parse", "--abbrev-ref", "HEAD"], in: repo)
+        XCTAssertEqual(head.trimmingCharacters(in: .whitespacesAndNewlines), "feat-a")
+
+        try await provider.switchBranch(to: "feat-b", in: repo)
+        head = try await git(["rev-parse", "--abbrev-ref", "HEAD"], in: repo)
+        XCTAssertEqual(head.trimmingCharacters(in: .whitespacesAndNewlines), "feat-b")
+
+        // A failed checkout must surface as an error rather than silently doing nothing.
+        do {
+            try await provider.switchBranch(to: "no-such-branch", in: repo)
+            XCTFail("expected switching to a missing branch to throw")
+        } catch {
+            // Any StackProviderError is fine; the point is that it does not succeed.
+        }
+    }
+
+    /// `.trackExisting` is not advertised for this backend, because gh-stack has no
+    /// "adopt this one branch onto this base" — `init` takes a whole set and `link` also
+    /// creates pull requests. This pins the refusal so the capability cannot be quietly
+    /// switched on without an implementation behind it.
+    func testTrackBranch_isRefused() async throws {
+        let provider = GitHubStackProvider()
+        XCTAssertFalse(provider.capabilities.contains(.trackExisting))
+        try await checkoutNewBranch("feat-a", change: "l1\nA\nl3\n")
+        try await provider.initialize(repo: repo, trunk: "main")
+        try await git(["checkout", "--quiet", "-b", "loose"], in: repo)
+
+        do {
+            try await provider.trackBranch("loose", base: "main", in: repo)
+            XCTFail("expected tracking a single branch to be unsupported")
+        } catch let error as StackProviderError {
+            guard case .unsupported = error else {
+                return XCTFail("must be .unsupported, not a fixable precondition: \(error)")
+            }
+        }
+    }
+
     /// The counterpart to Destroy Stack, and the reason they are separate capabilities:
     /// this one must leave every branch alive.
     func testUntrackStack_dropsTrackingAndKeepsEveryBranch() async throws {
