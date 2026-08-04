@@ -266,6 +266,12 @@ struct HarnessLaunchConfig {
     /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
     let cardTitle: String?
 
+    // Note: `--resume` is deliberately *not* emitted here. The init command is
+    // persisted on the card and replayed on every open, so baking the flag in
+    // would mean rewriting a stored (possibly hand-edited) command string every
+    // time the card's resume setting changed. It is applied at send time
+    // instead — see ResumeFlagInjector and TerminalSessionManager.
+
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.
     func command(sessionName: String? = nil) -> String {
