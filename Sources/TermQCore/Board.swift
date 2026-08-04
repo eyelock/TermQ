@@ -58,6 +58,7 @@ public class Board: ObservableObject, Codable {
         allowAutorun: Bool = false,
         allowOscClipboard: Bool = true,
         confirmExternalModifications: Bool = true,
+        autoResumeSession: Bool = false,
         backend: TerminalBackend? = nil
     ) -> TerminalCard {
         let maxIndex = cards(for: column).map(\.orderIndex).max() ?? -1
@@ -71,6 +72,7 @@ public class Board: ObservableObject, Codable {
             allowAutorun: allowAutorun,
             allowOscClipboard: allowOscClipboard,
             confirmExternalModifications: confirmExternalModifications,
+            autoResumeSession: autoResumeSession,
             backend: backend
         )
         cards.append(card)

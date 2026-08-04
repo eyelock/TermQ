@@ -197,6 +197,7 @@ public final class BoardPersistence {
                 existingCard.safePasteEnabled = loadedCard.safePasteEnabled
                 existingCard.themeId = loadedCard.themeId
                 existingCard.allowAutorun = loadedCard.allowAutorun
+                existingCard.autoResumeSession = loadedCard.autoResumeSession
                 existingCard.deletedAt = loadedCard.deletedAt
                 existingCard.lastLLMGet = loadedCard.lastLLMGet
             } else {

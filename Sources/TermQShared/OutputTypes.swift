@@ -16,6 +16,7 @@ public struct TerminalOutput: Codable, Sendable {
     public let llmPrompt: String
     public let llmNextAction: String
     public let allowAutorun: Bool
+    public let autoResumeSession: Bool
 
     public init(from card: Card, columnName: String) {
         self.id = card.id.uuidString
@@ -30,6 +31,7 @@ public struct TerminalOutput: Codable, Sendable {
         self.llmPrompt = card.llmPrompt
         self.llmNextAction = card.llmNextAction
         self.allowAutorun = card.allowAutorun
+        self.autoResumeSession = card.autoResumeSession
     }
 }
 
@@ -59,6 +61,7 @@ public struct PendingTerminalOutput: Codable, Sendable {
     public let llmNextAction: String
     public let llmPrompt: String
     public let allowAutorun: Bool
+    public let autoResumeSession: Bool
     public let staleness: String
     public let tags: [String: String]
 
@@ -70,6 +73,7 @@ public struct PendingTerminalOutput: Codable, Sendable {
         self.llmNextAction = card.llmNextAction
         self.llmPrompt = card.llmPrompt
         self.allowAutorun = card.allowAutorun
+        self.autoResumeSession = card.autoResumeSession
         self.staleness = staleness
         self.tags = card.tagsDictionary
     }

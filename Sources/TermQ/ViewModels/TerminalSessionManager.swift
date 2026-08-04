@@ -406,6 +406,33 @@ class TerminalSessionManager: ObservableObject {
         }
     }
 
+    /// Whether this card's launch should carry `--resume`.
+    ///
+    /// Requires both the user's intent (`autoResumeSession`) and live vendor
+    /// support. The capability check is deliberately made here at launch rather
+    /// than stored with the intent: a user can upgrade or downgrade YNH at any
+    /// time, and the stored preference should survive that without silently
+    /// producing a command the installed binary cannot honour.
+    ///
+    /// The failure mode this guards is specific. A YNH predating `--resume`
+    /// forwards unrecognised flags straight to the vendor CLI, so the flag
+    /// would arrive at Claude bare — opening its interactive session picker and
+    /// hanging the pane on a keypress that never comes. `supportsResume` is
+    /// false for such a binary because the field is simply absent from its
+    /// `ynh vendors` output.
+    func shouldResumeSession(for card: TerminalCard) -> Bool {
+        guard card.autoResumeSession else { return false }
+        guard let vendorID = card.tags.first(where: { $0.key == "vendor" })?.value,
+            !vendorID.isEmpty
+        else {
+            // Not a harness-launched card: no vendor session exists to continue.
+            return false
+        }
+        return VendorService.shared.vendors
+            .first { $0.vendorID == vendorID }?
+            .supportsResume ?? false
+    }
+
     /// Run init command after shell starts (supports token replacement)
     private func runInitCommand(terminal: TermQTerminalView, card: TerminalCard) {
         guard !card.initCommand.isEmpty else { return }
@@ -435,6 +462,10 @@ class TerminalSessionManager: ObservableObject {
             }
         } else {
             initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))
+        }
+
+        if shouldResumeSession(for: card) {
+            initCmd = ResumeFlagInjector().inject(into: initCmd)
         }
 
         let backend = effectiveBackend(for: card)
