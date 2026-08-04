@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Benarkan terminal ini mengakses papan klip sistem melalui urutan pelarian OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Sambung Semula Sesi LLM Sebelumnya";
+"editor.auto.resume.session.help" = "Melancarkan semula terminal ini akan menyambung sesi LLM sebelumnya dan bukan memulakan sesi baharu";
+"editor.auto.resume.session.unavailable" = "Hanya tersedia untuk terminal harnais yang CLI LLM-nya menyokong penyambungan semula sesi";
 "editor.disabled.globally" = "Dilumpuhkan secara global";
 
 // Editor - Security section

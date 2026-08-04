@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "允許此終端通過 OSC 52 跳脫序列存取系統剪貼簿";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "恢復上一次 LLM 工作階段";
+"editor.auto.resume.session.help" = "重新啟動此終端機時繼續上一次的 LLM 工作階段，而不是開始新的工作階段";
+"editor.auto.resume.session.unavailable" = "僅適用於 LLM 命令列支援恢復工作階段的工具集終端機";
 "editor.disabled.globally" = "全域停用";
 
 // Editor - Security section

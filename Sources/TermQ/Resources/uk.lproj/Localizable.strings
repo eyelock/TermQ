@@ -223,6 +223,9 @@
 "editor.allow.osc.clipboard.help" = "Дозволити цьому терміналу доступ до системного буфера обміну через escape-послідовності OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Відновлювати попередній сеанс LLM";
+"editor.auto.resume.session.help" = "Під час повторного запуску термінала продовжується попередній сеанс LLM, а не починається новий";
+"editor.auto.resume.session.unavailable" = "Доступно лише для терміналів набору, інтерфейс LLM яких підтримує відновлення сеансів";
 "editor.disabled.globally" = "Вимкнено глобально";
 
 // Editor - Security section

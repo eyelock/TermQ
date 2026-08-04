@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "Consenti a questo terminale di accedere agli appunti di sistema tramite sequenze di escape OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Riprendi la sessione LLM precedente";
+"editor.auto.resume.session.help" = "Riavviando questo terminale si riprende la sessione LLM precedente invece di iniziarne una nuova";
+"editor.auto.resume.session.unavailable" = "Disponibile solo per i terminali con set di strumenti la cui CLI LLM supporta la ripresa delle sessioni";
 "editor.disabled.globally" = "Disabilitato globalmente";
 
 // Editor - Security section

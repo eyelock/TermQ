@@ -33,6 +33,7 @@ final class CardEditorViewModel: ObservableObject {
     @Published var allowAutorun: Bool = false
     @Published var allowOscClipboard: Bool = true
     @Published var confirmExternalModifications: Bool = true
+    @Published var autoResumeSession: Bool = false
     @Published var selectedLLMVendor: LLMVendor = .claudeCode
     @Published var interactiveMode: Bool = true
     /// Optional override over the user-layer default. `nil` = inherit.
@@ -66,6 +67,7 @@ final class CardEditorViewModel: ObservableObject {
         allowAutorun = card.allowAutorun
         allowOscClipboard = card.allowOscClipboard
         confirmExternalModifications = card.confirmExternalModifications
+        autoResumeSession = card.autoResumeSession
         backend = card.backend
         environmentVariables = card.environmentVariables
     }
@@ -89,8 +91,30 @@ final class CardEditorViewModel: ObservableObject {
         card.allowAutorun = allowAutorun
         card.allowOscClipboard = allowOscClipboard
         card.confirmExternalModifications = confirmExternalModifications
+        card.autoResumeSession = autoResumeSession
         card.backend = backend
         card.environmentVariables = environmentVariables
+    }
+
+    // MARK: - Session Resume
+
+    /// Whether the session-resume toggle applies to the card being edited.
+    ///
+    /// Two conditions, both necessary: the card must have been launched by a
+    /// harness (a plain shell has no LLM session to continue), and the vendor
+    /// it runs must report `supports_resume`. The latter is false for any YNH
+    /// predating the feature, which is what stops TermQ emitting a flag that
+    /// such a binary would forward to the vendor CLI as a bare `--resume` —
+    /// opening an interactive session picker and hanging the pane.
+    ///
+    /// Takes the resumable vendor ids as a parameter rather than reaching for
+    /// VendorService.shared, so the rule stays unit-testable and this view
+    /// model keeps depending only on TermQCore.
+    func canResumeSession(resumableVendorIDs: Set<String>) -> Bool {
+        guard let vendorID = tags.first(where: { $0.key == "vendor" })?.value,
+            !vendorID.isEmpty
+        else { return false }
+        return resumableVendorIDs.contains(vendorID)
     }
 
     // MARK: - Tag Helpers
