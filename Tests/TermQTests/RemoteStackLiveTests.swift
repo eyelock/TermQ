@@ -46,8 +46,11 @@ final class RemoteStackLiveTests: XCTestCase {
     private var upperPR: Int!
     private var repo: String { root.appendingPathComponent("repo").path }
 
+    // No `super.setUp()` / `super.tearDown()`: on an async, @MainActor-isolated
+    // XCTestCase, Swift 6.1 (the toolchain CI pins) rejects sending the main-actor
+    // isolated test case to those nonisolated methods. 6.3 accepts it, so this only
+    // fails in CI. Every other async @MainActor case in this target omits them too.
     override func setUp() async throws {
-        try await super.setUp()
         guard let slug = ProcessInfo.processInfo.environment["TERMQ_GH_STACK_LIVE_REPO"],
             !slug.isEmpty
         else {
@@ -114,7 +117,6 @@ final class RemoteStackLiveTests: XCTestCase {
             }
         }
         if let root { try? FileManager.default.removeItem(at: root) }
-        try await super.tearDown()
     }
 
     // MARK: - Discovery
