@@ -223,6 +223,9 @@
 "editor.allow.osc.clipboard.help" = "Bu terminalin OSC 52 kaçış dizileri aracılığıyla sistem panosuna erişmesine izin ver";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Önceki LLM oturumunu sürdür";
+"editor.auto.resume.session.help" = "Bu terminal yeniden başlatıldığında yeni bir oturum yerine önceki LLM oturumu sürdürülür";
+"editor.auto.resume.session.unavailable" = "Yalnızca LLM komut satırı oturum sürdürmeyi destekleyen takım seti terminallerinde kullanılabilir";
 "editor.disabled.globally" = "Genel olarak devre dışı";
 
 // Editor - Security section

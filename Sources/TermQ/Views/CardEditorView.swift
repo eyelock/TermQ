@@ -13,6 +13,12 @@ struct CardEditorView: View {
     @State private var selectedTab: EditorTab = .general
     @ObservedObject private var tmuxManager = TmuxManager.shared
     @ObservedObject private var sessionManager = TerminalSessionManager.shared
+    @ObservedObject private var vendorService = VendorService.shared
+
+    /// Vendor ids whose CLI can resume a previous session, per the installed YNH.
+    private var resumableVendorIDs: Set<String> {
+        Set(vendorService.vendors.filter(\.supportsResume).map(\.vendorID))
+    }
     @Environment(SettingsStore.self) private var settings
     private var globalAllowAgentPrompts: Bool { settings.enableTerminalAutorun }
     private var globalAllowOscClipboard: Bool { settings.allowOscClipboard }
@@ -351,6 +357,14 @@ struct CardEditorView: View {
                 isGloballyEnabled: globalConfirmExternalModifications,
                 disabledMessage: Strings.Editor.confirmExternalModificationsDisabledGlobally,
                 helpText: Strings.Editor.confirmExternalModificationsHelp
+            )
+
+            SharedToggle(
+                label: Strings.Editor.autoResumeSession,
+                isOn: $viewModel.autoResumeSession,
+                isGloballyEnabled: viewModel.canResumeSession(resumableVendorIDs: resumableVendorIDs),
+                disabledMessage: Strings.Editor.autoResumeSessionUnavailable,
+                helpText: Strings.Editor.autoResumeSessionHelp
             )
 
             SharedToggle(

@@ -113,6 +113,7 @@ enum SchemaBuilder {
                 "llmPrompt": stringField("Persistent LLM context"),
                 "llmNextAction": stringField("Queued one-time action"),
                 "allowAutorun": boolField("Whether queued actions auto-execute"),
+                "autoResumeSession": boolField("Whether relaunch continues the previous LLM session"),
             ]),
         ])
     }
@@ -167,6 +168,7 @@ enum SchemaBuilder {
                             "llmNextAction": stringField("Queued one-time action"),
                             "llmPrompt": stringField("Persistent LLM context"),
                             "allowAutorun": boolField("Whether queued actions auto-execute"),
+                            "autoResumeSession": boolField("Whether relaunch continues the previous LLM session"),
                             "staleness": stringField("Staleness tag value"),
                             "tags": .object(["type": .string("object")]),
                         ]),

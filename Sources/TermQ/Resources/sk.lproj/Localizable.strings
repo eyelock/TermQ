@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "Povoliť tomuto terminálu prístup k systémovej schránke cez escape sekvencie OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Obnoviť predchádzajúcu reláciu LLM";
+"editor.auto.resume.session.help" = "Pri opätovnom spustení tohto terminálu pokračuje predchádzajúca relácia LLM namiesto začatia novej";
+"editor.auto.resume.session.unavailable" = "Dostupné len pre terminály súpravy, ktorých rozhranie LLM podporuje obnovenie relácií";
 "editor.disabled.globally" = "Globálne zakázané";
 
 // Editor - Security section

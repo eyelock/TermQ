@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "允许此终端通过 OSC 52 转义序列访问系统剪贴板";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "恢复上一次 LLM 会话";
+"editor.auto.resume.session.help" = "重新启动此终端时继续上一次 LLM 会话，而不是开始新会话";
+"editor.auto.resume.session.unavailable" = "仅适用于 LLM 命令行支持恢复会话的工具集终端";
 "editor.disabled.globally" = "全局禁用";
 
 // Editor - Security section
