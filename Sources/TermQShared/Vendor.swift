@@ -24,6 +24,17 @@ public struct Vendor: Codable, Sendable, Identifiable {
     /// prompt pre-loaded (`ynh run --interactive`).
     public let supportsInitialPrompt: Bool
 
+    /// Whether this vendor's CLI can continue a previous interactive session
+    /// (`ynh run --resume`).
+    ///
+    /// Absent-means-false is load-bearing, not merely defensive. A pre-resume
+    /// YNH forwards flags it does not recognise straight through to the vendor
+    /// CLI, so sending `--resume` to an older binary would reach Claude as a
+    /// *bare* `--resume` — which opens its interactive session picker and hangs
+    /// the pane waiting for a keypress. An older YNH omits this field, which
+    /// decodes to false, which stops TermQ emitting the flag at all.
+    public let supportsResume: Bool
+
     enum CodingKeys: String, CodingKey {
         case vendorID = "name"
         case displayName = "display_name"
@@ -31,6 +42,7 @@ public struct Vendor: Codable, Sendable, Identifiable {
         case configDir = "config_dir"
         case available
         case supportsInitialPrompt = "supports_initial_prompt"
+        case supportsResume = "supports_resume"
     }
 
     public init(from decoder: Decoder) throws {
@@ -42,5 +54,7 @@ public struct Vendor: Codable, Sendable, Identifiable {
         available = try c.decode(Bool.self, forKey: .available)
         supportsInitialPrompt =
             (try? c.decode(Bool.self, forKey: .supportsInitialPrompt)) ?? false
+        supportsResume =
+            (try? c.decode(Bool.self, forKey: .supportsResume)) ?? false
     }
 }

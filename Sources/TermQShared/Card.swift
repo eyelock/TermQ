@@ -14,6 +14,10 @@ public struct Card: Codable, Sendable, Identifiable {
     public let llmPrompt: String
     public let llmNextAction: String
     public let allowAutorun: Bool
+
+    /// Whether relaunching continues the harness's previous LLM session.
+    public let autoResumeSession: Bool
+
     public let deletedAt: Date?
     /// Cards created via headless MCP need tmux sessions when GUI starts
     /// GUI will detect this flag and create sessions automatically
@@ -37,6 +41,7 @@ public struct Card: Codable, Sendable, Identifiable {
         llmPrompt = try container.decodeIfPresent(String.self, forKey: .llmPrompt) ?? ""
         llmNextAction = try container.decodeIfPresent(String.self, forKey: .llmNextAction) ?? ""
         allowAutorun = try container.decodeIfPresent(Bool.self, forKey: .allowAutorun) ?? false
+        autoResumeSession = try container.decodeIfPresent(Bool.self, forKey: .autoResumeSession) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         needsTmuxSession = try container.decodeIfPresent(Bool.self, forKey: .needsTmuxSession) ?? false
         workspaceId = try container.decodeIfPresent(UUID.self, forKey: .workspaceId)
@@ -45,6 +50,7 @@ public struct Card: Codable, Sendable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex
         case workingDirectory, isFavourite, badge, llmPrompt, llmNextAction, allowAutorun, deletedAt
+        case autoResumeSession
         case needsTmuxSession
         case workspaceId
     }
@@ -63,6 +69,7 @@ public struct Card: Codable, Sendable, Identifiable {
         llmPrompt: String = "",
         llmNextAction: String = "",
         allowAutorun: Bool = false,
+        autoResumeSession: Bool = false,
         deletedAt: Date? = nil,
         needsTmuxSession: Bool = false,
         workspaceId: UUID? = nil
@@ -79,6 +86,7 @@ public struct Card: Codable, Sendable, Identifiable {
         self.llmPrompt = llmPrompt
         self.llmNextAction = llmNextAction
         self.allowAutorun = allowAutorun
+        self.autoResumeSession = autoResumeSession
         self.deletedAt = deletedAt
         self.needsTmuxSession = needsTmuxSession
         self.workspaceId = workspaceId

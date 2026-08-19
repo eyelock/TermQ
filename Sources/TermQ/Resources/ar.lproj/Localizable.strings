@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "السماح لهذه الطرفية بالوصول إلى حافظة النظام عبر تسلسلات OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "استئناف جلسة LLM السابقة";
+"editor.auto.resume.session.help" = "عند إعادة تشغيل هذه الطرفية تُستأنف جلسة LLM السابقة بدلاً من بدء جلسة جديدة";
+"editor.auto.resume.session.unavailable" = "متاح فقط لطرفيات حزم العمل التي تدعم واجهة LLM فيها استئناف الجلسات";
 "editor.disabled.globally" = "معطل عالميًا";
 
 // Editor - Security section

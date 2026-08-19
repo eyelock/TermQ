@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Tillad denne terminal at tilgå systemudklipsholderen via OSC 52 escape-sekvenser";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Genoptag forrige LLM-session";
+"editor.auto.resume.session.help" = "Når denne terminal genstartes, fortsætter den forrige LLM-session i stedet for at starte en ny";
+"editor.auto.resume.session.unavailable" = "Kun tilgængeligt for sele-terminaler, hvis LLM-CLI kan genoptage sessioner";
 "editor.disabled.globally" = "Deaktiveret globalt";
 
 // Editor - Security section

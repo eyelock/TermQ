@@ -101,6 +101,14 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// Whether this terminal requires confirmation for external LLM modifications (requires global confirmExternalLLMModifications)
     @Published public var confirmExternalModifications: Bool
 
+    /// Whether relaunching this terminal continues the harness's previous LLM
+    /// session instead of starting a cold one (adds `--resume` to `ynh run`).
+    ///
+    /// Only meaningful for harness-launched cards whose vendor reports
+    /// `supports_resume`; a plain shell card has no session to continue. Set
+    /// automatically when a harness launch creates or rewrites the card.
+    @Published public var autoResumeSession: Bool
+
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 
@@ -129,7 +137,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, description, tags, columnId, orderIndex, shellPath, workingDirectory
         case isFavourite, initCommand, llmPrompt, llmNextAction, badge, fontName, fontSize, safePasteEnabled, themeId
-        case allowAutorun, allowOscClipboard, confirmExternalModifications
+        case allowAutorun, allowOscClipboard, confirmExternalModifications, autoResumeSession
         case deletedAt, lastLLMGet, backend, needsTmuxSession, environmentVariables
         case workspaceId
     }
@@ -155,6 +163,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowAutorun: Bool = false,
         allowOscClipboard: Bool = true,
         confirmExternalModifications: Bool = true,
+        autoResumeSession: Bool = false,
         deletedAt: Date? = nil,
         lastLLMGet: Date? = nil,
         backend: TerminalBackend? = nil,
@@ -182,6 +191,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         self.allowAutorun = allowAutorun
         self.allowOscClipboard = allowOscClipboard
         self.confirmExternalModifications = confirmExternalModifications
+        self.autoResumeSession = autoResumeSession
         self.deletedAt = deletedAt
         self.lastLLMGet = lastLLMGet
         self.backend = backend
@@ -220,6 +230,9 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         allowOscClipboard = try container.decodeIfPresent(Bool.self, forKey: .allowOscClipboard) ?? true
         confirmExternalModifications =
             try container.decodeIfPresent(Bool.self, forKey: .confirmExternalModifications) ?? true
+        // Absent on every card written before resume existed: those keep the
+        // old cold-launch behaviour until explicitly opted in.
+        autoResumeSession = try container.decodeIfPresent(Bool.self, forKey: .autoResumeSession) ?? false
         deletedAt = try container.decodeIfPresent(Date.self, forKey: .deletedAt)
         lastLLMGet = try container.decodeIfPresent(Date.self, forKey: .lastLLMGet)
         // Backend override: present-and-concrete = explicit override; absent = inherit.
@@ -253,6 +266,7 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
         try container.encode(allowAutorun, forKey: .allowAutorun)
         try container.encode(allowOscClipboard, forKey: .allowOscClipboard)
         try container.encode(confirmExternalModifications, forKey: .confirmExternalModifications)
+        try container.encode(autoResumeSession, forKey: .autoResumeSession)
         try container.encodeIfPresent(deletedAt, forKey: .deletedAt)
         try container.encodeIfPresent(lastLLMGet, forKey: .lastLLMGet)
         try container.encodeIfPresent(backend, forKey: .backend)

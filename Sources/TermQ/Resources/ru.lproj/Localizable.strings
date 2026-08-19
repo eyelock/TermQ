@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "Разрешить этому терминалу доступ к системному буферу обмена через escape-последовательности OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Возобновлять предыдущий сеанс LLM";
+"editor.auto.resume.session.help" = "При повторном запуске терминала продолжается предыдущий сеанс LLM, а не начинается новый";
+"editor.auto.resume.session.unavailable" = "Доступно только для терминалов набора, чей интерфейс LLM поддерживает возобновление сеансов";
 "editor.disabled.globally" = "Отключено глобально";
 
 // Editor - Security section

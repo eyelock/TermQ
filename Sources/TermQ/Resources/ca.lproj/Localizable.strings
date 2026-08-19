@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Permetre a aquest terminal accedir al portapapers del sistema mitjançant seqüències d'escapament OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Reprèn la sessió LLM anterior";
+"editor.auto.resume.session.help" = "En tornar a iniciar aquest terminal es repren la sessió LLM anterior en lloc de començar-ne una de nova";
+"editor.auto.resume.session.unavailable" = "Només disponible per a terminals d'arnès la CLI LLM dels quals permet reprendre sessions";
 "editor.disabled.globally" = "Desactivat globalment";
 
 // Editor - Security section

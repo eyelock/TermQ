@@ -223,6 +223,9 @@
 "editor.allow.osc.clipboard.help" = "Cho phép terminal này truy cập clipboard hệ thống qua chuỗi thoát OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Tiếp tục phiên LLM trước";
+"editor.auto.resume.session.help" = "Khởi chạy lại terminal này sẽ tiếp tục phiên LLM trước thay vì bắt đầu phiên mới";
+"editor.auto.resume.session.unavailable" = "Chỉ khả dụng cho terminal bộ công cụ có LLM CLI hỗ trợ tiếp tục phiên";
 "editor.disabled.globally" = "Đã tắt toàn cục";
 
 // Editor - Security section

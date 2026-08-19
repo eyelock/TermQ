@@ -401,6 +401,11 @@ enum Strings {
         static var confirmExternalModificationsDisabledGlobally: String {
             localized("editor.confirm.external.modifications.disabled.globally")
         }
+        static var autoResumeSession: String { localized("editor.auto.resume.session") }
+        static var autoResumeSessionHelp: String { localized("editor.auto.resume.session.help") }
+        static var autoResumeSessionUnavailable: String {
+            localized("editor.auto.resume.session.unavailable")
+        }
         static var disabledGlobally: String { localized("editor.disabled.globally") }
 
         // Tags section

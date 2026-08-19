@@ -190,6 +190,11 @@ final class HarnessLaunchCoordinator {
             backend: config.backend
         )
         card.allowAutorun = true
+        // Harness cards resume by default: the first launch has nothing to
+        // continue and starts cold anyway, so this only takes effect from the
+        // second launch onward — which is the behaviour people expect when
+        // reopening a terminal they were working in.
+        card.autoResumeSession = true
         card.workspaceId = boardViewModel.newCardWorkspaceId
 
         boardViewModel.board.cards.append(card)

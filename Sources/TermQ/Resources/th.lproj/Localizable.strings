@@ -223,6 +223,9 @@
 "editor.allow.osc.clipboard.help" = "อนุญาตให้เทอร์มินัลนี้เข้าถึงคลิปบอร์ดระบบผ่านลำดับ escape OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "ดำเนินเซสชัน LLM ก่อนหน้าต่อ";
+"editor.auto.resume.session.help" = "เมื่อเปิดเทอร์มินัลนี้ใหม่ จะดำเนินเซสชัน LLM ก่อนหน้าต่อแทนการเริ่มเซสชันใหม่";
+"editor.auto.resume.session.unavailable" = "ใช้ได้เฉพาะเทอร์มินัลชุดเครื่องมือที่ LLM CLI รองรับการดำเนินเซสชันต่อ";
 "editor.disabled.globally" = "ปิดใช้งานทั่วโลก";
 
 // Editor - Security section

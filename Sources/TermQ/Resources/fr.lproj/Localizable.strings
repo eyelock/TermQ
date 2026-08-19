@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Autoriser ce terminal à accéder au presse-papiers système via les séquences d'échappement OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Reprendre la session LLM précédente";
+"editor.auto.resume.session.help" = "Relancer ce terminal poursuit la session LLM précédente au lieu d'en démarrer une nouvelle";
+"editor.auto.resume.session.unavailable" = "Disponible uniquement pour les terminaux de harnais dont l'interface LLM permet de reprendre les sessions";
 "editor.disabled.globally" = "Désactivé globalement";
 
 // Editor - Security section

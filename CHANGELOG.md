@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Harnesses
+
+- **Harness cards can resume their previous LLM session on relaunch.** Edit Terminal → Prompts gains a **Resume Previous LLM Session** toggle: with it on, reopening the card continues the conversation the vendor CLI last recorded for that working directory instead of starting cold. Cards created by the harness launcher have it on by default; existing cards keep their current cold-launch behaviour until you turn it on. The session id comes from the vendor's own on-disk session store — TermQ never scrapes the terminal for it.
+- The toggle stays greyed out unless the card's vendor reports that it can resume, so an older YNH that predates the feature leaves it unavailable rather than sending a flag that would strand the pane on the vendor's interactive session picker.
+
 ### Added — Stacked Branches & PRs
 
 - **Merge Stack** *(GitHub backend)* — merges every PR in a stack as one all-or-nothing operation. The confirmation fetches each PR's review decision and CI state **when the sheet opens** rather than reusing the cached PR feed, because stale readiness is precisely what you don't want when deciding to merge. Review and check state are reported but don't block — branch protection varies per repository and TermQ can't read it, so GitHub makes the final call. A draft or closed PR partway up the stack **does** block, and the sheet says so before you confirm, offering **Open Stack on GitHub** for the partial merge. That one deliberately isn't a TermQ button: `gh stack merge <number>` resolves a bare number as a stack number first and only then as a PR number, so a PR number colliding with a stack number would merge a different stack entirely. `--admin` is never passed.

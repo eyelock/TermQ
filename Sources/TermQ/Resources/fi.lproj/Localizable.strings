@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Salli tämän päätteen käyttää järjestelmän leikepöytää OSC 52 -pakosarjojen kautta";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Jatka edellistä LLM-istuntoa";
+"editor.auto.resume.session.help" = "Kun tämä pääte käynnistetään uudelleen, edellinen LLM-istunto jatkuu uuden aloittamisen sijaan";
+"editor.auto.resume.session.unavailable" = "Käytettävissä vain valjasterminaaleissa, joiden LLM-komentorivi tukee istuntojen jatkamista";
 "editor.disabled.globally" = "Poistettu käytöstä globaalisti";
 
 // Editor - Security section

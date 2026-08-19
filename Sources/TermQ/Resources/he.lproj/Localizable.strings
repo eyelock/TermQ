@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "אפשר למסוף זה גישה ללוח המערכת באמצעות רצפי בריחה OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "המשך הפעלת LLM קודמת";
+"editor.auto.resume.session.help" = "הפעלה מחדש של מסוף זה ממשיכה את הפעלת ה-LLM הקודמת במקום להתחיל חדשה";
+"editor.auto.resume.session.unavailable" = "זמין רק במסופי רתמה שממשק ה-LLM שלהם תומך בהמשך הפעלות";
 "editor.disabled.globally" = "מושבת ברמה גלובלית";
 
 // Editor - Security section

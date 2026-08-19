@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "Permite acestui terminal să acceseze clipboard-ul sistemului prin secvențe de escape OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Reia sesiunea LLM anterioară";
+"editor.auto.resume.session.help" = "La relansarea acestui terminal continuă sesiunea LLM anterioară în loc să înceapă una nouă";
+"editor.auto.resume.session.unavailable" = "Disponibil doar pentru terminalele de set a căror interfață LLM poate relua sesiuni";
 "editor.disabled.globally" = "Dezactivat global";
 
 // Editor - Security section

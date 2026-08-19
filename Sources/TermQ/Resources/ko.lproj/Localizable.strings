@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "이 터미널이 OSC 52 이스케이프 시퀀스를 통해 시스템 클립보드에 액세스할 수 있도록 허용";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "이전 LLM 세션 이어서 시작";
+"editor.auto.resume.session.help" = "이 터미널을 다시 실행하면 새 세션을 시작하지 않고 이전 LLM 세션을 이어서 진행합니다";
+"editor.auto.resume.session.unavailable" = "LLM CLI가 세션 재개를 지원하는 하네스 터미널에서만 사용할 수 있습니다";
 "editor.disabled.globally" = "전역적으로 비활성화됨";
 
 // Editor - Security section

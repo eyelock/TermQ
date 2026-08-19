@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "Izinkan terminal ini mengakses clipboard sistem melalui urutan escape OSC 52";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Lanjutkan Sesi LLM Sebelumnya";
+"editor.auto.resume.session.help" = "Menjalankan ulang terminal ini akan melanjutkan sesi LLM sebelumnya alih-alih memulai sesi baru";
+"editor.auto.resume.session.unavailable" = "Hanya tersedia untuk terminal harness yang LLM CLI-nya mendukung pelanjutan sesi";
 "editor.disabled.globally" = "Dinonaktifkan secara global";
 
 // Editor - Security section
