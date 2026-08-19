@@ -253,6 +253,62 @@ extension WorktreeSidebarViewModel {
         }
         await stackService.refreshGraph(repo: repo.path, worktrees: worktreePaths(for: repo))
         stacks[repo.id] = stackService.graphsByRepo[repo.path]
+            .map { adoptKnownPullRequests(into: $0, repo: repo) }
+    }
+
+    /// Fill in a branch's change request from the PR data TermQ already holds, when the
+    /// provider's own tracking doesn't know one.
+    ///
+    /// `gh stack link` states outright that it "does not rely on gh-stack local tracking
+    /// state" — it registers the stack on GitHub and writes nothing locally. So straight
+    /// after a successful link the tracking file still says the branch has no pull
+    /// request, and the sidebar faithfully reported "no PR" for a branch that had just
+    /// had one opened for it.
+    ///
+    /// The reconciling gh-stack commands all carry a side effect TermQ must not apply on
+    /// its own: `sync` force-pushes every branch (which is why it now asks first),
+    /// `checkout` moves HEAD, and `init` refuses outright once a branch is tracked. The
+    /// PR list is already fetched and already keyed by head branch, so the honest fix is
+    /// to show what we know rather than to mutate the repository to make it true.
+    ///
+    /// Only ever FILLS IN a missing value — a change request the provider reported always
+    /// wins, since it carries the URL and real status that this cannot.
+    private func adoptKnownPullRequests(
+        into graph: StackGraph, repo: ObservableRepository
+    )
+        -> StackGraph
+    {
+        let openPRs = prService.prsByRepo[repo.path] ?? []
+        let numbersByBranch = Dictionary(
+            openPRs.map { ($0.headRefName, $0.number) }, uniquingKeysWith: { first, _ in first })
+        return Self.adoptingPullRequests(in: graph, openPRNumbersByBranch: numbersByBranch)
+    }
+
+    /// The pure half of `adoptKnownPullRequests`, split out so it can be tested without
+    /// standing up a PR service.
+    ///
+    /// `openPRNumbersByBranch` must contain OPEN pull requests only — the resulting
+    /// change request is reported as `.open` on that basis.
+    static func adoptingPullRequests(
+        in graph: StackGraph, openPRNumbersByBranch: [String: Int]
+    ) -> StackGraph {
+        guard !openPRNumbersByBranch.isEmpty,
+            graph.branches.contains(where: { $0.changeRequest == nil })
+        else { return graph }
+
+        return StackGraph(
+            branches: graph.branches.map { branch in
+                guard branch.changeRequest == nil,
+                    let number = openPRNumbersByBranch[branch.name]
+                else { return branch }
+                var filled = branch
+                // `url` is nil because GitHubPR carries none; the badge is already
+                // `.disabled(cr.url == nil)`, so it shows the number without pretending
+                // to be a link.
+                filled.changeRequest = StackChangeRequest(
+                    id: String(number), url: nil, status: .open, commentCount: nil)
+                return filled
+            })
     }
 
     /// Every worktree path the sidebar knows about for `repo`, including the main

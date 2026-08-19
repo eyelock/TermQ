@@ -78,9 +78,10 @@ struct MergeStackSheet: View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(readiness.prs) { pr in
                 HStack(spacing: 8) {
-                    Image(systemName: pr.blocksStackMerge ? "exclamationmark.octagon.fill" : "checkmark.circle")
+                    let icon = rowIcon(pr, in: readiness)
+                    Image(systemName: icon.symbol)
                         .imageScale(.small)
-                        .foregroundColor(pr.blocksStackMerge ? .orange : .green)
+                        .foregroundColor(icon.color)
                     Text("#\(String(pr.number))")
                         .font(.system(.body, design: .monospaced))
                     Text(pr.branch)
@@ -102,6 +103,21 @@ struct MergeStackSheet: View {
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 6).fill(Color.secondary.opacity(0.08)))
+    }
+
+    /// Three states, not two. A pull request sitting ABOVE the blocker is ready in
+    /// itself but still cannot merge, because nothing above a draft or closed pull
+    /// request goes anywhere. Showing it with the same green tick as a genuinely
+    /// mergeable one promises exactly what the sheet is about to refuse, so it gets
+    /// a neutral mark instead; the summary line names the blocker and explains why.
+    private func rowIcon(
+        _ pr: StackPRReadiness, in readiness: StackMergeReadiness
+    ) -> (symbol: String, color: Color) {
+        if pr.blocksStackMerge { return ("exclamationmark.octagon.fill", .orange) }
+        if readiness.mergeable.contains(where: { $0.number == pr.number }) {
+            return ("checkmark.circle", .green)
+        }
+        return ("circle.dashed", .secondary)
     }
 
     /// Review and check state are advisory, not gates: branch protection varies per

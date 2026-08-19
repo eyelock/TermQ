@@ -160,7 +160,11 @@ public struct StackBranch: Codable, Sendable, Equatable, Identifiable {
     /// Names of branches directly above this one in the stack.
     public let children: [String]
     public let needsRestack: Bool
-    public let changeRequest: StackChangeRequest?
+    /// `var` so a caller can fill this in without re-listing every other field. The
+    /// memberwise rebuild it replaces is a live hazard: `remoteStackID` is defaulted
+    /// and last, so omitting it compiled silently and blanked the stack number on
+    /// every branch, hiding Merge Stack entirely.
+    public var changeRequest: StackChangeRequest?
     public let push: StackPushState?
     /// Branch's change request is sitting in a merge queue. Restructuring operations
     /// must refuse to touch it. Only providers with merge-queue awareness report this
