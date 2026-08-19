@@ -252,6 +252,8 @@ extension WorktreeSidebarViewModel {
             return
         }
         await stackService.refreshGraph(repo: repo.path, worktrees: worktreePaths(for: repo))
+        // TTL'd and coalesced inside the service — this runs on every stack refresh.
+        await mergedPRService.refresh(repoPath: repo.path)
         stacks[repo.id] = stackService.graphsByRepo[repo.path]
             .map { adoptKnownPullRequests(into: $0, repo: repo) }
     }
@@ -282,11 +284,12 @@ extension WorktreeSidebarViewModel {
         let numbersByBranch = Dictionary(
             openPRs.map { ($0.headRefName, $0.number) }, uniquingKeysWith: { first, _ in first })
         let adopted = Self.adoptingPullRequests(in: graph, openPRNumbersByBranch: numbersByBranch)
-        return Self.markingMerged(in: adopted, mergedIDs: mergedChangeRequestIDs[repo.path] ?? [])
+        let merged = Set(mergedPRService.mergedNumbers(repoPath: repo.path).map(String.init))
+        return Self.markingMerged(in: adopted, mergedIDs: merged)
     }
 
-    /// Report a change request TermQ merged as merged, since gh-stack's tracking file
-    /// keeps describing it as open. Everything else about the branch is untouched.
+    /// Report a merged change request as merged, since gh-stack's tracking file records a
+    /// pull request number and nothing about its state. Everything else is untouched.
     static func markingMerged(in graph: StackGraph, mergedIDs: Set<String>) -> StackGraph {
         guard !mergedIDs.isEmpty else { return graph }
         return StackGraph(
@@ -640,10 +643,9 @@ extension WorktreeSidebarViewModel {
         }
         try await stackService.mergeStack(
             repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
-        // Recorded BEFORE the refresh: the refresh rebuilds the graph from the tracking
-        // file, which gh-stack leaves describing an open stack after a merge.
-        mergedChangeRequestIDs[repo.path, default: []]
-            .formUnion(group.branches.compactMap { $0.changeRequest?.id })
+        // Forced: the merge just changed the answer, and the TTL would otherwise leave
+        // the sidebar showing the stack as open for up to a minute afterwards.
+        await mergedPRService.refresh(repoPath: repo.path, force: true)
         await refreshWorktrees(for: repo)
         await prService.refresh(repoPath: repo.path, force: true)
     }

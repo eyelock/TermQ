@@ -73,22 +73,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private static let collapsedWorktreeSectionsKey = "sidebar.collapsedWorktreeSections"
-    /// Change request ids TermQ has merged, per repo path.
-    ///
-    /// `gh stack merge` records nothing locally: the tracking file still describes an
-    /// open stack afterwards, and the provider's graph is built from that file, so a
-    /// merged stack kept rendering as live until a `gh stack sync` rewrote it — and sync
-    /// force-pushes, so TermQ asks before running it. Merging is the terminal action, so
-    /// leaving it looking unfinished is the worst place to be stale.
-    ///
-    /// Recorded rather than inferred. `gh stack view --json` does carry `pr.state`, but
-    /// `graph()` is deliberately offline — tracking file plus `git worktree list`, on
-    /// every refresh — and TermQ performed the merge, so it already knows. PR numbers are
-    /// never reused, so a recorded id cannot later mean something else.
-    ///
-    /// Internal so the stack mutations in `WorktreeSidebarViewModel+Stacks.swift` can
-    /// record into it.
-    var mergedChangeRequestIDs: [String: Set<String>] = [:]
+    /// Which pull requests have been merged, so a merged stack stops rendering as open.
+    /// See `MergedPullRequestService` for why this is fetched rather than remembered.
+    let mergedPRService: MergedPullRequestService
     var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
     /// Test seams for the guarded-switch checks. `nil` uses the production checks
@@ -102,7 +89,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
         prService: GitHubPRService = .shared,
         gitConfig: GitConfigStore = .shared,
         workspaceStore: WorkspaceStore = .shared,
-        stackService: StackService = .shared
+        stackService: StackService = .shared,
+        mergedPRService: MergedPullRequestService = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
@@ -110,6 +98,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         self.gitConfig = gitConfig
         self.workspaceStore = workspaceStore
         self.stackService = stackService
+        self.mergedPRService = mergedPRService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
