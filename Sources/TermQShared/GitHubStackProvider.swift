@@ -175,6 +175,8 @@ public struct GitHubStackProvider: StackProvider, Sendable {
         let currentBranch = checkouts.first { $0.isMain }?.branch
         var branches = Self.branches(
             from: Self.dedupe(stacks), currentBranch: currentBranch, checkouts: checkouts)
+        branches = Self.dropMissingBranches(
+            branches, existing: await Self.localBranchNames(repo: repo))
         branches = await Self.applyNeedsRestack(branches, repo: repo)
         return StackGraph(branches: branches)
     }
@@ -936,5 +938,49 @@ struct GhPullRequestRefDTO: Decodable {
             // an explicit refresh fetches the real state.
             status: (merged ?? false) ? .merged : .open,
             commentCount: nil)
+    }
+}
+
+// MARK: - Tracking file reconciliation
+
+extension GitHubStackProvider {
+    /// Every branch that actually exists in the repository, as `refs/heads` short names.
+    ///
+    /// Local, one subprocess, no network — `graph()` reads the tracking file on every
+    /// refresh and must stay offline.
+    static func localBranchNames(repo: String) async -> Set<String>? {
+        guard let gitPath = GitServiceShared.findGitPath(),
+            let result = try? await run(
+                gitPath, ["for-each-ref", "--format=%(refname:short)", "refs/heads"], cwd: repo),
+            result.exitCode == 0
+        else { return nil }
+        return Set(
+            result.stdout
+                .split(separator: "\n")
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { !$0.isEmpty })
+    }
+
+    /// Drop tracked branches that no longer exist in the repository.
+    ///
+    /// `gh stack merge` DELETES every branch in the stack, locally and on the remote, but
+    /// leaves the stack in its tracking file. Read back literally that file describes a
+    /// live stack of branches that exist nowhere, and the sidebar rendered it as one —
+    /// with actions offered against branches git no longer has.
+    ///
+    /// This is stale metadata, not pending work: there is nothing to sync, because the
+    /// cleanup already happened. A stack whose branches have all gone disappears with
+    /// them.
+    ///
+    /// A nil `existing` means the branch list could not be read at all. The tracking file
+    /// is then the only evidence available, so it is trusted as-is rather than blanking
+    /// every stack in the sidebar on a failed subprocess.
+    static func dropMissingBranches(
+        _ branches: [StackBranch], existing: Set<String>?
+    )
+        -> [StackBranch]
+    {
+        guard let existing else { return branches }
+        return branches.filter { existing.contains($0.name) }
     }
 }

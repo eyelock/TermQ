@@ -984,3 +984,54 @@ final class GitHubStackExitCodeTests: XCTestCase {
         XCTAssertEqual(output, "boom")
     }
 }
+
+/// Covers dropping tracked branches that no longer exist in the repository.
+///
+/// `gh stack merge` deletes every branch in the stack — locally and on the remote — but
+/// leaves the stack in its tracking file. Read back literally, that file describes a live
+/// stack of branches that exist nowhere, and the sidebar rendered exactly that: a stack
+/// whose every branch had been deleted, offering actions against them.
+final class GitHubStackMissingBranchTests: XCTestCase {
+
+    private func branch(_ name: String) -> StackBranch {
+        StackBranch(
+            name: name, isCurrent: false, checkedOutElsewhere: nil, parent: nil, children: [],
+            needsRestack: false, changeRequest: nil, push: nil, isQueued: false,
+            remoteStackID: "125")
+    }
+
+    func testBranchesGitNoLongerHasAreDropped() {
+        let branches = [branch("gone-a"), branch("still-here"), branch("gone-b")]
+
+        let result = GitHubStackProvider.dropMissingBranches(
+            branches, existing: ["still-here", "main"])
+
+        XCTAssertEqual(result.map(\.name), ["still-here"])
+    }
+
+    /// The whole stack going away is the point: after a merge every branch is deleted, so
+    /// the stack must disappear from the sidebar rather than linger as an empty shell.
+    func testAStackWhoseBranchesAreAllGoneDisappearsEntirely() {
+        let branches = [branch("demo2-alpha"), branch("demo2-beta"), branch("demo2-gamma")]
+
+        let result = GitHubStackProvider.dropMissingBranches(
+            branches, existing: ["main", "unrelated"])
+
+        XCTAssertTrue(result.isEmpty)
+    }
+
+    /// Failing to read the branch list must not blank every stack in the sidebar. The
+    /// tracking file is then the only evidence there is, so it is trusted as-is.
+    func testAnUnreadableBranchListLeavesTheTrackedBranchesAlone() {
+        let branches = [branch("a"), branch("b")]
+
+        let result = GitHubStackProvider.dropMissingBranches(branches, existing: nil)
+
+        XCTAssertEqual(result.map(\.name), ["a", "b"])
+    }
+
+    func testAnEmptyRepositoryDropsEverything() {
+        XCTAssertTrue(
+            GitHubStackProvider.dropMissingBranches([branch("a")], existing: []).isEmpty)
+    }
+}
