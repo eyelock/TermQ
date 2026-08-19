@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Yhdistää %ld pull requestin perushaaraan.</string>
+			<key>other</key>
+			<string>Yhdistää %ld pull requestia perushaaraan.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Yhdistä %ld PR</string>
+			<key>other</key>
+			<string>Yhdistä %ld PR:ää</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Luo %ld uuden pull requestin GitHubiin.</string>
+			<key>other</key>
+			<string>Luo %ld uutta pull requestia GitHubiin.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Linkitä %ld haara</string>
+			<key>other</key>
+			<string>Linkitä %ld haaraa</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Hae koko pino (%ld haara)</string>
+			<key>other</key>
+			<string>Hae koko pino (%ld haaraa)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Haettu %ld pinottu haara.</string>
+			<key>other</key>
+			<string>Haettu %ld pinottua haaraa.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

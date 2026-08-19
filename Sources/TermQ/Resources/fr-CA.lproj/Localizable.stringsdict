@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Fusionne %ld pull request dans la branche de base.</string>
+			<key>other</key>
+			<string>Fusionne %ld pull requests dans la branche de base.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Crée %ld nouvelle pull request sur GitHub.</string>
+			<key>other</key>
+			<string>Crée %ld nouvelles pull requests sur GitHub.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Lier %ld branche</string>
+			<key>other</key>
+			<string>Lier %ld branches</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Extraire toute la pile (%ld branche)</string>
+			<key>other</key>
+			<string>Extraire toute la pile (%ld branches)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld branche empilée extraite.</string>
+			<key>other</key>
+			<string>%ld branches empilées extraites.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

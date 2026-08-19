@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Führt %ld Pull Request in den Basis-Branch zusammen.</string>
+			<key>other</key>
+			<string>Führt %ld Pull Requests in den Basis-Branch zusammen.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld PR zusammenführen</string>
+			<key>other</key>
+			<string>%ld PRs zusammenführen</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Erstellt %ld neuen Pull Request auf GitHub.</string>
+			<key>other</key>
+			<string>Erstellt %ld neue Pull Requests auf GitHub.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld Branch verknüpfen</string>
+			<key>other</key>
+			<string>%ld Branches verknüpfen</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Ganzen Stapel auschecken (%ld Branch)</string>
+			<key>other</key>
+			<string>Ganzen Stapel auschecken (%ld Branches)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld gestapelter Branch ausgecheckt.</string>
+			<key>other</key>
+			<string>%ld gestapelte Branches ausgecheckt.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

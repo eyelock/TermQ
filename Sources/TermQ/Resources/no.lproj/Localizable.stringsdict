@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Slår sammen %ld pull request inn i basisgrenen.</string>
+			<key>other</key>
+			<string>Slår sammen %ld pull requests inn i basisgrenen.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Slå sammen %ld PR</string>
+			<key>other</key>
+			<string>Slå sammen %ld PR-er</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Oppretter %ld ny pull request på GitHub.</string>
+			<key>other</key>
+			<string>Oppretter %ld nye pull requests på GitHub.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Koble %ld gren</string>
+			<key>other</key>
+			<string>Koble %ld grener</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Sjekk ut hele stabelen (%ld gren)</string>
+			<key>other</key>
+			<string>Sjekk ut hele stabelen (%ld grener)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Sjekket ut %ld stablet gren.</string>
+			<key>other</key>
+			<string>Sjekket ut %ld stablede grener.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

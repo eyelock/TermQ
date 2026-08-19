@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Zlúči %ld pull request do základnej vetvy.</string>
+			<key>few</key>
+			<string>Zlúči %ld pull requesty do základnej vetvy.</string>
+			<key>other</key>
+			<string>Zlúči %ld pull requestov do základnej vetvy.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Vytvorí %ld nový pull request na GitHube.</string>
+			<key>few</key>
+			<string>Vytvorí %ld nové pull requesty na GitHube.</string>
+			<key>other</key>
+			<string>Vytvorí %ld nových pull requestov na GitHube.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Prepojiť %ld vetvu</string>
+			<key>few</key>
+			<string>Prepojiť %ld vetvy</string>
+			<key>other</key>
+			<string>Prepojiť %ld vetiev</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Načítať celý zásobník (%ld vetva)</string>
+			<key>few</key>
+			<string>Načítať celý zásobník (%ld vetvy)</string>
+			<key>other</key>
+			<string>Načítať celý zásobník (%ld vetiev)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Načítaná %ld vetva zásobníka.</string>
+			<key>few</key>
+			<string>Načítané %ld vetvy zásobníka.</string>
+			<key>other</key>
+			<string>Načítaných %ld vetiev zásobníka.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
