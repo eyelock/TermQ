@@ -28,6 +28,14 @@ extension WorktreeSidebarView {
             .padding(.leading, 4)
         case .ready:
             remotePRList(for: repo)
+                // One request per repo, only while Remote mode is actually showing, and
+                // only when the backend that could act on the result is installed.
+                // `stack(containingPR:)` is a pure lookup, so nothing fetches from a
+                // view body on redraw.
+                .task(id: repo.path) {
+                    guard stackService.availability(for: .gitHub).isReady else { return }
+                    await remoteStackDiscovery.refresh(repoPath: repo.path)
+                }
         }
     }
 
@@ -341,6 +349,20 @@ extension WorktreeSidebarView {
                         Label(Strings.RemotePRs.checkoutAsWorktree, systemImage: "square.and.arrow.down")
                     }
                 }
+
+                // Checking out one PR of a stack gives you a branch whose parent isn't
+                // here — the stack UI stays dark and the diff reads against the wrong
+                // base. When the PR belongs to a forge stack, offer to bring the whole
+                // thing down instead.
+                if let stack = stackContaining(pr: pr, repo: repo) {
+                    Button {
+                        Task { await checkoutWholeStack(stack, repo: repo) }
+                    } label: {
+                        Label(
+                            Strings.Stacks.checkoutStack(stack.branchCount),
+                            systemImage: "square.stack.3d.down.right")
+                    }
+                }
             }
         }
 
@@ -499,6 +521,63 @@ extension WorktreeSidebarView {
         do {
             let worktree = try await viewModel.checkoutPRForFocus(pr, repo: repo, ghPath: ghPath)
             runWithFocusContext = RunWithFocusContext(worktree: worktree, repo: repo, prNumber: pr.number)
+        } catch {
+            viewModel.operationError = error.localizedDescription
+        }
+    }
+}
+
+// MARK: - Stacked PR Grouping
+
+/// A forge stack that one of the feed's pull requests belongs to.
+struct RemoteStackTarget: Equatable {
+    let remoteStackID: String
+    let branchCount: Int
+}
+
+extension WorktreeSidebarView {
+    /// The forge stack `pr` belongs to, if any.
+    ///
+    /// Reads the FORGE's view (`RemoteStackDiscoveryService`) rather than the local stack
+    /// graph. The graph is built from gh-stack's local tracking file, so it only knows
+    /// about stacks this machine already has — which are exactly the ones that do not need
+    /// checking out. A colleague's stack, or one just registered by `gh stack link`
+    /// (which writes no local tracking at all), is invisible to it.
+    ///
+    /// Gated on the GitHub backend being READY rather than on it owning this repository.
+    /// A repo with no local stacking evidence resolves to whichever backend comes first,
+    /// which says nothing about whether the stack on the forge is a GitHub one. Checking
+    /// out is what creates the local evidence.
+    ///
+    /// It is still refused when a DIFFERENT backend already claims the repo: adopting a
+    /// gh-stack stack into a repository git-spice is tracking would leave two backends
+    /// with metadata in one place.
+    func stackContaining(pr: GitHubPR, repo: ObservableRepository) -> RemoteStackTarget? {
+        guard stackService.availability(for: .gitHub).isReady else { return nil }
+        let owner = stackService.providerIDByRepo[repo.path]
+        guard owner == nil || owner == .gitHub else { return nil }
+        guard let stack = remoteStackDiscovery.stack(containingPR: pr.number, repoPath: repo.path),
+            stack.pullRequests.count > 1
+        else { return nil }
+        return RemoteStackTarget(
+            remoteStackID: stack.remoteStackID, branchCount: stack.pullRequests.count)
+    }
+
+    /// Fetch every branch of `stack` and establish local tracking, so the sidebar's stack
+    /// UI works for it rather than showing an orphaned branch.
+    /// Re-read the forge after an operation that changes stacks there but writes nothing
+    /// locally. `gh stack link` is exactly that case.
+    func rediscoverRemoteStacks(for repo: ObservableRepository) async {
+        await remoteStackDiscovery.refresh(repoPath: repo.path)
+    }
+
+    func checkoutWholeStack(_ stack: RemoteStackTarget, repo: ObservableRepository) async {
+        guard let main = viewModel.mainWorktree(for: repo) else { return }
+        do {
+            try await viewModel.checkoutStack(
+                repo: repo, worktree: main, remoteStackID: stack.remoteStackID)
+            await remoteStackDiscovery.refresh(repoPath: repo.path)
+            showStackToast(Strings.Stacks.checkoutStackDone(stack.branchCount))
         } catch {
             viewModel.operationError = error.localizedDescription
         }

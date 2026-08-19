@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "مزامنة مع دفع قسري؟";
 "stacks.sync.confirm.message %ld %@" = "تؤدي المزامنة إلى دفع %ld فرعًا قسريًا وتحديث الكدس على GitHub: %@\n\nسيحتاج كل من يعمل على هذه الفروع إلى إعادة الضبط.";
 "stacks.sync.confirm.button" = "مزامنة ودفع";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "دمج الكدس…";
+"stacks.merge.stack.title" = "دمج الكدس؟";
+"stacks.merge.stack.message %ld" = "يدمج %ld طلب سحب في الفرع الأساسي.";
+"stacks.merge.stack.confirm %ld" = "دمج %ld طلب سحب";
+"stacks.merge.stack.method %@" = "طريقة الدمج: %@ (الافتراضية لهذا المستودع)";
+"stacks.merge.stack.irreversible" = "لا يمكن التراجع عن هذا من TermQ.";
+"stacks.merge.stack.done %ld" = "تم دمج %ld طلب سحب.";
+"stacks.merge.stack.loading" = "جارٍ التحقق من المراجعات وحالة CI…";
+"stacks.merge.stack.not.submitted" = "لم يُرسَل هذا الكدس إلى GitHub بعد.";
+"stacks.merge.blocked.draft" = "مسودة";
+"stacks.merge.blocked.closed" = "مغلق";
+"stacks.merge.blocked.merged" = "مدموج بالفعل";
+"stacks.merge.blocked.by %@" = "يمنع %@ كل ما فوقه، لذا لا يمكن دمج الكدس بالكامل من هنا. افتحه على GitHub للدمج حتى تلك النقطة.";
+"stacks.merge.open.on.github" = "فتح الكدس على GitHub";
+"stacks.review.approved" = "معتمَد";
+"stacks.review.changes.requested" = "طُلبت تغييرات";
+"stacks.review.required" = "المراجعة مطلوبة";
+"stacks.checks.passing" = "الفحوصات ناجحة";
+"stacks.checks.failing" = "الفحوصات فاشلة";
+"stacks.checks.pending" = "الفحوصات قيد التنفيذ";
+"stacks.link.stack" = "ربط طلبات السحب في كدس…";
+"stacks.link.stack.title" = "ربط طلبات السحب في كدس";
+"stacks.link.stack.will.create %ld" = "ينشئ %ld طلب سحب جديد على GitHub.";
+"stacks.link.stack.existing" = "موجود";
+"stacks.link.stack.new" = "سيُنشئ طلب سحب";
+"stacks.link.stack.confirm %ld" = "اربط %ld فرعًا";
+"stacks.link.stack.done" = "تم ربط الفروع في كدس.";
+"stacks.checkout.stack %ld" = "سحب الكدس بالكامل (%ld فرعًا)";
+"stacks.checkout.stack.done %ld" = "تم سحب %ld فرعًا من الكدس.";

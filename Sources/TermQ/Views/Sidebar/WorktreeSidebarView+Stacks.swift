@@ -85,6 +85,25 @@ struct SubmitStackContext: Identifiable {
     let scope: StackScope
 }
 
+// MARK: - Merge / Link Contexts
+
+/// Carries a stack into `MergeStackSheet`.
+struct MergeStackContext: Identifiable {
+    let id = UUID()
+    let repo: ObservableRepository
+    let worktree: GitWorktree
+    let group: StackGroup
+}
+
+/// Carries branches into `LinkStackSheet`.
+struct LinkStackContext: Identifiable {
+    let id = UUID()
+    let repo: ObservableRepository
+    let worktree: GitWorktree
+    let branches: [StackBranch]
+    let base: String?
+}
+
 // MARK: - Worktree Row (stack-aware)
 
 extension WorktreeSidebarView {
@@ -708,6 +727,31 @@ extension WorktreeSidebarView {
                 isShowingUntrackStackAlert = true
             } label: {
                 Label(Strings.Stacks.untrackStack, systemImage: "minus.circle")
+            }
+            .disabled(isMutating)
+        }
+
+        // Merge and Link both reach GitHub in ways nothing else in this menu does — one
+        // merges pull requests, the other creates them — so both go through a sheet that
+        // names every change request before anything happens.
+        if actions.canMergeStack, let target = operationWorktree,
+            group.branches.contains(where: { $0.remoteStackID != nil })
+        {
+            Divider()
+            Button {
+                mergeStackContext = MergeStackContext(repo: repo, worktree: target, group: group)
+            } label: {
+                Label(Strings.Stacks.mergeStack, systemImage: "arrow.triangle.merge")
+            }
+            .disabled(isMutating)
+        }
+
+        if actions.canLinkStack, let target = operationWorktree, group.branches.count >= 2 {
+            Button {
+                linkStackContext = LinkStackContext(
+                    repo: repo, worktree: target, branches: group.branches, base: nil)
+            } label: {
+                Label(Strings.Stacks.linkStack, systemImage: "link")
             }
             .disabled(isMutating)
         }

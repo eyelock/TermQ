@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Synchronizovať a vynútiť push?";
 "stacks.sync.confirm.message %ld %@" = "Synchronizácia vynúti push %ld vetiev a aktualizuje zásobník na GitHube: %@\n\nKtokoľvek ďalší, kto na týchto vetvách pracuje, ich bude musieť resetovať.";
 "stacks.sync.confirm.button" = "Synchronizovať a odoslať";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Zlúčiť zásobník…";
+"stacks.merge.stack.title" = "Zlúčiť zásobník?";
+"stacks.merge.stack.message %ld" = "Zlúči %ld pull requestov do základnej vetvy.";
+"stacks.merge.stack.confirm %ld" = "Zlúčiť %ld PR";
+"stacks.merge.stack.method %@" = "Spôsob zlúčenia: %@ (predvolený pre tento repozitár)";
+"stacks.merge.stack.irreversible" = "Toto sa už z TermQ nedá vrátiť späť.";
+"stacks.merge.stack.done %ld" = "Zlúčených %ld pull requestov.";
+"stacks.merge.stack.loading" = "Kontrola recenzií a stavu CI…";
+"stacks.merge.stack.not.submitted" = "Tento zásobník ešte nebol odoslaný na GitHub.";
+"stacks.merge.blocked.draft" = "Koncept";
+"stacks.merge.blocked.closed" = "Zatvorený";
+"stacks.merge.blocked.merged" = "Už zlúčený";
+"stacks.merge.blocked.by %@" = "%@ blokuje všetko nad sebou, takže celý zásobník sa odtiaľto zlúčiť nedá. Otvor ho na GitHube a zlúč až po toto miesto.";
+"stacks.merge.open.on.github" = "Otvoriť zásobník na GitHube";
+"stacks.review.approved" = "Schválené";
+"stacks.review.changes.requested" = "Vyžiadané zmeny";
+"stacks.review.required" = "Vyžaduje sa recenzia";
+"stacks.checks.passing" = "Kontroly prešli";
+"stacks.checks.failing" = "Kontroly zlyhávajú";
+"stacks.checks.pending" = "Kontroly bežia";
+"stacks.link.stack" = "Prepojiť PR do zásobníka…";
+"stacks.link.stack.title" = "Prepojiť PR do zásobníka";
+"stacks.link.stack.will.create %ld" = "Vytvorí %ld nových pull requestov na GitHube.";
+"stacks.link.stack.existing" = "existujúci";
+"stacks.link.stack.new" = "vytvorí PR";
+"stacks.link.stack.confirm %ld" = "Prepojiť %ld vetiev";
+"stacks.link.stack.done" = "Vetvy prepojené do zásobníka.";
+"stacks.checkout.stack %ld" = "Načítať celý zásobník (%ld vetiev)";
+"stacks.checkout.stack.done %ld" = "Načítaných %ld vetiev zásobníka.";

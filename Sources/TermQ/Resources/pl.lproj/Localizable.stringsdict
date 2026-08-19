@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Scala %ld pull request do gałęzi bazowej.</string>
+			<key>few</key>
+			<string>Scala %ld pull requesty do gałęzi bazowej.</string>
+			<key>other</key>
+			<string>Scala %ld pull requestów do gałęzi bazowej.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Scal %ld PR</string>
+			<key>few</key>
+			<string>Scal %ld PR-y</string>
+			<key>other</key>
+			<string>Scal %ld PR-ów</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Utworzy %ld nowy pull request na GitHubie.</string>
+			<key>few</key>
+			<string>Utworzy %ld nowe pull requesty na GitHubie.</string>
+			<key>other</key>
+			<string>Utworzy %ld nowych pull requestów na GitHubie.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Połącz %ld gałąź</string>
+			<key>few</key>
+			<string>Połącz %ld gałęzie</string>
+			<key>other</key>
+			<string>Połącz %ld gałęzi</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Pobierz cały stos (%ld gałąź)</string>
+			<key>few</key>
+			<string>Pobierz cały stos (%ld gałęzie)</string>
+			<key>other</key>
+			<string>Pobierz cały stos (%ld gałęzi)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Pobrano %ld gałąź ze stosu.</string>
+			<key>few</key>
+			<string>Pobrano %ld gałęzie ze stosu.</string>
+			<key>other</key>
+			<string>Pobrano %ld gałęzi ze stosu.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

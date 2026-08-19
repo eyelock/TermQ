@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "Szinkronizálás kényszerített push-sal?";
 "stacks.sync.confirm.message %ld %@" = "A szinkronizálás %ld ágat kényszerítve push-ol, és frissíti a vermet a GitHubon: %@\n\nMindenki másnak, aki ezeken az ágakon dolgozik, vissza kell állítania őket.";
 "stacks.sync.confirm.button" = "Szinkronizálás és küldés";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Verem egyesítése…";
+"stacks.merge.stack.title" = "Egyesíted a vermet?";
+"stacks.merge.stack.message %ld" = "%ld pull requestet egyesít az alapágba.";
+"stacks.merge.stack.confirm %ld" = "%ld PR egyesítése";
+"stacks.merge.stack.method %@" = "Egyesítési mód: %@ (a tároló alapértelmezése)";
+"stacks.merge.stack.irreversible" = "Ezt a TermQ-ból nem lehet visszavonni.";
+"stacks.merge.stack.done %ld" = "%ld pull request egyesítve.";
+"stacks.merge.stack.loading" = "Ellenőrzések és CI-állapot lekérése…";
+"stacks.merge.stack.not.submitted" = "Ezt a vermet még nem küldted el a GitHubra.";
+"stacks.merge.blocked.draft" = "Vázlat";
+"stacks.merge.blocked.closed" = "Lezárt";
+"stacks.merge.blocked.merged" = "Már egyesítve";
+"stacks.merge.blocked.by %@" = "%@ blokkol mindent felette, ezért az egész verem innen nem egyesíthető. Nyisd meg a GitHubon, és egyesíts addig a pontig.";
+"stacks.merge.open.on.github" = "Verem megnyitása a GitHubon";
+"stacks.review.approved" = "Jóváhagyva";
+"stacks.review.changes.requested" = "Módosítás kérve";
+"stacks.review.required" = "Átnézés szükséges";
+"stacks.checks.passing" = "Ellenőrzések rendben";
+"stacks.checks.failing" = "Ellenőrzések elbuknak";
+"stacks.checks.pending" = "Ellenőrzések futnak";
+"stacks.link.stack" = "PR-ek verembe kapcsolása…";
+"stacks.link.stack.title" = "PR-ek verembe kapcsolása";
+"stacks.link.stack.will.create %ld" = "%ld új pull requestet hoz létre a GitHubon.";
+"stacks.link.stack.existing" = "meglévő";
+"stacks.link.stack.new" = "PR-t hoz létre";
+"stacks.link.stack.confirm %ld" = "%ld ág összekapcsolása";
+"stacks.link.stack.done" = "Az ágak verembe kapcsolva.";
+"stacks.checkout.stack %ld" = "Teljes verem kicsekkolása (%ld ág)";
+"stacks.checkout.stack.done %ld" = "%ld veremág kicsekkolva.";

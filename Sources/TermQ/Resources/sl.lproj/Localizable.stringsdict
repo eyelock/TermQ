@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Združi %ld pull request v osnovno vejo.</string>
+			<key>two</key>
+			<string>Združi %ld pull requesta v osnovno vejo.</string>
+			<key>few</key>
+			<string>Združi %ld pull requeste v osnovno vejo.</string>
+			<key>other</key>
+			<string>Združi %ld pull requestov v osnovno vejo.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Združi %ld PR</string>
+			<key>two</key>
+			<string>Združi %ld PR-ja</string>
+			<key>few</key>
+			<string>Združi %ld PR-je</string>
+			<key>other</key>
+			<string>Združi %ld PR-jev</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Ustvari %ld nov pull request na GitHubu.</string>
+			<key>two</key>
+			<string>Ustvari %ld nova pull requesta na GitHubu.</string>
+			<key>few</key>
+			<string>Ustvari %ld nove pull requeste na GitHubu.</string>
+			<key>other</key>
+			<string>Ustvari %ld novih pull requestov na GitHubu.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Poveži %ld vejo</string>
+			<key>two</key>
+			<string>Poveži %ld veji</string>
+			<key>few</key>
+			<string>Poveži %ld veje</string>
+			<key>other</key>
+			<string>Poveži %ld vej</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Prevzemi celoten sklad (%ld veja)</string>
+			<key>two</key>
+			<string>Prevzemi celoten sklad (%ld veji)</string>
+			<key>few</key>
+			<string>Prevzemi celoten sklad (%ld veje)</string>
+			<key>other</key>
+			<string>Prevzemi celoten sklad (%ld vej)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Prevzeta %ld veja sklada.</string>
+			<key>two</key>
+			<string>Prevzeti %ld veji sklada.</string>
+			<key>few</key>
+			<string>Prevzete %ld veje sklada.</string>
+			<key>other</key>
+			<string>Prevzetih %ld vej sklada.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

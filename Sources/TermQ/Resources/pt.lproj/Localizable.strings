@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Sincronizar e forçar o push?";
 "stacks.sync.confirm.message %ld %@" = "Sincronizar força o push de %ld branches e atualiza a pilha no GitHub: %@\n\nQuem mais estiver trabalhando nestes branches precisará redefini-los.";
 "stacks.sync.confirm.button" = "Sincronizar e enviar";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Mesclar pilha…";
+"stacks.merge.stack.title" = "Mesclar a pilha?";
+"stacks.merge.stack.message %ld" = "Mescla %ld pull requests no branch base.";
+"stacks.merge.stack.confirm %ld" = "Mesclar %ld PRs";
+"stacks.merge.stack.method %@" = "Método de merge: %@ (padrão deste repositório)";
+"stacks.merge.stack.irreversible" = "Isso não pode ser desfeito pelo TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests mescladas.";
+"stacks.merge.stack.loading" = "Verificando revisões e estado da CI…";
+"stacks.merge.stack.not.submitted" = "Esta pilha ainda não foi enviada ao GitHub.";
+"stacks.merge.blocked.draft" = "Rascunho";
+"stacks.merge.blocked.closed" = "Fechada";
+"stacks.merge.blocked.merged" = "Já mesclada";
+"stacks.merge.blocked.by %@" = "%@ bloqueia tudo acima dela, então a pilha inteira não pode ser mesclada daqui. Abra no GitHub para mesclar até esse ponto.";
+"stacks.merge.open.on.github" = "Abrir a pilha no GitHub";
+"stacks.review.approved" = "Aprovada";
+"stacks.review.changes.requested" = "Alterações solicitadas";
+"stacks.review.required" = "Revisão necessária";
+"stacks.checks.passing" = "Verificações aprovadas";
+"stacks.checks.failing" = "Verificações falhando";
+"stacks.checks.pending" = "Verificações em execução";
+"stacks.link.stack" = "Vincular PRs em uma pilha…";
+"stacks.link.stack.title" = "Vincular PRs em uma pilha";
+"stacks.link.stack.will.create %ld" = "Cria %ld novas pull requests no GitHub.";
+"stacks.link.stack.existing" = "existente";
+"stacks.link.stack.new" = "vai criar um PR";
+"stacks.link.stack.confirm %ld" = "Vincular %ld branches";
+"stacks.link.stack.done" = "Branches vinculados em uma pilha.";
+"stacks.checkout.stack %ld" = "Fazer checkout da pilha inteira (%ld branches)";
+"stacks.checkout.stack.done %ld" = "Checkout de %ld branches empilhados.";

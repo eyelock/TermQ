@@ -114,6 +114,17 @@ struct StackActionAvailability: Equatable {
     let canDestroyStack: Bool
     let canUntrackStack: Bool
     let canResumeConflict: Bool
+    /// Merge every change request in the stack in one operation. The only stack action
+    /// that lands code on a real branch, and the only one gated behind a readiness fetch.
+    let canMergeStack: Bool
+    /// Adopt existing branches into a stack on the forge — CREATES change requests for
+    /// any that lack one, which is why it is not folded into `canTrackExisting`.
+    let canLinkStack: Bool
+    /// Check out a stack that exists only on the forge.
+    let canCheckoutRemoteStack: Bool
+    /// Track a single pre-existing branch onto a stack using LOCAL metadata only.
+    /// Deliberately distinct from `canLinkStack`, which creates change requests.
+    let canTrackExisting: Bool
 
     init(capabilities: StackCapabilities) {
         canRestack = capabilities.contains(.restack)
@@ -129,6 +140,10 @@ struct StackActionAvailability: Equatable {
         canDestroyStack = capabilities.contains(.destroyStack)
         canUntrackStack = capabilities.contains(.untrackStack)
         canResumeConflict = capabilities.contains(.conflictResume)
+        canMergeStack = capabilities.contains(.mergeStack)
+        canLinkStack = capabilities.contains(.linkExisting)
+        canCheckoutRemoteStack = capabilities.contains(.remoteDiscovery)
+        canTrackExisting = capabilities.contains(.trackExisting)
     }
 
     /// Whether group-level actions must run in a worktree that has one of the stack's
@@ -237,7 +252,82 @@ extension WorktreeSidebarViewModel {
             return
         }
         await stackService.refreshGraph(repo: repo.path, worktrees: worktreePaths(for: repo))
+        // TTL'd and coalesced inside the service — this runs on every stack refresh.
+        await mergedPRService.refresh(repoPath: repo.path)
         stacks[repo.id] = stackService.graphsByRepo[repo.path]
+            .map { adoptKnownPullRequests(into: $0, repo: repo) }
+    }
+
+    /// Fill in a branch's change request from the PR data TermQ already holds, when the
+    /// provider's own tracking doesn't know one.
+    ///
+    /// `gh stack link` states outright that it "does not rely on gh-stack local tracking
+    /// state" — it registers the stack on GitHub and writes nothing locally. So straight
+    /// after a successful link the tracking file still says the branch has no pull
+    /// request, and the sidebar faithfully reported "no PR" for a branch that had just
+    /// had one opened for it.
+    ///
+    /// The reconciling gh-stack commands all carry a side effect TermQ must not apply on
+    /// its own: `sync` force-pushes every branch (which is why it now asks first),
+    /// `checkout` moves HEAD, and `init` refuses outright once a branch is tracked. The
+    /// PR list is already fetched and already keyed by head branch, so the honest fix is
+    /// to show what we know rather than to mutate the repository to make it true.
+    ///
+    /// Only ever FILLS IN a missing value — a change request the provider reported always
+    /// wins, since it carries the URL and real status that this cannot.
+    private func adoptKnownPullRequests(
+        into graph: StackGraph, repo: ObservableRepository
+    )
+        -> StackGraph
+    {
+        let openPRs = prService.prsByRepo[repo.path] ?? []
+        let numbersByBranch = Dictionary(
+            openPRs.map { ($0.headRefName, $0.number) }, uniquingKeysWith: { first, _ in first })
+        let adopted = Self.adoptingPullRequests(in: graph, openPRNumbersByBranch: numbersByBranch)
+        let merged = Set(mergedPRService.mergedNumbers(repoPath: repo.path).map(String.init))
+        return Self.markingMerged(in: adopted, mergedIDs: merged)
+    }
+
+    /// Report a merged change request as merged, since gh-stack's tracking file records a
+    /// pull request number and nothing about its state. Everything else is untouched.
+    static func markingMerged(in graph: StackGraph, mergedIDs: Set<String>) -> StackGraph {
+        guard !mergedIDs.isEmpty else { return graph }
+        return StackGraph(
+            branches: graph.branches.map { branch in
+                guard let cr = branch.changeRequest, mergedIDs.contains(cr.id), cr.status != .merged
+                else { return branch }
+                var updated = branch
+                updated.changeRequest = StackChangeRequest(
+                    id: cr.id, url: cr.url, status: .merged, commentCount: cr.commentCount)
+                return updated
+            })
+    }
+
+    /// The pure half of `adoptKnownPullRequests`, split out so it can be tested without
+    /// standing up a PR service.
+    ///
+    /// `openPRNumbersByBranch` must contain OPEN pull requests only — the resulting
+    /// change request is reported as `.open` on that basis.
+    static func adoptingPullRequests(
+        in graph: StackGraph, openPRNumbersByBranch: [String: Int]
+    ) -> StackGraph {
+        guard !openPRNumbersByBranch.isEmpty,
+            graph.branches.contains(where: { $0.changeRequest == nil })
+        else { return graph }
+
+        return StackGraph(
+            branches: graph.branches.map { branch in
+                guard branch.changeRequest == nil,
+                    let number = openPRNumbersByBranch[branch.name]
+                else { return branch }
+                var filled = branch
+                // `url` is nil because GitHubPR carries none; the badge is already
+                // `.disabled(cr.url == nil)`, so it shows the number without pretending
+                // to be a link.
+                filled.changeRequest = StackChangeRequest(
+                    id: String(number), url: nil, status: .open, commentCount: nil)
+                return filled
+            })
     }
 
     /// Every worktree path the sidebar knows about for `repo`, including the main
@@ -539,6 +629,45 @@ extension WorktreeSidebarViewModel {
     /// guarantees by only offering the action for an anchored stack.
     func untrackStack(repo: ObservableRepository, worktree: GitWorktree) async throws {
         try await stackService.untrackStack(repo: repo.path, worktree: worktree.path)
+        await refreshWorktrees(for: repo)
+    }
+
+    /// Merge every pull request in `group`, then refresh so the merged state lands in the
+    /// sidebar. The confirmation — including which pull requests, and whether a blocker
+    /// makes the merge impossible — is the sheet's job, not this method's.
+    func mergeStack(
+        repo: ObservableRepository, worktree: GitWorktree, group: StackGroup
+    ) async throws {
+        guard let remoteStackID = group.branches.compactMap(\.remoteStackID).first else {
+            throw StackProviderError.preconditionFailed(Strings.Stacks.mergeStackNotSubmitted)
+        }
+        try await stackService.mergeStack(
+            repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
+        // Forced: the merge just changed the answer, and the TTL would otherwise leave
+        // the sidebar showing the stack as open for up to a minute afterwards.
+        await mergedPRService.refresh(repoPath: repo.path, force: true)
+        await refreshWorktrees(for: repo)
+        await prService.refresh(repoPath: repo.path, force: true)
+    }
+
+    /// Adopt `branches` into a stack on the forge. Creates pull requests for branches that
+    /// lack one — the caller must have said so plainly first.
+    func linkStack(
+        repo: ObservableRepository, worktree: GitWorktree, branches: [String], base: String?
+    ) async throws {
+        try await stackService.linkStack(
+            repo: repo.path, worktree: worktree.path, branches: branches, base: base)
+        await refreshWorktrees(for: repo)
+        await prService.refresh(repoPath: repo.path, force: true)
+    }
+
+    /// Check out a stack that exists on the forge, fetching every branch and establishing
+    /// local tracking.
+    func checkoutStack(
+        repo: ObservableRepository, worktree: GitWorktree, remoteStackID: String
+    ) async throws {
+        try await stackService.checkoutStack(
+            repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
         await refreshWorktrees(for: repo)
     }
 

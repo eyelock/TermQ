@@ -15,6 +15,9 @@ struct WorktreeSidebarView: View {
     @ObservedObject var ynhDetector: YNHDetector = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     @ObservedObject var prService: GitHubPRService = .shared
+    /// Stacks as the FORGE sees them — needed because the local stack graph can only
+    /// describe stacks this machine already tracks.
+    @ObservedObject var remoteStackDiscovery: RemoteStackDiscoveryService = .shared
     @ObservedObject var ghProbe: GhCliProbe = .shared
     @ObservedObject var stackService: StackService = .shared
     @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
@@ -73,6 +76,11 @@ struct WorktreeSidebarView: View {
     /// name exactly what gets pushed.
     @State var pendingSyncStack: (ObservableRepository, GitWorktree, [String])?
     @State var isShowingSyncConfirmAlert = false
+    /// Stack awaiting the merge confirmation sheet. A sheet rather than an alert because
+    /// it fetches per-PR review and check state before offering the action at all.
+    @State var mergeStackContext: MergeStackContext?
+    /// Branches awaiting the link confirmation sheet.
+    @State var linkStackContext: LinkStackContext?
     /// Worktree row to scroll into view — set by the Stacks section's jump indicator,
     /// consumed by the ScrollViewReader wrapping the repo list.
     @State var stackJumpTargetWorktreeID: String?
@@ -115,6 +123,24 @@ struct WorktreeSidebarView: View {
                 scope: ctx.scope, viewModel: viewModel,
                 onComplete: { created, updated in
                     showStackToast(Strings.Stacks.submitDone(created, updated))
+                })
+        }
+        .sheet(item: $mergeStackContext) { ctx in
+            MergeStackSheet(
+                repo: ctx.repo, worktree: ctx.worktree, group: ctx.group, viewModel: viewModel,
+                readinessService: .shared,
+                onComplete: { count in showStackToast(Strings.Stacks.mergeStackDone(count)) })
+        }
+        .sheet(item: $linkStackContext) { ctx in
+            LinkStackSheet(
+                repo: ctx.repo, worktree: ctx.worktree, branches: ctx.branches, base: ctx.base,
+                viewModel: viewModel,
+                onComplete: {
+                    // Link registers the stack on the forge and writes NO local tracking,
+                    // so without rediscovery the sidebar would look entirely unchanged
+                    // after a successful link.
+                    Task { await rediscoverRemoteStacks(for: ctx.repo) }
+                    showStackToast(Strings.Stacks.linkStackDone)
                 })
         }
         .sheet(item: $showEditRepoFor) { repo in EditRepositorySheet(repo: repo, viewModel: viewModel) }

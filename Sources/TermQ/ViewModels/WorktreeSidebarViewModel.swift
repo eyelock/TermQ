@@ -73,6 +73,9 @@ final class WorktreeSidebarViewModel: ObservableObject {
     private static let expandedReposKey = "sidebar.expandedRepos"
     private static let expandedBranchSectionsKey = "sidebar.expandedBranchSections"
     private static let collapsedWorktreeSectionsKey = "sidebar.collapsedWorktreeSections"
+    /// Which pull requests have been merged, so a merged stack stops rendering as open.
+    /// See `MergedPullRequestService` for why this is fetched rather than remembered.
+    let mergedPRService: MergedPullRequestService
     var monitors: [UUID: GitRepositoryMonitor] = [:]
     private var dirtyPollTimer: Timer?
     /// Test seams for the guarded-switch checks. `nil` uses the production checks
@@ -86,7 +89,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
         prService: GitHubPRService = .shared,
         gitConfig: GitConfigStore = .shared,
         workspaceStore: WorkspaceStore = .shared,
-        stackService: StackService = .shared
+        stackService: StackService = .shared,
+        mergedPRService: MergedPullRequestService = .shared
     ) {
         self.persistence = persistence
         self.gitService = gitService
@@ -94,6 +98,7 @@ final class WorktreeSidebarViewModel: ObservableObject {
         self.gitConfig = gitConfig
         self.workspaceStore = workspaceStore
         self.stackService = stackService
+        self.mergedPRService = mergedPRService
         let saved = UserDefaults.standard.stringArray(forKey: Self.expandedReposKey) ?? []
         expandedRepoIDs = Set(saved.compactMap { UUID(uuidString: $0) })
         let savedBranch = UserDefaults.standard.stringArray(forKey: Self.expandedBranchSectionsKey) ?? []
@@ -351,7 +356,15 @@ final class WorktreeSidebarViewModel: ObservableObject {
         // Stacked repos refresh via provider sync: it pulls trunk, deletes merged
         // locals, and retargets/restacks upstack CRs — a plain fetch would leave the
         // stack stale after a downstack merge.
+        //
+        // UNLESS that sync reaches the remote. git-spice's `repo sync` is local-only, so
+        // running it behind a refresh is free. gh-stack's force-pushes every branch and
+        // rewrites the stack on GitHub — which is why Sync is a confirmed action — and a
+        // refresh button must never do that unasked. Those repos take the plain fetch;
+        // the stale-after-merge case is reached through Sync, where the user is told what
+        // will be pushed first.
         if stackService.isAvailable, stackService.isStacked(repo: repo.path),
+            !stackActions(for: repo).syncNeedsConfirmation,
             let mainWorktree = worktrees[repo.id]?.first(where: { $0.isMainWorktree })
         {
             do {

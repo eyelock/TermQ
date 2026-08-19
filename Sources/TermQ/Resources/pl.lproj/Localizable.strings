@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Zsynchronizować i wymusić push?";
 "stacks.sync.confirm.message %ld %@" = "Synchronizacja wymusza push %ld gałęzi i aktualizuje stos na GitHubie: %@\n\nKażdy, kto pracuje na tych gałęziach, będzie musiał je zresetować.";
 "stacks.sync.confirm.button" = "Synchronizuj i wypchnij";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Scal stos…";
+"stacks.merge.stack.title" = "Scalić stos?";
+"stacks.merge.stack.message %ld" = "Scala %ld pull requestów do gałęzi bazowej.";
+"stacks.merge.stack.confirm %ld" = "Scal %ld PR-ów";
+"stacks.merge.stack.method %@" = "Metoda scalania: %@ (domyślna dla tego repozytorium)";
+"stacks.merge.stack.irreversible" = "Tego nie da się cofnąć z poziomu TermQ.";
+"stacks.merge.stack.done %ld" = "Scalono %ld pull requestów.";
+"stacks.merge.stack.loading" = "Sprawdzanie recenzji i stanu CI…";
+"stacks.merge.stack.not.submitted" = "Ten stos nie został jeszcze wysłany na GitHuba.";
+"stacks.merge.blocked.draft" = "Wersja robocza";
+"stacks.merge.blocked.closed" = "Zamknięty";
+"stacks.merge.blocked.merged" = "Już scalony";
+"stacks.merge.blocked.by %@" = "%@ blokuje wszystko powyżej, więc całego stosu nie da się scalić stąd. Otwórz go na GitHubie, aby scalić do tego miejsca.";
+"stacks.merge.open.on.github" = "Otwórz stos na GitHubie";
+"stacks.review.approved" = "Zatwierdzony";
+"stacks.review.changes.requested" = "Poproszono o zmiany";
+"stacks.review.required" = "Wymagana recenzja";
+"stacks.checks.passing" = "Testy przechodzą";
+"stacks.checks.failing" = "Testy nie przechodzą";
+"stacks.checks.pending" = "Testy w toku";
+"stacks.link.stack" = "Połącz PR-y w stos…";
+"stacks.link.stack.title" = "Połącz PR-y w stos";
+"stacks.link.stack.will.create %ld" = "Utworzy %ld nowych pull requestów na GitHubie.";
+"stacks.link.stack.existing" = "istniejący";
+"stacks.link.stack.new" = "utworzy PR";
+"stacks.link.stack.confirm %ld" = "Połącz %ld gałęzi";
+"stacks.link.stack.done" = "Gałęzie połączone w stos.";
+"stacks.checkout.stack %ld" = "Pobierz cały stos (%ld gałęzi)";
+"stacks.checkout.stack.done %ld" = "Pobrano %ld gałęzi ze stosu.";

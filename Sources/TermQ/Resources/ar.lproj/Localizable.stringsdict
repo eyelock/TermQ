@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>stacks.merge.stack.message %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>يدمج طلب سحب واحدًا في الفرع الأساسي.</string>
+			<key>two</key>
+			<string>يدمج طلبَي سحب في الفرع الأساسي.</string>
+			<key>few</key>
+			<string>يدمج %ld طلبات سحب في الفرع الأساسي.</string>
+			<key>many</key>
+			<string>يدمج %ld طلب سحب في الفرع الأساسي.</string>
+			<key>other</key>
+			<string>يدمج %ld طلب سحب في الفرع الأساسي.</string>
+		</dict>
+	</dict>
+	<key>stacks.merge.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>دمج طلب سحب واحد</string>
+			<key>two</key>
+			<string>دمج طلبَي سحب</string>
+			<key>few</key>
+			<string>دمج %ld طلبات سحب</string>
+			<key>many</key>
+			<string>دمج %ld طلب سحب</string>
+			<key>other</key>
+			<string>دمج %ld طلب سحب</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.will.create %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>ينشئ طلب سحب جديدًا واحدًا على GitHub.</string>
+			<key>two</key>
+			<string>ينشئ طلبَي سحب جديدين على GitHub.</string>
+			<key>few</key>
+			<string>ينشئ %ld طلبات سحب جديدة على GitHub.</string>
+			<key>many</key>
+			<string>ينشئ %ld طلب سحب جديد على GitHub.</string>
+			<key>other</key>
+			<string>ينشئ %ld طلب سحب جديد على GitHub.</string>
+		</dict>
+	</dict>
+	<key>stacks.link.stack.confirm %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>اربط فرعًا واحدًا</string>
+			<key>two</key>
+			<string>اربط فرعين</string>
+			<key>few</key>
+			<string>اربط %ld فروع</string>
+			<key>many</key>
+			<string>اربط %ld فرعًا</string>
+			<key>other</key>
+			<string>اربط %ld فرعًا</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>سحب الكدس بالكامل (فرع واحد)</string>
+			<key>two</key>
+			<string>سحب الكدس بالكامل (فرعان)</string>
+			<key>few</key>
+			<string>سحب الكدس بالكامل (%ld فروع)</string>
+			<key>many</key>
+			<string>سحب الكدس بالكامل (%ld فرعًا)</string>
+			<key>other</key>
+			<string>سحب الكدس بالكامل (%ld فرعًا)</string>
+		</dict>
+	</dict>
+	<key>stacks.checkout.stack.done %ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>تم سحب فرع واحد من الكدس.</string>
+			<key>two</key>
+			<string>تم سحب فرعين من الكدس.</string>
+			<key>few</key>
+			<string>تم سحب %ld فروع من الكدس.</string>
+			<key>many</key>
+			<string>تم سحب %ld فرعًا من الكدس.</string>
+			<key>other</key>
+			<string>تم سحب %ld فرعًا من الكدس.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

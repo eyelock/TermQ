@@ -119,6 +119,38 @@ private let userStringsCache: [String: String]? = {
     return nil
 }()
 
+/// The preferred language's `.lproj` as a real bundle, plus the keys it defines
+/// in `Localizable.stringsdict`.
+///
+/// `userStringsCache` cannot serve plural keys. A `.stringsdict` entry holds one
+/// form per plural category and choosing between them is the language's grammar
+/// — "1 gałąź" / "2 gałęzie" / "5 gałęzi" — not a dictionary lookup. Foundation
+/// already implements those rules, so plural keys go through a bundle instead.
+///
+/// Only keys present in the `.stringsdict` are routed here; everything else
+/// keeps using the parsed cache, so this changes nothing for the non-plural keys.
+private let userPluralBundle: (bundle: Bundle, keys: Set<String>)? = {
+    let preferredLanguage = UserDefaults.standard.string(forKey: "preferredLanguage") ?? ""
+    guard !preferredLanguage.isEmpty else { return nil }
+
+    let languageCodes = [
+        preferredLanguage, preferredLanguage.components(separatedBy: "-").first ?? preferredLanguage,
+    ]
+    for code in languageCodes {
+        guard let lprojPath = resourceBundle.path(forResource: code, ofType: "lproj"),
+            let bundle = Bundle(path: lprojPath)
+        else { continue }
+        let dictURL = URL(fileURLWithPath: lprojPath)
+            .appendingPathComponent("Localizable.stringsdict")
+        guard let data = try? Data(contentsOf: dictURL),
+            let plist = try? PropertyListSerialization.propertyList(
+                from: data, options: [], format: nil) as? [String: Any]
+        else { continue }
+        return (bundle, Set(plist.keys))
+    }
+    return nil
+}()
+
 /// Helper to get localized string
 func localized(_ key: String) -> String {
     // Use manually loaded strings if user has a preferred language
@@ -132,7 +164,12 @@ func localized(_ key: String) -> String {
 /// Helper for strings with arguments
 func localized(_ key: String, _ args: CVarArg...) -> String {
     let format: String
-    if let cache = userStringsCache, let value = cache[key] {
+    if let plural = userPluralBundle, plural.keys.contains(key) {
+        // Checked BEFORE the parsed cache: that cache is built from
+        // Localizable.strings, which carries only one form per key, so serving a
+        // plural key from it would silently pick the wrong grammatical number.
+        format = plural.bundle.localizedString(forKey: key, value: nil, table: "Localizable")
+    } else if let cache = userStringsCache, let value = cache[key] {
         format = value
     } else {
         format = resourceBundle.localizedString(forKey: key, value: nil, table: "Localizable")

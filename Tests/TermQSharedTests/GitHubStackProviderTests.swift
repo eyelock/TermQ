@@ -778,6 +778,107 @@ final class GitHubStackSubmitArgumentsTests: XCTestCase {
     }
 }
 
+// MARK: - Forge Stack Operations (Phase 5)
+
+/// `merge`, `link` and `checkout` have no git-spice equivalent, and two of them reach
+/// GitHub in ways the other operations do not: one merges pull requests, the other
+/// creates them. These pin the flags that keep that behaviour predictable.
+final class GitHubStackForgeOperationTests: XCTestCase {
+    func testMerge_addressesTheStackExplicitly() throws {
+        // Never bare: with no argument `merge` resolves "the active stack" from the
+        // working directory, which would make WHICH pull requests get merged depend on
+        // state the caller cannot see.
+        let args = try GitHubStackProvider.mergeArguments(remoteStackID: "42", method: nil)
+        XCTAssertEqual(args, ["stack", "merge", "42", "--yes"])
+    }
+
+    func testMerge_neverPassesAdmin() throws {
+        // --yes only skips gh-stack's own prompt; TermQ has already confirmed. Branch
+        // protection must still apply, so --admin must never appear under any options.
+        for method in [nil, StackMergeMethod.merge, .squash, .rebase] {
+            let args = try GitHubStackProvider.mergeArguments(remoteStackID: "7", method: method)
+            XCTAssertFalse(args.contains("--admin"), "got \(args)")
+        }
+    }
+
+    func testMerge_noMethod_inheritsTheRepositoryDefault() throws {
+        // gh-stack resolves an unspecified method to the repo's configured default and
+        // falls back to the first allowed one. Naming a method here could pick one the
+        // repository forbids, which fails the merge for no reason.
+        let args = try GitHubStackProvider.mergeArguments(remoteStackID: "42", method: nil)
+        XCTAssertFalse(args.contains("--merge-method"))
+    }
+
+    func testMerge_explicitMethod_isPassedThrough() throws {
+        let args = try GitHubStackProvider.mergeArguments(remoteStackID: "42", method: .squash)
+        XCTAssertEqual(args.suffix(2), ["--merge-method", "squash"])
+    }
+
+    func testMerge_unsubmittedStack_refusesRatherThanGuessing() {
+        // A stack with no remote number has never been submitted, so there is nothing on
+        // GitHub to merge. An empty or non-numeric id must not degrade into a bare
+        // `gh stack merge`, which would merge whatever happens to be checked out.
+        for id in ["", "not-a-number", "0", "-1"] {
+            XCTAssertThrowsError(
+                try GitHubStackProvider.mergeArguments(remoteStackID: id, method: nil)
+            ) { error in
+                guard case StackProviderError.preconditionFailed? = error as? StackProviderError
+                else { return XCTFail("expected .preconditionFailed for \(id.debugDescription)") }
+            }
+        }
+    }
+
+    func testStackNumber_roundTripsAValidIdentifier() throws {
+        XCTAssertEqual(try GitHubStackProvider.stackNumber(from: "91470"), 91470)
+    }
+
+    func testLink_refusesFewerThanTwoBranches() async {
+        // `gh stack link` requires at least two; catching it here gives a message that
+        // says what to do instead of an argument-parsing error.
+        for branches in [[], ["only-one"]] {
+            do {
+                try await GitHubStackProvider().linkStack(
+                    branches: branches, base: nil, in: "/wt")
+                XCTFail("expected a refusal for \(branches)")
+            } catch let error as StackProviderError {
+                guard case .preconditionFailed = error else {
+                    return XCTFail("expected .preconditionFailed, got \(error)")
+                }
+            } catch {
+                XCTFail("expected StackProviderError, got \(error)")
+            }
+        }
+    }
+}
+
+/// git-spice must be unaffected by any of this: it has no forge-level stack object, and
+/// the defaults refuse rather than substituting an adjacent command.
+final class GitSpiceForgeOperationRefusalTests: XCTestCase {
+    func testGitSpiceRefusesAllThree() async {
+        let provider = GitSpiceStackProvider()
+        var refusals = 0
+        for operation in [
+            { try await provider.mergeStack(remoteStackID: "1", method: nil, in: "/wt") },
+            { try await provider.linkStack(branches: ["a", "b"], base: nil, in: "/wt") },
+            { try await provider.checkoutStack(remoteStackID: "1", in: "/wt") },
+        ] as [() async throws -> Void] {
+            do {
+                try await operation()
+            } catch let error as StackProviderError {
+                if case .unsupported = error { refusals += 1 }
+            } catch {}
+        }
+        XCTAssertEqual(refusals, 3, "every forge operation must refuse for git-spice")
+    }
+
+    func testGitSpiceAdvertisesNoneOfTheForgeCapabilities() {
+        let capabilities = GitSpiceStackProvider().capabilities
+        XCTAssertFalse(capabilities.contains(.mergeStack))
+        XCTAssertFalse(capabilities.contains(.remoteDiscovery))
+        XCTAssertFalse(capabilities.contains(.linkExisting))
+    }
+}
+
 // MARK: - Exit Code Mapping
 
 /// gh-stack assigns a distinct exit code per failure class, which is far more stable than
@@ -820,6 +921,58 @@ final class GitHubStackExitCodeTests: XCTestCase {
             error.errorDescription, "can only add branches to the top of the stack")
     }
 
+    // The stderr in the next three cases is copied byte-for-byte from a live gh-stack
+    // v0.1.0 run against a repository whose remote the token cannot read, which is what
+    // the extension reports as "stacks not enabled". Invented fixtures missed the
+    // progress line entirely.
+
+    func testProgressChatter_isStrippedFromTheMessage() {
+        // `gh stack link` exit 9. Without stripping, the alert opens with "Checking
+        // existing stacks..." — a progress line presented to the user as the error.
+        let error = GitHubStackProvider.mapExitCode(
+            result(
+                9,
+                stderr: "Checking existing stacks...\n"
+                    + "⚠ Stacked PRs are not enabled for this repository\n"),
+            command: "gh stack link")
+        XCTAssertEqual(
+            error.errorDescription, "Stacked PRs are not enabled for this repository")
+    }
+
+    func testStatusGlyphIsStripped_whenThereIsNoProgressLine() {
+        // `gh stack merge 1` exit 9 — same failure, no chatter ahead of it.
+        let error = GitHubStackProvider.mapExitCode(
+            result(9, stderr: "⚠ Stacked PRs are not enabled for this repository\n"),
+            command: "gh stack merge")
+        XCTAssertEqual(
+            error.errorDescription, "Stacked PRs are not enabled for this repository")
+    }
+
+    func testTrailingAdviceIsKept() {
+        // gh-stack's follow-up line has no glyph and is the most actionable part of the
+        // message, so only *leading* chatter may be dropped.
+        let error = GitHubStackProvider.mapExitCode(
+            result(
+                2,
+                stderr: "✗ current branch \"feat-one\" is not part of a stack\n"
+                    + "Checkout an existing stack using `gh stack checkout`\n"),
+            command: "gh stack rebase")
+        XCTAssertEqual(
+            error.errorDescription,
+            "current branch \"feat-one\" is not part of a stack\n"
+                + "Checkout an existing stack using `gh stack checkout`")
+    }
+
+    func testProgressOnly_fallsBackToTheGenericMessage() {
+        // If gh-stack ever fails after printing nothing but progress, the caller's
+        // wording is better than a bare "Checking existing stacks...".
+        let error = GitHubStackProvider.mapExitCode(
+            result(9, stderr: "Checking existing stacks...\n"), command: "gh stack link")
+        XCTAssertEqual(
+            error.errorDescription,
+            "Stacked pull requests are not available for this repository.")
+    }
+
     func testUnknownCode_fallsThroughWithItsOutput() {
         let error = GitHubStackProvider.mapExitCode(
             result(1, stderr: "boom"), command: "gh stack sync")
@@ -829,5 +982,56 @@ final class GitHubStackExitCodeTests: XCTestCase {
         XCTAssertEqual(command, "gh stack sync")
         XCTAssertEqual(code, 1)
         XCTAssertEqual(output, "boom")
+    }
+}
+
+/// Covers dropping tracked branches that no longer exist in the repository.
+///
+/// `gh stack merge` deletes every branch in the stack — locally and on the remote — but
+/// leaves the stack in its tracking file. Read back literally, that file describes a live
+/// stack of branches that exist nowhere, and the sidebar rendered exactly that: a stack
+/// whose every branch had been deleted, offering actions against them.
+final class GitHubStackMissingBranchTests: XCTestCase {
+
+    private func branch(_ name: String) -> StackBranch {
+        StackBranch(
+            name: name, isCurrent: false, checkedOutElsewhere: nil, parent: nil, children: [],
+            needsRestack: false, changeRequest: nil, push: nil, isQueued: false,
+            remoteStackID: "125")
+    }
+
+    func testBranchesGitNoLongerHasAreDropped() {
+        let branches = [branch("gone-a"), branch("still-here"), branch("gone-b")]
+
+        let result = GitHubStackProvider.dropMissingBranches(
+            branches, existing: ["still-here", "main"])
+
+        XCTAssertEqual(result.map(\.name), ["still-here"])
+    }
+
+    /// The whole stack going away is the point: after a merge every branch is deleted, so
+    /// the stack must disappear from the sidebar rather than linger as an empty shell.
+    func testAStackWhoseBranchesAreAllGoneDisappearsEntirely() {
+        let branches = [branch("demo2-alpha"), branch("demo2-beta"), branch("demo2-gamma")]
+
+        let result = GitHubStackProvider.dropMissingBranches(
+            branches, existing: ["main", "unrelated"])
+
+        XCTAssertTrue(result.isEmpty)
+    }
+
+    /// Failing to read the branch list must not blank every stack in the sidebar. The
+    /// tracking file is then the only evidence there is, so it is trusted as-is.
+    func testAnUnreadableBranchListLeavesTheTrackedBranchesAlone() {
+        let branches = [branch("a"), branch("b")]
+
+        let result = GitHubStackProvider.dropMissingBranches(branches, existing: nil)
+
+        XCTAssertEqual(result.map(\.name), ["a", "b"])
+    }
+
+    func testAnEmptyRepositoryDropsEverything() {
+        XCTAssertTrue(
+            GitHubStackProvider.dropMissingBranches([branch("a")], existing: []).isEmpty)
     }
 }

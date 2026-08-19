@@ -122,6 +122,7 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 
 **Remote actions:**
 - **Checkout as Worktree** — runs `gh pr checkout` to create a permanent linked worktree for the PR's branch.
+- **Check Out Whole Stack (N branches)** — only for a PR that belongs to a GitHub stack. Brings down every branch in the stack rather than this one. Checking out a single PR of a stack leaves you with a branch whose parent isn't present, so the diff reads against the wrong base and the stack UI stays inert. Requires the `gh stack` extension — git-spice has no forge-level stack to discover. See [Stacked Branches & PRs](stacked-branches.md).
 - **Open PR on Remote** / **Copy PR URL** — as above.
 
 If a local worktree already exists for the branch (e.g. you checked it out manually), the menu shows **Worktree exists** and a **Switch to Existing** button instead.

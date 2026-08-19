@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "לסנכרן ולדחוף בכפייה?";
 "stacks.sync.confirm.message %ld %@" = "הסנכרון דוחף בכפייה %ld ענפים ומעדכן את הערימה ב‑GitHub: %@\n\nכל מי שעובד על הענפים האלה יצטרך לאפס אותם.";
 "stacks.sync.confirm.button" = "סנכרן ודחוף";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "מיזוג הערימה…";
+"stacks.merge.stack.title" = "למזג את הערימה?";
+"stacks.merge.stack.message %ld" = "ממזג %ld בקשות משיכה לענף הבסיס.";
+"stacks.merge.stack.confirm %ld" = "מזג %ld בקשות משיכה";
+"stacks.merge.stack.method %@" = "שיטת מיזוג: %@ (ברירת המחדל של המאגר)";
+"stacks.merge.stack.irreversible" = "אי אפשר לבטל את זה מתוך TermQ.";
+"stacks.merge.stack.done %ld" = "%ld בקשות משיכה מוזגו.";
+"stacks.merge.stack.loading" = "בודק סקירות ומצב CI…";
+"stacks.merge.stack.not.submitted" = "הערימה הזו עדיין לא נשלחה ל‑GitHub.";
+"stacks.merge.blocked.draft" = "טיוטה";
+"stacks.merge.blocked.closed" = "סגורה";
+"stacks.merge.blocked.merged" = "כבר מוזגה";
+"stacks.merge.blocked.by %@" = "‏%@ חוסמת את כל מה שמעליה, ולכן אי אפשר למזג את כל הערימה מכאן. פתח אותה ב‑GitHub כדי למזג עד לנקודה הזו.";
+"stacks.merge.open.on.github" = "פתח את הערימה ב‑GitHub";
+"stacks.review.approved" = "אושרה";
+"stacks.review.changes.requested" = "התבקשו שינויים";
+"stacks.review.required" = "נדרשת סקירה";
+"stacks.checks.passing" = "הבדיקות עוברות";
+"stacks.checks.failing" = "הבדיקות נכשלות";
+"stacks.checks.pending" = "הבדיקות רצות";
+"stacks.link.stack" = "קישור בקשות משיכה לערימה…";
+"stacks.link.stack.title" = "קישור בקשות משיכה לערימה";
+"stacks.link.stack.will.create %ld" = "יוצר %ld בקשות משיכה חדשות ב‑GitHub.";
+"stacks.link.stack.existing" = "קיימת";
+"stacks.link.stack.new" = "ייצור בקשת משיכה";
+"stacks.link.stack.confirm %ld" = "קשר %ld ענפים";
+"stacks.link.stack.done" = "הענפים קושרו לערימה.";
+"stacks.checkout.stack %ld" = "משיכת הערימה כולה (%ld ענפים)";
+"stacks.checkout.stack.done %ld" = "נמשכו %ld ענפי ערימה.";

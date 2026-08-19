@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "सिंक करके फ़ोर्स-पुश करें?";
 "stacks.sync.confirm.message %ld %@" = "सिंक करने पर %ld ब्रांच फ़ोर्स-पुश होंगी और GitHub पर स्टैक अपडेट होगा: %@\n\nइन ब्रांच पर काम कर रहे बाकी लोगों को रीसेट करना होगा।";
 "stacks.sync.confirm.button" = "सिंक करें और पुश करें";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "स्टैक मर्ज करें…";
+"stacks.merge.stack.title" = "स्टैक मर्ज करें?";
+"stacks.merge.stack.message %ld" = "%ld पुल रिक्वेस्ट बेस ब्रांच में मर्ज करता है।";
+"stacks.merge.stack.confirm %ld" = "%ld PR मर्ज करें";
+"stacks.merge.stack.method %@" = "मर्ज विधि: %@ (इस रिपॉज़िटरी की डिफ़ॉल्ट)";
+"stacks.merge.stack.irreversible" = "इसे TermQ से पूर्ववत नहीं किया जा सकता।";
+"stacks.merge.stack.done %ld" = "%ld पुल रिक्वेस्ट मर्ज हो गईं।";
+"stacks.merge.stack.loading" = "समीक्षा और CI स्थिति जाँची जा रही है…";
+"stacks.merge.stack.not.submitted" = "यह स्टैक अभी GitHub पर नहीं भेजा गया है।";
+"stacks.merge.blocked.draft" = "ड्राफ़्ट";
+"stacks.merge.blocked.closed" = "बंद";
+"stacks.merge.blocked.merged" = "पहले ही मर्ज";
+"stacks.merge.blocked.by %@" = "%@ अपने ऊपर की हर चीज़ रोक रहा है, इसलिए पूरा स्टैक यहाँ से मर्ज नहीं हो सकता। उस बिंदु तक मर्ज करने के लिए इसे GitHub पर खोलें।";
+"stacks.merge.open.on.github" = "स्टैक GitHub पर खोलें";
+"stacks.review.approved" = "स्वीकृत";
+"stacks.review.changes.requested" = "बदलाव माँगे गए";
+"stacks.review.required" = "समीक्षा आवश्यक";
+"stacks.checks.passing" = "जाँचें पास";
+"stacks.checks.failing" = "जाँचें विफल";
+"stacks.checks.pending" = "जाँचें चल रही हैं";
+"stacks.link.stack" = "PR को स्टैक में जोड़ें…";
+"stacks.link.stack.title" = "PR को स्टैक में जोड़ें";
+"stacks.link.stack.will.create %ld" = "GitHub पर %ld नई पुल रिक्वेस्ट बनाता है।";
+"stacks.link.stack.existing" = "मौजूदा";
+"stacks.link.stack.new" = "PR बनाएगा";
+"stacks.link.stack.confirm %ld" = "%ld ब्रांच जोड़ें";
+"stacks.link.stack.done" = "ब्रांच स्टैक में जुड़ गईं।";
+"stacks.checkout.stack %ld" = "पूरा स्टैक चेक आउट करें (%ld ब्रांच)";
+"stacks.checkout.stack.done %ld" = "%ld स्टैक ब्रांच चेक आउट हुईं।";

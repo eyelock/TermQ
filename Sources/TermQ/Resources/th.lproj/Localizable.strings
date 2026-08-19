@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "ซิงค์และบังคับพุชหรือไม่?";
 "stacks.sync.confirm.message %ld %@" = "การซิงค์จะบังคับพุชเบรนช์ %ld รายการและอัปเดตสแต็กบน GitHub: %@\n\nคนอื่นที่ทำงานบนเบรนช์เหล่านี้จะต้องรีเซ็ต";
 "stacks.sync.confirm.button" = "ซิงค์และพุช";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "ผสานสแต็ก…";
+"stacks.merge.stack.title" = "ผสานสแต็กหรือไม่?";
+"stacks.merge.stack.message %ld" = "ผสานพูลรีเควสต์ %ld รายการเข้ากับเบรนช์ฐาน";
+"stacks.merge.stack.confirm %ld" = "ผสาน %ld PR";
+"stacks.merge.stack.method %@" = "วิธีผสาน: %@ (ค่าเริ่มต้นของที่เก็บนี้)";
+"stacks.merge.stack.irreversible" = "การกระทำนี้ย้อนกลับจาก TermQ ไม่ได้";
+"stacks.merge.stack.done %ld" = "ผสานพูลรีเควสต์แล้ว %ld รายการ";
+"stacks.merge.stack.loading" = "กำลังตรวจสอบการรีวิวและสถานะ CI…";
+"stacks.merge.stack.not.submitted" = "สแต็กนี้ยังไม่ได้ส่งไปยัง GitHub";
+"stacks.merge.blocked.draft" = "ฉบับร่าง";
+"stacks.merge.blocked.closed" = "ปิดแล้ว";
+"stacks.merge.blocked.merged" = "ผสานแล้ว";
+"stacks.merge.blocked.by %@" = "%@ ขวางทุกอย่างที่อยู่เหนือมัน จึงผสานทั้งสแต็กจากที่นี่ไม่ได้ เปิดบน GitHub เพื่อผสานถึงจุดนั้น";
+"stacks.merge.open.on.github" = "เปิดสแต็กบน GitHub";
+"stacks.review.approved" = "อนุมัติแล้ว";
+"stacks.review.changes.requested" = "ขอให้แก้ไข";
+"stacks.review.required" = "ต้องมีการรีวิว";
+"stacks.checks.passing" = "การตรวจสอบผ่าน";
+"stacks.checks.failing" = "การตรวจสอบล้มเหลว";
+"stacks.checks.pending" = "การตรวจสอบกำลังทำงาน";
+"stacks.link.stack" = "เชื่อม PR เป็นสแต็ก…";
+"stacks.link.stack.title" = "เชื่อม PR เป็นสแต็ก";
+"stacks.link.stack.will.create %ld" = "สร้างพูลรีเควสต์ใหม่ %ld รายการบน GitHub";
+"stacks.link.stack.existing" = "มีอยู่แล้ว";
+"stacks.link.stack.new" = "จะสร้าง PR";
+"stacks.link.stack.confirm %ld" = "เชื่อม %ld เบรนช์";
+"stacks.link.stack.done" = "เชื่อมเบรนช์เป็นสแต็กแล้ว";
+"stacks.checkout.stack %ld" = "เช็คเอาต์ทั้งสแต็ก (%ld เบรนช์)";
+"stacks.checkout.stack.done %ld" = "เช็คเอาต์เบรนช์ในสแต็กแล้ว %ld รายการ";

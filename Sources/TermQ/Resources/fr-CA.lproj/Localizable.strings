@@ -1474,3 +1474,34 @@
 "stacks.sync.confirm.title" = "Synchroniser et forcer le push ?";
 "stacks.sync.confirm.message %ld %@" = "La synchronisation force le push de %ld branches et met à jour la pile sur GitHub : %@\n\nToute autre personne travaillant sur ces branches devra les réinitialiser.";
 "stacks.sync.confirm.button" = "Synchroniser et pousser";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Fusionner la pile…";
+"stacks.merge.stack.title" = "Fusionner la pile ?";
+"stacks.merge.stack.message %ld" = "Fusionne %ld pull requests dans la branche de base.";
+"stacks.merge.stack.confirm %ld" = "Fusionner %ld PR";
+"stacks.merge.stack.method %@" = "Méthode de fusion : %@ (celle par défaut du dépôt)";
+"stacks.merge.stack.irreversible" = "Cette action est irréversible depuis TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests fusionnées.";
+"stacks.merge.stack.loading" = "Vérification des revues et de l'état CI…";
+"stacks.merge.stack.not.submitted" = "Cette pile n'a pas encore été envoyée sur GitHub.";
+"stacks.merge.blocked.draft" = "Brouillon";
+"stacks.merge.blocked.closed" = "Fermée";
+"stacks.merge.blocked.merged" = "Déjà fusionnée";
+"stacks.merge.blocked.by %@" = "%@ bloque tout ce qui se trouve au-dessus : la pile entière ne peut pas être fusionnée d'ici. Ouvrez-la sur GitHub pour fusionner jusqu'à ce point.";
+"stacks.merge.open.on.github" = "Ouvrir la pile sur GitHub";
+"stacks.review.approved" = "Approuvée";
+"stacks.review.changes.requested" = "Modifications demandées";
+"stacks.review.required" = "Revue requise";
+"stacks.checks.passing" = "Vérifications réussies";
+"stacks.checks.failing" = "Vérifications en échec";
+"stacks.checks.pending" = "Vérifications en cours";
+"stacks.link.stack" = "Lier des PR en une pile…";
+"stacks.link.stack.title" = "Lier des PR en une pile";
+"stacks.link.stack.will.create %ld" = "Crée %ld nouvelles pull requests sur GitHub.";
+"stacks.link.stack.existing" = "existante";
+"stacks.link.stack.new" = "créera une PR";
+"stacks.link.stack.confirm %ld" = "Lier %ld branches";
+"stacks.link.stack.done" = "Branches liées en une pile.";
+"stacks.checkout.stack %ld" = "Extraire toute la pile (%ld branches)";
+"stacks.checkout.stack.done %ld" = "%ld branches empilées extraites.";

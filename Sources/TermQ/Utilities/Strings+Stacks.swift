@@ -97,6 +97,61 @@ extension Strings {
         static var untrackStackConfirm: String { localized("stacks.untrack.stack.confirm") }
         static var untrackStackDone: String { localized("stacks.untrack.stack.done") }
 
+        // Merge Stack — the only action here that lands code on a real branch.
+        static var mergeStack: String { localized("stacks.merge.stack") }
+        static var mergeStackTitle: String { localized("stacks.merge.stack.title") }
+        static func mergeStackMessage(_ count: Int) -> String {
+            localized("stacks.merge.stack.message %ld", count)
+        }
+        static func mergeStackConfirm(_ count: Int) -> String {
+            localized("stacks.merge.stack.confirm %ld", count)
+        }
+        static func mergeStackMethod(_ method: String) -> String {
+            localized("stacks.merge.stack.method %@", method)
+        }
+        static var mergeStackIrreversible: String { localized("stacks.merge.stack.irreversible") }
+        static func mergeStackDone(_ count: Int) -> String {
+            localized("stacks.merge.stack.done %ld", count)
+        }
+        static var mergeStackLoading: String { localized("stacks.merge.stack.loading") }
+        static var mergeStackNotSubmitted: String { localized("stacks.merge.stack.not.submitted") }
+        static var mergeBlockedDraft: String { localized("stacks.merge.blocked.draft") }
+        static var mergeBlockedClosed: String { localized("stacks.merge.blocked.closed") }
+        static var mergeBlockedMerged: String { localized("stacks.merge.blocked.merged") }
+        /// Shown when a draft or closed PR partway up stops the whole stack merging.
+        /// The partial merge is deliberately handed to GitHub — see the sheet.
+        static func mergeBlockedBy(_ number: String) -> String {
+            localized("stacks.merge.blocked.by %@", number)
+        }
+        static var mergeOpenOnGitHub: String { localized("stacks.merge.open.on.github") }
+        static var reviewApproved: String { localized("stacks.review.approved") }
+        static var reviewChangesRequested: String { localized("stacks.review.changes.requested") }
+        static var reviewRequired: String { localized("stacks.review.required") }
+        static var checksPassing: String { localized("stacks.checks.passing") }
+        static var checksFailing: String { localized("stacks.checks.failing") }
+        static var checksPending: String { localized("stacks.checks.pending") }
+
+        // Link PRs into a Stack — creates pull requests, so it is named for that.
+        static var linkStack: String { localized("stacks.link.stack") }
+        static var linkStackTitle: String { localized("stacks.link.stack.title") }
+        static func linkStackWillCreate(_ count: Int) -> String {
+            localized("stacks.link.stack.will.create %ld", count)
+        }
+        static var linkStackExisting: String { localized("stacks.link.stack.existing") }
+        static var linkStackNew: String { localized("stacks.link.stack.new") }
+        static func linkStackConfirm(_ count: Int) -> String {
+            localized("stacks.link.stack.confirm %ld", count)
+        }
+        static var linkStackDone: String { localized("stacks.link.stack.done") }
+
+        // Check Out Whole Stack — Remote PRs feed.
+        static func checkoutStack(_ count: Int) -> String {
+            localized("stacks.checkout.stack %ld", count)
+        }
+        static func checkoutStackDone(_ count: Int) -> String {
+            localized("stacks.checkout.stack.done %ld", count)
+        }
+
         // Sync confirmation — shown only for a provider whose sync reaches the remote.
         static var syncConfirmTitle: String { localized("stacks.sync.confirm.title") }
         static func syncConfirmMessage(_ count: Int, _ names: String) -> String {

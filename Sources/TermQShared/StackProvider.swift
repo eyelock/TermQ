@@ -160,15 +160,28 @@ public struct StackBranch: Codable, Sendable, Equatable, Identifiable {
     /// Names of branches directly above this one in the stack.
     public let children: [String]
     public let needsRestack: Bool
-    public let changeRequest: StackChangeRequest?
+    /// `var` so a caller can fill this in without re-listing every other field. The
+    /// memberwise rebuild it replaces is a live hazard: `remoteStackID` is defaulted
+    /// and last, so omitting it compiled silently and blanked the stack number on
+    /// every branch, hiding Merge Stack entirely.
+    public var changeRequest: StackChangeRequest?
     public let push: StackPushState?
     /// Branch's change request is sitting in a merge queue. Restructuring operations
     /// must refuse to touch it. Only providers with merge-queue awareness report this
     /// (git-spice has no notion of it and always reports `false`).
     public let isQueued: Bool
+    /// Identifier of the STACK this branch belongs to on the forge, when the forge models
+    /// stacks as first-class objects. Provider-opaque above this boundary, exactly like
+    /// `StackChangeRequest.id` — the provider that emitted it is the one that parses it.
+    ///
+    /// Carried per branch rather than per stack because `StackGraph` is a flat branch
+    /// list; every branch of one stack reports the same value. `nil` for git-spice, which
+    /// has no remote stack object at all, and for a gh-stack stack that has not been
+    /// submitted yet.
+    public let remoteStackID: String?
 
-    /// `isQueued` is last and defaulted so providers that can't report merge-queue
-    /// state — and every existing call site — stay source-compatible.
+    /// Trailing parameters are defaulted so providers that can't report merge-queue or
+    /// remote-stack state — and every existing call site — stay source-compatible.
     public init(
         name: String,
         isCurrent: Bool,
@@ -178,7 +191,8 @@ public struct StackBranch: Codable, Sendable, Equatable, Identifiable {
         needsRestack: Bool,
         changeRequest: StackChangeRequest?,
         push: StackPushState?,
-        isQueued: Bool = false
+        isQueued: Bool = false,
+        remoteStackID: String? = nil
     ) {
         self.name = name
         self.isCurrent = isCurrent
@@ -189,6 +203,7 @@ public struct StackBranch: Codable, Sendable, Equatable, Identifiable {
         self.changeRequest = changeRequest
         self.push = push
         self.isQueued = isQueued
+        self.remoteStackID = remoteStackID
     }
 
     /// Hand-rolled to keep `isQueued` optional on the wire: `StackGraph` is encoded into
@@ -205,6 +220,7 @@ public struct StackBranch: Codable, Sendable, Equatable, Identifiable {
         changeRequest = try container.decodeIfPresent(StackChangeRequest.self, forKey: .changeRequest)
         push = try container.decodeIfPresent(StackPushState.self, forKey: .push)
         isQueued = try container.decodeIfPresent(Bool.self, forKey: .isQueued) ?? false
+        remoteStackID = try container.decodeIfPresent(String.self, forKey: .remoteStackID)
     }
 }
 
@@ -294,6 +310,26 @@ public enum StackScope: Sendable, Equatable {
     case upstack(from: String?)
     /// The entire stack containing the current branch.
     case stack
+}
+
+/// How a stack merge combines each change request.
+///
+/// `nil` at the call site means INHERIT THE REPOSITORY'S DEFAULT, and that is the normal
+/// case — gh-stack resolves an unspecified method to the repo's configured default and
+/// falls back to the first method the repo allows, so passing nothing is both simpler and
+/// more correct than resolving it here and risking a method the repo forbids.
+///
+/// The cases exist so the confirmation UI can NAME the inherited method, and so a future
+/// caller can override deliberately.
+public enum StackMergeMethod: String, Sendable, CaseIterable, Codable {
+    case merge
+    case squash
+    case rebase
+
+    /// Maps GitHub's `viewerDefaultMergeMethod` (`MERGE` / `SQUASH` / `REBASE`).
+    public init?(githubDefault raw: String) {
+        self.init(rawValue: raw.lowercased())
+    }
 }
 
 /// Options for a submit (create/update change requests) operation.
@@ -444,6 +480,34 @@ public protocol StackProvider: Sendable {
     /// LEAVING EVERY BRANCH IN PLACE. Only meaningful when `capabilities` contains
     /// `.untrackStack`. Not a synonym for `destroyStack` — that one deletes branches.
     func untrackStack(in worktree: String) async throws
+
+    /// Merge every change request in the stack identified by `remoteStackID`, using
+    /// `method`. Only meaningful when `capabilities` contains `.mergeStack`.
+    ///
+    /// The stack is addressed EXPLICITLY rather than by "whatever is checked out": this
+    /// merges pull requests, and resolving the target from the working directory would
+    /// make the blast radius depend on state the caller cannot see.
+    ///
+    /// `method` is normally `nil`, meaning "use whatever this repository is configured to
+    /// do" — see `StackMergeMethod`. Pass a value only to override deliberately.
+    ///
+    /// Callers are responsible for confirming with the user first. Providers must never
+    /// bypass branch protection to make this succeed.
+    func mergeStack(remoteStackID: String, method: StackMergeMethod?, in worktree: String) async throws
+
+    /// Adopt `branches` into a stack on the forge, bottom-first. Only meaningful when
+    /// `capabilities` contains `.linkExisting`.
+    ///
+    /// NOT a local-only operation: a branch without a change request gets one CREATED.
+    /// This is why it is distinct from `trackBranch`, which only records local metadata.
+    /// `base` names the trunk for the bottom of the stack; `nil` uses the repository
+    /// default branch.
+    func linkStack(branches: [String], base: String?, in worktree: String) async throws
+
+    /// Check out the stack identified by `remoteStackID`, fetching its branches and
+    /// establishing local tracking. Only meaningful when `capabilities` contains
+    /// `.remoteDiscovery`.
+    func checkoutStack(remoteStackID: String, in worktree: String) async throws
 }
 
 // MARK: - Default Implementations
@@ -478,6 +542,24 @@ extension StackProvider {
     /// silently doing something adjacent (and destructive).
     public func untrackStack(in worktree: String) async throws {
         throw StackProviderError.unsupported(operation: "untracking a stack")
+    }
+
+    /// The three forge-stack operations below have no git-spice equivalent. Each default
+    /// refuses outright — there is no adjacent command worth substituting, and for
+    /// `mergeStack` in particular a near-miss would merge the wrong thing.
+    public func mergeStack(
+        remoteStackID: String, method: StackMergeMethod?, in worktree: String
+    ) async throws {
+        throw StackProviderError.unsupported(operation: "merging a whole stack")
+    }
+
+    public func linkStack(branches: [String], base: String?, in worktree: String) async throws {
+        throw StackProviderError.unsupported(
+            operation: "linking existing pull requests into a stack")
+    }
+
+    public func checkoutStack(remoteStackID: String, in worktree: String) async throws {
+        throw StackProviderError.unsupported(operation: "checking out a stack from the remote")
     }
 }
 

@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "Synkronisera och tvinga push?";
 "stacks.sync.confirm.message %ld %@" = "Synkronisering tvingar push av %ld grenar och uppdaterar stapeln på GitHub: %@\n\nAlla andra som arbetar med grenarna måste återställa.";
 "stacks.sync.confirm.button" = "Synkronisera och pusha";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Slå ihop stapeln…";
+"stacks.merge.stack.title" = "Slå ihop stapeln?";
+"stacks.merge.stack.message %ld" = "Slår ihop %ld pull requests till basgrenen.";
+"stacks.merge.stack.confirm %ld" = "Slå ihop %ld PR";
+"stacks.merge.stack.method %@" = "Sammanslagningsmetod: %@ (repots standard)";
+"stacks.merge.stack.irreversible" = "Det här går inte att ångra från TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests sammanslagna.";
+"stacks.merge.stack.loading" = "Kontrollerar granskning och CI-status…";
+"stacks.merge.stack.not.submitted" = "Stapeln har ännu inte skickats till GitHub.";
+"stacks.merge.blocked.draft" = "Utkast";
+"stacks.merge.blocked.closed" = "Stängd";
+"stacks.merge.blocked.merged" = "Redan sammanslagen";
+"stacks.merge.blocked.by %@" = "%@ blockerar allt ovanför, så hela stapeln kan inte slås ihop härifrån. Öppna den på GitHub för att slå ihop fram till den punkten.";
+"stacks.merge.open.on.github" = "Öppna stapeln på GitHub";
+"stacks.review.approved" = "Godkänd";
+"stacks.review.changes.requested" = "Ändringar begärda";
+"stacks.review.required" = "Granskning krävs";
+"stacks.checks.passing" = "Kontroller godkända";
+"stacks.checks.failing" = "Kontroller misslyckas";
+"stacks.checks.pending" = "Kontroller pågår";
+"stacks.link.stack" = "Länka PR till en stapel…";
+"stacks.link.stack.title" = "Länka PR till en stapel";
+"stacks.link.stack.will.create %ld" = "Skapar %ld nya pull requests på GitHub.";
+"stacks.link.stack.existing" = "befintlig";
+"stacks.link.stack.new" = "skapar en PR";
+"stacks.link.stack.confirm %ld" = "Länka %ld grenar";
+"stacks.link.stack.done" = "Grenar länkade till en stapel.";
+"stacks.checkout.stack %ld" = "Checka ut hela stapeln (%ld grenar)";
+"stacks.checkout.stack.done %ld" = "%ld staplade grenar utcheckade.";

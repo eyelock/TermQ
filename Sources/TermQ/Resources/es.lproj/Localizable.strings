@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "¿Sincronizar y forzar el push?";
 "stacks.sync.confirm.message %ld %@" = "Sincronizar fuerza el push de %ld ramas y actualiza la pila en GitHub: %@\n\nQuien más trabaje en estas ramas tendrá que restablecerlas.";
 "stacks.sync.confirm.button" = "Sincronizar y enviar";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Fusionar pila…";
+"stacks.merge.stack.title" = "¿Fusionar la pila?";
+"stacks.merge.stack.message %ld" = "Fusiona %ld pull requests en la rama base.";
+"stacks.merge.stack.confirm %ld" = "Fusionar %ld PR";
+"stacks.merge.stack.method %@" = "Método de fusión: %@ (el predeterminado de este repositorio)";
+"stacks.merge.stack.irreversible" = "Esto no se puede deshacer desde TermQ.";
+"stacks.merge.stack.done %ld" = "Se han fusionado %ld pull requests.";
+"stacks.merge.stack.loading" = "Comprobando revisiones y estado de CI…";
+"stacks.merge.stack.not.submitted" = "Esta pila aún no se ha enviado a GitHub.";
+"stacks.merge.blocked.draft" = "Borrador";
+"stacks.merge.blocked.closed" = "Cerrado";
+"stacks.merge.blocked.merged" = "Ya fusionado";
+"stacks.merge.blocked.by %@" = "%@ bloquea todo lo que está por encima, así que la pila completa no se puede fusionar desde aquí. Ábrela en GitHub para fusionar hasta ese punto.";
+"stacks.merge.open.on.github" = "Abrir la pila en GitHub";
+"stacks.review.approved" = "Aprobado";
+"stacks.review.changes.requested" = "Cambios solicitados";
+"stacks.review.required" = "Revisión necesaria";
+"stacks.checks.passing" = "Comprobaciones correctas";
+"stacks.checks.failing" = "Comprobaciones fallidas";
+"stacks.checks.pending" = "Comprobaciones en curso";
+"stacks.link.stack" = "Vincular PR en una pila…";
+"stacks.link.stack.title" = "Vincular PR en una pila";
+"stacks.link.stack.will.create %ld" = "Crea %ld pull requests nuevos en GitHub.";
+"stacks.link.stack.existing" = "existente";
+"stacks.link.stack.new" = "creará un PR";
+"stacks.link.stack.confirm %ld" = "Vincular %ld ramas";
+"stacks.link.stack.done" = "Ramas vinculadas en una pila.";
+"stacks.checkout.stack %ld" = "Extraer la pila completa (%ld ramas)";
+"stacks.checkout.stack.done %ld" = "Se han extraído %ld ramas apiladas.";

@@ -1473,3 +1473,34 @@
 "stacks.sync.confirm.title" = "Synkronisere og tvinge push?";
 "stacks.sync.confirm.message %ld %@" = "Synkronisering tvinger push av %ld grener og oppdaterer stabelen på GitHub: %@\n\nAlle andre som jobber på grenene, må tilbakestille.";
 "stacks.sync.confirm.button" = "Synkroniser og push";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Slå sammen stabelen…";
+"stacks.merge.stack.title" = "Slå sammen stabelen?";
+"stacks.merge.stack.message %ld" = "Slår sammen %ld pull requests inn i basisgrenen.";
+"stacks.merge.stack.confirm %ld" = "Slå sammen %ld PR-er";
+"stacks.merge.stack.method %@" = "Sammenslåingsmetode: %@ (standarden til dette repositoriet)";
+"stacks.merge.stack.irreversible" = "Dette kan ikke angres fra TermQ.";
+"stacks.merge.stack.done %ld" = "%ld pull requests slått sammen.";
+"stacks.merge.stack.loading" = "Sjekker gjennomgang og CI-status…";
+"stacks.merge.stack.not.submitted" = "Denne stabelen er ikke sendt til GitHub ennå.";
+"stacks.merge.blocked.draft" = "Utkast";
+"stacks.merge.blocked.closed" = "Lukket";
+"stacks.merge.blocked.merged" = "Allerede slått sammen";
+"stacks.merge.blocked.by %@" = "%@ blokkerer alt over seg, så hele stabelen kan ikke slås sammen herfra. Åpne den på GitHub for å slå sammen opp til det punktet.";
+"stacks.merge.open.on.github" = "Åpne stabelen på GitHub";
+"stacks.review.approved" = "Godkjent";
+"stacks.review.changes.requested" = "Endringer forespurt";
+"stacks.review.required" = "Gjennomgang kreves";
+"stacks.checks.passing" = "Sjekker bestått";
+"stacks.checks.failing" = "Sjekker feiler";
+"stacks.checks.pending" = "Sjekker kjører";
+"stacks.link.stack" = "Koble PR-er til en stabel…";
+"stacks.link.stack.title" = "Koble PR-er til en stabel";
+"stacks.link.stack.will.create %ld" = "Oppretter %ld nye pull requests på GitHub.";
+"stacks.link.stack.existing" = "eksisterende";
+"stacks.link.stack.new" = "oppretter en PR";
+"stacks.link.stack.confirm %ld" = "Koble %ld grener";
+"stacks.link.stack.done" = "Grener koblet til en stabel.";
+"stacks.checkout.stack %ld" = "Sjekk ut hele stabelen (%ld grener)";
+"stacks.checkout.stack.done %ld" = "Sjekket ut %ld stablede grener.";

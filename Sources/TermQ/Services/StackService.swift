@@ -342,6 +342,34 @@ final class StackService: ObservableObject {
         }
     }
 
+    /// Merge every change request in a stack. The most consequential thing this service
+    /// does — callers MUST have confirmed with the user, naming each change request.
+    func mergeStack(
+        repo: String, worktree: String, remoteStackID: String, method: StackMergeMethod? = nil
+    ) async throws {
+        try await runMutation(repo: repo, worktree: worktree) { provider in
+            try await provider.mergeStack(
+                remoteStackID: remoteStackID, method: method, in: worktree)
+        }
+    }
+
+    /// Adopt existing branches into a stack on the forge. CREATES change requests for
+    /// branches that lack one — not a local-only operation.
+    func linkStack(
+        repo: String, worktree: String, branches: [String], base: String?
+    ) async throws {
+        try await runMutation(repo: repo, worktree: worktree) { provider in
+            try await provider.linkStack(branches: branches, base: base, in: worktree)
+        }
+    }
+
+    /// Check out a stack that exists on the forge.
+    func checkoutStack(repo: String, worktree: String, remoteStackID: String) async throws {
+        try await runMutation(repo: repo, worktree: worktree) { provider in
+            try await provider.checkoutStack(remoteStackID: remoteStackID, in: worktree)
+        }
+    }
+
     /// Drop the stack from tracking WITHOUT deleting its branches. Distinct from
     /// `destroyStack` — gate on `.untrackStack`, not `.destroyStack`.
     func untrackStack(repo: String, worktree: String) async throws {

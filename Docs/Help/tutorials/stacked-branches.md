@@ -81,11 +81,29 @@ All of these live in the worktree row's context menu (right-click):
 
 ![Submit Stack confirmation sheet](../Images/stacked-prs-submit-confirmation.png)
 
-**Sync Repo** — the stack-aware refresh: pulls trunk, deletes local branches whose PRs merged, and retargets/restacks the branches above a merged one. Run it after a downstack PR merges. TermQ lists any branches the sync removed ("Sync removed 2 merged branches: …") — and says "Everything in sync" when there was nothing to do. The repo row's ⟳ refresh button also uses sync automatically for stacked repos.
+**Sync Repo** — the stack-aware refresh: pulls trunk, deletes local branches whose PRs merged, and retargets/restacks the branches above a merged one. Run it after a downstack PR merges. TermQ lists any branches the sync removed ("Sync removed 2 merged branches: …") — and says "Everything in sync" when there was nothing to do.
 
 > **Sync is not the same operation on both backends.** `gs repo sync` is local only. `gh stack sync` **force-pushes every branch in the stack** and rewrites the stack on GitHub — so on a `gh stack` repo, TermQ asks you to confirm first and lists exactly which branches will be pushed.
 
+That difference decides what the repo row's **⟳ refresh** button does. On a git-spice repo it runs the sync, because that costs nothing beyond a local rebase and keeps the stack from going stale after a downstack merge. On a `gh stack` repo it does a plain fetch instead — a refresh button must never force-push, which is the whole reason Sync asks first. So on a `gh stack` repo, tidying up after a merge is something you run **Sync** for, deliberately.
+
 **Untrack Stack** *(`gh stack` only)* — drops a stack from local tracking and **leaves every branch in place**. Use it when you want to stop managing a chain as a stack without losing any work. It is not the same as **Destroy Stack** *(git-spice only)*, which **deletes every branch** in the chain — the two are deliberately never offered under the same label.
+
+**Merge Stack…** *(`gh stack` only)* — merges every PR in the stack into the base branch as one all-or-nothing operation. The confirmation sheet fetches each PR's **review decision and CI state at the moment you open it** — not from the cached PR feed, because stale information is exactly what you don't want when deciding to merge — and names the merge method it will use, inherited from the repository's own setting.
+
+Review and check state are shown but do **not** block: branch protection rules vary per repository and TermQ can't read them, so it reports what it knows and lets GitHub make the final call. What *does* block is a **draft or closed PR partway up the stack** — nothing above it can merge. The sheet says so up front rather than letting you confirm something that can't succeed, and offers **Open Stack on GitHub** to merge up to that point there instead.
+
+> **Why the partial merge goes to GitHub.** `gh stack merge <number>` treats a bare number as a *stack* number first and only then as a PR number, and the two are independent sequences in the same repository. A PR number that happens to collide with a stack number would merge a different stack entirely. Merging the whole stack is unambiguous, so that stays a TermQ button; merging *up to* a PR isn't, so it goes where it is.
+
+**Link PRs into a Stack…** *(`gh stack` only)* — adopts existing branches into a stack on GitHub. Named for what it does rather than folded into Track Branch, because **any branch without a PR gets one created**. The sheet marks each branch as existing or new and counts the PRs it will open.
+
+### After a stack merges
+
+Merging doesn't make the stack vanish, and that's not a leftover — the branches are still on disk. What you'll see straight after **Merge Stack** is every PR badge turn **purple (merged)** while the stack stays in the sidebar.
+
+Run **Sync** to finish up: it deletes the local branches whose PRs merged, and once a stack has no branches left it disappears from the sidebar with them. TermQ names what it removed ("Sync removed 3 merged branches: …").
+
+Whether the *remote* branches go too is GitHub's call, not TermQ's — it depends on the repository's **Automatically delete head branches** setting.
 
 While any of these runs, the repo row shows a spinner and the stack actions are disabled — mutations queue one at a time per repository.
 
@@ -104,6 +122,12 @@ Switches are **guarded**. TermQ refuses when:
 The guard messages tell you which case you hit. The rules exist so a switch is always boring — nothing moves that you didn't commit.
 
 ---
+
+## Checking out a stack someone else pushed
+
+In **Remote PRs** mode, a PR that belongs to a GitHub stack offers **Check Out Whole Stack** alongside the usual per-PR checkout. The difference matters: checking out one PR of a stack gives you a branch whose parent isn't there, so the diff reads against the wrong base and the stack UI stays dark. Checking out the whole stack fetches every branch and sets up local tracking, so it behaves like a stack you built yourself.
+
+This is `gh stack`-only — git-spice has no forge-level stack object to discover.
 
 ## Break-out worktrees
 
@@ -138,6 +162,10 @@ This is where TermQ's home advantage kicks in: the conflicted worktree's termina
 - Switching entries is double-click or context menu, and it's **guarded**: dirty worktrees, in-use terminals, and branches owned by other worktrees are refused — because uncommitted changes travel with the worktree, not the branch
 - **Break Out into Worktree…** gives a stack entry its own worktree for concurrent sessions; TermQ restacks broken-out branches in their own worktrees afterwards, and tells you when a dirty or in-use worktree was skipped
 - Conflict pauses show a banner with **Continue** / **Abort** — resolve in the worktree's own terminal
+- **Merge Stack** checks review and CI state fresh when you open it, tells you up front when a draft or closed PR blocks the merge, and sends the partial merge to GitHub where it's unambiguous
+- **Link PRs into a Stack** creates PRs for branches that lack one — the sheet counts them before you confirm
+- **Check Out Whole Stack** in Remote PRs brings down every branch of someone else's stack, not just the one PR
+- After a merge the PRs go purple and the stack stays until **Sync** deletes the merged branches — on a `gh stack` repo the ⟳ button won't do that for you, because it would mean force-pushing without asking
 
 ## Next
 

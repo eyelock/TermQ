@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "同步並強制推送？";
 "stacks.sync.confirm.message %ld %@" = "同步會強制推送 %ld 個分支，並更新 GitHub 上的堆疊：%@\n\n其他正在這些分支上工作的人需要重設。";
 "stacks.sync.confirm.button" = "同步並推送";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "合併堆疊…";
+"stacks.merge.stack.title" = "合併堆疊？";
+"stacks.merge.stack.message %ld" = "將 %ld 個拉取請求合併到基礎分支。";
+"stacks.merge.stack.confirm %ld" = "合併 %ld 個 PR";
+"stacks.merge.stack.method %@" = "合併方式：%@（此儲存庫的預設值）";
+"stacks.merge.stack.irreversible" = "此操作無法在 TermQ 中復原。";
+"stacks.merge.stack.done %ld" = "已合併 %ld 個拉取請求。";
+"stacks.merge.stack.loading" = "正在檢查審查與 CI 狀態…";
+"stacks.merge.stack.not.submitted" = "此堆疊尚未提交至 GitHub。";
+"stacks.merge.blocked.draft" = "草稿";
+"stacks.merge.blocked.closed" = "已關閉";
+"stacks.merge.blocked.merged" = "已合併";
+"stacks.merge.blocked.by %@" = "%@ 阻擋了其上方的所有內容，因此無法在此合併整個堆疊。請在 GitHub 上開啟，合併到該處為止。";
+"stacks.merge.open.on.github" = "在 GitHub 上開啟堆疊";
+"stacks.review.approved" = "已核准";
+"stacks.review.changes.requested" = "已要求修改";
+"stacks.review.required" = "需要審查";
+"stacks.checks.passing" = "檢查通過";
+"stacks.checks.failing" = "檢查失敗";
+"stacks.checks.pending" = "檢查進行中";
+"stacks.link.stack" = "將 PR 連結為堆疊…";
+"stacks.link.stack.title" = "將 PR 連結為堆疊";
+"stacks.link.stack.will.create %ld" = "將在 GitHub 上建立 %ld 個新的拉取請求。";
+"stacks.link.stack.existing" = "已存在";
+"stacks.link.stack.new" = "將建立 PR";
+"stacks.link.stack.confirm %ld" = "連結 %ld 個分支";
+"stacks.link.stack.done" = "已將分支連結為堆疊。";
+"stacks.checkout.stack %ld" = "簽出整個堆疊（%ld 個分支）";
+"stacks.checkout.stack.done %ld" = "已簽出 %ld 個堆疊分支。";

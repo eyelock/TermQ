@@ -1468,3 +1468,34 @@
 "stacks.sync.confirm.title" = "Синхронизировать с принудительной отправкой?";
 "stacks.sync.confirm.message %ld %@" = "Синхронизация принудительно отправит %ld веток и обновит стек на GitHub: %@\n\nВсем, кто работает с этими ветками, придётся сделать сброс.";
 "stacks.sync.confirm.button" = "Синхронизировать и отправить";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Слить стек…";
+"stacks.merge.stack.title" = "Слить стек?";
+"stacks.merge.stack.message %ld" = "Сольёт %ld пул-реквестов в базовую ветку.";
+"stacks.merge.stack.confirm %ld" = "Слить %ld PR";
+"stacks.merge.stack.method %@" = "Способ слияния: %@ (по умолчанию для этого репозитория)";
+"stacks.merge.stack.irreversible" = "Это нельзя отменить из TermQ.";
+"stacks.merge.stack.done %ld" = "Слито пул-реквестов: %ld.";
+"stacks.merge.stack.loading" = "Проверка ревью и состояния CI…";
+"stacks.merge.stack.not.submitted" = "Этот стек ещё не отправлен на GitHub.";
+"stacks.merge.blocked.draft" = "Черновик";
+"stacks.merge.blocked.closed" = "Закрыт";
+"stacks.merge.blocked.merged" = "Уже слит";
+"stacks.merge.blocked.by %@" = "%@ блокирует всё, что выше, поэтому весь стек нельзя слить отсюда. Откройте его на GitHub, чтобы слить до этого места.";
+"stacks.merge.open.on.github" = "Открыть стек на GitHub";
+"stacks.review.approved" = "Одобрен";
+"stacks.review.changes.requested" = "Запрошены изменения";
+"stacks.review.required" = "Требуется ревью";
+"stacks.checks.passing" = "Проверки пройдены";
+"stacks.checks.failing" = "Проверки не проходят";
+"stacks.checks.pending" = "Проверки выполняются";
+"stacks.link.stack" = "Связать PR в стек…";
+"stacks.link.stack.title" = "Связать PR в стек";
+"stacks.link.stack.will.create %ld" = "Создаст новых пул-реквестов на GitHub: %ld.";
+"stacks.link.stack.existing" = "существующий";
+"stacks.link.stack.new" = "создаст PR";
+"stacks.link.stack.confirm %ld" = "Связать %ld веток";
+"stacks.link.stack.done" = "Ветки связаны в стек.";
+"stacks.checkout.stack %ld" = "Переключиться на весь стек (%ld веток)";
+"stacks.checkout.stack.done %ld" = "Переключено веток стека: %ld.";

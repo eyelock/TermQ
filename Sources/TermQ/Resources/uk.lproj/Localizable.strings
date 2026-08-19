@@ -1475,3 +1475,34 @@
 "stacks.sync.confirm.title" = "Синхронізувати з примусовою відправкою?";
 "stacks.sync.confirm.message %ld %@" = "Синхронізація примусово відправить %ld гілок і оновить стек на GitHub: %@\n\nУсім, хто працює з цими гілками, доведеться зробити скидання.";
 "stacks.sync.confirm.button" = "Синхронізувати та відправити";
+
+/* Stacked pull requests — forge-level stack operations */
+"stacks.merge.stack" = "Злити стек…";
+"stacks.merge.stack.title" = "Злити стек?";
+"stacks.merge.stack.message %ld" = "Зіллє %ld пул-реквестів у базову гілку.";
+"stacks.merge.stack.confirm %ld" = "Злити %ld PR";
+"stacks.merge.stack.method %@" = "Спосіб злиття: %@ (типовий для цього репозиторію)";
+"stacks.merge.stack.irreversible" = "Це не можна скасувати з TermQ.";
+"stacks.merge.stack.done %ld" = "Злито пул-реквестів: %ld.";
+"stacks.merge.stack.loading" = "Перевірка рецензій і стану CI…";
+"stacks.merge.stack.not.submitted" = "Цей стек ще не надіслано на GitHub.";
+"stacks.merge.blocked.draft" = "Чернетка";
+"stacks.merge.blocked.closed" = "Закритий";
+"stacks.merge.blocked.merged" = "Уже злитий";
+"stacks.merge.blocked.by %@" = "%@ блокує все, що вище, тож увесь стек не можна злити звідси. Відкрийте його на GitHub, щоб злити до цього місця.";
+"stacks.merge.open.on.github" = "Відкрити стек на GitHub";
+"stacks.review.approved" = "Схвалено";
+"stacks.review.changes.requested" = "Запитано зміни";
+"stacks.review.required" = "Потрібна рецензія";
+"stacks.checks.passing" = "Перевірки пройдено";
+"stacks.checks.failing" = "Перевірки не проходять";
+"stacks.checks.pending" = "Перевірки виконуються";
+"stacks.link.stack" = "Зв'язати PR у стек…";
+"stacks.link.stack.title" = "Зв'язати PR у стек";
+"stacks.link.stack.will.create %ld" = "Створить нових пул-реквестів на GitHub: %ld.";
+"stacks.link.stack.existing" = "наявний";
+"stacks.link.stack.new" = "створить PR";
+"stacks.link.stack.confirm %ld" = "Зв'язати %ld гілок";
+"stacks.link.stack.done" = "Гілки зв'язані у стек.";
+"stacks.checkout.stack %ld" = "Отримати весь стек (%ld гілок)";
+"stacks.checkout.stack.done %ld" = "Отримано гілок стека: %ld.";
