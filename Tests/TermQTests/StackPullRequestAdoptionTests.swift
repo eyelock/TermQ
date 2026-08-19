@@ -87,6 +87,52 @@ final class StackPullRequestAdoptionTests: XCTestCase {
         XCTAssertEqual(filled?.push?.behind, 1)
     }
 
+    // MARK: - Merged marking
+
+    func testAMergedChangeRequestIsReportedAsMerged() {
+        let open = StackChangeRequest(
+            id: "112", url: "https://example.com/112", status: .open, commentCount: 2)
+        let graph = StackGraph(branches: [branch("schema", changeRequest: open)])
+
+        let result = WorktreeSidebarViewModel.markingMerged(in: graph, mergedIDs: ["112"])
+        let cr = result.branch(named: "schema")?.changeRequest
+
+        XCTAssertEqual(cr?.status, .merged)
+        XCTAssertEqual(cr?.url, "https://example.com/112", "the URL must survive")
+        XCTAssertEqual(cr?.commentCount, 2, "the comment count must survive")
+    }
+
+    func testAChangeRequestThatWasNotMergedIsUntouched() {
+        let open = StackChangeRequest(id: "116", url: nil, status: .open, commentCount: nil)
+        let graph = StackGraph(branches: [branch("other", changeRequest: open)])
+
+        let result = WorktreeSidebarViewModel.markingMerged(in: graph, mergedIDs: ["112"])
+
+        XCTAssertEqual(result.branch(named: "other")?.changeRequest?.status, .open)
+    }
+
+    func testMergedMarkingPreservesTheStackNumber() {
+        let open = StackChangeRequest(id: "112", url: nil, status: .open, commentCount: nil)
+        let original = StackBranch(
+            name: "schema", isCurrent: false, checkedOutElsewhere: nil, parent: nil,
+            children: ["api"], needsRestack: false, changeRequest: open, push: nil,
+            isQueued: false, remoteStackID: "115")
+
+        let result = WorktreeSidebarViewModel.markingMerged(
+            in: StackGraph(branches: [original]), mergedIDs: ["112"])
+
+        XCTAssertEqual(result.branch(named: "schema")?.changeRequest?.status, .merged)
+        XCTAssertEqual(result.branch(named: "schema")?.remoteStackID, "115")
+        XCTAssertEqual(result.branch(named: "schema")?.children, ["api"])
+    }
+
+    func testNoMergedIDsLeavesTheGraphIdentical() {
+        let open = StackChangeRequest(id: "112", url: nil, status: .open, commentCount: nil)
+        let graph = StackGraph(branches: [branch("schema", changeRequest: open)])
+
+        XCTAssertEqual(WorktreeSidebarViewModel.markingMerged(in: graph, mergedIDs: []), graph)
+    }
+
     func testAnEmptyPullRequestListLeavesTheGraphIdentical() {
         let graph = StackGraph(branches: [branch("a"), branch("b")])
 

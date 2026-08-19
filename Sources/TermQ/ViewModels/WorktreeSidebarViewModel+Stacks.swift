@@ -281,7 +281,23 @@ extension WorktreeSidebarViewModel {
         let openPRs = prService.prsByRepo[repo.path] ?? []
         let numbersByBranch = Dictionary(
             openPRs.map { ($0.headRefName, $0.number) }, uniquingKeysWith: { first, _ in first })
-        return Self.adoptingPullRequests(in: graph, openPRNumbersByBranch: numbersByBranch)
+        let adopted = Self.adoptingPullRequests(in: graph, openPRNumbersByBranch: numbersByBranch)
+        return Self.markingMerged(in: adopted, mergedIDs: mergedChangeRequestIDs[repo.path] ?? [])
+    }
+
+    /// Report a change request TermQ merged as merged, since gh-stack's tracking file
+    /// keeps describing it as open. Everything else about the branch is untouched.
+    static func markingMerged(in graph: StackGraph, mergedIDs: Set<String>) -> StackGraph {
+        guard !mergedIDs.isEmpty else { return graph }
+        return StackGraph(
+            branches: graph.branches.map { branch in
+                guard let cr = branch.changeRequest, mergedIDs.contains(cr.id), cr.status != .merged
+                else { return branch }
+                var updated = branch
+                updated.changeRequest = StackChangeRequest(
+                    id: cr.id, url: cr.url, status: .merged, commentCount: cr.commentCount)
+                return updated
+            })
     }
 
     /// The pure half of `adoptKnownPullRequests`, split out so it can be tested without
@@ -624,6 +640,10 @@ extension WorktreeSidebarViewModel {
         }
         try await stackService.mergeStack(
             repo: repo.path, worktree: worktree.path, remoteStackID: remoteStackID)
+        // Recorded BEFORE the refresh: the refresh rebuilds the graph from the tracking
+        // file, which gh-stack leaves describing an open stack after a merge.
+        mergedChangeRequestIDs[repo.path, default: []]
+            .formUnion(group.branches.compactMap { $0.changeRequest?.id })
         await refreshWorktrees(for: repo)
         await prService.refresh(repoPath: repo.path, force: true)
     }
