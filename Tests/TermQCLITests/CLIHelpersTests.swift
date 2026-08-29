@@ -65,4 +65,54 @@ final class CLIHelpersTests: XCTestCase {
             XCTAssertTrue(shouldUseDebugMode(true))
         #endif
     }
+
+    // MARK: - waitForBoardCondition
+
+    func test_waitForBoardCondition_conditionTrue_returnsTrueWithoutRetrying() {
+        var evaluations = 0
+        let result = waitForBoardCondition(maxAttempts: 4, initialDelayMs: 1) {
+            evaluations += 1
+            return true
+        }
+
+        XCTAssertTrue(result)
+        XCTAssertEqual(evaluations, 1)
+    }
+
+    func test_waitForBoardCondition_conditionNeverTrue_returnsFalseAfterBudget() {
+        var evaluations = 0
+        let result = waitForBoardCondition(maxAttempts: 3, initialDelayMs: 1) {
+            evaluations += 1
+            return false
+        }
+
+        XCTAssertFalse(result)
+        XCTAssertEqual(evaluations, 3)
+    }
+
+    func test_waitForBoardCondition_conditionBecomesTrue_returnsTrue() {
+        var evaluations = 0
+        let result = waitForBoardCondition(maxAttempts: 4, initialDelayMs: 1) {
+            evaluations += 1
+            return evaluations == 2
+        }
+
+        XCTAssertTrue(result)
+        XCTAssertEqual(evaluations, 2)
+    }
+
+    /// A read can fail while the app is mid-write, which is a reason to look again rather than to
+    /// call the command dropped.
+    func test_waitForBoardCondition_conditionThrows_keepsRetrying() {
+        struct ReadFailure: Error {}
+        var evaluations = 0
+        let result = waitForBoardCondition(maxAttempts: 4, initialDelayMs: 1) {
+            evaluations += 1
+            if evaluations == 1 { throw ReadFailure() }
+            return true
+        }
+
+        XCTAssertTrue(result)
+        XCTAssertEqual(evaluations, 2)
+    }
 }

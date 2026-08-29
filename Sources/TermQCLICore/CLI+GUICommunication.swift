@@ -6,7 +6,60 @@ import TermQShared
 
 // MARK: - GUI Communication Helpers (URL Schemes)
 
-func deleteViaGUI(cardId: UUID, permanent: Bool) throws {
+/// Where to re-read the board when confirming a GUI-routed command.
+struct BoardContext {
+    let dataDirectory: URL?
+    let profile: AppProfile.Variant
+    let boardFilename: String
+
+    func load() throws -> Board {
+        try BoardLoader.loadBoard(
+            dataDirectory: dataDirectory, profile: profile, boardFilename: boardFilename)
+    }
+}
+
+/// Poll the board until `condition` holds, or the retry budget runs out.
+///
+/// `NSWorkspace.open` reports only that a URL was dispatched, never that the app acted on it, so
+/// a GUI-routed command has to be read back off the board before it can be called done. The budget
+/// mirrors `URLOpener.waitForCondition` on the MCP side so both front ends agree on when a command
+/// has been dropped; the CLI is synchronous, so this sleeps rather than awaits.
+func waitForBoardCondition(
+    maxAttempts: Int = 4,
+    initialDelayMs: UInt32 = 100,
+    condition: () throws -> Bool
+) -> Bool {
+    var delayMs = initialDelayMs
+
+    for attempt in 1...maxAttempts {
+        Thread.sleep(forTimeInterval: Double(delayMs) / 1000)
+        if (try? condition()) == true {
+            return true
+        }
+        if attempt < maxAttempts {
+            delayMs *= 2
+        }
+    }
+
+    return false
+}
+
+/// Fail a GUI-routed command that never showed up on the board.
+///
+/// The board write behind these commands is synchronous, so a change still missing after the full
+/// retry budget was not applied — reporting success here is what let a dropped command pass for a
+/// completed one.
+func reportUnconfirmed(_ action: String, hint: String? = nil) -> Error {
+    var message =
+        "TermQ accepted the \(action) request but the board never changed, so it was not applied."
+    if let hint {
+        message += " \(hint)"
+    }
+    JSONHelper.printErrorJSON(message)
+    return ExitCode.failure
+}
+
+func deleteViaGUI(cardId: UUID, permanent: Bool, context: BoardContext) throws {
     var components = URLComponents()
     components.scheme = AppProfile.Current.urlScheme
     components.host = "delete"
@@ -22,17 +75,23 @@ func deleteViaGUI(cardId: UUID, permanent: Bool) throws {
     }
 
     let workspace = NSWorkspace.shared
-    let success = workspace.open(url)
-
-    if success {
-        JSONHelper.printJSON(DeleteResponse(id: cardId.uuidString, permanent: permanent))
-    } else {
+    guard workspace.open(url) else {
         JSONHelper.printErrorJSON("Failed to send delete command to TermQ. Is it running?")
         throw ExitCode.failure
     }
+
+    let cardIdStr = cardId.uuidString
+    let confirmed = waitForBoardCondition {
+        GUIConfirmation.cardIsAbsent(try context.load(), cardId: cardIdStr)
+    }
+    guard confirmed else {
+        throw reportUnconfirmed("delete")
+    }
+
+    JSONHelper.printJSON(DeleteResponse(id: cardIdStr, permanent: permanent))
 }
 
-func moveViaGUI(cardId: UUID, toColumn: String) throws {
+func moveViaGUI(cardId: UUID, toColumn: String, context: BoardContext) throws {
     var components = URLComponents()
     components.scheme = AppProfile.Current.urlScheme
     components.host = "move"
@@ -48,14 +107,20 @@ func moveViaGUI(cardId: UUID, toColumn: String) throws {
     }
 
     let workspace = NSWorkspace.shared
-    let success = workspace.open(url)
-
-    if success {
-        JSONHelper.printJSON(MoveResponse(success: true, id: cardId.uuidString, column: toColumn))
-    } else {
+    guard workspace.open(url) else {
         JSONHelper.printErrorJSON("Failed to send move command to TermQ. Is it running?")
         throw ExitCode.failure
     }
+
+    let cardIdStr = cardId.uuidString
+    let confirmed = waitForBoardCondition {
+        GUIConfirmation.cardIsInColumn(try context.load(), cardId: cardIdStr, column: toColumn)
+    }
+    guard confirmed else {
+        throw reportUnconfirmed("move")
+    }
+
+    JSONHelper.printJSON(MoveResponse(success: true, id: cardIdStr, column: toColumn))
 }
 
 struct SetOptions {
@@ -73,7 +138,7 @@ struct SetOptions {
     let unfavourite: Bool
 }
 
-func setViaGUI(_ options: SetOptions) throws {
+func setViaGUI(_ options: SetOptions, context: BoardContext) throws {
     var components = URLComponents()
     components.scheme = AppProfile.Current.urlScheme
     components.host = "update"
@@ -108,14 +173,45 @@ func setViaGUI(_ options: SetOptions) throws {
     }
 
     let workspace = NSWorkspace.shared
-    let success = workspace.open(url)
-
-    if success {
-        JSONHelper.printJSON(SetResponse(success: true, id: options.cardId.uuidString))
-    } else {
+    guard workspace.open(url) else {
         JSONHelper.printErrorJSON("Failed to send update to TermQ. Is it running?")
         throw ExitCode.failure
     }
+
+    let cardIdStr = options.cardId.uuidString
+    let parsedTags = parseTags(options.tags).map { Tag(key: $0.key, value: $0.value) }
+    let favouriteValue: Bool? = options.favourite ? true : (options.unfavourite ? false : nil)
+    let expected = GUIConfirmation.ExpectedUpdate(
+        title: options.name,
+        description: options.description,
+        badge: options.badge,
+        llmPrompt: options.llmPrompt,
+        llmNextAction: options.llmNextAction,
+        isFavourite: favouriteValue,
+        column: options.column,
+        requiredTags: options.replaceTags ? nil : (parsedTags.isEmpty ? nil : parsedTags),
+        exactTags: options.replaceTags ? parsedTags : nil
+    )
+
+    let confirmed = waitForBoardCondition {
+        let board = try context.load()
+        // `initCommand` is the one field `set` accepts that never reaches board.json, so a request
+        // carrying only that can be confirmed no further than the card surviving.
+        guard expected.hasObservableFields else {
+            return !GUIConfirmation.cardIsAbsent(board, cardId: cardIdStr)
+        }
+        return GUIConfirmation.cardMatches(board, cardId: cardIdStr, expected: expected)
+    }
+    guard confirmed else {
+        let touchesLLMFields = options.llmPrompt != nil || options.llmNextAction != nil
+        throw reportUnconfirmed(
+            "update",
+            hint: touchesLLMFields
+                ? "TermQ can be set to confirm external LLM changes — a prompt may still be open."
+                : nil)
+    }
+
+    JSONHelper.printJSON(SetResponse(success: true, id: cardIdStr))
 }
 
 func createViaGUI(

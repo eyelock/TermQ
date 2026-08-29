@@ -67,6 +67,13 @@ struct Set: ParsableCommand {
             }
 
             if GUIDetector.isGUIRunning() {
+                // Reject an unknown column before dispatching. The GUI applies every other field
+                // and quietly skips the move, which left the card half-updated and the caller
+                // told it all worked.
+                if let columnName = column, GUIConfirmation.column(named: columnName, in: board) == nil {
+                    throw BoardWriter.WriteError.columnNotFound(name: columnName)
+                }
+
                 try setViaGUI(
                     SetOptions(
                         cardId: card.id,
@@ -81,7 +88,10 @@ struct Set: ParsableCommand {
                         initCommand: initCommand,
                         favourite: favourite,
                         unfavourite: unfavourite
-                    ))
+                    ),
+                    context: BoardContext(
+                        dataDirectory: dataDirURL, profile: profile,
+                        boardFilename: resolveBoardFilename()))
             } else {
                 let parsedTags = parseTags(tag)
                 let favouriteValue: Bool? = favourite ? true : (unfavourite ? false : nil)
@@ -177,7 +187,18 @@ struct Move: ParsableCommand {
             }
 
             if GUIDetector.isGUIRunning() {
-                try moveViaGUI(cardId: card.id, toColumn: toColumn)
+                // The GUI silently drops a move whose column it cannot resolve, so resolve it here
+                // and fail exactly as the headless path does rather than reporting a phantom move.
+                guard let targetColumn = GUIConfirmation.column(named: toColumn, in: board) else {
+                    throw BoardWriter.WriteError.columnNotFound(name: toColumn)
+                }
+
+                try moveViaGUI(
+                    cardId: card.id,
+                    toColumn: targetColumn.name,
+                    context: BoardContext(
+                        dataDirectory: dataDirURL, profile: profile,
+                        boardFilename: resolveBoardFilename()))
             } else {
                 _ = try HeadlessWriter.moveCard(
                     identifier: card.id.uuidString,
@@ -248,7 +269,12 @@ struct Delete: ParsableCommand {
             }
 
             if GUIDetector.isGUIRunning() {
-                try deleteViaGUI(cardId: card.id, permanent: permanent)
+                try deleteViaGUI(
+                    cardId: card.id,
+                    permanent: permanent,
+                    context: BoardContext(
+                        dataDirectory: dataDirURL, profile: profile,
+                        boardFilename: resolveBoardFilename()))
             } else {
                 try HeadlessWriter.deleteCard(
                     identifier: card.id.uuidString,
