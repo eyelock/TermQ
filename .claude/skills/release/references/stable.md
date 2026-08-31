@@ -30,6 +30,16 @@ git checkout -b release/v{VERSION}
 git push -u origin release/v{VERSION}
 ```
 
+**From a worktree** where `develop` is checked out elsewhere, branch off the remote-tracking ref
+instead — creating a *new* branch based on `develop` is allowed even when `develop` itself is
+claimed by another worktree:
+
+```bash
+git fetch origin
+git checkout -b release/v{VERSION} origin/develop
+git push -u origin release/v{VERSION}
+```
+
 ### 2. Update CHANGELOG.md
 
 ```bash
@@ -68,6 +78,12 @@ gh pr merge --merge
 git checkout main && git pull
 ```
 
+Steps 4 and 5 below need `main` in a working tree (`make check` builds it, `make release-*`
+tags `HEAD`). If `main` is checked out in another worktree, run them from **that** checkout —
+this is the one part of the stable procedure that is not worktree-portable. If you cannot, see
+"Releasing from a Worktree" in [SKILL.md](../SKILL.md) to tag `origin/main` by SHA, and run
+`make check` on a branch pointing at the same commit.
+
 ### 4. Pre-Release Checks
 
 ```bash
@@ -88,8 +104,16 @@ make release-minor   # 0.6.4 → 0.7.0
 make release-major   # 0.6.4 → 1.0.0
 ```
 
-This verifies you're on main, calculates the next version from git tags, creates an annotated
-tag, and pushes it.
+This calculates the next version from git tags, creates an annotated tag, and pushes it.
+
+Two things to know before running it:
+
+- It **tags `HEAD`**, and it only *warns* if you are not on `main` — a `[y/N]` prompt you can
+  answer past. Run it only from the checkout that holds `main`; from a worktree it will tag that
+  worktree's feature branch.
+- It is **interactive** (prompts for the branch confirmation and again to push), so it cannot be
+  driven non-interactively. To tag without prompts, use the by-SHA pattern in
+  "Releasing from a Worktree" in [SKILL.md](../SKILL.md).
 
 ### 6. Monitor Automated Release
 
@@ -112,7 +136,7 @@ gh pr list --base main --search "appcast in:title" --state merged --limit 1
 
 # 2. Build the back-merge branch from develop
 git fetch origin
-git checkout -b chore/back-merge-v{VERSION} develop
+git checkout -b chore/back-merge-v{VERSION} origin/develop   # works from any worktree
 git merge origin/main          # real merge of main — never use origin/release/* or cherry-picks
 # Resolve any conflicts (CHANGELOG is the most common — keep develop's [Unreleased]
 # section and accept main's released version sections below it)
@@ -154,7 +178,11 @@ git push origin :refs/tags/v{VERSION}
 - NEVER tag without running `make check` first
 - NEVER use custom release titles
 - NEVER skip CI verification
-- NEVER tag from branches other than `main`
+- NEVER tag a commit that is not on `main` — the rule is about *which commit* carries the tag,
+  not which branch is checked out. `git tag -a v{VERSION} $(git rev-parse origin/main)` from a
+  worktree satisfies it; `make release-patch` from a feature branch does not, because it tags
+  that branch's `HEAD`
+- NEVER use `git checkout --ignore-other-worktrees` to force `main` or `develop` into a worktree
 - NEVER skip the back-merge (step 7)
 - NEVER merge the release branch back to develop — always merge `origin/main`
 - NEVER use cherry-picks in step 7 — always `git merge origin/main`
