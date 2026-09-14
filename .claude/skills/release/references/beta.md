@@ -29,10 +29,29 @@ The git SHA is stored in the custom key `TermQBuildSHA` (for display in Settings
 
 ### 1. Ensure Changes Are on Develop
 
+What this step is really checking is that **the commit you are about to tag is the tip of
+`origin/develop`** — not that `develop` happens to be checked out locally.
+
+From the checkout that holds `develop`:
+
 ```bash
 git checkout develop
 git pull
 ```
+
+**From any other worktree**, `git checkout develop` fails with
+`fatal: 'develop' is already used by worktree at ...`. That is normal — a branch can be checked
+out in only one worktree at a time. Skip the checkout and tag by SHA instead:
+
+```bash
+git fetch origin
+SHA=$(git rev-parse origin/develop)
+git log -1 --oneline "$SHA"        # confirm this is the change you mean to ship
+```
+
+See "Releasing from a Worktree" in [SKILL.md](../SKILL.md) for the full pattern and its
+verification checks. Do not use `--ignore-other-worktrees`, and do not move another worktree's
+branch to get around this.
 
 ### 2. Create Beta Tag
 
@@ -40,6 +59,18 @@ git pull
 git tag -a "v0.7.0-beta.1" -m "Release v0.7.0-beta.1"
 git push origin v0.7.0-beta.1
 ```
+
+Tagging by SHA (from a worktree) is the same command with the commit added:
+
+```bash
+git tag -a "v0.7.0-beta.1" "$SHA" -m "Release v0.7.0-beta.1"
+git rev-list -n1 v0.7.0-beta.1     # must equal $SHA before you push
+git push origin v0.7.0-beta.1
+```
+
+There is **no `make` target for beta tags**. `make release-major|minor|patch` only compute
+stable `X.Y.Z` versions, and they tag `HEAD` interactively — from a worktree that means the
+wrong commit. Use raw `git tag -a` as shown above.
 
 ### 3. Monitor
 
@@ -97,3 +128,5 @@ v1.0.0-alpha.1  →  v1.0.0-alpha.2  →  v1.0.0-beta.1  →  v1.0.0-beta.2  →
 - NEVER mark stable releases as pre-release
 - NEVER promote beta to stable without testing
 - NEVER open `develop → main` directly for promotion — always use a release branch
+- NEVER use `git checkout --ignore-other-worktrees` to force `develop` into a worktree
+- NEVER use `make release-*` to cut a beta — those tag `HEAD` and compute stable versions

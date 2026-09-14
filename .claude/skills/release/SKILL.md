@@ -30,6 +30,60 @@ TermQ uses semantic versioning. Version is determined entirely from git tags —
 | `appcast.xml` | Stable releases only | Default update channel |
 | `appcast-beta.xml` | All releases including pre-releases | Beta opt-in users |
 
+## Releasing from a Worktree
+
+Development runs many worktrees at once, and **git allows a branch to be checked out in only
+one worktree at a time**. From any worktree other than the one holding `develop` (or `main`),
+the usual first step fails:
+
+```
+$ git checkout develop
+fatal: 'develop' is already used by worktree at '/path/to/main/checkout'
+```
+
+This is the normal state of the repo, not an error to work around. Do **not** pass
+`--ignore-other-worktrees` (it yanks the branch out from under the other worktree and still
+leaves it at whatever commit it was on), and do not reach into another worktree to move its
+branch — another session may be working there.
+
+A release needs a **tag on the right commit**, and `git tag` accepts any commit-ish. So tag the
+remote-tracking ref by SHA, from wherever you are:
+
+```bash
+git fetch origin
+SHA=$(git rev-parse origin/develop)          # origin/main for a stable release
+git log -1 --oneline "$SHA"                  # eyeball it — is this what you mean to ship?
+git tag -a "v{VERSION}" "$SHA" -m "Release v{VERSION}"
+```
+
+Verify before pushing — these three checks catch the mistakes that are painful to undo:
+
+```bash
+git cat-file -t "v{VERSION}"                 # must print "tag" (annotated, not lightweight)
+git rev-list -n1 "v{VERSION}"                # must equal $SHA
+git ls-remote --exit-code --tags origin "v{VERSION}" && echo "ALREADY EXISTS — stop"
+```
+
+```bash
+git push origin "v{VERSION}"                 # this is what triggers release.yml
+```
+
+The workflow builds from the tag, so the artifact is identical either way. Your local
+`develop`/`main` stays where it is — expected and harmless; pull it next time you work there.
+
+**The checkout is a convenience, not a prerequisite.** What matters is that the SHA you tag is
+the tip of the branch you intend to release, which `git rev-parse origin/<branch>` guarantees
+after a fetch.
+
+### Do not use `make release-*` from a worktree
+
+`make release-patch|minor|major` (and the underlying `tag-release`) **tag `HEAD`**, not `main`.
+From a worktree, `HEAD` is that worktree's feature branch, so they will happily tag the wrong
+commit after a single `[y/N]` warning. They are also interactive — two `read -p` prompts — so
+they cannot be driven non-interactively by an agent.
+
+Use them only from the checkout that actually holds `main`. Everywhere else, tag by SHA as above.
+
 ## Release Types
 
 See the detailed procedure for each release type:

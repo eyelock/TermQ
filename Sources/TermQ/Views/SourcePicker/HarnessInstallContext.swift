@@ -75,17 +75,28 @@ final class HarnessInstallContext: SourcePickerContext {
     func applyLibrary(result: SearchResult) -> HarnessInstallConfig {
         let ref: String
         if let repo = result.repo, !repo.isEmpty {
-            // Build a path-shaped canonical ref: "github.com/org/repo/path" or
-            // "github.com/org/repo/name". YNH install resolves this as a git
-            // source — no registry lookup required, so it works across machines
-            // regardless of which registries are configured.
-            let within: String
-            if let path = result.path, !path.isEmpty {
-                within = path
-            } else {
-                within = result.name
+            switch result.from.type {
+            case .source:
+                // A local source reports `repo` as the harness's complete
+                // filesystem path — the harness *is* that directory, and
+                // `path` is never emitted. Joining anything on produces a
+                // directory that has never existed, so pass `repo` verbatim.
+                // (`id` is no shortcut: it is "local/<name>", which
+                // `ynh install` would resolve as a registry id and fail on.)
+                ref = repo
+            case .registry:
+                // Build a path-shaped canonical ref: "github.com/org/repo/path"
+                // or "github.com/org/repo/name". YNH install resolves this as a
+                // git source — no registry lookup required, so it works across
+                // machines regardless of which registries are configured.
+                let within: String
+                if let path = result.path, !path.isEmpty {
+                    within = path
+                } else {
+                    within = result.name
+                }
+                ref = "\(repo)/\(within)"
             }
-            ref = "\(repo)/\(within)"
         } else {
             ref = result.name
         }

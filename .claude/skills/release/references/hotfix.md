@@ -18,6 +18,9 @@ Use for critical production bugs, security vulnerabilities, or data loss issues 
 git checkout -b hotfix/v0.6.4 v0.6.3
 ```
 
+This is worktree-safe as written: it creates a *new* branch from a tag, which never collides
+with a branch checked out in another worktree.
+
 ### 2. Implement the Fix and Update CHANGELOG
 
 Apply the fix directly on the hotfix branch. Keep it minimal — only the targeted change.
@@ -86,7 +89,7 @@ gh pr list --base main --search "appcast in:title" --state merged --limit 1
 
 # 2. Build the back-merge branch from develop
 git fetch origin
-git checkout -b chore/back-merge-v0.6.4 develop
+git checkout -b chore/back-merge-v0.6.4 origin/develop   # works from any worktree
 git merge origin/main          # real merge — never cherry-pick
 # Resolve any conflicts (CHANGELOG is the most common — keep develop's [Unreleased]
 # section and accept main's released version sections below it)
