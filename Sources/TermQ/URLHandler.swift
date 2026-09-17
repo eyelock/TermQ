@@ -205,6 +205,13 @@ class URLHandler: ObservableObject {
                 $0.name.lowercased() == columnLower
             }) {
                 viewModel.moveCard(card, to: targetColumn)
+            } else {
+                // Every other field of this update still applies, so without a trace the card ends
+                // up half-updated with nothing to explain why.
+                TermQLogger.ui.warning("url update: unknown column, card \(cardId) not moved")
+                if TermQLogger.fileLoggingEnabled {
+                    TermQLogger.ui.debug("url update: unknown column '\(columnName)' for card \(cardId)")
+                }
             }
         }
 
@@ -218,14 +225,26 @@ class URLHandler: ObservableObject {
         else { return }
 
         let viewModel = boardViewModel
-        guard let card = viewModel.card(for: cardId) else { return }
+        guard let card = viewModel.card(for: cardId) else {
+            TermQLogger.ui.warning("url move: no such card \(cardId)")
+            return
+        }
 
         let columnLower = columnName.lowercased()
         guard
             let targetColumn = viewModel.board.columns.first(where: {
                 $0.name.lowercased() == columnLower
             })
-        else { return }
+        else {
+            // The URL scheme is one-way — a sender cannot see a dropped command, so leave a trace
+            // rather than failing invisibly. The column name is user-authored board content and
+            // stays out of Unified Logging.
+            TermQLogger.ui.warning("url move: unknown column, card \(cardId) not moved")
+            if TermQLogger.fileLoggingEnabled {
+                TermQLogger.ui.debug("url move: unknown column '\(columnName)' for card \(cardId)")
+            }
+            return
+        }
 
         viewModel.moveCard(card, to: targetColumn)
     }

@@ -95,22 +95,6 @@ extension TermQMCPServer {
         }
     }
 
-    // MARK: - Helper Types
-
-    /// Parameters for updating a terminal card
-    private struct SetParameters {
-        let name: String?
-        let description: String?
-        let badge: String?
-        let column: String?
-        let llmPrompt: String?
-        let llmNextAction: String?
-        let initCommand: String?
-        let favourite: Bool?
-        let tags: [(key: String, value: String)]?
-        let replaceTags: Bool
-    }
-
     // MARK: - Tool Implementations
 
     func handlePending(_ arguments: [String: Value]?) async throws -> CallTool.Result {
@@ -667,6 +651,15 @@ extension TermQMCPServer {
             replaceTags: replaceTags
         )
 
+        // A `set` carrying an unknown column used to apply every other field and quietly skip
+        // the move, leaving the card half-updated and the caller told it all worked. Reject the
+        // whole request instead, matching the headless path.
+        if let requestedColumn = params.column,
+            GUIConfirmation.column(named: requestedColumn, in: board) == nil
+        {
+            return columnNotFoundResult(requestedColumn, in: board)
+        }
+
         // Check if GUI is available
         let guiAvailable: Bool
         if GUIDetector.isGUIRunning() {
@@ -681,105 +674,6 @@ extension TermQMCPServer {
         } else {
             // Headless path - use BoardWriter directly
             return try await handleSetHeadless(identifier: identifier, params: params)
-        }
-    }
-
-    private func handleSetViaGUI(card: Card, params: SetParameters) async throws -> CallTool.Result {
-        // Build and open the URL to update the terminal via GUI
-        let urlString = URLOpener.buildUpdateURL(
-            params: URLOpener.UpdateURLParams(
-                cardId: card.id,
-                name: params.name,
-                description: params.description,
-                badge: params.badge,
-                column: params.column,
-                llmPrompt: params.llmPrompt,
-                llmNextAction: params.llmNextAction,
-                initCommand: params.initCommand,
-                favourite: params.favourite,
-                tags: params.tags,
-                replaceTags: params.replaceTags
-            )
-        )
-
-        do {
-            try await URLOpener.open(urlString)
-
-            // Wait for GUI to process with retry and exponential backoff
-            let dataDir = dataDirectory
-            let cardIdStr = card.id.uuidString
-            _ = await URLOpener.waitForCondition {
-                // Just verify the card still exists - we trust the GUI applied the update
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
-                return board.findTerminal(identifier: cardIdStr) != nil
-            }
-
-            // Reload to get updated state
-            let updatedBoard = try loadBoard()
-            if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
-                let output = TerminalOutput(
-                    from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
-                return try structuredResult(output)
-            } else {
-                return CallTool.Result(
-                    content: [.text(text: "Error: Terminal not found after update", annotations: nil, _meta: nil)],
-                    isError: true)
-            }
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    private func handleSetHeadless(identifier: String, params: SetParameters) async throws -> CallTool.Result {
-        do {
-            let updateParams = HeadlessWriter.UpdateParameters(
-                name: params.name,
-                description: params.description,
-                badge: params.badge,
-                llmPrompt: params.llmPrompt,
-                llmNextAction: params.llmNextAction,
-                favourite: params.favourite,
-                tags: params.tags,
-                replaceTags: params.replaceTags
-            )
-
-            var card = try HeadlessWriter.updateCard(
-                identifier: identifier,
-                params: updateParams,
-                dataDirectory: dataDirectory,
-                boardFilename: boardFilename
-            )
-
-            // `set` with a `column` argument is equivalent to a move — apply it
-            // after the field updates so a rename + column change in one call both land.
-            if let column = params.column {
-                card = try HeadlessWriter.moveCard(
-                    identifier: card.id.uuidString,
-                    toColumn: column,
-                    dataDirectory: dataDirectory,
-                    boardFilename: boardFilename
-                )
-            }
-
-            let board = try loadBoard()
-            let output = TerminalOutput(
-                from: card,
-                columnName: board.columnName(for: card.columnId)
-            )
-            return try structuredResult(output)
-
-        } catch let error as BoardWriter.WriteError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
         }
     }
 
@@ -803,6 +697,13 @@ extension TermQMCPServer {
                 isError: true)
         }
 
+        // Resolve the column before dispatching anything. The GUI silently drops a move whose
+        // column it cannot resolve, so leaving this to the URL handler is what allowed an
+        // impossible move to report success while the headless path rejected it outright.
+        guard let targetColumn = GUIConfirmation.column(named: column, in: board) else {
+            return columnNotFoundResult(column, in: board)
+        }
+
         // Check if GUI is available
         let guiAvailable: Bool
         if GUIDetector.isGUIRunning() {
@@ -813,76 +714,10 @@ extension TermQMCPServer {
 
         if guiAvailable {
             // GUI path - use URL scheme
-            return try await handleMoveViaGUI(card: card, column: column)
+            return try await handleMoveViaGUI(card: card, column: targetColumn.name)
         } else {
             // Headless path - use BoardWriter directly
-            return try await handleMoveHeadless(identifier: identifier, column: column)
-        }
-    }
-
-    private func handleMoveViaGUI(card: Card, column: String) async throws -> CallTool.Result {
-        // Build and open the URL to move the terminal via GUI
-        let urlString = URLOpener.buildMoveURL(cardId: card.id, column: column)
-
-        do {
-            try await URLOpener.open(urlString)
-
-            // Wait for GUI to process with retry and exponential backoff
-            let dataDir = dataDirectory
-            let cardIdStr = card.id.uuidString
-            let targetColumn = column.lowercased()
-            _ = await URLOpener.waitForCondition {
-                // Verify the card moved to the target column
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
-                guard let movedCard = board.findTerminal(identifier: cardIdStr) else { return false }
-                let columnName = board.columnName(for: movedCard.columnId).lowercased()
-                return columnName == targetColumn
-            }
-
-            // Reload to get updated state
-            let updatedBoard = try loadBoard()
-            if let updatedCard = updatedBoard.findTerminal(identifier: card.id.uuidString) {
-                let output = TerminalOutput(
-                    from: updatedCard, columnName: updatedBoard.columnName(for: updatedCard.columnId))
-                return try structuredResult(output)
-            } else {
-                return CallTool.Result(
-                    content: [.text(text: "Error: Terminal not found after move", annotations: nil, _meta: nil)],
-                    isError: true)
-            }
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    private func handleMoveHeadless(identifier: String, column: String) async throws -> CallTool.Result {
-        do {
-            let card = try HeadlessWriter.moveCard(
-                identifier: identifier,
-                toColumn: column,
-                dataDirectory: dataDirectory,
-                boardFilename: boardFilename
-            )
-
-            let board = try loadBoard()
-            let output = TerminalOutput(
-                from: card,
-                columnName: board.columnName(for: card.columnId)
-            )
-            return try structuredResult(output)
-
-        } catch let error as BoardWriter.WriteError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
+            return try await handleMoveHeadless(identifier: identifier, column: targetColumn.name)
         }
     }
 
@@ -923,68 +758,4 @@ extension TermQMCPServer {
         }
     }
 
-    private func handleDeleteViaGUI(card: Card, permanent: Bool) async throws -> CallTool.Result {
-        // Build and open the URL to delete the terminal via GUI
-        let urlString = URLOpener.buildDeleteURL(cardId: card.id, permanent: permanent)
-
-        do {
-            try await URLOpener.open(urlString)
-
-            // Wait for GUI to process with retry and exponential backoff
-            let dataDir = dataDirectory
-            let cardIdStr = card.id.uuidString
-            _ = await URLOpener.waitForCondition {
-                // Verify the card is no longer in active cards (deleted or in bin)
-                let board = try BoardLoader.loadBoard(dataDirectory: dataDir, boardFilename: boardFilename)
-                return board.findTerminal(identifier: cardIdStr) == nil
-            }
-
-            let result = DeleteResponse(
-                id: card.id.uuidString,
-                permanent: permanent
-            )
-            return try structuredResult(result)
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true)
-        }
-    }
-
-    private func handleDeleteHeadless(identifier: String, permanent: Bool) async throws -> CallTool.Result {
-        do {
-            // Get card ID before deletion for response
-            let board = try loadBoard()
-            guard let card = board.findTerminal(identifier: identifier) else {
-                return CallTool.Result(
-                    content: [.text(text: "Error: Terminal not found: \(identifier)", annotations: nil, _meta: nil)],
-                    isError: true
-                )
-            }
-
-            try HeadlessWriter.deleteCard(
-                identifier: identifier,
-                permanent: permanent,
-                dataDirectory: dataDirectory,
-                boardFilename: boardFilename
-            )
-
-            let result = DeleteResponse(
-                id: card.id.uuidString,
-                permanent: permanent
-            )
-            return try structuredResult(result)
-
-        } catch let error as BoardWriter.WriteError {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
-        } catch {
-            return CallTool.Result(
-                content: [.text(text: "Error: \(error.localizedDescription)", annotations: nil, _meta: nil)],
-                isError: true
-            )
-        }
-    }
 }
