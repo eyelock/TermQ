@@ -22,6 +22,10 @@ struct ResumeFlagInjector {
         let trimmed = command.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return command }
 
+        // Only `ynh run` understands the flag. A harness card whose command was
+        // hand-edited to a wrapper script or another binary is left alone.
+        guard isYNHRunCommand(trimmed) else { return command }
+
         // Already resuming — whether TermQ added it or the user typed it.
         // Matches "--resume" and "--resume=<id>"; an explicit id the user wrote
         // by hand always wins.
@@ -44,26 +48,49 @@ struct ResumeFlagInjector {
         }
     }
 
+    /// Whether the command invokes `ynh run`, by name or by path.
+    func isYNHRunCommand(_ command: String) -> Bool {
+        let parts = tokens(of: command)
+        guard parts.count >= 2, parts[1] == "run" else { return false }
+        let executable = parts[0]
+        return executable == "ynh" || executable.hasSuffix("/ynh")
+    }
+
     // MARK: - Internals
+
+    private static let quotes: Set<Character> = ["\"", "'"]
+    private static let separators: Set<Character> = [" ", "\t"]
 
     /// Range of the ` -- ` prompt separator, if the command has one.
     ///
-    /// Matched on token boundaries so a `--` inside a quoted prompt (or a
-    /// flag that merely starts with `--`) is never mistaken for the separator.
+    /// Matched on token boundaries and outside quotes, so a `--` inside a
+    /// quoted argument (or a flag that merely starts with `--`) is never
+    /// mistaken for the separator.
     private func promptSeparatorRange(in command: String) -> Range<String.Index>? {
-        var searchStart = command.startIndex
-        while let range = command.range(of: "--", range: searchStart..<command.endIndex) {
-            let precededBySpace =
-                range.lowerBound == command.startIndex
-                || command[command.index(before: range.lowerBound)] == " "
-            let followedBySpaceOrEnd =
-                range.upperBound == command.endIndex
-                || command[range.upperBound] == " "
+        var quote: Character?
+        var index = command.startIndex
 
-            if precededBySpace && followedBySpaceOrEnd {
-                return range
+        while index < command.endIndex {
+            let char = command[index]
+            let next = command.index(after: index)
+
+            if let open = quote {
+                if char == open { quote = nil }
+            } else if Self.quotes.contains(char) {
+                quote = char
+            } else if char == "-", next < command.endIndex, command[next] == "-" {
+                let end = command.index(after: next)
+                let precededByBoundary =
+                    index == command.startIndex
+                    || Self.separators.contains(command[command.index(before: index)])
+                let followedByBoundary = end == command.endIndex || Self.separators.contains(command[end])
+                if precededByBoundary && followedByBoundary {
+                    return index..<end
+                }
+                index = end
+                continue
             }
-            searchStart = range.upperBound
+            index = next
         }
         return nil
     }
@@ -81,9 +108,9 @@ struct ResumeFlagInjector {
                 continue
             }
             switch char {
-            case "\"", "'":
+            case _ where Self.quotes.contains(char):
                 quote = char
-            case " ", "\t":
+            case _ where Self.separators.contains(char):
                 if !current.isEmpty {
                     result.append(current)
                     current = ""

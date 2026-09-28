@@ -42,6 +42,46 @@ final class ResumeFlagInjectorTests: XCTestCase {
         XCTAssertEqual(result, "ynh run local/dev --resume -- \"run make -- verbose\"")
     }
 
+    /// The real separator can follow a quoted argument that itself contains
+    /// ` -- `. The quoted one must be skipped, not taken as the separator.
+    func test_inject_skipsAQuotedDoubleDashBeforeTheRealSeparator() {
+        let command = "ynh run local/dev --instructions \"run make -- verbose\" -- 'go'"
+
+        let result = injector.inject(into: command)
+
+        XCTAssertEqual(result, "ynh run local/dev --instructions \"run make -- verbose\" --resume -- 'go'")
+    }
+
+    func test_inject_recognisesATabDelimitedSeparator() {
+        let result = injector.inject(into: "ynh run local/dev\t--\t'fix it'")
+
+        XCTAssertEqual(result, "ynh run local/dev --resume --\t'fix it'")
+    }
+
+    // MARK: - Only ynh run
+
+    /// A harness card whose command was hand-edited to something other than
+    /// `ynh run` gets no flag: nothing else understands it.
+    func test_inject_leavesNonYNHCommandsAlone() {
+        XCTAssertEqual(injector.inject(into: "claude"), "claude")
+        XCTAssertEqual(injector.inject(into: "./wrapper.sh run local/dev"), "./wrapper.sh run local/dev")
+        XCTAssertEqual(injector.inject(into: "ynh vendors"), "ynh vendors")
+    }
+
+    func test_inject_acceptsYNHByPath() {
+        let result = injector.inject(into: "/Users/me/.ynh/bin/ynh run local/dev")
+
+        XCTAssertEqual(result, "/Users/me/.ynh/bin/ynh run local/dev --resume")
+    }
+
+    func test_isYNHRunCommand() {
+        XCTAssertTrue(injector.isYNHRunCommand("ynh run x"))
+        XCTAssertTrue(injector.isYNHRunCommand("~/.ynh/bin/ynh run x"))
+        XCTAssertFalse(injector.isYNHRunCommand("ynh"))
+        XCTAssertFalse(injector.isYNHRunCommand("ynh install x"))
+        XCTAssertFalse(injector.isYNHRunCommand("myynh run x"))
+    }
+
     // MARK: - Idempotence
 
     func test_inject_isIdempotent() {

@@ -46,6 +46,33 @@ final class SessionResumeTests: XCTestCase {
         XCTAssertFalse(decoded.autoResumeSession)
     }
 
+    // MARK: - Duplicate
+
+    /// Duplicating a harness card must carry the preference across, as it
+    /// does every other per-card setting.
+    func test_duplicateTerminal_copiesTheResumeSetting() throws {
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("SessionResumeTests-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+        let boardURL = tempDir.appendingPathComponent("board.json")
+        let seed =
+            #"{"columns":[{"id":"00000000-0000-0000-0000-000000000001","name":"To Do","orderIndex":0}],"cards":[]}"#
+        try Data(seed.utf8).write(to: boardURL)
+
+        let viewModel = BoardViewModel(persistence: BoardPersistence(saveURL: boardURL))
+        let source = TerminalCard(
+            columnId: try XCTUnwrap(viewModel.board.columns.first?.id),
+            autoResumeSession: true
+        )
+        viewModel.board.cards.append(source)
+
+        viewModel.duplicateTerminal(source)
+
+        let copy = try XCTUnwrap(viewModel.board.cards.first { $0.id != source.id })
+        XCTAssertTrue(copy.autoResumeSession)
+    }
+
     // MARK: - Editor availability rule
 
     private func viewModel(tags: [TermQCore.Tag]) -> CardEditorViewModel {
