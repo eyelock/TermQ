@@ -28,21 +28,13 @@ class ControlModeTerminalView: TerminalView {
             dragController.stop()
         }
     }
-
-    override func scrolled(source: Terminal, yDisp: Int) {
-        super.scrolled(source: source, yDisp: yDisp)
-        dragController.handleScrolled(yDisp: yDisp)
-    }
-
-    override func selectionChanged(source: Terminal) {
-        super.selectionChanged(source: source)
-        dragController.handleSelectionChanged()
-    }
 }
 
 // MARK: - Control Mode Pane Delegate
 
-/// Terminal delegate that routes input to tmux control mode instead of local PTY
+/// Terminal delegate that routes input to tmux control mode instead of local PTY.
+/// `TerminalViewDelegate` is `@MainActor` in SwiftTerm 2.x.
+@MainActor
 class ControlModePaneDelegate: TerminalViewDelegate {
     let cardId: UUID
     let paneId: String
@@ -470,7 +462,7 @@ extension TerminalSessionManager {
             if let pane = getControlModeSession(for: cardId)?.parser.panes
                 .first(where: { $0.id == paneId })
             {
-                let term = paneTerminal.getTerminal()
+                let term = paneTerminal.terminalDimensions
                 let signature = "\(term.cols)x\(term.rows)|\(pane.width)x\(pane.height)"
                 let key = "\(cardId.uuidString)/\(paneId)"
                 if Self.geoCheckSignatures[key] != signature {

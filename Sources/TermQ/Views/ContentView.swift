@@ -791,8 +791,7 @@ extension ContentView {
             return
         }
 
-        let terminal = terminalView.getTerminal()
-        let bufferData = terminal.getBufferAsData()
+        let bufferData = terminalView.getBufferAsData()
 
         guard let content = String(data: bufferData, encoding: .utf8) else {
             return

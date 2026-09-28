@@ -6,15 +6,15 @@ import SwiftTerm
 ///
 /// The technique: keep `allowMouseReporting = true` so single clicks reach the
 /// inner app, then flip it to `false` on the first `leftMouseDragged` so SwiftTerm
-/// stops intercepting drags and starts a selection. The flag stays `false` until
-/// the next `leftMouseDown`, which keeps streaming output from clearing the
-/// selection — SwiftTerm's `feedPrepare()` and `linefeed()` both skip
-/// `selectNone()` while `allowMouseReporting` is off.
+/// stops forwarding the drag to the app and starts a selection instead. The flag
+/// stays `false` until the next `leftMouseDown`, so the rest of the gesture is
+/// never forwarded either. SwiftTerm 2.x preserves a valid selection while output
+/// streams and keeps the viewport where the user scrolled it (`userScrolling`),
+/// so no further protection is needed here.
 ///
 /// Composed into terminal view subclasses (`TermQTerminalView`,
 /// `ControlModeTerminalView`) since they have different `TerminalView` ancestors
-/// and can't share a Swift base class. Each subclass forwards its `scrolled`
-/// and `selectionChanged` overrides into the controller.
+/// and can't share a Swift base class.
 @MainActor
 final class TerminalSelectionDragController {
 
@@ -28,10 +28,6 @@ final class TerminalSelectionDragController {
     private var autoScrollTimer: Timer?
     private var autoScrollDelta: Int = 0
     private var lastDragPosition: NSPoint?
-
-    /// Target yDisp row for upward auto-scroll; nil when not active.
-    /// Persists the intended viewport position across linefeed resets.
-    private var selectionScrollTargetRow: Int?
 
     /// Whether the current drag started inside our terminal view.
     private(set) var dragStartedInTerminal: Bool = false
@@ -98,29 +94,6 @@ final class TerminalSelectionDragController {
         TerminalSessionManager.shared.isMouseDragInProgress = false
     }
 
-    // MARK: - View-side hooks
-
-    /// Forward from the view's `scrolled(source:yDisp:)` override after `super`.
-    /// Re-applies the upward auto-scroll target so streaming linefeeds don't
-    /// undo it.
-    func handleScrolled(yDisp: Int) {
-        guard let view, let targetRow = selectionScrollTargetRow, yDisp > targetRow else { return }
-        view.scrollUp(lines: yDisp - targetRow)
-    }
-
-    /// Forward from the view's `selectionChanged(source:)` override — pure
-    /// diagnostic surface, no behavior.
-    func handleSelectionChanged() {
-        #if TERMQ_DEBUG_BUILD
-            guard TermQLogger.fileLoggingEnabled, let view else { return }
-            let active = view.selectionActive
-            let reporting = view.allowMouseReporting
-            TermQLogger.io.debug(
-                "sel.changed active=\(active) reporting=\(reporting) dragInTerm=\(self.dragStartedInTerminal)"
-            )
-        #endif
-    }
-
     // MARK: - Event Handlers
 
     private func handleMouseDown(_ event: NSEvent) {
@@ -134,7 +107,7 @@ final class TerminalSelectionDragController {
 
         #if TERMQ_DEBUG_BUILD
             let wasReporting = view.allowMouseReporting
-            let mm = "\(view.getTerminal().mouseMode)"
+            let mm = "\(view.currentMouseMode)"
         #endif
 
         // Restore mouse reporting so clicks are forwarded to the running app
@@ -189,10 +162,9 @@ final class TerminalSelectionDragController {
             lastDragPosition = nil
             dragStartedInTerminal = false
             TerminalSessionManager.shared.isMouseDragInProgress = false
-            // Do NOT restore allowMouseReporting here — leaving it false keeps
-            // SwiftTerm from calling selectNone() on the next linefeed while
-            // streaming continues. allowMouseReporting is restored in
-            // handleMouseDown on the next click.
+            // Do NOT restore allowMouseReporting here — the mouse-up would
+            // otherwise be forwarded to the inner app as the tail of a drag it
+            // never saw begin. It is restored in handleMouseDown on the next click.
             return
         }
 
@@ -200,7 +172,7 @@ final class TerminalSelectionDragController {
             if dragStartedInTerminal && view.allowMouseReporting {
                 #if TERMQ_DEBUG_BUILD
                     if TermQLogger.fileLoggingEnabled {
-                        let mode = "\(view.getTerminal().mouseMode)"
+                        let mode = "\(view.currentMouseMode)"
                         TermQLogger.io.debug(
                             "sel.firstDrag flipping reporting true→false mouseMode=\(mode)"
                         )
@@ -266,30 +238,18 @@ final class TerminalSelectionDragController {
         autoScrollTimer?.invalidate()
         autoScrollTimer = nil
         autoScrollDelta = 0
-        selectionScrollTargetRow = nil
     }
 
+    /// Scrolling up through the view marks the terminal as user-scrolled, so
+    /// streaming output no longer drags the viewport back to the live tail
+    /// between timer fires; each tick can simply move by the delta.
     private func autoScrollTimerFired() {
         guard let view, autoScrollDelta != 0 else { return }
 
-        let currentYDisp = view.getTerminal().buffer.yDisp
-
         if autoScrollDelta < 0 {
-            // Scrolling up into history. Accumulate the intended position from
-            // the last known target (not from yDisp, which may have been reset
-            // to yBase by a linefeed since the last timer fire).
-            let currentEffective = selectionScrollTargetRow ?? currentYDisp
-            let newTarget = max(currentEffective - abs(autoScrollDelta), 0)
-            selectionScrollTargetRow = newTarget
-            if currentYDisp > newTarget {
-                view.scrollUp(lines: currentYDisp - newTarget)
-            }
+            view.scrollUp(lines: -autoScrollDelta)
         } else {
-            // Scrolling down toward live view — linefeeds help, no fight needed.
-            selectionScrollTargetRow = nil
             view.scrollDown(lines: autoScrollDelta)
         }
-
-        view.setNeedsDisplay(view.bounds)
     }
 }
