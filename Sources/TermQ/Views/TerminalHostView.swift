@@ -715,11 +715,10 @@ private final class TermQLinkDelegate: TerminalViewDelegate {
     }
 }
 
-/// Container view that adds padding around the terminal and handles alternate scroll mode
+/// Container view that adds padding around the terminal
 class TerminalContainerView: NSView {
     private(set) var terminal: TermQTerminalView
     let padding: CGFloat = 12
-    private var scrollEventMonitor: Any?
 
     init(terminal: TermQTerminalView) {
         self.terminal = terminal
@@ -743,73 +742,13 @@ class TerminalContainerView: NSView {
             ])
         }
 
-        // Add local event monitor for scroll wheel to implement alternate scroll mode
-        scrollEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { [weak self] event in
-            guard let self = self else { return event }
-            return self.handleScrollEvent(event)
-        }
+        // Alternate Scroll Mode (wheel → cursor keys on the alternate screen) is
+        // handled by SwiftTerm's scrollWheel: it honours DECSET/DECRST 1007, the
+        // application-cursor variant, and mouse tracking, with line-accurate deltas.
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        // Use MainActor.assumeIsolated since deinit is nonisolated in Swift 6
-        // but we're always deallocated on the main thread for NSView subclasses
-        MainActor.assumeIsolated {
-            if let monitor = scrollEventMonitor {
-                NSEvent.removeMonitor(monitor)
-            }
-        }
-    }
-
-    /// Handle scroll events - implement alternate scroll mode
-    /// When in alternate buffer (less, vim, git log), convert scroll to arrow keys
-    private func handleScrollEvent(_ event: NSEvent) -> NSEvent? {
-        // Only handle if the scroll is in our terminal view
-        guard let eventWindow = event.window,
-            eventWindow == self.window,
-            let locationInWindow = event.window?.mouseLocationOutsideOfEventStream,
-            let hitView = eventWindow.contentView?.hitTest(locationInWindow),
-            hitView === terminal || hitView.isDescendant(of: terminal)
-        else {
-            return event  // Not our event, pass through
-        }
-
-        guard event.deltaY != 0 else { return event }
-
-        // Check if terminal is in alternate buffer (fullscreen apps like less, vim)
-        let term = terminal.getTerminal()
-        // Only convert scroll → arrow keys when:
-        //   1. alternate buffer is active (vim, less, etc.)
-        //   2. application cursor mode is set (the app requested arrow key sequences)
-        //   3. mouse mode is off (app has NOT enabled its own mouse tracking)
-        // If the app has enabled mouse tracking (e.g. Claude Code), let SwiftTerm pass the
-        // scroll as a proper mouse event sequence — never inject extra arrow keys.
-        if term.isCurrentBufferAlternate && term.applicationCursor && term.mouseMode == .off {
-            let lines = calcScrollLines(delta: abs(event.deltaY))
-            let sequence = event.deltaY > 0 ? "\u{1b}OA" : "\u{1b}OB"
-            for _ in 0..<lines {
-                terminal.send(txt: sequence)
-            }
-            return nil  // Consume the event
-        }
-
-        // Normal buffer - let SwiftTerm handle it (scroll through history)
-        return event
-    }
-
-    /// Calculate number of lines to scroll based on scroll wheel delta
-    private func calcScrollLines(delta: CGFloat) -> Int {
-        if delta > 9 {
-            return 5
-        } else if delta > 5 {
-            return 3
-        } else if delta > 1 {
-            return 2
-        }
-        return 1
     }
 
     override func viewDidMoveToWindow() {
