@@ -27,13 +27,15 @@ let package = Package(
         .library(name: "MCPServerLib", targets: ["MCPServerLib"])
     ],
     dependencies: [
-        // Pinned 2026-08-03 HEAD. Adds since the 2026-07-10 pin: in-place selection
-        // translation (#616), mouse motion row and focus reporting fixes (#590), Korean
-        // IME transaction fix (#563), line-accurate scroll wheel (#600), flipped mouse
-        // reporting toggle (#601), CircularList precondition checks (#609), Powerline
-        // separators as cell geometry (#605), hyperlink GC and TinyAtom thread safety
-        // (#611), implicit-link backtracking fix (#613).
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", revision: "25ba06fd0d04c478db64c95387507c9e429f8eb5"),
+        // v1.20.0 (2026-08-18) is the last release on the 1.x API; upstream main is now
+        // 2.x (no getTerminal(), new IO pipeline) and needs a separate migration.
+        // Adds since the 2026-08-03 pin: Kitty keyboard text loss with alternate-key
+        // reporting (#624), stale rows when repainting in place while scrolled back
+        // (#620), Alternate Scroll Mode 1007 tracked and honoured by the wheel, full
+        // reset notifying the view, cursor refresh on focus change, link-open during
+        // drag regression, combining glyphs after cursor movement, dropped child-exit
+        // for fast-exiting processes (#617), OSC 8 print-time attribution (#635).
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", exact: "1.20.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),
