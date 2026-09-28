@@ -32,7 +32,8 @@ jobs:
           fetch-depth: 0  # Full history for proper git operations
 
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+        # SwiftTerm 2.x needs swift-tools 6.2, so Xcode 26 or later.
+        run: sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
 
       - name: Run Claude Code
         id: claude

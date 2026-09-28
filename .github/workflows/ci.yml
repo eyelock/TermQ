@@ -10,8 +10,10 @@ on:
 # Pin the Xcode version used by all jobs. The Makefile reads XCODE_DEVELOPER_DIR
 # via `xcode-select -p` (with ?= so this env var takes precedence). Update here
 # when upgrading the toolchain — one place, all jobs.
+#
+# SwiftTerm 2.x declares swift-tools-version 6.2, which needs Xcode 26 or later.
 env:
-  XCODE_DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+  XCODE_DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
 
 jobs:
   # Detect which files changed to determine what checks to run
