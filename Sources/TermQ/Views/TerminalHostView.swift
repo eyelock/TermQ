@@ -51,6 +51,14 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// Event monitor for tracking key input
     private var keyInputMonitor: Any?
 
+    /// Keeps the OSC observation (notifications, theme protection) alive for the
+    /// view's lifetime. The token cancels itself when released.
+    private var oscObservation: TerminalOscObservation?
+
+    /// Theme most recently applied by `TerminalThemeManager`. Re-applied when a
+    /// child process tries to override the colours through OSC 10/11/12.
+    var appliedTheme: TerminalTheme?
+
     /// Drag-to-select controller — manages NSEvent monitors, allowMouseReporting
     /// toggle, and auto-scroll during selection. Created lazily so the `self`
     /// reference is valid.
@@ -165,72 +173,61 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
-    /// Set up custom OSC handlers after the terminal is initialized
+    /// Observe the OSC sequences SwiftTerm does not surface through its delegate.
+    ///
+    /// SwiftTerm 2.x owns the parser, so TermQ no longer registers handlers that
+    /// replace built-in behaviour. OSC 52 (clipboard) is gated in
+    /// `TermQLinkDelegate.clipboardCopy`. OSC 10/11/12 colour *queries* are
+    /// answered by SwiftTerm from the installed theme colours. What remains is
+    /// passive observation: desktop notifications (OSC 777, OSC 9) and undoing
+    /// colour *set* requests, see `handleColorOsc`.
+    ///
+    /// Events arrive on a private serial queue; every handler hops to the main
+    /// actor before touching the view.
     func setupOscHandlers() {
-        let terminal = getTerminal()
-
-        // OSC 52 - Clipboard: ESC ] 52 ; c ; <base64> BEL
-        // Only register if user has allowed OSC 52 clipboard access.
-        // The runtime gate now reads through `SettingsStore.shared` so it
-        // matches what Settings → Data & Security displays. Previously
-        // these two paths disagreed: the runtime defaulted to `true` on
-        // unset, the Settings UI defaulted to `false`, so a never-touched
-        // user saw "Off" in Settings while OSC 52 silently worked.
-        if SettingsStore.shared.allowOscClipboard {
-            terminal.registerOscHandler(code: 52) { [weak self] data in
-                self?.handleClipboardOsc(data)
+        oscObservation = observeOscEvents { [weak self] event in
+            Task { @MainActor [weak self] in
+                self?.handleOscEvent(event)
             }
         }
+    }
 
-        // OSC 777 - Notification: ESC ] 777 ; notify ; <title> ; <body> BEL
-        terminal.registerOscHandler(code: 777) { [weak self] data in
-            self?.handleNotificationOsc(data)
-        }
-
-        // OSC 9 - Windows Terminal notification: ESC ] 9 ; <message> BEL
-        terminal.registerOscHandler(code: 9) { [weak self] data in
-            self?.handleSimpleNotificationOsc(data)
-        }
-
-        // OSC 10/11/12 - Foreground/background/cursor color.
-        // Some CLIs (e.g. GitHub Copilot CLI) emit a "set" request on startup that
-        // would otherwise silently override TermQ's theme background for the rest
-        // of the session. Queries ("?") still get an honest answer so tools that
-        // probe the color to pick a light/dark palette keep working; only "set"
-        // requests are swallowed so the theme color sticks.
-        terminal.registerOscHandler(code: 10) { [weak self] data in
-            self?.handleColorOsc(code: 10, data: data)
-        }
-        terminal.registerOscHandler(code: 11) { [weak self] data in
-            self?.handleColorOsc(code: 11, data: data)
-        }
-        terminal.registerOscHandler(code: 12) { [weak self] data in
-            self?.handleColorOsc(code: 12, data: data)
+    private func handleOscEvent(_ event: TerminalOscEvent) {
+        switch event.code {
+        case 777:
+            handleNotificationOsc(event.payload[...])
+        case 9:
+            handleSimpleNotificationOsc(event.payload[...])
+        case 10, 11, 12:
+            handleColorOsc(event.payload[...])
+        default:
+            break
         }
     }
 
-    /// Answers OSC 10/11/12 color queries with the terminal's current theme
-    /// color; ignores "set" requests so a child process can't override the
-    /// theme background/foreground/cursor color for the session.
-    private func handleColorOsc(code: Int, data: ArraySlice<UInt8>) {
-        guard data.first == UInt8(ascii: "?") else { return }
-
-        let terminal = getTerminal()
-        let color: SwiftTerm.Color
-        switch code {
-        case 10: color = terminal.foregroundColor
-        case 11: color = terminal.backgroundColor
-        default: color = terminal.cursorColor ?? terminal.foregroundColor
+    /// Re-applies the theme after a child process issued an OSC 10/11/12 *set*.
+    ///
+    /// Some CLIs (GitHub Copilot CLI emits one on startup) set the background
+    /// colour and would otherwise override TermQ's theme for the rest of the
+    /// session. Queries ("?") are answered by SwiftTerm and need nothing from
+    /// us. SwiftTerm applies the requested colour on the main queue from the
+    /// parse thread; the observation reaches us through one more queue hop, and
+    /// the short delay guarantees the theme is re-applied after that, so the
+    /// theme wins.
+    private func handleColorOsc(_ data: ArraySlice<UInt8>) {
+        guard data.first != UInt8(ascii: "?"), let theme = appliedTheme else { return }
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .milliseconds(50))
+            guard let self else { return }
+            TerminalSessionManager.shared.themeManager.applyTheme(to: self, theme: theme)
         }
-
-        func hex(_ component: UInt16) -> String { String(format: "%04x", component) }
-        let response = "\u{1B}]\(code);rgb:\(hex(color.red))/\(hex(color.green))/\(hex(color.blue))\u{1B}\\"
-        terminal.sendResponse(text: response)
     }
 
-    /// Called when the terminal receives a bell character (ASCII 7 / \a)
-    override func bell(source: Terminal) {
-        super.bell(source: source)
+    /// Bell delivered by SwiftTerm through `TerminalViewDelegate`, see
+    /// `TermQLinkDelegate.bell`. Audible beep (what SwiftTerm's default delegate
+    /// does), card callback, visual flash.
+    fileprivate func handleBell() {
+        NSSound.beep()
         onBell?()
         showVisualBell()
     }
@@ -247,20 +244,6 @@ class TermQTerminalView: LocalProcessTerminalView {
     /// and from `deinit`.
     func cleanupAutoScrollDuringSelection() {
         dragController.stop()
-    }
-
-    /// Called by SwiftTerm when the terminal engine resets yDisp (e.g. on each linefeed).
-    /// Re-applies our scroll target so upward auto-scroll is not undone by streaming output.
-    override func scrolled(source: Terminal, yDisp: Int) {
-        super.scrolled(source: source, yDisp: yDisp)
-        dragController.handleScrolled(yDisp: yDisp)
-    }
-
-    /// Track selection state transitions for diagnostics — surfaces any path that
-    /// activates/deactivates selection (feedPrepare, resize, keyDown, etc.).
-    override func selectionChanged(source: Terminal) {
-        super.selectionChanged(source: source)
-        dragController.handleSelectionChanged()
     }
 
     // MARK: - Copy on Select
@@ -515,13 +498,15 @@ class TermQTerminalView: LocalProcessTerminalView {
         } else {
             // Show warning dialog
             let decision = SafePasteAnalyzer.showWarningDialog(text: text, warnings: warnings)
+            // `pasteText` goes through SwiftTerm's paste path (bracketed paste,
+            // control-byte filtering) rather than pretending the text was typed.
             switch decision {
             case .paste:
-                insertText(text, replacementRange: NSRange(location: 0, length: 0))
+                pasteText(text)
             case .disableAndPaste:
                 safePasteEnabled = false
                 onDisableSafePaste?()
-                insertText(text, replacementRange: NSRange(location: 0, length: 0))
+                pasteText(text)
             case .cancel:
                 break
             }
@@ -529,30 +514,6 @@ class TermQTerminalView: LocalProcessTerminalView {
     }
 
     // MARK: - OSC Handlers
-
-    /// Handle OSC 52 clipboard command
-    private func handleClipboardOsc(_ data: ArraySlice<UInt8>) {
-        // Format: c;<base64-data> (c = clipboard target)
-        guard data.count >= 2,
-            data[data.startIndex] == UInt8(ascii: "c"),
-            data[data.startIndex + 1] == UInt8(ascii: ";")
-        else {
-            return
-        }
-
-        let base64Data = Data(data[(data.startIndex + 2)...])
-        guard let decoded = Data(base64Encoded: base64Data),
-            let string = String(data: decoded, encoding: .utf8)
-        else {
-            return
-        }
-
-        DispatchQueue.main.async {
-            let pasteboard = NSPasteboard.general
-            pasteboard.clearContents()
-            pasteboard.setString(string, forType: .string)
-        }
-    }
 
     /// Handle OSC 777 notification command
     private func handleNotificationOsc(_ data: ArraySlice<UInt8>) {
@@ -564,20 +525,18 @@ class TermQTerminalView: LocalProcessTerminalView {
 
         let title = parts[1]
         let body = parts[2...].joined(separator: ";")
-
-        DispatchQueue.main.async { [weak self] in
-            self?.showDesktopNotification(title: title, body: body)
-        }
+        showDesktopNotification(title: title, body: body)
     }
 
     /// Handle OSC 9 simple notification (Windows Terminal format)
     private func handleSimpleNotificationOsc(_ data: ArraySlice<UInt8>) {
-        // Format: just the message text
-        guard let message = String(bytes: data, encoding: .utf8) else { return }
-
-        DispatchQueue.main.async { [weak self] in
-            self?.showDesktopNotification(title: self?.terminalTitle ?? "Terminal", body: message)
-        }
+        // Format: just the message text. "9;4;…" is the ConEmu progress-bar
+        // sub-command, which SwiftTerm renders itself and which is not a
+        // notification.
+        guard let message = String(bytes: data, encoding: .utf8),
+            !message.hasPrefix("4;")
+        else { return }
+        showDesktopNotification(title: terminalTitle, body: message)
     }
 
     // MARK: - Visual Bell
@@ -666,13 +625,13 @@ extension TermQTerminalView {
     }
 }
 
-/// Full-proxy `TerminalViewDelegate` that intercepts `requestOpenLink` and forwards
-/// every other method to `LocalProcessTerminalView`'s own implementations.
+/// Full-proxy `TerminalViewDelegate` that intercepts `requestOpenLink`, `bell` and
+/// `clipboardCopy`, and forwards every other method to `LocalProcessTerminalView`'s
+/// own implementations.
 ///
-/// `TerminalViewDelegate` isn't annotated `@MainActor`, but SwiftTerm only ever calls
-/// it from `TerminalView` (NSView → `@MainActor`). The class is marked `@MainActor`
-/// to reflect that reality; each protocol method is `nonisolated` to satisfy the
-/// conformance and uses `assumeIsolated` to re-enter the main actor for forwarded calls.
+/// `TerminalViewDelegate` is `@MainActor` in SwiftTerm 2.x: parsing happens on the
+/// IO thread, and the view marshals these callbacks onto the main actor before
+/// calling them.
 ///
 /// Per SwiftTerm's docs: "If you must change the delegate make sure that you proxy
 /// the values in your implementation to the values set after initializing this instance."
@@ -685,33 +644,41 @@ private final class TermQLinkDelegate: TerminalViewDelegate {
 
     init(view: TermQTerminalView) { self.view = view }
 
-    nonisolated func requestOpenLink(source: TerminalView, link: String, params: [String: String]) {
-        MainActor.assumeIsolated {
-            let cwd = view?.cardId.flatMap { TerminalSessionManager.shared.getCurrentDirectory(for: $0) }
-            TermQTerminalLink.open(link: link, cwd: cwd)
-        }
+    func requestOpenLink(source: TerminalView, link: String, params: [String: String]) {
+        let cwd = view?.cardId.flatMap { TerminalSessionManager.shared.getCurrentDirectory(for: $0) }
+        TermQTerminalLink.open(link: link, cwd: cwd)
     }
 
-    nonisolated func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
-        MainActor.assumeIsolated { view?.sizeChanged(source: source, newCols: newCols, newRows: newRows) }
+    func bell(source: TerminalView) {
+        view?.handleBell()
     }
-    nonisolated func setTerminalTitle(source: TerminalView, title: String) {
-        MainActor.assumeIsolated { view?.setTerminalTitle(source: source, title: title) }
+
+    /// OSC 52 clipboard writes reach the pasteboard only when the user allowed
+    /// it in Settings → Data & Security. The runtime gate reads through
+    /// `SettingsStore.shared` so it matches what Settings displays. Reads
+    /// (`clipboardRead`) are not forwarded, so SwiftTerm's default denies them.
+    func clipboardCopy(source: TerminalView, content: Data) {
+        guard SettingsStore.shared.allowOscClipboard else { return }
+        view?.clipboardCopy(source: source, content: content)
     }
-    nonisolated func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
-        MainActor.assumeIsolated { view?.hostCurrentDirectoryUpdate(source: source, directory: directory) }
+
+    func sizeChanged(source: TerminalView, newCols: Int, newRows: Int) {
+        view?.sizeChanged(source: source, newCols: newCols, newRows: newRows)
     }
-    nonisolated func send(source: TerminalView, data: ArraySlice<UInt8>) {
-        MainActor.assumeIsolated { view?.send(source: source, data: data) }
+    func setTerminalTitle(source: TerminalView, title: String) {
+        view?.setTerminalTitle(source: source, title: title)
     }
-    nonisolated func scrolled(source: TerminalView, position: Double) {
-        MainActor.assumeIsolated { view?.scrolled(source: source, position: position) }
+    func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {
+        view?.hostCurrentDirectoryUpdate(source: source, directory: directory)
     }
-    nonisolated func clipboardCopy(source: TerminalView, content: Data) {
-        MainActor.assumeIsolated { view?.clipboardCopy(source: source, content: content) }
+    func send(source: TerminalView, data: ArraySlice<UInt8>) {
+        view?.send(source: source, data: data)
     }
-    nonisolated func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
-        MainActor.assumeIsolated { view?.rangeChanged(source: source, startY: startY, endY: endY) }
+    func scrolled(source: TerminalView, position: Double) {
+        view?.scrolled(source: source, position: position)
+    }
+    func rangeChanged(source: TerminalView, startY: Int, endY: Int) {
+        view?.rangeChanged(source: source, startY: startY, endY: endY)
     }
 }
 

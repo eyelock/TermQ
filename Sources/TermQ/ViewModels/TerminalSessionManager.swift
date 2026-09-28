@@ -771,7 +771,10 @@ public enum PaneDirection: Sendable {
     case up, down, left, right
 }
 
-/// Delegate to handle terminal process events
+/// Delegate to handle terminal process events. `LocalProcessTerminalViewDelegate`
+/// is `@MainActor` in SwiftTerm 2.x; the view marshals process events onto the
+/// main actor before calling it.
+@MainActor
 class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate {
     let cardId: UUID
     weak var manager: TerminalSessionManager?

@@ -34,6 +34,7 @@ public final class TerminalThemeManager: ObservableObject {
     /// Apply theme to a terminal view
     func applyTheme(to terminal: TermQTerminalView, theme: TerminalTheme? = nil) {
         let theme = theme ?? currentTheme
+        terminal.appliedTheme = theme
 
         terminal.nativeForegroundColor = theme.foreground
         terminal.nativeBackgroundColor = theme.background

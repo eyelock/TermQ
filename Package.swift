@@ -35,7 +35,11 @@ let package = Package(
         // reset notifying the view, cursor refresh on focus change, link-open during
         // drag regression, combining glyphs after cursor movement, dropped child-exit
         // for fast-exiting processes (#617), OSC 8 print-time attribution (#635).
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", exact: "1.20.0"),
+        // 2.x: pinned to upstream main 2026-09-27 (no 2.0.0 tag yet). See the 2.x
+        // migration notes in the PR for what changed at the integration seam.
+        .package(
+            url: "https://github.com/migueldeicaza/SwiftTerm.git",
+            revision: "fe4fb45d5888ce33ff3788d6873870a73894a41b"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         // MCP Swift SDK for Model Context Protocol support
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.0"),

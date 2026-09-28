@@ -10,8 +10,13 @@ on:
 # Pin the Xcode version used by all jobs. The Makefile reads XCODE_DEVELOPER_DIR
 # via `xcode-select -p` (with ?= so this env var takes precedence). Update here
 # when upgrading the toolchain — one place, all jobs.
+#
+# SwiftTerm 2.x declares swift-tools-version 6.2, which needs Xcode 26 or later.
+# Xcode 26.0.1 and 26.3 compile it but fail to link (undefined type metadata
+# inside the SwiftTerm module); 26.6 (Swift 6.3.3) links cleanly, and only the
+# macos-26 image carries it. Keep the runner and this pin in step.
 env:
-  XCODE_DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+  XCODE_DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
 
 jobs:
   # Detect which files changed to determine what checks to run
@@ -40,7 +45,7 @@ jobs:
 
   build:
     name: Build
-    runs-on: macos-15
+    runs-on: macos-26
     needs: changes
     if: needs.changes.outputs.code == 'true'
 
@@ -56,7 +61,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: macos-15
+    runs-on: macos-26
     needs: changes
     if: needs.changes.outputs.code == 'true'
 
@@ -72,7 +77,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: macos-15
+    runs-on: macos-26
     needs: changes
     if: needs.changes.outputs.code == 'true'
 
@@ -88,7 +93,7 @@ jobs:
 
   format:
     name: Format Check
-    runs-on: macos-15
+    runs-on: macos-26
     needs: changes
     if: needs.changes.outputs.code == 'true'
 
@@ -104,7 +109,7 @@ jobs:
 
   build-release:
     name: Build Release
-    runs-on: macos-15
+    runs-on: macos-26
     needs: [build, test, lint, format]
     # Skip on PRs targeting develop — release build validation is only needed
     # when merging to main (stable release) or on direct pushes (hotfix/develop).
