@@ -437,17 +437,7 @@ class TerminalSessionManager: ObservableObject {
             initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))
         }
 
-        let backend = effectiveBackend(for: card)
-
-        if backend == .tmuxControl {
-            sendInitCommandViaControlMode(cardId: card.id, command: initCmd)
-        } else {
-            // Direct or tmux-attach: send text directly to the terminal.
-            let delay: Double = backend == .tmuxAttach ? 0.8 : 0.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                terminal.send(txt: initCmd + "\n")
-            }
-        }
+        dispatchInitCommand(initCmd, to: terminal, for: card, backend: effectiveBackend(for: card))
     }
 
     /// Check if a session exists and is running

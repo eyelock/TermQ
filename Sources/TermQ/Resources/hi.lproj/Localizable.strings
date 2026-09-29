@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "इस टर्मिनल को OSC 52 एस्केप सीक्वेंस के माध्यम से सिस्टम क्लिपबोर्ड तक पहुंचने की अनुमति दें";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "पिछला LLM सत्र फिर से शुरू करें";
+"editor.auto.resume.session.help" = "इस टर्मिनल को दोबारा चलाने पर नया सत्र शुरू करने के बजाय पिछला LLM सत्र जारी रहता है";
+"editor.auto.resume.session.unavailable" = "केवल उन हार्नेस टर्मिनल के लिए उपलब्ध जिनका LLM CLI सत्र फिर से शुरू करने का समर्थन करता है";
 "editor.disabled.globally" = "वैश्विक रूप से अक्षम";
 
 // Editor - Security section

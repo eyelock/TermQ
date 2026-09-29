@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Tillat denne terminalen å få tilgang til systemets utklippstavle via OSC 52 escape-sekvenser";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Gjenoppta forrige LLM-økt";
+"editor.auto.resume.session.help" = "Når denne terminalen startes på nytt, fortsetter den forrige LLM-økten i stedet for å starte en ny";
+"editor.auto.resume.session.unavailable" = "Bare tilgjengelig for sele-terminaler der LLM-kommandolinjen kan gjenoppta økter";
 "editor.disabled.globally" = "Deaktivert globalt";
 
 // Editor - Security section
