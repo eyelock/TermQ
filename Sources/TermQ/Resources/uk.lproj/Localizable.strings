@@ -975,6 +975,19 @@
 "diagnostics.export.title" = "Звіт діагностики TermQ";
 "diagnostics.export.footer" = "Надіслано через вбудовану діагностику TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Звіт про пам’ять…";
+"memory.report.window.title" = "Звіт про пам’ять";
+"memory.report.collecting" = "Збирання відомостей про пам’ять…";
+"memory.report.analysing" = "Аналіз пам’яті…";
+"memory.report.pause.notice" = "Під час аналізу пам’яті TermQ може призупинитися на кілька секунд.";
+"memory.report.ready" = "Звіт про пам’ять готовий";
+"memory.report.summary %@ %@ %lld" = "Використовується %1$@ (пік %2$@), сеансів термінала в пам’яті: %3$lld.";
+"memory.report.privacy" = "Звіт містить лише розміри, кількості та назви типів об’єктів: без виводу термінала, заголовків, шляхів і команд.";
+"memory.report.copy" = "Копіювати в буфер обміну";
+"memory.report.copied" = "Скопійовано";
+"memory.report.save" = "Зберегти…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Дублювати";
 "harness.duplicate.installing" = "Встановлення копії…";

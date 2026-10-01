@@ -974,6 +974,19 @@
 "diagnostics.export.title" = "TermQ निदान रिपोर्ट";
 "diagnostics.export.footer" = "TermQ के अंतर्निहित निदान के माध्यम से दर्ज किया गया।";
 
+// MARK: - Memory Report
+"menu.memory.report" = "मेमोरी रिपोर्ट…";
+"memory.report.window.title" = "मेमोरी रिपोर्ट";
+"memory.report.collecting" = "मेमोरी की जानकारी एकत्र की जा रही है…";
+"memory.report.analysing" = "मेमोरी का विश्लेषण किया जा रहा है…";
+"memory.report.pause.notice" = "मेमोरी का विश्लेषण होने के दौरान TermQ कुछ सेकंड के लिए रुक सकता है।";
+"memory.report.ready" = "मेमोरी रिपोर्ट तैयार है";
+"memory.report.summary %@ %@ %lld" = "%1$@ उपयोग में (अधिकतम %2$@), मेमोरी में %3$lld टर्मिनल सत्र हैं।";
+"memory.report.privacy" = "रिपोर्ट में केवल आकार, गिनती और ऑब्जेक्ट प्रकार के नाम शामिल हैं: टर्मिनल आउटपुट, शीर्षक, पथ या कमांड नहीं।";
+"memory.report.copy" = "क्लिपबोर्ड पर कॉपी करें";
+"memory.report.copied" = "कॉपी हो गया";
+"memory.report.save" = "सहेजें…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "डुप्लिकेट करें";
 "harness.duplicate.installing" = "डुप्लिकेट इंस्टॉल हो रहा है…";

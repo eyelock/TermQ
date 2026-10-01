@@ -974,6 +974,19 @@
 "diagnostics.export.title" = "TermQ-diagnostiikkaraportti";
 "diagnostics.export.footer" = "Lähetetty TermQ:n sisäänrakennetun diagnostiikan kautta.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Muistiraportti…";
+"memory.report.window.title" = "Muistiraportti";
+"memory.report.collecting" = "Kerätään muistitietoja…";
+"memory.report.analysing" = "Analysoidaan muistia…";
+"memory.report.pause.notice" = "TermQ saattaa pysähtyä muutamaksi sekunniksi muistin analysoinnin ajaksi.";
+"memory.report.ready" = "Muistiraportti valmis";
+"memory.report.summary %@ %@ %lld" = "Käytössä %1$@ (huippu %2$@) ja %3$lld päätteen istuntoa muistissa.";
+"memory.report.privacy" = "Raportti sisältää vain kokoja, lukumääriä ja objektityyppien nimiä: ei päätteen tulostetta, otsikoita, polkuja tai komentoja.";
+"memory.report.copy" = "Kopioi leikepöydälle";
+"memory.report.copied" = "Kopioitu";
+"memory.report.save" = "Tallenna…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Kopioi";
 "harness.duplicate.installing" = "Asennetaan kopiota…";

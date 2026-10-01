@@ -3,6 +3,7 @@ import Foundation
 extension Strings.Menu {
     static var utilities: String { localized("menu.utilities") }
     static var utilitiesLogging: String { localized("menu.utilities.logging") }
+    static var memoryReport: String { localized("menu.memory.report") }
 }
 
 extension Strings {
@@ -26,6 +27,25 @@ extension Strings {
 
         static func statusEntries(_ total: Int, _ matching: Int) -> String {
             localized("diagnostics.status.entries %lld %lld", total, matching)
+        }
+    }
+}
+
+extension Strings {
+    // MARK: - Memory Report
+    enum MemoryReport {
+        static var windowTitle: String { localized("memory.report.window.title") }
+        static var collecting: String { localized("memory.report.collecting") }
+        static var analysing: String { localized("memory.report.analysing") }
+        static var pauseNotice: String { localized("memory.report.pause.notice") }
+        static var ready: String { localized("memory.report.ready") }
+        static var privacyNote: String { localized("memory.report.privacy") }
+        static var copy: String { localized("memory.report.copy") }
+        static var copied: String { localized("memory.report.copied") }
+        static var save: String { localized("memory.report.save") }
+
+        static func summary(_ footprint: String, _ peak: String, _ sessions: Int) -> String {
+            localized("memory.report.summary %@ %@ %lld", footprint, peak, sessions)
         }
     }
 }

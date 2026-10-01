@@ -974,6 +974,19 @@
 "diagnostics.export.title" = "TermQ Diagnosztikai jelentés";
 "diagnostics.export.footer" = "Beküldve a TermQ beépített diagnosztikájával.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Memóriajelentés…";
+"memory.report.window.title" = "Memóriajelentés";
+"memory.report.collecting" = "Memóriaadatok gyűjtése…";
+"memory.report.analysing" = "Memória elemzése…";
+"memory.report.pause.notice" = "A TermQ néhány másodpercre megállhat, amíg a memóriát elemzi.";
+"memory.report.ready" = "A memóriajelentés elkészült";
+"memory.report.summary %@ %@ %lld" = "%1$@ használatban (csúcs: %2$@), %3$lld terminálmunkamenet van a memóriában.";
+"memory.report.privacy" = "A jelentés csak méreteket, darabszámokat és objektumtípusok nevét tartalmazza: nincs benne terminálkimenet, cím, elérési út vagy parancs.";
+"memory.report.copy" = "Másolás a vágólapra";
+"memory.report.copied" = "Másolva";
+"memory.report.save" = "Mentés…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplikálás";
 "harness.duplicate.installing" = "Másolat telepítése…";

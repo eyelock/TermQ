@@ -968,6 +968,19 @@
 "diagnostics.export.title" = "Diagnostická zpráva TermQ";
 "diagnostics.export.footer" = "Odesláno prostřednictvím vestavěné diagnostiky TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Zpráva o paměti…";
+"memory.report.window.title" = "Zpráva o paměti";
+"memory.report.collecting" = "Shromažďování informací o paměti…";
+"memory.report.analysing" = "Analýza paměti…";
+"memory.report.pause.notice" = "Během analýzy paměti se TermQ může na několik sekund pozastavit.";
+"memory.report.ready" = "Zpráva o paměti je připravena";
+"memory.report.summary %@ %@ %lld" = "Využito %1$@ (maximum %2$@), relací terminálu v paměti: %3$lld.";
+"memory.report.privacy" = "Zpráva obsahuje pouze velikosti, počty a názvy typů objektů: žádný výstup terminálu, názvy, cesty ani příkazy.";
+"memory.report.copy" = "Kopírovat do schránky";
+"memory.report.copied" = "Zkopírováno";
+"memory.report.save" = "Uložit…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplikovat";
 "harness.duplicate.installing" = "Instaluji duplikát…";

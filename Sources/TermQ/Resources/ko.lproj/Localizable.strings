@@ -973,6 +973,19 @@
 "diagnostics.export.title" = "TermQ 진단 보고서";
 "diagnostics.export.footer" = "TermQ 내장 진단을 통해 제출됨.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "메모리 보고서…";
+"memory.report.window.title" = "메모리 보고서";
+"memory.report.collecting" = "메모리 정보 수집 중…";
+"memory.report.analysing" = "메모리 분석 중…";
+"memory.report.pause.notice" = "메모리를 분석하는 동안 TermQ가 몇 초간 멈출 수 있습니다.";
+"memory.report.ready" = "메모리 보고서 준비됨";
+"memory.report.summary %@ %@ %lld" = "%1$@ 사용 중(최대 %2$@), 메모리에 터미널 세션 %3$lld개가 있습니다.";
+"memory.report.privacy" = "보고서에는 크기, 개수, 객체 유형 이름만 포함되며 터미널 출력, 제목, 경로, 명령은 포함되지 않습니다.";
+"memory.report.copy" = "클립보드에 복사";
+"memory.report.copied" = "복사됨";
+"memory.report.save" = "저장…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "복제";
 "harness.duplicate.installing" = "복제본 설치 중…";

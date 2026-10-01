@@ -973,6 +973,19 @@
 "diagnostics.export.title" = "Laporan Diagnostik TermQ";
 "diagnostics.export.footer" = "Difailkan melalui diagnostik terbina dalam TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Laporan Memori…";
+"memory.report.window.title" = "Laporan Memori";
+"memory.report.collecting" = "Mengumpul maklumat memori…";
+"memory.report.analysing" = "Menganalisis memori…";
+"memory.report.pause.notice" = "TermQ mungkin berhenti seketika selama beberapa saat semasa memorinya dianalisis.";
+"memory.report.ready" = "Laporan memori sedia";
+"memory.report.summary %@ %@ %lld" = "Menggunakan %1$@ (puncak %2$@) dengan %3$lld sesi terminal dalam memori.";
+"memory.report.privacy" = "Laporan hanya mengandungi saiz, bilangan dan nama jenis objek: tiada output terminal, tajuk, laluan atau arahan.";
+"memory.report.copy" = "Salin ke Papan Keratan";
+"memory.report.copied" = "Disalin";
+"memory.report.save" = "Simpan…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplikat";
 "harness.duplicate.installing" = "Memasang duplikat…";

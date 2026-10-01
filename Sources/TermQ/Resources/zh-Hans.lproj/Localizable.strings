@@ -968,6 +968,19 @@
 "diagnostics.export.title" = "TermQ 诊断报告";
 "diagnostics.export.footer" = "通过 TermQ 内置诊断工具提交。";
 
+// MARK: - Memory Report
+"menu.memory.report" = "内存报告…";
+"memory.report.window.title" = "内存报告";
+"memory.report.collecting" = "正在收集内存信息…";
+"memory.report.analysing" = "正在分析内存…";
+"memory.report.pause.notice" = "在分析内存期间，TermQ 可能会暂停数秒。";
+"memory.report.ready" = "内存报告已就绪";
+"memory.report.summary %@ %@ %lld" = "正在使用 %1$@（峰值 %2$@），内存中有 %3$lld 个终端会话。";
+"memory.report.privacy" = "报告仅包含大小、数量和对象类型名称：不含终端输出、标题、路径或命令。";
+"memory.report.copy" = "复制到剪贴板";
+"memory.report.copied" = "已复制";
+"memory.report.save" = "保存…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "复制";
 "harness.duplicate.installing" = "正在安装副本…";

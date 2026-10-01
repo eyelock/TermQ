@@ -974,6 +974,19 @@
 "diagnostics.export.title" = "דוח אבחון TermQ";
 "diagnostics.export.footer" = "הוגש דרך כלי האבחון המובנה של TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "דוח זיכרון…";
+"memory.report.window.title" = "דוח זיכרון";
+"memory.report.collecting" = "אוסף מידע על הזיכרון…";
+"memory.report.analysing" = "מנתח את הזיכרון…";
+"memory.report.pause.notice" = "ייתכן ש-TermQ ייעצר למספר שניות בזמן ניתוח הזיכרון.";
+"memory.report.ready" = "דוח הזיכרון מוכן";
+"memory.report.summary %@ %@ %lld" = "בשימוש: %1$@ (שיא: %2$@), עם %3$lld הפעלות מסוף בזיכרון.";
+"memory.report.privacy" = "הדוח כולל רק גדלים, ספירות ושמות של סוגי אובייקטים: ללא פלט מסוף, כותרות, נתיבים או פקודות.";
+"memory.report.copy" = "העתקה ללוח";
+"memory.report.copied" = "הועתק";
+"memory.report.save" = "שמירה…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "שכפל";
 "harness.duplicate.installing" = "מתקין עותק…";

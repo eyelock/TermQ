@@ -975,6 +975,19 @@
 "diagnostics.export.title" = "Poročilo diagnostike TermQ";
 "diagnostics.export.footer" = "Predloženo prek vgrajene diagnostike TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Poročilo o pomnilniku…";
+"memory.report.window.title" = "Poročilo o pomnilniku";
+"memory.report.collecting" = "Zbiranje podatkov o pomnilniku…";
+"memory.report.analysing" = "Analiza pomnilnika…";
+"memory.report.pause.notice" = "TermQ se lahko za nekaj sekund ustavi, medtem ko se analizira pomnilnik.";
+"memory.report.ready" = "Poročilo o pomnilniku je pripravljeno";
+"memory.report.summary %@ %@ %lld" = "Uporaba: %1$@ (vrh %2$@), sej terminala v pomnilniku: %3$lld.";
+"memory.report.privacy" = "Poročilo vsebuje samo velikosti, števila in imena vrst objektov: brez izpisa terminala, naslovov, poti ali ukazov.";
+"memory.report.copy" = "Kopiraj v odložišče";
+"memory.report.copied" = "Kopirano";
+"memory.report.save" = "Shrani…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Podvoji";
 "harness.duplicate.installing" = "Nameščanje dvojnika…";

@@ -974,6 +974,19 @@
 "diagnostics.export.title" = "TermQ Dijagnostički izvještaj";
 "diagnostics.export.footer" = "Predano putem ugrađene dijagnostike TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Izvješće o memoriji…";
+"memory.report.window.title" = "Izvješće o memoriji";
+"memory.report.collecting" = "Prikupljanje informacija o memoriji…";
+"memory.report.analysing" = "Analiza memorije…";
+"memory.report.pause.notice" = "TermQ se može zaustaviti na nekoliko sekundi dok se memorija analizira.";
+"memory.report.ready" = "Izvješće o memoriji je spremno";
+"memory.report.summary %@ %@ %lld" = "Korištenje: %1$@ (vrhunac %2$@), sesija terminala u memoriji: %3$lld.";
+"memory.report.privacy" = "Izvješće sadrži samo veličine, brojeve i nazive vrsta objekata: bez izlaza terminala, naslova, putanja ili naredbi.";
+"memory.report.copy" = "Kopiraj u međuspremnik";
+"memory.report.copied" = "Kopirano";
+"memory.report.save" = "Spremi…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Dupliciraj";
 "harness.duplicate.installing" = "Instalira se duplikat…";

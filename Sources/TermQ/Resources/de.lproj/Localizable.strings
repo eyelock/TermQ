@@ -968,6 +968,19 @@
 "diagnostics.export.title" = "TermQ Diagnosebericht";
 "diagnostics.export.footer" = "Übermittelt über die integrierte TermQ-Diagnose.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Speicherbericht…";
+"memory.report.window.title" = "Speicherbericht";
+"memory.report.collecting" = "Speicherinformationen werden gesammelt…";
+"memory.report.analysing" = "Speicher wird analysiert…";
+"memory.report.pause.notice" = "TermQ reagiert möglicherweise einige Sekunden lang nicht, während der Speicher analysiert wird.";
+"memory.report.ready" = "Speicherbericht bereit";
+"memory.report.summary %@ %@ %lld" = "Belegt %1$@ (Spitzenwert %2$@) mit %3$lld Terminalsitzungen im Speicher.";
+"memory.report.privacy" = "Der Bericht enthält nur Größen, Anzahlen und Objekttypnamen: keine Terminalausgaben, Titel, Pfade oder Befehle.";
+"memory.report.copy" = "In die Zwischenablage kopieren";
+"memory.report.copied" = "Kopiert";
+"memory.report.save" = "Sichern…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplizieren";
 "harness.duplicate.installing" = "Duplikat wird installiert…";

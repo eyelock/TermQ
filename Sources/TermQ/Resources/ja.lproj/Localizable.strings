@@ -968,6 +968,19 @@
 "diagnostics.export.title" = "TermQ 診断レポート";
 "diagnostics.export.footer" = "TermQ 内蔵診断ツール経由で提出。";
 
+// MARK: - Memory Report
+"menu.memory.report" = "メモリレポート…";
+"memory.report.window.title" = "メモリレポート";
+"memory.report.collecting" = "メモリ情報を収集中…";
+"memory.report.analysing" = "メモリを分析中…";
+"memory.report.pause.notice" = "メモリの分析中、TermQ が数秒間停止することがあります。";
+"memory.report.ready" = "メモリレポートの準備ができました";
+"memory.report.summary %@ %@ %lld" = "%1$@ を使用中（ピーク %2$@）、メモリ内のターミナルセッションは %3$lld 件です。";
+"memory.report.privacy" = "レポートにはサイズ、件数、オブジェクトの型名のみが含まれます。ターミナルの出力、タイトル、パス、コマンドは含まれません。";
+"memory.report.copy" = "クリップボードにコピー";
+"memory.report.copied" = "コピーしました";
+"memory.report.save" = "保存…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "複製";
 "harness.duplicate.installing" = "複製をインストール中…";

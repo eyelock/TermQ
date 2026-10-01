@@ -975,6 +975,19 @@
 "diagnostics.export.title" = "TermQ Diagnostikrapport";
 "diagnostics.export.footer" = "Inskickad via TermQs inbyggda diagnostik.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Minnesrapport…";
+"memory.report.window.title" = "Minnesrapport";
+"memory.report.collecting" = "Samlar in minnesinformation…";
+"memory.report.analysing" = "Analyserar minne…";
+"memory.report.pause.notice" = "TermQ kan frysa några sekunder medan minnet analyseras.";
+"memory.report.ready" = "Minnesrapporten är klar";
+"memory.report.summary %@ %@ %lld" = "Använder %1$@ (högst %2$@) med %3$lld terminalsessioner i minnet.";
+"memory.report.privacy" = "Rapporten innehåller bara storlekar, antal och objekttypnamn: ingen terminalutdata, inga titlar, sökvägar eller kommandon.";
+"memory.report.copy" = "Kopiera till Urklipp";
+"memory.report.copied" = "Kopierat";
+"memory.report.save" = "Spara…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplicera";
 "harness.duplicate.installing" = "Installerar duplikat…";

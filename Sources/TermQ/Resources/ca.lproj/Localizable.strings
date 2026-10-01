@@ -968,6 +968,19 @@
 "diagnostics.export.title" = "Informe de diagnòstics de TermQ";
 "diagnostics.export.footer" = "Enviat mitjançant els diagnòstics integrats de TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Informe de memòria…";
+"memory.report.window.title" = "Informe de memòria";
+"memory.report.collecting" = "Recopilant informació de la memòria…";
+"memory.report.analysing" = "Analitzant la memòria…";
+"memory.report.pause.notice" = "TermQ pot aturar-se uns segons mentre s’analitza la seva memòria.";
+"memory.report.ready" = "Informe de memòria llest";
+"memory.report.summary %@ %@ %lld" = "Utilitzant %1$@ (màxim %2$@) amb %3$lld sessions de terminal a la memòria.";
+"memory.report.privacy" = "L’informe només conté mides, recomptes i noms de tipus d’objecte: cap sortida de terminal, títol, ruta ni ordre.";
+"memory.report.copy" = "Copia al porta-retalls";
+"memory.report.copied" = "Copiat";
+"memory.report.save" = "Desa…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplica";
 "harness.duplicate.installing" = "Instal·lant duplicat…";
