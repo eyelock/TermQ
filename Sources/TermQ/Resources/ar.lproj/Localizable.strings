@@ -971,6 +971,19 @@
 "diagnostics.export.title" = "تقرير تشخيصات TermQ";
 "diagnostics.export.footer" = "مُقدَّم عبر أداة التشخيص المدمجة في TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "تقرير الذاكرة…";
+"memory.report.window.title" = "تقرير الذاكرة";
+"memory.report.collecting" = "جارٍ جمع معلومات الذاكرة…";
+"memory.report.analysing" = "جارٍ تحليل الذاكرة…";
+"memory.report.pause.notice" = "قد يتوقف TermQ مؤقتًا لبضع ثوانٍ أثناء تحليل الذاكرة.";
+"memory.report.ready" = "تقرير الذاكرة جاهز";
+"memory.report.summary %@ %@ %lld" = "يستخدم %1$@ (الذروة %2$@) مع %3$lld جلسة طرفية في الذاكرة.";
+"memory.report.privacy" = "يحتوي التقرير على الأحجام والأعداد وأسماء أنواع الكائنات فقط: بدون مخرجات الطرفية أو العناوين أو المسارات أو الأوامر.";
+"memory.report.copy" = "نسخ إلى الحافظة";
+"memory.report.copied" = "تم النسخ";
+"memory.report.save" = "حفظ…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "تكرار";
 "harness.duplicate.installing" = "جارٍ تثبيت النسخة المكررة…";

@@ -978,6 +978,19 @@
 "diagnostics.export.title" = "TermQ Tanılama Raporu";
 "diagnostics.export.footer" = "TermQ yerleşik tanılama aracıyla gönderildi.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Bellek Raporu…";
+"memory.report.window.title" = "Bellek Raporu";
+"memory.report.collecting" = "Bellek bilgileri toplanıyor…";
+"memory.report.analysing" = "Bellek analiz ediliyor…";
+"memory.report.pause.notice" = "Bellek analiz edilirken TermQ birkaç saniyeliğine duraklayabilir.";
+"memory.report.ready" = "Bellek raporu hazır";
+"memory.report.summary %@ %@ %lld" = "%1$@ kullanılıyor (tepe %2$@), bellekte %3$lld terminal oturumu var.";
+"memory.report.privacy" = "Rapor yalnızca boyutları, sayıları ve nesne türü adlarını içerir: terminal çıktısı, başlık, yol veya komut içermez.";
+"memory.report.copy" = "Panoya Kopyala";
+"memory.report.copied" = "Kopyalandı";
+"memory.report.save" = "Kaydet…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Çoğalt";
 "harness.duplicate.installing" = "Kopya yükleniyor…";

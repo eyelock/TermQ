@@ -971,6 +971,19 @@
 "diagnostics.export.title" = "Отчёт диагностики TermQ";
 "diagnostics.export.footer" = "Отправлено через встроенную диагностику TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Отчёт о памяти…";
+"memory.report.window.title" = "Отчёт о памяти";
+"memory.report.collecting" = "Сбор информации о памяти…";
+"memory.report.analysing" = "Анализ памяти…";
+"memory.report.pause.notice" = "Во время анализа памяти TermQ может приостановиться на несколько секунд.";
+"memory.report.ready" = "Отчёт о памяти готов";
+"memory.report.summary %@ %@ %lld" = "Используется %1$@ (пик %2$@), сеансов терминала в памяти: %3$lld.";
+"memory.report.privacy" = "Отчёт содержит только размеры, количества и названия типов объектов: без вывода терминала, заголовков, путей и команд.";
+"memory.report.copy" = "Скопировать в буфер обмена";
+"memory.report.copied" = "Скопировано";
+"memory.report.save" = "Сохранить…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Дублировать";
 "harness.duplicate.installing" = "Установка копии…";

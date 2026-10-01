@@ -971,6 +971,19 @@
 "diagnostics.export.title" = "TermQ 診斷報告";
 "diagnostics.export.footer" = "透過 TermQ 內建診斷工具提交。";
 
+// MARK: - Memory Report
+"menu.memory.report" = "記憶體報告…";
+"memory.report.window.title" = "記憶體報告";
+"memory.report.collecting" = "正在收集記憶體資訊…";
+"memory.report.analysing" = "正在分析記憶體…";
+"memory.report.pause.notice" = "分析記憶體期間，TermQ 可能會暫停數秒。";
+"memory.report.ready" = "記憶體報告已就緒";
+"memory.report.summary %@ %@ %lld" = "正在使用 %1$@（峰值 %2$@），記憶體中有 %3$lld 個終端機工作階段。";
+"memory.report.privacy" = "報告僅包含大小、數量和物件類型名稱：不含終端機輸出、標題、路徑或指令。";
+"memory.report.copy" = "複製到剪貼板";
+"memory.report.copied" = "已複製";
+"memory.report.save" = "儲存…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "複製";
 "harness.duplicate.installing" = "正在安裝副本…";

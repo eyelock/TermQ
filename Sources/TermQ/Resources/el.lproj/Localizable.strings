@@ -971,6 +971,19 @@
 "diagnostics.export.title" = "Αναφορά διαγνωστικών TermQ";
 "diagnostics.export.footer" = "Υποβλήθηκε μέσω του ενσωματωμένου διαγνωστικού TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Αναφορά μνήμης…";
+"memory.report.window.title" = "Αναφορά μνήμης";
+"memory.report.collecting" = "Συλλογή πληροφοριών μνήμης…";
+"memory.report.analysing" = "Ανάλυση μνήμης…";
+"memory.report.pause.notice" = "Το TermQ ενδέχεται να σταματήσει για λίγα δευτερόλεπτα όσο αναλύεται η μνήμη του.";
+"memory.report.ready" = "Η αναφορά μνήμης είναι έτοιμη";
+"memory.report.summary %@ %@ %lld" = "Χρήση %1$@ (μέγιστο %2$@) με %3$lld συνεδρίες τερματικού στη μνήμη.";
+"memory.report.privacy" = "Η αναφορά περιέχει μόνο μεγέθη, πλήθη και ονόματα τύπων αντικειμένων: χωρίς έξοδο τερματικού, τίτλους, διαδρομές ή εντολές.";
+"memory.report.copy" = "Αντιγραφή στο πρόχειρο";
+"memory.report.copied" = "Αντιγράφηκε";
+"memory.report.save" = "Αποθήκευση…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Αντιγραφή";
 "harness.duplicate.installing" = "Εγκατάσταση αντιγράφου…";

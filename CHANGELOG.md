@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Diagnostics
+
+- **Help → Memory Report…** collects what we need to look into a "TermQ is using a lot of memory" report, ready to save or copy into an issue. It covers TermQ's current and peak memory, every terminal session it is holding (and whether that session's tab is open, closed, or its process has exited), and summaries from macOS's `footprint`, `heap` and `leaks` tools run against TermQ itself. TermQ may pause for a few seconds while those tools inspect it. The report contains only sizes, counts and object type names — no terminal output, card titles, paths or commands, with your home folder and user name redacted. For when TermQ is too unresponsive to use its own menu, `scripts/memory-report.sh` collects the same diagnostics from outside.
+
 ### Added — Harnesses
 
 - **Harness cards can resume their previous LLM session on relaunch.** Edit Terminal → Prompts gains a **Resume Previous LLM Session** toggle: with it on, reopening the card continues the conversation the vendor CLI last recorded for that working directory instead of starting cold. Cards created by the harness launcher have it on by default; existing cards keep their current cold-launch behaviour until you turn it on. The session id comes from the vendor's own on-disk session store — TermQ never scrapes the terminal for it.

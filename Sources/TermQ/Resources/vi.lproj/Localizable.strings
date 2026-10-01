@@ -978,6 +978,19 @@
 "diagnostics.export.title" = "Báo cáo chẩn đoán TermQ";
 "diagnostics.export.footer" = "Được nộp qua công cụ chẩn đoán tích hợp của TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Báo cáo bộ nhớ…";
+"memory.report.window.title" = "Báo cáo bộ nhớ";
+"memory.report.collecting" = "Đang thu thập thông tin bộ nhớ…";
+"memory.report.analysing" = "Đang phân tích bộ nhớ…";
+"memory.report.pause.notice" = "TermQ có thể tạm dừng trong vài giây khi bộ nhớ đang được phân tích.";
+"memory.report.ready" = "Báo cáo bộ nhớ đã sẵn sàng";
+"memory.report.summary %@ %@ %lld" = "Đang dùng %1$@ (cao nhất %2$@) với %3$lld phiên terminal trong bộ nhớ.";
+"memory.report.privacy" = "Báo cáo chỉ chứa kích thước, số lượng và tên loại đối tượng: không có đầu ra terminal, tiêu đề, đường dẫn hay lệnh.";
+"memory.report.copy" = "Sao chép vào bảng nhớ tạm";
+"memory.report.copied" = "Đã sao chép";
+"memory.report.save" = "Lưu…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Nhân bản";
 "harness.duplicate.installing" = "Đang cài đặt bản sao…";

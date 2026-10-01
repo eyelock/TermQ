@@ -971,6 +971,19 @@
 "diagnostics.export.title" = "Raport diagnostic TermQ";
 "diagnostics.export.footer" = "Depus prin diagnosticele integrate TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Raport de memorie…";
+"memory.report.window.title" = "Raport de memorie";
+"memory.report.collecting" = "Se colectează informații despre memorie…";
+"memory.report.analysing" = "Se analizează memoria…";
+"memory.report.pause.notice" = "TermQ se poate bloca câteva secunde în timp ce memoria este analizată.";
+"memory.report.ready" = "Raportul de memorie este gata";
+"memory.report.summary %@ %@ %lld" = "Se utilizează %1$@ (maxim %2$@) cu %3$lld sesiuni de terminal în memorie.";
+"memory.report.privacy" = "Raportul conține doar dimensiuni, numere și nume de tipuri de obiecte: fără ieșire de terminal, titluri, căi sau comenzi.";
+"memory.report.copy" = "Copiază în clipboard";
+"memory.report.copied" = "Copiat";
+"memory.report.save" = "Salvare…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplica";
 "harness.duplicate.installing" = "Se instalează duplicatul…";

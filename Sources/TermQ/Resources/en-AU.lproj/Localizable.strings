@@ -969,6 +969,19 @@
 "diagnostics.export.title" = "TermQ Diagnostics Report";
 "diagnostics.export.footer" = "Filed via TermQ built-in diagnostics.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Memory Report…";
+"memory.report.window.title" = "Memory Report";
+"memory.report.collecting" = "Collecting memory information…";
+"memory.report.analysing" = "Analysing memory…";
+"memory.report.pause.notice" = "TermQ may pause for a few seconds while its memory is analysed.";
+"memory.report.ready" = "Memory report ready";
+"memory.report.summary %@ %@ %lld" = "Using %1$@ (peak %2$@) with %3$lld terminal sessions in memory.";
+"memory.report.privacy" = "The report contains only sizes, counts and object type names: no terminal output, titles, paths or commands.";
+"memory.report.copy" = "Copy to Clipboard";
+"memory.report.copied" = "Copied";
+"memory.report.save" = "Save…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Duplicate";
 "harness.duplicate.installing" = "Installing duplicate…";

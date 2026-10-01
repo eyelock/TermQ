@@ -976,6 +976,19 @@
 "diagnostics.export.title" = "TermQ Diagnostiekrapport";
 "diagnostics.export.footer" = "Ingediend via de ingebouwde diagnostiek van TermQ.";
 
+// MARK: - Memory Report
+"menu.memory.report" = "Geheugenrapport…";
+"memory.report.window.title" = "Geheugenrapport";
+"memory.report.collecting" = "Geheugeninformatie verzamelen…";
+"memory.report.analysing" = "Geheugen analyseren…";
+"memory.report.pause.notice" = "TermQ kan een paar seconden stilvallen terwijl het geheugen wordt geanalyseerd.";
+"memory.report.ready" = "Geheugenrapport gereed";
+"memory.report.summary %@ %@ %lld" = "Gebruikt %1$@ (piek %2$@) met %3$lld terminalsessies in het geheugen.";
+"memory.report.privacy" = "Het rapport bevat alleen groottes, aantallen en objecttypenamen: geen terminaluitvoer, titels, paden of opdrachten.";
+"memory.report.copy" = "Kopieer naar klembord";
+"memory.report.copied" = "Gekopieerd";
+"memory.report.save" = "Bewaar…";
+
 // MARK: - Harness Duplicate (added sync)
 "harness.duplicate.button" = "Dupliceren";
 "harness.duplicate.installing" = "Duplicaat wordt geïnstalleerd…";

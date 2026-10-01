@@ -180,6 +180,12 @@ struct TermQApp: App {
                     openWindow(id: "help")
                 }
                 .keyboardShortcut("?", modifiers: .command)
+
+                Divider()
+
+                Button(Strings.Menu.memoryReport) {
+                    MemoryReportWindowController.shared.show()
+                }
             }
 
             // File menu — terminal/document lifecycle only. Navigation, zoom,
