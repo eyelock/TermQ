@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Engedélyezze ennek a terminálnak a rendszer vágólapjának elérését OSC 52 escape szekvenciákon keresztül";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Előző LLM-munkamenet folytatása";
+"editor.auto.resume.session.help" = "A terminál újraindításakor az előző LLM-munkamenet folytatódik, nem új indul";
+"editor.auto.resume.session.unavailable" = "Csak olyan meghajtó-terminálokhoz érhető el, amelyek LLM parancssora támogatja a munkamenetek folytatását";
 "editor.disabled.globally" = "Globálisan letiltva";
 
 // Editor - Security section

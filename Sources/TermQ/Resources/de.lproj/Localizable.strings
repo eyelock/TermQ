@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Diesem Terminal erlauben, über OSC 52-Escape-Sequenzen auf die Systemzwischenablage zuzugreifen";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Vorherige LLM-Sitzung fortsetzen";
+"editor.auto.resume.session.help" = "Beim Neustart dieses Terminals wird die vorherige LLM-Sitzung fortgesetzt, statt eine neue zu beginnen";
+"editor.auto.resume.session.unavailable" = "Nur für Satz-Terminals verfügbar, deren LLM-CLI das Fortsetzen von Sitzungen unterstützt";
 "editor.disabled.globally" = "Global deaktiviert";
 
 // Editor - Security section

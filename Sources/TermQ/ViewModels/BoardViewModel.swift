@@ -236,6 +236,7 @@ class BoardViewModel: ObservableObject {
             allowAutorun: source.allowAutorun,
             allowOscClipboard: source.allowOscClipboard,
             confirmExternalModifications: source.confirmExternalModifications,
+            autoResumeSession: source.autoResumeSession,
             backend: source.backend,
             environmentVariables: source.environmentVariables,
             workspaceId: source.workspaceId

@@ -222,6 +222,9 @@
 "editor.allow.osc.clipboard.help" = "Dopusti ovom terminalu pristup međuspremniku sustava putem OSC 52 escape sekvenci";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "Nastavi prethodnu LLM sesiju";
+"editor.auto.resume.session.help" = "Ponovnim pokretanjem ovog terminala nastavlja se prethodna LLM sesija umjesto pokretanja nove";
+"editor.auto.resume.session.unavailable" = "Dostupno samo za terminale pogonskog sklopa čije LLM sučelje podržava nastavak sesija";
 "editor.disabled.globally" = "Onemogućeno globalno";
 
 // Editor - Security section

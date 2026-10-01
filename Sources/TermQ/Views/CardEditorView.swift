@@ -353,6 +353,8 @@ struct CardEditorView: View {
                 helpText: Strings.Editor.confirmExternalModificationsHelp
             )
 
+            CardEditorResumeToggle(viewModel: viewModel)
+
             SharedToggle(
                 label: Strings.Editor.allowOscClipboard,
                 isOn: $viewModel.allowOscClipboard,

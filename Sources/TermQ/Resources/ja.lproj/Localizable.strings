@@ -221,6 +221,9 @@
 "editor.allow.osc.clipboard.help" = "このターミナルがOSC 52エスケープシーケンスを介してシステムクリップボードにアクセスすることを許可します";
 "editor.confirm.external.modifications" = "Require Confirmation for CLI/MCP LLM Prompt Modifications";
 "editor.confirm.external.modifications.help" = "When disabled, CLI/MCP commands can modify this terminal's LLM prompts without confirmation";
+"editor.auto.resume.session" = "前回の LLM セッションを再開";
+"editor.auto.resume.session.help" = "このターミナルを再起動すると、新しいセッションではなく前回の LLM セッションを再開します";
+"editor.auto.resume.session.unavailable" = "LLM CLI がセッションの再開に対応しているハーネス端末でのみ利用できます";
 "editor.disabled.globally" = "グローバルに無効";
 
 // Editor - Security section
