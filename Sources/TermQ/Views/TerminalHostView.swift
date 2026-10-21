@@ -474,6 +474,16 @@ class TermQTerminalView: LocalProcessTerminalView {
         }
     }
 
+    // MARK: - Copy
+
+    /// Standard copy, then drop the border or scrollbar glyph a TUI positioned
+    /// with a cursor jump (see `TerminalSelectionGapTrimmer`). Runs for Cmd+C,
+    /// copy-on-select, and the context menu's copy variants alike.
+    override func copy(_ sender: Any) {
+        super.copy(sender)
+        rewritePasteboardTrimmingUnwrittenGaps()
+    }
+
     // MARK: - Smart Paste
 
     /// Override paste to warn about potentially dangerous content

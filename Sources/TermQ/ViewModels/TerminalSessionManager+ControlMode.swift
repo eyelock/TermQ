@@ -28,6 +28,13 @@ class ControlModeTerminalView: TerminalView {
             dragController.stop()
         }
     }
+
+    /// Standard copy, then drop the border or scrollbar glyph a TUI positioned
+    /// with a cursor jump (see `TerminalSelectionGapTrimmer`).
+    override func copy(_ sender: Any) {
+        super.copy(sender)
+        rewritePasteboardTrimmingUnwrittenGaps()
+    }
 }
 
 // MARK: - Control Mode Pane Delegate
