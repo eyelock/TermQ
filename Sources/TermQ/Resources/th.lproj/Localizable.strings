@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "เลือก…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
+"harnesses.launch.resume" = "เริ่มเซสชันก่อนหน้าต่อ";
+"harnesses.launch.resume.help" = "ดำเนินการต่อจากเซสชันล่าสุดในไดเรกทอรีทำงานแทนการเริ่มใหม่";
 "harnesses.launch.button" = "เปิด";
 "harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
 "harnesses.launch.cancel" = "ยกเลิก";

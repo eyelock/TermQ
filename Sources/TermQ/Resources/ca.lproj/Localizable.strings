@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Navega…";
 "harnesses.launch.prompt" = "Indicació";
 "harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
+"harnesses.launch.resume" = "Represa la sessió anterior";
+"harnesses.launch.resume.help" = "Continua la sessió més recent al directori de treball en lloc de començar de zero.";
 "harnesses.launch.button" = "Inicia";
 "harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
 "harnesses.launch.cancel" = "Cancel·la";

@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Tallózás…";
 "harnesses.launch.prompt" = "Kérdés";
 "harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
+"harnesses.launch.resume" = "Előző munkamenet folytatása";
+"harnesses.launch.resume.help" = "A munkakönyvtár legutóbbi munkamenetét folytatja az újrakezdés helyett.";
 "harnesses.launch.button" = "Indítás";
 "harnesses.launch.help" = "Harness indítása új terminálban";
 "harnesses.launch.cancel" = "Mégse";

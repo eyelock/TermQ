@@ -190,11 +190,12 @@ final class HarnessLaunchCoordinator {
             backend: config.backend
         )
         card.allowAutorun = true
-        // Harness cards resume by default: the first launch has nothing to
-        // continue and starts cold anyway, so this only takes effect from the
-        // second launch onward — which is the behaviour people expect when
-        // reopening a terminal they were working in.
+        // Harness cards resume on reopen/restart by default. The first launch is
+        // NOT implicitly cold: YNH resumes the newest session in the working
+        // directory, which could belong to someone else, so the first launch's
+        // behaviour is set explicitly from the sheet's toggle (off by default).
         card.autoResumeSession = true
+        card.resumeOverrideForNextLaunch = config.resumeSession
         card.workspaceId = boardViewModel.newCardWorkspaceId
 
         boardViewModel.board.cards.append(card)
@@ -245,6 +246,9 @@ final class HarnessLaunchCoordinator {
         // launch path, which derives the same name from the card id).
         card.initCommand = config.command(sessionName: card.tmuxSessionName)
         card.allowAutorun = true
+        // A rewrite carries new intent (focus/prompt), so it starts cold unless
+        // the config explicitly asks to resume.
+        card.resumeOverrideForNextLaunch = config.resumeSession
 
         boardViewModel.save()
     }

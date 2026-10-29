@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Semak imbas…";
 "harnesses.launch.prompt" = "Gesaan";
 "harnesses.launch.prompt.placeholder" = "Gesaan pilihan untuk dihantar kepada ejen…";
+"harnesses.launch.resume" = "Sambung sesi sebelumnya";
+"harnesses.launch.resume.help" = "Menyambung sesi terkini dalam direktori kerja dan bukannya bermula semula.";
 "harnesses.launch.button" = "Lancarkan";
 "harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
 "harnesses.launch.cancel" = "Batal";

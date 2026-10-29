@@ -432,6 +432,12 @@ class TerminalSessionManager: ObservableObject {
             if hasNextActionToken && hadNextAction {
                 card.llmNextAction = ""
                 boardViewModelProvider().updateCard(card)
+                // The queued action was just consumed into the prompt and
+                // cleared from the card. Resuming would drop or strip that
+                // prompt, losing the action, so this launch starts cold.
+                if card.resumeOverrideForNextLaunch == nil {
+                    card.resumeOverrideForNextLaunch = false
+                }
             }
         } else {
             initCmd = tokenizer.replace(initCmd, with: .init(prompt: "", nextAction: ""))

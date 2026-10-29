@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Explorar…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opcional para pasar al agente…";
+"harnesses.launch.resume" = "Reanudar la sesión anterior";
+"harnesses.launch.resume.help" = "Continúa la sesión más reciente en el directorio de trabajo en lugar de empezar de cero.";
 "harnesses.launch.button" = "Lanzar";
 "harnesses.launch.help" = "Lanzar este arnés en un nuevo terminal";
 "harnesses.launch.cancel" = "Cancelar";

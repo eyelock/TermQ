@@ -158,4 +158,43 @@ final class HarnessLaunchCoordinatorTests: XCTestCase {
         XCTAssertFalse(card.initCommand.contains("--focus"), card.initCommand)
         XCTAssertTrue(card.initCommand.contains("ynh run new/h"), card.initCommand)
     }
+
+    // MARK: - Resume override
+
+    func testRewriteCardLaunch_setsColdOverrideByDefault() {
+        let (coord, _, bvm) = makeCoordinator()
+        let column = bvm.board.columns.first ?? bvm.board.addColumn(name: "Test")
+        let card = bvm.board.addCard(to: column, title: "Tab")
+
+        coord.rewriteCardLaunch(card, config: launchConfig(focus: "review", branch: nil))
+
+        XCTAssertEqual(card.resumeOverrideForNextLaunch, false)
+    }
+
+    func testRewriteCardLaunch_honoursResumeFromConfig() {
+        let (coord, _, bvm) = makeCoordinator()
+        let column = bvm.board.columns.first ?? bvm.board.addColumn(name: "Test")
+        let card = bvm.board.addCard(to: column, title: "Tab")
+        var config = launchConfig(focus: nil, branch: nil)
+        config.resumeSession = true
+
+        coord.rewriteCardLaunch(card, config: config)
+
+        XCTAssertEqual(card.resumeOverrideForNextLaunch, true)
+        XCTAssertFalse(card.initCommand.contains("--resume"), "resume is applied at send time")
+    }
+
+    func testLaunchHarness_newCardOverrideComesFromConfig() throws {
+        for resume in [false, true] {
+            let (coord, _, bvm) = makeCoordinator()
+            var config = launchConfig(focus: nil, branch: nil)
+            config.resumeSession = resume
+
+            coord.launchHarness(config, reuseExisting: false)
+
+            let card = try XCTUnwrap(bvm.board.cards.last)
+            XCTAssertEqual(card.resumeOverrideForNextLaunch, resume)
+            XCTAssertTrue(card.autoResumeSession, "reopen default stays on")
+        }
+    }
 }

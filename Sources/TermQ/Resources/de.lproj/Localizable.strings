@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Durchsuchen…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optionaler Prompt für den Agenten…";
+"harnesses.launch.resume" = "Vorherige Sitzung fortsetzen";
+"harnesses.launch.resume.help" = "Setzt die letzte Sitzung im Arbeitsverzeichnis fort, statt neu zu beginnen.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Dieses Harness in einem neuen Terminal starten";
 "harnesses.launch.cancel" = "Abbrechen";
