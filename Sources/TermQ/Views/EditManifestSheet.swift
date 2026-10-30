@@ -4,7 +4,7 @@ import TermQShared
 /// Sheet for editing the safe subset of manifest fields — description,
 /// default vendor, version.
 ///
-/// Reads `.ynh-plugin/plugin.json` directly via `HarnessManifestEditor` and
+/// Reads `plugin.json` (`.agents/harness/` or legacy `.ynh-plugin/`) directly via `HarnessManifestEditor` and
 /// writes specific fields back, preserving all other keys (includes,
 /// delegates, $schema, etc.). Triggers a detail re-fetch on success.
 struct EditManifestSheet: View {
@@ -86,6 +86,17 @@ struct EditManifestSheet: View {
                     .padding(.leading, 108)
             }
 
+            if let note = layoutNote {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.orange)
+                    Text(note)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .textSelection(.enabled)
+                }
+            }
+
             if let error = loadError ?? manifestEditor.errorMessage {
                 HStack(spacing: 6) {
                     Image(systemName: "exclamationmark.triangle")
@@ -121,6 +132,14 @@ struct EditManifestSheet: View {
                     await vendorService.refresh()
                 }
             }
+        }
+    }
+
+    /// Shown when the harness tree uses a layout YNH 0.14+ refuses. The
+    /// editor still edits the file in place; migrating is the user's call.
+    private var layoutNote: String? {
+        HarnessManifestEditor.layout(at: harness.editablePath).flatMap {
+            Strings.Harnesses.layoutMessage($0, path: harness.editablePath)
         }
     }
 

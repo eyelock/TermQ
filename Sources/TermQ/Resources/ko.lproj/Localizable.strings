@@ -1201,6 +1201,8 @@
 "harnesses.manifest.edit.description" = "설명";
 "harnesses.manifest.edit.description.hint" = "harness 목록과 상세 헤더에 표시됩니다. 생략하려면 비워 두세요.";
 "harnesses.manifest.edit.save" = "변경사항 저장";
+"harnesses.layout.legacy %@" = "이전 .ynh-plugin/ 레이아웃을 사용 중이며 YNH 0.14+에서는 거부됩니다. 실행: ynd migrate %@";
+"harnesses.layout.both" = ".agents/harness/와 .ynh-plugin/가 모두 있어 YNH 0.14+에서 거부됩니다. .ynh-plugin/ 디렉터리를 삭제하세요.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "업스트림 커밋 변경됨: %@ → %@";

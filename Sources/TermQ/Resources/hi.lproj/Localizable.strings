@@ -1200,6 +1200,8 @@
 "harnesses.manifest.edit.description" = "विवरण";
 "harnesses.manifest.edit.description.hint" = "harness सूची और विवरण हेडर में दिखाया गया। छोड़ने के लिए खाली रखें।";
 "harnesses.manifest.edit.save" = "परिवर्तन सहेजें";
+"harnesses.layout.legacy %@" = "पुराने .ynh-plugin/ लेआउट का उपयोग करता है, जिसे YNH 0.14+ अस्वीकार करता है। चलाएँ: ynd migrate %@";
+"harnesses.layout.both" = "इसमें .agents/harness/ और .ynh-plugin/ दोनों हैं, जिसे YNH 0.14+ अस्वीकार करता है। .ynh-plugin/ डायरेक्टरी हटाएँ।";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit बदल गया: %@ → %@";

@@ -35,6 +35,11 @@ enum HarnessPublishPlannerError: Error, Equatable {
     case sourceNotFound(String)
     case manifestNotFound(String)
     case manifestInvalid(String)
+    /// The source tree uses a layout YNH 0.14+ refuses (legacy
+    /// `.ynh-plugin/` only, or both layouts). Publishing it would copy a
+    /// tree the destination's `ynd validate` rejects; the user migrates the
+    /// source first (`ynd migrate <path>`). Never auto-run.
+    case unsupportedLayout(path: String, state: HarnessManifestLayout.State)
     /// Enumerated mode cannot be built without a successful `ynd compose` —
     /// artifact ownership is unknowable from the manifest alone, and
     /// guessing risks publishing host-project files.
@@ -66,17 +71,21 @@ enum HarnessPublishPlanner {
     ///
     /// - Parameters:
     ///   - sourcePath: absolute path of the harness source (the directory
-    ///     containing `.ynh-plugin/`).
+    ///     containing `.agents/harness/`).
     ///   - harnessName: the harness's own name — compose tags artifacts it
     ///     owns with this value in `ComposedArtifact.source`.
     ///   - composition: decoded `ynd compose` output. Required for
     ///     `.enumerated`; unused for `.entireDirectory`.
     ///   - mode: explicit override; defaults via ``defaultMode(forSourceAt:)``.
+    ///   - allowLegacyLayout: tolerate a legacy/dual-layout tree. Only for
+    ///     enumerating what an *existing destination* owns (so its stale
+    ///     `.ynh-plugin` root can be deleted); never for a publish source.
     static func plan(
         sourcePath: String,
         harnessName: String,
         composition: HarnessComposition?,
-        mode: HarnessPublishPlan.CopyMode? = nil
+        mode: HarnessPublishPlan.CopyMode? = nil,
+        allowLegacyLayout: Bool = false
     ) throws -> HarnessPublishPlan {
         let fileManager = FileManager.default
         var isDirectory: ObjCBool = false
@@ -87,6 +96,11 @@ enum HarnessPublishPlanner {
         // A harness without a parseable manifest is not publishable in
         // either mode — validate would fail it anyway, so fail fast here.
         let manifest = try manifestJSON(at: sourcePath)
+        if !allowLegacyLayout, let layout = HarnessManifestLayout.resolve(at: sourcePath),
+            layout.needsAttention
+        {
+            throw HarnessPublishPlannerError.unsupportedLayout(path: sourcePath, state: layout.state)
+        }
 
         let resolvedMode = mode ?? defaultMode(forSourceAt: sourcePath)
         switch resolvedMode {
@@ -132,11 +146,11 @@ enum HarnessPublishPlanner {
     // MARK: - Manifest
 
     private static func manifestJSON(at sourcePath: String) throws -> [String: Any] {
-        let url = URL(fileURLWithPath: sourcePath)
-            .appendingPathComponent(".ynh-plugin")
-            .appendingPathComponent("plugin.json")
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            throw HarnessPublishPlannerError.manifestNotFound(url.path)
+        guard let url = HarnessManifestLayout.manifestURL(at: sourcePath) else {
+            throw HarnessPublishPlannerError.manifestNotFound(
+                URL(fileURLWithPath: sourcePath)
+                    .appendingPathComponent(HarnessManifestLayout.canonicalDir)
+                    .appendingPathComponent(HarnessManifestLayout.manifestFile).path)
         }
         let data: Data
         do {
@@ -152,12 +166,48 @@ enum HarnessPublishPlanner {
 
     // MARK: - Entire-directory mode
 
+    /// Top-level entries of the source, minus junk.
+    ///
+    /// `.agents/` is never listed whole: the executor replaces each root
+    /// individually, and in a shared destination `.agents/` also holds other
+    /// tools' content (Codex skills and plugins). So `.agents/harness` is one
+    /// root, while every other `.agents/<dir>` is expanded to its entries
+    /// (`.agents/skills/<name>`), replacing only what the source ships and
+    /// leaving the destination's other entries alone.
     private static func topLevelRoots(at sourcePath: String) throws -> [String] {
-        let entries = try FileManager.default.contentsOfDirectory(atPath: sourcePath)
-        return
-            entries
-            .filter { !junkNames.contains($0) }
-            .sorted()
+        var roots: [String] = []
+        for entry in try visibleEntries(at: sourcePath) {
+            if entry == HarnessManifestLayout.agentsDir {
+                roots.append(contentsOf: agentsRoots(at: (sourcePath as NSString).appendingPathComponent(entry)))
+            } else {
+                roots.append(entry)
+            }
+        }
+        return roots.sorted()
+    }
+
+    /// Roots under the source's `.agents/`, relative to the harness root.
+    private static func agentsRoots(at agentsPath: String) -> [String] {
+        let agents = HarnessManifestLayout.agentsDir
+        var roots: [String] = []
+        for child in (try? visibleEntries(at: agentsPath)) ?? [] {
+            let childRoot = "\(agents)/\(child)"
+            let childPath = (agentsPath as NSString).appendingPathComponent(child)
+            var isDirectory: ObjCBool = false
+            let isDir =
+                FileManager.default.fileExists(atPath: childPath, isDirectory: &isDirectory)
+                && isDirectory.boolValue
+            if childRoot == HarnessManifestLayout.canonicalDir || !isDir {
+                roots.append(childRoot)
+            } else {
+                roots.append(contentsOf: ((try? visibleEntries(at: childPath)) ?? []).map { "\(childRoot)/\($0)" })
+            }
+        }
+        return roots
+    }
+
+    private static func visibleEntries(at path: String) throws -> [String] {
+        try FileManager.default.contentsOfDirectory(atPath: path).filter { !junkNames.contains($0) }
     }
 
     // MARK: - Enumerated mode
@@ -175,7 +225,9 @@ enum HarnessPublishPlanner {
         composition: HarnessComposition,
         manifest: [String: Any]
     ) -> (files: [String], unresolved: [String]) {
-        var roots: Set<String> = [".ynh-plugin"]
+        // Only the manifest dir (`.agents/harness`, or the legacy dir when
+        // enumerating a legacy destination) — never all of `.agents/`.
+        var roots: Set<String> = [HarnessManifestLayout.writeDir(at: sourcePath)]
         var unresolved: [String] = []
 
         // Compose-attributed artifacts, probed against the conventional

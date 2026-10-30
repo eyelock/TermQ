@@ -275,6 +275,9 @@ final class PublishHarnessViewModel: ObservableObject {
         } catch HarnessPublishPlannerError.compositionRequired {
             plan = nil
             planError = Strings.HarnessPublish.compositionUnavailable
+        } catch HarnessPublishPlannerError.unsupportedLayout(let path, let state) {
+            plan = nil
+            planError = Strings.Harnesses.layoutMessage(state, path: path)
         } catch {
             plan = nil
             planError = error.localizedDescription
@@ -556,7 +559,8 @@ final class PublishHarnessViewModel: ObservableObject {
             sourcePath: destinationPath,
             harnessName: composition.name,
             composition: composition,
-            mode: .enumerated
+            mode: .enumerated,
+            allowLegacyLayout: true
         ).files
     }
 

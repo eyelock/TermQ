@@ -1199,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Descrição";
 "harnesses.manifest.edit.description.hint" = "Exibido na lista de harnesses e no cabeçalho de detalhes. Deixe vazio para omitir.";
 "harnesses.manifest.edit.save" = "Salvar alterações";
+"harnesses.layout.legacy %@" = "Usa o layout antigo .ynh-plugin/, que o YNH 0.14+ recusa. Execute: ynd migrate %@";
+"harnesses.layout.both" = "Tem .agents/harness/ e .ynh-plugin/ ao mesmo tempo, e o YNH 0.14+ recusa isso. Remova o diretório .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream alterado: %@ → %@";

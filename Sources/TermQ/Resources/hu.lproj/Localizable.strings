@@ -1200,6 +1200,8 @@
 "harnesses.manifest.edit.description" = "Leírás";
 "harnesses.manifest.edit.description.hint" = "Megjelenik a harness listában és a részletek fejlécében. Hagyja üresen az elhagyáshoz.";
 "harnesses.manifest.edit.save" = "Változtatások mentése";
+"harnesses.layout.legacy %@" = "A régi .ynh-plugin/ elrendezést használja, amelyet a YNH 0.14+ elutasít. Futtassa: ynd migrate %@";
+"harnesses.layout.both" = "A .agents/harness/ és a .ynh-plugin/ is megvan, amit a YNH 0.14+ elutasít. Törölje a .ynh-plugin/ könyvtárat.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit megváltozott: %@ → %@";

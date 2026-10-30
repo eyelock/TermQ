@@ -1200,6 +1200,8 @@
 "harnesses.manifest.edit.description" = "Kuvaus";
 "harnesses.manifest.edit.description.hint" = "Näytetään harness-listassa ja yksityiskohtien otsikossa. Jätä tyhjäksi jättääksesi pois.";
 "harnesses.manifest.edit.save" = "Tallenna muutokset";
+"harnesses.layout.legacy %@" = "Käyttää vanhaa .ynh-plugin/-rakennetta, jonka YNH 0.14+ hylkää. Suorita: ynd migrate %@";
+"harnesses.layout.both" = "Sisältää sekä .agents/harness/ että .ynh-plugin/, minkä YNH 0.14+ hylkää. Poista .ynh-plugin/-hakemisto.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit muuttunut: %@ → %@";

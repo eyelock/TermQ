@@ -1201,6 +1201,8 @@
 "harnesses.manifest.edit.description" = "คำอธิบาย";
 "harnesses.manifest.edit.description.hint" = "แสดงในรายการ harness และส่วนหัวรายละเอียด เว้นว่างเพื่อละเว้น";
 "harnesses.manifest.edit.save" = "บันทึกการเปลี่ยนแปลง";
+"harnesses.layout.legacy %@" = "ใช้โครงสร้าง .ynh-plugin/ แบบเก่า ซึ่ง YNH 0.14+ ปฏิเสธ รันคำสั่ง: ynd migrate %@";
+"harnesses.layout.both" = "มีทั้ง .agents/harness/ และ .ynh-plugin/ ซึ่ง YNH 0.14+ ปฏิเสธ ให้ลบไดเรกทอรี .ynh-plugin/";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";

@@ -1194,6 +1194,8 @@
 "harnesses.manifest.edit.description" = "描述";
 "harnesses.manifest.edit.description.hint" = "顯示在 harness 清單和詳情標題中。留空則省略。";
 "harnesses.manifest.edit.save" = "儲存變更";
+"harnesses.layout.legacy %@" = "使用舊版 .ynh-plugin/ 配置，YNH 0.14+ 會拒絕。請執行：ynd migrate %@";
+"harnesses.layout.both" = "同時存在 .agents/harness/ 和 .ynh-plugin/，YNH 0.14+ 會拒絕。請刪除 .ynh-plugin/ 目錄。";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已變更：%@ → %@";

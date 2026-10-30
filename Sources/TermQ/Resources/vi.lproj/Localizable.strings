@@ -1202,6 +1202,8 @@
 "harnesses.manifest.edit.description" = "Mô tả";
 "harnesses.manifest.edit.description.hint" = "Hiển thị trong danh sách harness và tiêu đề chi tiết. Để trống để bỏ qua.";
 "harnesses.manifest.edit.save" = "Lưu thay đổi";
+"harnesses.layout.legacy %@" = "Dùng bố cục cũ .ynh-plugin/, mà YNH 0.14+ từ chối. Chạy: ynd migrate %@";
+"harnesses.layout.both" = "Có cả .agents/harness/ và .ynh-plugin/, YNH 0.14+ từ chối điều này. Hãy xóa thư mục .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit đã thay đổi: %@ → %@";

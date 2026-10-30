@@ -1194,6 +1194,8 @@
 "harnesses.manifest.edit.description" = "Descriere";
 "harnesses.manifest.edit.description.hint" = "Afișat în lista de harness-uri și în antetul detaliilor. Lăsați gol pentru a omite.";
 "harnesses.manifest.edit.save" = "Salvați modificările";
+"harnesses.layout.legacy %@" = "Folosește structura veche .ynh-plugin/, pe care YNH 0.14+ o refuză. Rulează: ynd migrate %@";
+"harnesses.layout.both" = "Are atât .agents/harness/, cât și .ynh-plugin/, ceea ce YNH 0.14+ refuză. Șterge directorul .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";

@@ -1194,6 +1194,8 @@
 "harnesses.manifest.edit.description" = "Περιγραφή";
 "harnesses.manifest.edit.description.hint" = "Εμφανίζεται στη λίστα harness και στην κεφαλίδα λεπτομερειών. Αφήστε κενό για παράλειψη.";
 "harnesses.manifest.edit.save" = "Αποθήκευση αλλαγών";
+"harnesses.layout.legacy %@" = "Χρησιμοποιεί την παλιά διάταξη .ynh-plugin/, την οποία το YNH 0.14+ απορρίπτει. Εκτελέστε: ynd migrate %@";
+"harnesses.layout.both" = "Έχει και το .agents/harness/ και το .ynh-plugin/, κάτι που το YNH 0.14+ απορρίπτει. Αφαιρέστε τον κατάλογο .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";
