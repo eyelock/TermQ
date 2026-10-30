@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optionaler Prompt für den Agenten…";
 "harnesses.launch.resume" = "Vorherige Sitzung fortsetzen";
-"harnesses.launch.resume.help" = "Setzt die letzte Sitzung im Arbeitsverzeichnis fort, statt neu zu beginnen.";
+"harnesses.launch.resume.help" = "Setzt eine frühere Sitzung fort, statt neu zu beginnen. Claude setzt nur die Sitzung fort, die diese Karte gestartet hat, sodass eine neue Karte neu beginnt; andere Anbieter setzen die letzte Sitzung im Arbeitsverzeichnis fort.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Dieses Harness in einem neuen Terminal starten";
 "harnesses.launch.cancel" = "Abbrechen";

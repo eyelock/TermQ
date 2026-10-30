@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "プロンプト";
 "harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
 "harnesses.launch.resume" = "前回のセッションを再開";
-"harnesses.launch.resume.help" = "最初からやり直す代わりに、作業ディレクトリの最新のセッションを続行します。";
+"harnesses.launch.resume.help" = "最初からやり直す代わりに、以前のセッションを続行します。Claude はこのカードが開始したセッションのみを続行するため、新しいカードは最初から始まります。他のベンダーは作業ディレクトリの最新のセッションを続行します。";
 "harnesses.launch.button" = "起動";
 "harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
 "harnesses.launch.cancel" = "キャンセル";

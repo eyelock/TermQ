@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Indicació";
 "harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
 "harnesses.launch.resume" = "Represa la sessió anterior";
-"harnesses.launch.resume.help" = "Continua la sessió més recent al directori de treball en lloc de començar de zero.";
+"harnesses.launch.resume.help" = "Continua una sessió anterior en lloc de començar de zero. Claude només continua la sessió que ha iniciat aquesta targeta, de manera que una targeta nova comença de zero; els altres proveïdors continuen la sessió més recent al directori de treball.";
 "harnesses.launch.button" = "Inicia";
 "harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
 "harnesses.launch.cancel" = "Cancel·la";

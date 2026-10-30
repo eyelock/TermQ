@@ -748,7 +748,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
 "harnesses.launch.resume" = "Tiếp tục phiên trước";
-"harnesses.launch.resume.help" = "Tiếp tục phiên gần nhất trong thư mục làm việc thay vì bắt đầu lại từ đầu.";
+"harnesses.launch.resume.help" = "Tiếp tục phiên trước đó thay vì bắt đầu lại từ đầu. Claude chỉ tiếp tục phiên mà thẻ này đã bắt đầu, nên thẻ mới sẽ bắt đầu lại từ đầu; các nhà cung cấp khác tiếp tục phiên gần nhất trong thư mục làm việc.";
 "harnesses.launch.button" = "Khởi chạy";
 "harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
 "harnesses.launch.cancel" = "Hủy";

@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Výzva";
 "harnesses.launch.prompt.placeholder" = "Voliteľná výzva pre agenta…";
 "harnesses.launch.resume" = "Obnoviť predchádzajúcu reláciu";
-"harnesses.launch.resume.help" = "Naviaže na poslednú reláciu v pracovnom adresári namiesto spustenia od začiatku.";
+"harnesses.launch.resume.help" = "Naviaže na predchádzajúcu reláciu namiesto spustenia od začiatku. Claude naviaže iba na reláciu, ktorú spustila táto karta, takže nová karta začína od začiatku; ostatní poskytovatelia naväzujú na poslednú reláciu v pracovnom adresári.";
 "harnesses.launch.button" = "Spustiť";
 "harnesses.launch.help" = "Spustiť tento postroj v novom termináli";
 "harnesses.launch.cancel" = "Zrušiť";

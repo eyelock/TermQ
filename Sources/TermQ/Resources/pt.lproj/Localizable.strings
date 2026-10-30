@@ -746,7 +746,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opcional para passar ao agente…";
 "harnesses.launch.resume" = "Retomar a sessão anterior";
-"harnesses.launch.resume.help" = "Continua a sessão mais recente no diretório de trabalho em vez de começar do zero.";
+"harnesses.launch.resume.help" = "Continua uma sessão anterior em vez de começar do zero. O Claude só continua a sessão iniciada por este cartão, então um novo cartão começa do zero; os outros fornecedores continuam a sessão mais recente no diretório de trabalho.";
 "harnesses.launch.button" = "Iniciar";
 "harnesses.launch.help" = "Iniciar este harness em um novo terminal";
 "harnesses.launch.cancel" = "Cancelar";

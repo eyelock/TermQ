@@ -747,7 +747,7 @@
 "harnesses.launch.prompt" = "Upit";
 "harnesses.launch.prompt.placeholder" = "Neobavezni upit za agenta…";
 "harnesses.launch.resume" = "Nastavi prethodnu sesiju";
-"harnesses.launch.resume.help" = "Nastavlja najnoviju sesiju u radnom direktoriju umjesto pokretanja iznova.";
+"harnesses.launch.resume.help" = "Nastavlja prethodnu sesiju umjesto pokretanja iznova. Claude nastavlja samo sesiju koju je pokrenula ova kartica, pa nova kartica počinje iznova; ostali pružatelji nastavljaju najnoviju sesiju u radnom direktoriju.";
 "harnesses.launch.button" = "Pokreni";
 "harnesses.launch.help" = "Pokreni ovaj harness u novom terminalu";
 "harnesses.launch.cancel" = "Odustani";

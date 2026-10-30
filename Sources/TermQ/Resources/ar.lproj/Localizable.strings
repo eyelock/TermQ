@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "موجّه الأوامر";
 "harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
 "harnesses.launch.resume" = "استئناف الجلسة السابقة";
-"harnesses.launch.resume.help" = "يتابع أحدث جلسة في مجلد العمل بدلاً من البدء من جديد.";
+"harnesses.launch.resume.help" = "يتابع جلسة سابقة بدلاً من البدء من جديد. يتابع Claude فقط الجلسة التي بدأتها هذه البطاقة، لذا تبدأ البطاقة الجديدة من جديد؛ أما الموردون الآخرون فيتابعون أحدث جلسة في مجلد العمل.";
 "harnesses.launch.button" = "تشغيل";
 "harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
 "harnesses.launch.cancel" = "إلغاء";

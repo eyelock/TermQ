@@ -747,7 +747,7 @@
 "harnesses.launch.prompt" = "Invite";
 "harnesses.launch.prompt.placeholder" = "Invite optionnelle à transmettre à l'agent…";
 "harnesses.launch.resume" = "Reprendre la session précédente";
-"harnesses.launch.resume.help" = "Poursuit la session la plus récente dans le répertoire de travail au lieu de repartir de zéro.";
+"harnesses.launch.resume.help" = "Poursuit une session précédente au lieu de repartir de zéro. Claude ne poursuit que la session démarrée par cette carte, donc une nouvelle carte repart de zéro ; les autres fournisseurs poursuivent la session la plus récente dans le répertoire de travail.";
 "harnesses.launch.button" = "Lancer";
 "harnesses.launch.help" = "Lancer ce harnais dans un nouveau terminal";
 "harnesses.launch.cancel" = "Annuler";

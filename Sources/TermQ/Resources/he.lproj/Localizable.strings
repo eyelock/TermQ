@@ -747,7 +747,7 @@
 "harnesses.launch.prompt" = "פרומפט";
 "harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
 "harnesses.launch.resume" = "המשך את ההפעלה הקודמת";
-"harnesses.launch.resume.help" = "ממשיך את ההפעלה האחרונה בתיקיית העבודה במקום להתחיל מחדש.";
+"harnesses.launch.resume.help" = "ממשיך הפעלה קודמת במקום להתחיל מחדש. Claude ממשיך רק את ההפעלה שהכרטיס הזה התחיל, ולכן כרטיס חדש מתחיל מחדש; ספקים אחרים ממשיכים את ההפעלה האחרונה בתיקיית העבודה.";
 "harnesses.launch.button" = "הפעל";
 "harnesses.launch.help" = "הפעל harness זה במסוף חדש";
 "harnesses.launch.cancel" = "ביטול";

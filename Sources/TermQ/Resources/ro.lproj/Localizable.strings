@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opțional pentru agent…";
 "harnesses.launch.resume" = "Reia sesiunea anterioară";
-"harnesses.launch.resume.help" = "Continuă cea mai recentă sesiune din directorul de lucru în loc să înceapă de la zero.";
+"harnesses.launch.resume.help" = "Continuă o sesiune anterioară în loc să înceapă de la zero. Claude continuă doar sesiunea pornită de acest card, așa că un card nou începe de la zero; ceilalți furnizori continuă cea mai recentă sesiune din directorul de lucru.";
 "harnesses.launch.button" = "Lansare";
 "harnesses.launch.help" = "Lansează acest harness într-un terminal nou";
 "harnesses.launch.cancel" = "Anulare";
