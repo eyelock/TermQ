@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "עיין…";
 "harnesses.launch.prompt" = "פרומפט";
 "harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
+"harnesses.launch.resume" = "המשך את ההפעלה הקודמת";
+"harnesses.launch.resume.help" = "ממשיך את ההפעלה האחרונה בתיקיית העבודה במקום להתחיל מחדש.";
 "harnesses.launch.button" = "הפעל";
 "harnesses.launch.help" = "הפעל harness זה במסוף חדש";
 "harnesses.launch.cancel" = "ביטול";

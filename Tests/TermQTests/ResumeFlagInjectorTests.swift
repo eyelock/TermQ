@@ -131,4 +131,39 @@ final class ResumeFlagInjectorTests: XCTestCase {
         // ...nor the word appearing inside the prompt.
         XCTAssertFalse(injector.containsResumeFlag("ynh run x -- 'talk about --resume'"))
     }
+
+    // MARK: - Prompt stripping
+
+    func test_removingPrompt_stripsTheTrailingPrompt() {
+        let result = injector.removingPrompt(
+            from: "ynh run local/dev -v claude --session-name termq-abc -- 'fix the build'")
+
+        XCTAssertEqual(result, "ynh run local/dev -v claude --session-name termq-abc")
+    }
+
+    func test_removingPrompt_leavesACommandWithoutASeparatorAlone() {
+        let command = "ynh run local/dev -v claude"
+
+        XCTAssertEqual(injector.removingPrompt(from: command), command)
+    }
+
+    /// A `--` inside a quoted argument is not the prompt separator.
+    func test_removingPrompt_ignoresDoubleDashInsideQuotes() {
+        let command = "ynh run local/dev --instructions 'use -- carefully'"
+
+        XCTAssertEqual(injector.removingPrompt(from: command), command)
+    }
+
+    func test_removingPrompt_cutsAtTheRealSeparatorNotAQuotedOne() {
+        let result = injector.removingPrompt(
+            from: "ynh run local/dev --instructions 'a -- b' -- \"do it -- now\"")
+
+        XCTAssertEqual(result, "ynh run local/dev --instructions 'a -- b'")
+    }
+
+    func test_removingPrompt_leavesNonYNHCommandsAlone() {
+        let command = "./wrapper.sh run thing -- 'prompt'"
+
+        XCTAssertEqual(injector.removingPrompt(from: command), command)
+    }
 }

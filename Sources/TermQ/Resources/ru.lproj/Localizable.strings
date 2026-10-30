@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Обзор…";
 "harnesses.launch.prompt" = "Запрос";
 "harnesses.launch.prompt.placeholder" = "Необязательный запрос для агента…";
+"harnesses.launch.resume" = "Возобновить предыдущий сеанс";
+"harnesses.launch.resume.help" = "Продолжает последний сеанс в рабочем каталоге вместо запуска с нуля.";
 "harnesses.launch.button" = "Запустить";
 "harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
 "harnesses.launch.cancel" = "Отмена";

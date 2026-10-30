@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Gözat…";
 "harnesses.launch.prompt" = "İstem";
 "harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
+"harnesses.launch.resume" = "Önceki oturuma devam et";
+"harnesses.launch.resume.help" = "Sıfırdan başlamak yerine çalışma dizinindeki en son oturuma devam eder.";
 "harnesses.launch.button" = "Başlat";
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
 "harnesses.launch.cancel" = "İptal";

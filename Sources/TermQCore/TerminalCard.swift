@@ -109,6 +109,18 @@ public class TerminalCard: Identifiable, ObservableObject, Codable {
     /// automatically when a harness launch creates or rewrites the card.
     @Published public var autoResumeSession: Bool
 
+    /// One-shot override of the resume decision for the next launch only.
+    ///
+    /// `nil` applies the default: reopening a card continues its session when
+    /// `autoResumeSession` is on. `false` starts this launch cold, which is what
+    /// a launch carrying new intent (a new card, a new focus or prompt) needs.
+    /// `true` resumes this launch and keeps any prompt.
+    ///
+    /// Transient by design: not in `CodingKeys`, never persisted, and cleared
+    /// by the session manager when the init command is dispatched, so it can
+    /// never leak into a later reopen.
+    public var resumeOverrideForNextLaunch: Bool?
+
     /// When the card was soft-deleted (nil = active, set = in bin)
     @Published public var deletedAt: Date?
 

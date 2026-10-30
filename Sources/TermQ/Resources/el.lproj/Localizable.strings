@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Αναζήτηση…";
 "harnesses.launch.prompt" = "Ερώτημα";
 "harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
+"harnesses.launch.resume" = "Συνέχιση προηγούμενης συνεδρίας";
+"harnesses.launch.resume.help" = "Συνεχίζει την πιο πρόσφατη συνεδρία στον φάκελο εργασίας αντί να ξεκινά από την αρχή.";
 "harnesses.launch.button" = "Εκκίνηση";
 "harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
 "harnesses.launch.cancel" = "Ακύρωση";

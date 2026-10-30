@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Selaa…";
 "harnesses.launch.prompt" = "Kehote";
 "harnesses.launch.prompt.placeholder" = "Valinnainen kehote agentille…";
+"harnesses.launch.resume" = "Jatka edellistä istuntoa";
+"harnesses.launch.resume.help" = "Jatkaa työhakemiston viimeisintä istuntoa sen sijaan, että aloittaisi alusta.";
 "harnesses.launch.button" = "Käynnistä";
 "harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
 "harnesses.launch.cancel" = "Peruuta";

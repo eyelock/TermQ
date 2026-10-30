@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Brskaj…";
 "harnesses.launch.prompt" = "Poziv";
 "harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
+"harnesses.launch.resume" = "Nadaljuj prejšnjo sejo";
+"harnesses.launch.resume.help" = "Nadaljuje zadnjo sejo v delovnem imeniku namesto začetka znova.";
 "harnesses.launch.button" = "Zaženi";
 "harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
 "harnesses.launch.cancel" = "Prekliči";
