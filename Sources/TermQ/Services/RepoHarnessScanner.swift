@@ -1,14 +1,19 @@
 import Foundation
+import TermQShared
 
 /// A harness-shaped entry discovered in a repository working tree — any
-/// directory containing `.ynh-plugin/plugin.json` (harnesses, plugins, and
-/// skill collections all share this marker).
+/// directory containing `.agents/harness/plugin.json` or the legacy
+/// `.ynh-plugin/plugin.json` (harnesses, plugins, and skill collections all
+/// share this marker).
 struct RepoHarnessEntry: Equatable, Sendable {
     /// The `name` field from the entry's manifest.
     let name: String
-    /// Directory containing `.ynh-plugin/`, relative to the repo root.
+    /// Directory containing the manifest dir, relative to the repo root.
     /// `"."` when the repo root itself is the harness (embedded layout).
     let relativePath: String
+    /// Which manifest layout the entry uses. Anything but `.canonical` is
+    /// refused by YNH 0.14+ and is surfaced to the user.
+    var layout: HarnessManifestLayout.State = .canonical
 }
 
 /// Result of scanning a target repository for existing harness entries.
@@ -29,7 +34,7 @@ struct RepoHarnessScan: Equatable, Sendable {
     }
 }
 
-/// Scans a repository checkout for `*/.ynh-plugin/plugin.json` markers.
+/// Scans a repository checkout for `*/.agents/harness/plugin.json` (or legacy `*/.ynh-plugin/plugin.json`) markers.
 ///
 /// Read-only and defensive: unreadable directories and malformed manifests
 /// are skipped, never thrown — a scan failure must not block the publish
@@ -63,8 +68,8 @@ enum RepoHarnessScanner {
         // Depth-first walk, bounded by maxDepth and the skip list.
         var stack: [WalkEntry] = [WalkEntry(url: root, relative: ".", depth: 0)]
         while let entry = stack.popLast() {
-            if let name = manifestName(inDirectory: entry.url) {
-                entries.append(RepoHarnessEntry(name: name, relativePath: entry.relative))
+            if let (name, layout) = manifest(inDirectory: entry.url) {
+                entries.append(RepoHarnessEntry(name: name, relativePath: entry.relative, layout: layout))
                 // Harness entries don't nest — no need to descend further.
                 continue
             }
@@ -109,19 +114,17 @@ enum RepoHarnessScanner {
         )
     }
 
-    /// Decode the `name` from a directory's `.ynh-plugin/plugin.json`,
-    /// or nil when the marker is absent or unreadable.
-    private static func manifestName(inDirectory url: URL) -> String? {
-        let manifestURL =
-            url
-            .appendingPathComponent(".ynh-plugin")
-            .appendingPathComponent("plugin.json")
-        guard FileManager.default.fileExists(atPath: manifestURL.path),
+    /// Decode the `name` from a directory's manifest (canonical location
+    /// first, legacy fallback — one entry per directory even when both
+    /// exist), or nil when the marker is absent or unreadable.
+    private static func manifest(inDirectory url: URL) -> (String, HarnessManifestLayout.State)? {
+        guard let resolution = HarnessManifestLayout.resolve(at: url.path),
+            let manifestURL = HarnessManifestLayout.manifestURL(at: url.path),
             let data = try? Data(contentsOf: manifestURL),
             let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
             let name = json["name"] as? String,
             !name.isEmpty
         else { return nil }
-        return name
+        return (name, resolution.state)
     }
 }

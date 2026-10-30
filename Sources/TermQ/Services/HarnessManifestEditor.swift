@@ -1,7 +1,9 @@
 import Foundation
 import TermQShared
 
-/// Read/write helper for a harness's `.ynh-plugin/plugin.json` manifest.
+/// Read/write helper for a harness's `plugin.json` manifest (`.agents/harness/`,
+/// falling back to the legacy `.ynh-plugin/`; the file that was read is the
+/// file that is written — nothing is moved).
 ///
 /// Limited to the safe subset of fields that don't require ynh to validate
 /// or fetch anything — `description`, `default_vendor`, `version`. Includes
@@ -111,10 +113,17 @@ final class HarnessManifestEditor: ObservableObject {
         }
     }
 
+    /// Layout of the harness at `editablePath` (nil when it has no manifest);
+    /// anything but `.canonical` is refused by YNH 0.14+.
+    nonisolated static func layout(at editablePath: String) -> HarnessManifestLayout.State? {
+        HarnessManifestLayout.resolve(at: editablePath)?.state
+    }
+
     nonisolated private static func manifestURL(for editablePath: String) -> URL {
-        URL(fileURLWithPath: editablePath)
-            .appendingPathComponent(".ynh-plugin")
-            .appendingPathComponent("plugin.json")
+        HarnessManifestLayout.manifestURL(at: editablePath)
+            ?? URL(fileURLWithPath: editablePath)
+            .appendingPathComponent(HarnessManifestLayout.canonicalDir)
+            .appendingPathComponent(HarnessManifestLayout.manifestFile)
     }
 
     nonisolated private static func message(for error: HarnessManifestEditorError) -> String {

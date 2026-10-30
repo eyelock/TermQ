@@ -1197,6 +1197,8 @@
 "harnesses.manifest.edit.description" = "Penerangan";
 "harnesses.manifest.edit.description.hint" = "Dipaparkan dalam senarai harness dan pengepala butiran. Biarkan kosong untuk ditinggalkan.";
 "harnesses.manifest.edit.save" = "Simpan Perubahan";
+"harnesses.layout.legacy %@" = "Menggunakan susun atur lama .ynh-plugin/, yang ditolak oleh YNH 0.14+. Jalankan: ynd migrate %@";
+"harnesses.layout.both" = "Mempunyai kedua-dua .agents/harness/ dan .ynh-plugin/, yang ditolak oleh YNH 0.14+. Buang direktori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";

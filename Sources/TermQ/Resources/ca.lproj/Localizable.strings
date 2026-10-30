@@ -1192,6 +1192,8 @@
 "harnesses.manifest.edit.description" = "Descripció";
 "harnesses.manifest.edit.description.hint" = "Es mostra a la llista de harnesses i a la capçalera de detalls. Deixa en blanc per ometre.";
 "harnesses.manifest.edit.save" = "Desa els canvis";
+"harnesses.layout.legacy %@" = "Fa servir el disseny antic .ynh-plugin/, que YNH 0.14+ rebutja. Executa: ynd migrate %@";
+"harnesses.layout.both" = "Té alhora .agents/harness/ i .ynh-plugin/, i YNH 0.14+ ho rebutja. Elimina el directori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";

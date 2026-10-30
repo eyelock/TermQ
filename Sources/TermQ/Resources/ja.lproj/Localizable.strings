@@ -1192,6 +1192,8 @@
 "harnesses.manifest.edit.description" = "説明";
 "harnesses.manifest.edit.description.hint" = "harness リストとdetailヘッダーに表示されます。省略する場合は空のままにしてください。";
 "harnesses.manifest.edit.save" = "変更を保存";
+"harnesses.layout.legacy %@" = "従来の .ynh-plugin/ レイアウトを使用しており、YNH 0.14+ は受け付けません。実行してください: ynd migrate %@";
+"harnesses.layout.both" = "新旧両方の .agents/harness/ と .ynh-plugin/ が存在し、YNH 0.14+ は受け付けません。.ynh-plugin/ ディレクトリを削除してください。";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";

@@ -364,6 +364,14 @@ extension Strings {
         static func removeDelegateConfirmMessage(_ source: String) -> String {
             String(format: localized("harnesses.delegate.remove.confirm.message %@"), source)
         }
+        // Manifest layout (YNH 0.14+ refuses legacy / dual layouts)
+        static func layoutMessage(_ state: HarnessManifestLayout.State, path: String) -> String? {
+            switch state {
+            case .canonical: return nil
+            case .legacy: return String(format: localized("harnesses.layout.legacy %@"), path)
+            case .both: return localized("harnesses.layout.both")
+            }
+        }
         // Manifest editor
         static var editManifestMenu: String { localized("harnesses.manifest.edit.menu") }
         static var editManifestTitle: String { localized("harnesses.manifest.edit.title") }

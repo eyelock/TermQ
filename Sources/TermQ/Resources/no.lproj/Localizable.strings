@@ -1197,6 +1197,8 @@
 "harnesses.manifest.edit.description" = "Beskrivelse";
 "harnesses.manifest.edit.description.hint" = "Vises i harness-listen og detaljoverskriften. La stå tomt for å utelate.";
 "harnesses.manifest.edit.save" = "Lagre endringer";
+"harnesses.layout.legacy %@" = "Bruker det gamle oppsettet .ynh-plugin/, som YNH 0.14+ avviser. Kjør: ynd migrate %@";
+"harnesses.layout.both" = "Har både .agents/harness/ og .ynh-plugin/, noe YNH 0.14+ avviser. Fjern katalogen .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit endret: %@ → %@";

@@ -1198,6 +1198,8 @@
 "harnesses.manifest.edit.description" = "Opis";
 "harnesses.manifest.edit.description.hint" = "Prikazano na popisu harnessa i u zaglavlju detalja. Ostavite prazno za izostavljanje.";
 "harnesses.manifest.edit.save" = "Spremi promjene";
+"harnesses.layout.legacy %@" = "Koristi stari raspored .ynh-plugin/, koji YNH 0.14+ odbija. Pokrenite: ynd migrate %@";
+"harnesses.layout.both" = "Ima i .agents/harness/ i .ynh-plugin/, što YNH 0.14+ odbija. Uklonite direktorij .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit promijenjen: %@ → %@";

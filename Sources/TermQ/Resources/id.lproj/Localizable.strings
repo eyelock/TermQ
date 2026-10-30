@@ -1192,6 +1192,8 @@
 "harnesses.manifest.edit.description" = "Deskripsi";
 "harnesses.manifest.edit.description.hint" = "Ditampilkan dalam daftar harness dan header detail. Kosongkan untuk dihilangkan.";
 "harnesses.manifest.edit.save" = "Simpan Perubahan";
+"harnesses.layout.legacy %@" = "Menggunakan tata letak lama .ynh-plugin/, yang ditolak YNH 0.14+. Jalankan: ynd migrate %@";
+"harnesses.layout.both" = "Memiliki .agents/harness/ sekaligus .ynh-plugin/, yang ditolak YNH 0.14+. Hapus direktori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";

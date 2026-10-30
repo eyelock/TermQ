@@ -1192,6 +1192,8 @@
 "harnesses.manifest.edit.description" = "Popis";
 "harnesses.manifest.edit.description.hint" = "Zobrazeno v seznamu setů a v záhlaví detailů. Ponechte prázdné pro vynechání.";
 "harnesses.manifest.edit.save" = "Uložit změny";
+"harnesses.layout.legacy %@" = "Používá starý formát .ynh-plugin/, který YNH 0.14+ odmítá. Spusťte: ynd migrate %@";
+"harnesses.layout.both" = "Obsahuje .agents/harness/ i .ynh-plugin/, což YNH 0.14+ odmítá. Odstraňte adresář .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream se změnil: %@ → %@";

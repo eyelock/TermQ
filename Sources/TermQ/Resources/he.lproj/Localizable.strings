@@ -1198,6 +1198,8 @@
 "harnesses.manifest.edit.description" = "תיאור";
 "harnesses.manifest.edit.description.hint" = "מוצג ברשימת ה-harness ובכותרת הפרטים. השאר ריק להשמטה.";
 "harnesses.manifest.edit.save" = "שמור שינויים";
+"harnesses.layout.legacy %@" = "משתמש בפריסה הישנה .ynh-plugin/ ש-YNH 0.14+ דוחה. הריצו: ynd migrate %@";
+"harnesses.layout.both" = "קיימים גם .agents/harness/ וגם .ynh-plugin/, ו-YNH 0.14+ דוחה זאת. הסירו את התיקייה .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "ה-commit העולמי השתנה: %@ → %@";
