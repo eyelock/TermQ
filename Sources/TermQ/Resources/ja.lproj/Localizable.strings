@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "参照…";
 "harnesses.launch.prompt" = "プロンプト";
 "harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
+"harnesses.launch.resume" = "前回のセッションを再開";
+"harnesses.launch.resume.help" = "最初からやり直す代わりに、作業ディレクトリの最新のセッションを続行します。";
 "harnesses.launch.button" = "起動";
 "harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
 "harnesses.launch.cancel" = "キャンセル";

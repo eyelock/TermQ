@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Telusuri…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opsional untuk diteruskan ke agen…";
+"harnesses.launch.resume" = "Lanjutkan sesi sebelumnya";
+"harnesses.launch.resume.help" = "Melanjutkan sesi terbaru di direktori kerja alih-alih memulai dari awal.";
 "harnesses.launch.button" = "Jalankan";
 "harnesses.launch.help" = "Jalankan harness ini di terminal baru";
 "harnesses.launch.cancel" = "Batal";

@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Răsfoire…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opțional pentru agent…";
+"harnesses.launch.resume" = "Reia sesiunea anterioară";
+"harnesses.launch.resume.help" = "Continuă cea mai recentă sesiune din directorul de lucru în loc să înceapă de la zero.";
 "harnesses.launch.button" = "Lansare";
 "harnesses.launch.help" = "Lansează acest harness într-un terminal nou";
 "harnesses.launch.cancel" = "Anulare";

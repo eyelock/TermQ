@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Bla gjennom…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.resume" = "Gjenoppta forrige økt";
+"harnesses.launch.resume.help" = "Fortsetter den siste økten i arbeidsmappen i stedet for å starte på nytt.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Avbryt";

@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "浏览…";
 "harnesses.launch.prompt" = "提示词";
 "harnesses.launch.prompt.placeholder" = "传递给代理的可选提示词…";
+"harnesses.launch.resume" = "恢复上一个会话";
+"harnesses.launch.resume.help" = "继续工作目录中最近的会话，而不是重新开始。";
 "harnesses.launch.button" = "启动";
 "harnesses.launch.help" = "在新终端中启动此 harness";
 "harnesses.launch.cancel" = "取消";

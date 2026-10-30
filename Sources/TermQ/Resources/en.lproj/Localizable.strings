@@ -894,6 +894,8 @@
 "harnesses.launch.browse" = "Browse…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optional prompt to pass to the agent…";
+"harnesses.launch.resume" = "Resume previous session";
+"harnesses.launch.resume.help" = "Continues the most recent session in the working directory instead of starting fresh.";
 "harnesses.launch.button" = "Launch";
 "harnesses.launch.help" = "Launch this harness in a new terminal";
 "harnesses.launch.cancel" = "Cancel";

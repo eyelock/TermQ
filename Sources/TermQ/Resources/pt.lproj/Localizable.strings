@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Procurar…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opcional para passar ao agente…";
+"harnesses.launch.resume" = "Retomar a sessão anterior";
+"harnesses.launch.resume.help" = "Continua a sessão mais recente no diretório de trabalho em vez de começar do zero.";
 "harnesses.launch.button" = "Iniciar";
 "harnesses.launch.help" = "Iniciar este harness em um novo terminal";
 "harnesses.launch.cancel" = "Cancelar";

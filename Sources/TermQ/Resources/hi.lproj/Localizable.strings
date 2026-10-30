@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "ब्राउज़ करें…";
 "harnesses.launch.prompt" = "प्रॉम्प्ट";
 "harnesses.launch.prompt.placeholder" = "एजेंट को भेजने के लिए वैकल्पिक प्रॉम्प्ट…";
+"harnesses.launch.resume" = "पिछला सत्र फिर शुरू करें";
+"harnesses.launch.resume.help" = "नए सिरे से शुरू करने के बजाय कार्य निर्देशिका के सबसे हाल के सत्र को जारी रखता है।";
 "harnesses.launch.button" = "लॉन्च करें";
 "harnesses.launch.help" = "नए टर्मिनल में यह harness लॉन्च करें";
 "harnesses.launch.cancel" = "रद्द करें";

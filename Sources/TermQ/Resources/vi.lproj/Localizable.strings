@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Duyệt…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
+"harnesses.launch.resume" = "Tiếp tục phiên trước";
+"harnesses.launch.resume.help" = "Tiếp tục phiên gần nhất trong thư mục làm việc thay vì bắt đầu lại từ đầu.";
 "harnesses.launch.button" = "Khởi chạy";
 "harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
 "harnesses.launch.cancel" = "Hủy";

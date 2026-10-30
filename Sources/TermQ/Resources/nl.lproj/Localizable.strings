@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Bladeren…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optionele prompt voor de agent…";
+"harnesses.launch.resume" = "Vorige sessie hervatten";
+"harnesses.launch.resume.help" = "Zet de meest recente sessie in de werkmap voort in plaats van opnieuw te beginnen.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Deze harness starten in een nieuwe terminal";
 "harnesses.launch.cancel" = "Annuleren";

@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Procházet…";
 "harnesses.launch.prompt" = "Výzva";
 "harnesses.launch.prompt.placeholder" = "Volitelná výzva pro agenta…";
+"harnesses.launch.resume" = "Obnovit předchozí relaci";
+"harnesses.launch.resume.help" = "Naváže na poslední relaci v pracovním adresáři místo spuštění od začátku.";
 "harnesses.launch.button" = "Spustit";
 "harnesses.launch.help" = "Spustit tento postroj v novém terminálu";
 "harnesses.launch.cancel" = "Zrušit";

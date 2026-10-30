@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Bläddra…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valfri prompt att skicka till agenten…";
+"harnesses.launch.resume" = "Återuppta föregående session";
+"harnesses.launch.resume.help" = "Fortsätter den senaste sessionen i arbetskatalogen i stället för att börja om.";
 "harnesses.launch.button" = "Starta";
 "harnesses.launch.help" = "Starta denna harness i en ny terminal";
 "harnesses.launch.cancel" = "Avbryt";

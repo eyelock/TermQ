@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "تصفّح…";
 "harnesses.launch.prompt" = "موجّه الأوامر";
 "harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
+"harnesses.launch.resume" = "استئناف الجلسة السابقة";
+"harnesses.launch.resume.help" = "يتابع أحدث جلسة في مجلد العمل بدلاً من البدء من جديد.";
 "harnesses.launch.button" = "تشغيل";
 "harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
 "harnesses.launch.cancel" = "إلغاء";

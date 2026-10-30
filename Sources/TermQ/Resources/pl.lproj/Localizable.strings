@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Przeglądaj…";
 "harnesses.launch.prompt" = "Monit";
 "harnesses.launch.prompt.placeholder" = "Opcjonalny monit dla agenta…";
+"harnesses.launch.resume" = "Wznów poprzednią sesję";
+"harnesses.launch.resume.help" = "Kontynuuje ostatnią sesję w katalogu roboczym zamiast zaczynać od nowa.";
 "harnesses.launch.button" = "Uruchom";
 "harnesses.launch.help" = "Uruchom tę uprząż w nowym terminalu";
 "harnesses.launch.cancel" = "Anuluj";

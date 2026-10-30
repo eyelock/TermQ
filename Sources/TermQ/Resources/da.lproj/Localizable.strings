@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Gennemse…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.resume" = "Genoptag forrige session";
+"harnesses.launch.resume.help" = "Fortsætter den seneste session i arbejdsmappen i stedet for at starte forfra.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Annuller";

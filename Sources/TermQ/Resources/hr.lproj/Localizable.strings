@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Pregledaj…";
 "harnesses.launch.prompt" = "Upit";
 "harnesses.launch.prompt.placeholder" = "Neobavezni upit za agenta…";
+"harnesses.launch.resume" = "Nastavi prethodnu sesiju";
+"harnesses.launch.resume.help" = "Nastavlja najnoviju sesiju u radnom direktoriju umjesto pokretanja iznova.";
 "harnesses.launch.button" = "Pokreni";
 "harnesses.launch.help" = "Pokreni ovaj harness u novom terminalu";
 "harnesses.launch.cancel" = "Odustani";
