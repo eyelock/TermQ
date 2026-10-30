@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opzionale da passare all'agente…";
 "harnesses.launch.resume" = "Riprendi la sessione precedente";
-"harnesses.launch.resume.help" = "Continua la sessione più recente nella directory di lavoro invece di ricominciare da zero.";
+"harnesses.launch.resume.help" = "Continua una sessione precedente invece di ricominciare da zero. Claude continua solo la sessione avviata da questa scheda, quindi una nuova scheda ricomincia da zero; gli altri fornitori continuano la sessione più recente nella directory di lavoro.";
 "harnesses.launch.button" = "Avvia";
 "harnesses.launch.help" = "Avvia questo harness in un nuovo terminale";
 "harnesses.launch.cancel" = "Annulla";

@@ -746,7 +746,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
 "harnesses.launch.resume" = "Gjenoppta forrige økt";
-"harnesses.launch.resume.help" = "Fortsetter den siste økten i arbeidsmappen i stedet for å starte på nytt.";
+"harnesses.launch.resume.help" = "Fortsetter en tidligere økt i stedet for å starte på nytt. Claude fortsetter bare økten dette kortet startet, så et nytt kort starter på nytt; andre leverandører fortsetter den siste økten i arbeidsmappen.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Avbryt";

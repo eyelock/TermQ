@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Запрос";
 "harnesses.launch.prompt.placeholder" = "Необязательный запрос для агента…";
 "harnesses.launch.resume" = "Возобновить предыдущий сеанс";
-"harnesses.launch.resume.help" = "Продолжает последний сеанс в рабочем каталоге вместо запуска с нуля.";
+"harnesses.launch.resume.help" = "Продолжает предыдущий сеанс вместо запуска с нуля. Claude продолжает только сеанс, запущенный этой карточкой, поэтому новая карточка начинает с нуля; другие поставщики продолжают последний сеанс в рабочем каталоге.";
 "harnesses.launch.button" = "Запустить";
 "harnesses.launch.help" = "Запустить эту упряжку в новом терминале";
 "harnesses.launch.cancel" = "Отмена";

@@ -748,7 +748,7 @@
 "harnesses.launch.prompt" = "İstem";
 "harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
 "harnesses.launch.resume" = "Önceki oturuma devam et";
-"harnesses.launch.resume.help" = "Sıfırdan başlamak yerine çalışma dizinindeki en son oturuma devam eder.";
+"harnesses.launch.resume.help" = "Sıfırdan başlamak yerine önceki bir oturuma devam eder. Claude yalnızca bu kartın başlattığı oturuma devam eder, bu nedenle yeni bir kart sıfırdan başlar; diğer sağlayıcılar çalışma dizinindeki en son oturuma devam eder.";
 "harnesses.launch.button" = "Başlat";
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
 "harnesses.launch.cancel" = "İptal";

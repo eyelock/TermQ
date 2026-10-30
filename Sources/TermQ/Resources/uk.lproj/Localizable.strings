@@ -748,7 +748,7 @@
 "harnesses.launch.prompt" = "Запит";
 "harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
 "harnesses.launch.resume" = "Відновити попередній сеанс";
-"harnesses.launch.resume.help" = "Продовжує останній сеанс у робочому каталозі замість запуску з нуля.";
+"harnesses.launch.resume.help" = "Продовжує попередній сеанс замість запуску з нуля. Claude продовжує лише сеанс, запущений цією карткою, тому нова картка починає з нуля; інші постачальники продовжують останній сеанс у робочому каталозі.";
 "harnesses.launch.button" = "Запустити";
 "harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
 "harnesses.launch.cancel" = "Скасувати";

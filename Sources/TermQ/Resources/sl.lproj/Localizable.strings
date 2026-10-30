@@ -748,7 +748,7 @@
 "harnesses.launch.prompt" = "Poziv";
 "harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
 "harnesses.launch.resume" = "Nadaljuj prejšnjo sejo";
-"harnesses.launch.resume.help" = "Nadaljuje zadnjo sejo v delovnem imeniku namesto začetka znova.";
+"harnesses.launch.resume.help" = "Nadaljuje prejšnjo sejo namesto začetka znova. Claude nadaljuje samo sejo, ki jo je začela ta kartica, zato nova kartica začne znova; drugi ponudniki nadaljujejo zadnjo sejo v delovnem imeniku.";
 "harnesses.launch.button" = "Zaženi";
 "harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
 "harnesses.launch.cancel" = "Prekliči";

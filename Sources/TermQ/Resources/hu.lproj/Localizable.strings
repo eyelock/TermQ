@@ -747,7 +747,7 @@
 "harnesses.launch.prompt" = "Kérdés";
 "harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
 "harnesses.launch.resume" = "Előző munkamenet folytatása";
-"harnesses.launch.resume.help" = "A munkakönyvtár legutóbbi munkamenetét folytatja az újrakezdés helyett.";
+"harnesses.launch.resume.help" = "Egy korábbi munkamenetet folytat az újrakezdés helyett. A Claude csak azt a munkamenetet folytatja, amelyet ez a kártya indított, így egy új kártya elölről kezdi; a többi szolgáltató a munkakönyvtár legutóbbi munkamenetét folytatja.";
 "harnesses.launch.button" = "Indítás";
 "harnesses.launch.help" = "Harness indítása új terminálban";
 "harnesses.launch.cancel" = "Mégse";

@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opsional untuk diteruskan ke agen…";
 "harnesses.launch.resume" = "Lanjutkan sesi sebelumnya";
-"harnesses.launch.resume.help" = "Melanjutkan sesi terbaru di direktori kerja alih-alih memulai dari awal.";
+"harnesses.launch.resume.help" = "Melanjutkan sesi sebelumnya alih-alih memulai dari awal. Claude hanya melanjutkan sesi yang dimulai oleh kartu ini, sehingga kartu baru dimulai dari awal; vendor lain melanjutkan sesi terbaru di direktori kerja.";
 "harnesses.launch.button" = "Jalankan";
 "harnesses.launch.help" = "Jalankan harness ini di terminal baru";
 "harnesses.launch.cancel" = "Batal";

@@ -746,7 +746,7 @@
 "harnesses.launch.prompt" = "Monit";
 "harnesses.launch.prompt.placeholder" = "Opcjonalny monit dla agenta…";
 "harnesses.launch.resume" = "Wznów poprzednią sesję";
-"harnesses.launch.resume.help" = "Kontynuuje ostatnią sesję w katalogu roboczym zamiast zaczynać od nowa.";
+"harnesses.launch.resume.help" = "Kontynuuje poprzednią sesję zamiast zaczynać od nowa. Claude kontynuuje tylko sesję rozpoczętą przez tę kartę, więc nowa karta zaczyna od nowa; inni dostawcy kontynuują ostatnią sesję w katalogu roboczym.";
 "harnesses.launch.button" = "Uruchom";
 "harnesses.launch.help" = "Uruchom tę uprząż w nowym terminalu";
 "harnesses.launch.cancel" = "Anuluj";

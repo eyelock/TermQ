@@ -746,7 +746,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optionele prompt voor de agent…";
 "harnesses.launch.resume" = "Vorige sessie hervatten";
-"harnesses.launch.resume.help" = "Zet de meest recente sessie in de werkmap voort in plaats van opnieuw te beginnen.";
+"harnesses.launch.resume.help" = "Zet een eerdere sessie voort in plaats van opnieuw te beginnen. Claude zet alleen de sessie voort die deze kaart heeft gestart, dus een nieuwe kaart begint opnieuw; andere leveranciers zetten de meest recente sessie in de werkmap voort.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Deze harness starten in een nieuwe terminal";
 "harnesses.launch.cancel" = "Annuleren";

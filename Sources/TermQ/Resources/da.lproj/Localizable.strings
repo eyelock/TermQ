@@ -757,7 +757,7 @@
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
 "harnesses.launch.resume" = "Genoptag forrige session";
-"harnesses.launch.resume.help" = "Fortsætter den seneste session i arbejdsmappen i stedet for at starte forfra.";
+"harnesses.launch.resume.help" = "Fortsætter en tidligere session i stedet for at starte forfra. Claude fortsætter kun den session, som dette kort startede, så et nyt kort starter forfra; andre leverandører fortsætter den seneste session i arbejdsmappen.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Annuller";
