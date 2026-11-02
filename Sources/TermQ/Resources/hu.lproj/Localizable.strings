@@ -915,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Ehhez a bővítményhez nincsenek összetevők felsorolva.";
 "marketplace.plugin.no.artifacts.hint" = "A bővítmény teljes tartalma bele lesz foglalva.";
 "marketplace.plugin.artifacts.unavailable %@" = "Az összetevők nem érhetők el: %@";
+"marketplace.plugin.unsupported %@" = "Nem támogatott tartalomtípus: %@. Nem adható hozzá a harnesshez.";
 "marketplace.picker.step.artifacts" = "Összetevők";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Alkalmazás";

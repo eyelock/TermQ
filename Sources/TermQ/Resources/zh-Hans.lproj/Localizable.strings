@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "此插件没有列出构件。";
 "marketplace.plugin.no.artifacts.hint" = "将包含插件的所有内容。";
 "marketplace.plugin.artifacts.unavailable %@" = "构件不可用：%@";
+"marketplace.plugin.unsupported %@" = "不支持的内容类型:%@。无法添加到 Harness。";
 "marketplace.picker.step.artifacts" = "构件";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "应用";

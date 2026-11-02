@@ -133,7 +133,10 @@ struct PluginSourceSpec: Codable, Sendable {
     // or a JSON object. The object uses "source" as the type discriminator key (not "type").
     init(from decoder: Decoder) throws {
         if let str = try? decoder.singleValueContainer().decode(String.self) {
-            self.type = str.hasPrefix(".") ? .relative : .url
+            // A bare string is a path inside the marketplace repo ("./plugins/x", or "plugins/x" as
+            // Copilot's index writes it) unless it is clearly a remote URL.
+            let isRemote = str.contains("://") || str.hasPrefix("git@") || str.hasPrefix("github.com/")
+            self.type = isRemote ? .url : .relative
             self.url = str
             self.path = nil
             return
@@ -209,6 +212,8 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
     case pending  // external source — not yet cloned
     case loading  // clone in progress
     case failed(String)
+    /// Recognised content TermQ/ynh cannot add (e.g. a Copilot "extensions" plugin). Holds the type name.
+    case unsupported(String)
 
     private enum CodingKeys: String, CodingKey { case type, message }
 
@@ -220,6 +225,9 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
         case "failed":
             let msg = (try? container.decode(String.self, forKey: .message)) ?? ""
             self = .failed(msg)
+        case "unsupported":
+            let kind = (try? container.decode(String.self, forKey: .message)) ?? ""
+            self = .unsupported(kind)
         default: self = .pending
         }
     }
@@ -235,12 +243,15 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
         case .failed(let msg):
             try container.encode("failed", forKey: .type)
             try container.encode(msg, forKey: .message)
+        case .unsupported(let kind):
+            try container.encode("unsupported", forKey: .type)
+            try container.encode(kind, forKey: .message)
         }
     }
 
     var isResolved: Bool {
         switch self {
-        case .eager, .failed: return true
+        case .eager, .failed, .unsupported: return true
         default: return false
         }
     }

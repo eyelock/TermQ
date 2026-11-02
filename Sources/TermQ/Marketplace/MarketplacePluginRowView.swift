@@ -68,7 +68,9 @@ struct MarketplacePluginRowView: View {
 
     @ViewBuilder
     private var actionButton: some View {
-        if isYNHReady {
+        if case .unsupported = plugin.skillsState {
+            EmptyView()
+        } else if isYNHReady {
             Button(Strings.Marketplace.pluginAddToHarness) { onAddToHarness() }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)
@@ -140,6 +142,10 @@ struct MarketplacePluginRowView: View {
             Text(Strings.Marketplace.pluginArtifactsUnavailable(msg))
                 .font(.caption2).foregroundColor(.secondary)
                 .lineLimit(2)
+
+        case .unsupported(let kind):
+            Label(Strings.Marketplace.pluginUnsupported(kind), systemImage: "exclamationmark.triangle")
+                .font(.caption).foregroundColor(.orange)
         }
     }
 

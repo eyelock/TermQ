@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Для этого плагина не указаны артефакты.";
 "marketplace.plugin.no.artifacts.hint" = "Всё содержимое плагина будет включено.";
 "marketplace.plugin.artifacts.unavailable %@" = "Артефакты недоступны: %@";
+"marketplace.plugin.unsupported %@" = "Неподдерживаемый тип содержимого: %@. Его нельзя добавить в харнесс.";
 "marketplace.picker.step.artifacts" = "Артефакты";
 "marketplace.picker.step.harness" = "Харнесс";
 "marketplace.picker.step.apply" = "Применить";

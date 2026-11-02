@@ -915,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Tälle laajennukselle ei ole lueteltu artefakteja.";
 "marketplace.plugin.no.artifacts.hint" = "Kaikki laajennuksen sisältö sisällytetään.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefaktit ei saatavilla: %@";
+"marketplace.plugin.unsupported %@" = "Sisältötyyppiä ei tueta: %@. Sitä ei voi lisätä harnessiin.";
 "marketplace.picker.step.artifacts" = "Artefaktit";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Käytä";

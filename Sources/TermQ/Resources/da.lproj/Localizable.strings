@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Ingen artefakter angivet for dette plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Alt pluginindhold medtages.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakter utilgængelige: %@";
+"marketplace.plugin.unsupported %@" = "Indholdstype understøttes ikke: %@. Den kan ikke føjes til et harness.";
 "marketplace.picker.step.artifacts" = "Artefakter";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Anvend";

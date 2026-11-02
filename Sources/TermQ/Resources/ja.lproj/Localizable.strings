@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "このプラグインにはアーティファクトが列挙されていません。";
 "marketplace.plugin.no.artifacts.hint" = "プラグインのすべてのコンテンツが含まれます。";
 "marketplace.plugin.artifacts.unavailable %@" = "アーティファクトが利用できません: %@";
+"marketplace.plugin.unsupported %@" = "サポートされていないコンテンツタイプ: %@。ハーネスには追加できません。";
 "marketplace.picker.step.artifacts" = "アーティファクト";
 "marketplace.picker.step.harness" = "ハーネス";
 "marketplace.picker.step.apply" = "適用";

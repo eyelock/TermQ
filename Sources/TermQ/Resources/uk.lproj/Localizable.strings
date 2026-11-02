@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Для цього плагіна не зазначено артефактів.";
 "marketplace.plugin.no.artifacts.hint" = "Весь вміст плагіна буде включено.";
 "marketplace.plugin.artifacts.unavailable %@" = "Артефакти недоступні: %@";
+"marketplace.plugin.unsupported %@" = "Непідтримуваний тип вмісту: %@. Його не можна додати до харнесу.";
 "marketplace.picker.step.artifacts" = "Артефакти";
 "marketplace.picker.step.harness" = "Харнес";
 "marketplace.picker.step.apply" = "Застосувати";

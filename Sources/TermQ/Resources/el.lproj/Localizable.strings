@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Δεν υπάρχουν αντικείμενα για αυτό το πρόσθετο.";
 "marketplace.plugin.no.artifacts.hint" = "Θα συμπεριληφθεί όλο το περιεχόμενο του πρόσθετου.";
 "marketplace.plugin.artifacts.unavailable %@" = "Τα αντικείμενα δεν είναι διαθέσιμα: %@";
+"marketplace.plugin.unsupported %@" = "Μη υποστηριζόμενος τύπος περιεχομένου: %@. Δεν μπορεί να προστεθεί σε harness.";
 "marketplace.picker.step.artifacts" = "Αντικείμενα";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Εφαρμογή";

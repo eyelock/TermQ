@@ -57,6 +57,9 @@ extension Strings {
         static var pluginLoadingArtifacts: String { localized("marketplace.plugin.loading.artifacts") }
         static var pluginNoArtifacts: String { localized("marketplace.plugin.no.artifacts") }
         static var pluginNoArtifactsHint: String { localized("marketplace.plugin.no.artifacts.hint") }
+        static func pluginUnsupported(_ kind: String) -> String {
+            localized("marketplace.plugin.unsupported %@", kind)
+        }
         static func pluginArtifactsUnavailable(_ msg: String) -> String {
             localized("marketplace.plugin.artifacts.unavailable %@", msg)
         }

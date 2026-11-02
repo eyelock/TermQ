@@ -67,12 +67,13 @@ enum MarketplaceFetcher {
             root = repoRoot.appendingPathComponent(folder, isDirectory: true)
         }
 
-        let candidates = marketplace.vendor.indexPaths
-        guard
-            let indexRelPath = candidates.first(where: {
-                FileManager.default.fileExists(atPath: root.appendingPathComponent($0).path)
-            })
-        else {
+        // Prefer the chosen vendor's layout, but fall back to any known vendor's so a marketplace
+        // added under the wrong vendor (e.g. a Copilot repo added as Claude) still loads.
+        let exists: (String) -> Bool = {
+            FileManager.default.fileExists(atPath: root.appendingPathComponent($0).path)
+        }
+        let candidates = marketplace.vendor.indexPaths + MarketplaceVendor.allCases.flatMap(\.indexPaths)
+        guard let indexRelPath = candidates.first(where: exists) else {
             let shown = (marketplace.normalizedFolder.map { "\($0)/" } ?? "") + marketplace.vendor.indexPath
             throw FetchError.indexNotFound(shown)
         }
@@ -88,6 +89,11 @@ enum MarketplaceFetcher {
         }
 
         var updated = marketplace
+        if !marketplace.vendor.indexPaths.contains(indexRelPath),
+            let detected = MarketplaceVendor.allCases.first(where: { $0.indexPaths.contains(indexRelPath) })
+        {
+            updated.vendor = detected
+        }
         updated.name = raw.name ?? marketplace.name
         updated.owner = raw.owner ?? marketplace.owner
         if let desc = raw.description { updated.description = desc }
@@ -217,7 +223,7 @@ enum MarketplaceFetcher {
     }
 
     private static func mapPlugin(_ raw: RawMarketplacePlugin, cloneRoot: URL) -> MarketplacePlugin {
-        let source = raw.source ?? PluginSourceSpec(type: .unknown, url: "")
+        var source = raw.source ?? PluginSourceSpec(type: .unknown, url: "")
         let isRelative = source.type.isRelative
 
         var picks: [String] = []
@@ -230,7 +236,20 @@ enum MarketplaceFetcher {
                     : source.url)
             let root = source.path.map { pluginDir.appendingPathComponent($0) } ?? pluginDir
             picks = enumerateArtifacts(in: root)
+            // A plugin folder may hold only a manifest that points at content elsewhere in the repo.
+            // Follow it, and re-root the include at the marketplace root so the picks resolve.
+            if picks.isEmpty {
+                let redirected = redirectedArtifacts(pluginDir: root, marketplaceRoot: cloneRoot)
+                if !redirected.isEmpty {
+                    picks = redirected
+                    source = PluginSourceSpec(type: .relative, url: "./")
+                }
+            }
             state = .eager
+            if picks.isEmpty {
+                let unsupported = unsupportedContentKinds(pluginDir: root)
+                if !unsupported.isEmpty { state = .unsupported(unsupported.joined(separator: ", ")) }
+            }
         }
 
         return MarketplacePlugin(
@@ -244,6 +263,74 @@ enum MarketplaceFetcher {
             picks: picks,
             skillsState: state
         )
+    }
+
+    /// Reads the `extensions."com.github.awesome-copilot"` block of a plugin's `plugin.json`, if any.
+    private static func declaredContent(pluginDir: URL) -> [String: Any]? {
+        guard let data = try? Data(contentsOf: pluginDir.appendingPathComponent("plugin.json")),
+            let manifest = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+            let extensions = manifest["extensions"] as? [String: Any]
+        else { return nil }
+        return extensions["com.github.awesome-copilot"] as? [String: Any]
+    }
+
+    /// Content types a plugin declares that cannot be picked (anything but skills/agents/commands/rules),
+    /// e.g. `extensions` for a Copilot extension. Empty when the manifest declares none.
+    static func unsupportedContentKinds(pluginDir: URL) -> [String] {
+        let supported: Set<String> = ["skills", "agents", "commands", "rules"]
+        guard let declared = declaredContent(pluginDir: pluginDir) else { return [] }
+        return declared.compactMap { key, value in
+            guard !supported.contains(key), let list = value as? [Any], !list.isEmpty else { return nil }
+            return key
+        }.sorted()
+    }
+
+    /// Artifacts a plugin declares in its `plugin.json` rather than holding itself.
+    ///
+    /// Copilot marketplaces (e.g. awesome-copilot) keep a thin `plugins/<name>/plugin.json` whose
+    /// `extensions."com.github.awesome-copilot"` lists `skills`, `agents`, … as paths relative to the
+    /// marketplace root. Agent entries are written `./agents/x.md` while the file is `x.agent.md`.
+    /// Returns `type/name` picks relative to `marketplaceRoot`; Copilot "extensions" are not pickable.
+    /// Only paths under the matching top-level folder (`skills/…`, `agents/…`) and inside the clone
+    /// (no `..`, no symlinks leading out) are accepted, so every pick exists where `ynh` will look.
+    static func redirectedArtifacts(pluginDir: URL, marketplaceRoot: URL) -> [String] {
+        guard let declared = declaredContent(pluginDir: pluginDir) else { return [] }
+
+        let fm = FileManager.default
+        let rootPrefix = marketplaceRoot.resolvingSymlinksInPath().path + "/"
+
+        /// Resolves a manifest path under `kind/` to a URL inside the clone, or nil.
+        func resolve(_ raw: String, kind: String) -> (url: URL, rel: String)? {
+            var rel = raw
+            if rel.hasPrefix("./") { rel = String(rel.dropFirst(2)) }
+            rel = rel.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            let parts = rel.split(separator: "/")
+            guard parts.count >= 2, parts[0] == kind, !parts.contains("..") else { return nil }
+            let url = marketplaceRoot.appendingPathComponent(rel)
+            guard url.resolvingSymlinksInPath().path.hasPrefix(rootPrefix) else { return nil }
+            return (url, rel)
+        }
+
+        var results: [String] = []
+        for raw in declared["skills"] as? [String] ?? [] {
+            guard let item = resolve(raw, kind: "skills"),
+                fm.fileExists(atPath: item.url.appendingPathComponent("SKILL.md").path)
+            else { continue }
+            results.append(item.rel)
+        }
+        for kind in ["agents", "commands", "rules"] {
+            for raw in declared[kind] as? [String] ?? [] {
+                guard let item = resolve(raw, kind: kind) else { continue }
+                let stem = item.url.deletingPathExtension()
+                let candidates = [item.url, stem.appendingPathExtension("agent.md"), stem.appendingPathExtension("md")]
+                guard let found = candidates.first(where: { fm.fileExists(atPath: $0.path) }),
+                    found.resolvingSymlinksInPath().path.hasPrefix(rootPrefix)
+                else { continue }
+                let dir = (item.rel as NSString).deletingLastPathComponent
+                results.append("\(dir)/\(found.lastPathComponent)")
+            }
+        }
+        return results.sorted()
     }
 
     /// Walk a plugin directory and collect all pickable artifacts with their type-prefixed paths.

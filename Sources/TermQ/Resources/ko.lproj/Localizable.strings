@@ -914,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "이 플러그인에 대해 나열된 아티팩트가 없습니다.";
 "marketplace.plugin.no.artifacts.hint" = "플러그인의 모든 내용이 포함됩니다.";
 "marketplace.plugin.artifacts.unavailable %@" = "아티팩트를 사용할 수 없습니다: %@";
+"marketplace.plugin.unsupported %@" = "지원되지 않는 콘텐츠 유형: %@. 하네스에 추가할 수 없습니다.";
 "marketplace.picker.step.artifacts" = "아티팩트";
 "marketplace.picker.step.harness" = "하네스";
 "marketplace.picker.step.apply" = "적용";

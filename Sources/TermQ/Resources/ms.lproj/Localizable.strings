@@ -914,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "Tiada artifak disenaraikan untuk pemalam ini.";
 "marketplace.plugin.no.artifacts.hint" = "Semua kandungan pemalam akan disertakan.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artifak tidak tersedia: %@";
+"marketplace.plugin.unsupported %@" = "Jenis kandungan tidak disokong: %@. Ini tidak boleh ditambah ke Harness.";
 "marketplace.picker.step.artifacts" = "Artifak";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Guna";

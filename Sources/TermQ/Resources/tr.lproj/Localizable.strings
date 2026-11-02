@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Bu eklenti için yapıt listelenmemiş.";
 "marketplace.plugin.no.artifacts.hint" = "Eklentinin tüm içeriği dahil edilecek.";
 "marketplace.plugin.artifacts.unavailable %@" = "Yapıtlar kullanılamıyor: %@";
+"marketplace.plugin.unsupported %@" = "Desteklenmeyen içerik türü: %@. Bir Harness'e eklenemez.";
 "marketplace.picker.step.artifacts" = "Yapıtlar";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Uygula";
