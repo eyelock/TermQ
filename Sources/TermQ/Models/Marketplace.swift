@@ -45,6 +45,24 @@ struct Marketplace: Codable, Identifiable, Sendable {
         return trimmed.isEmpty ? nil : trimmed
     }
 
+    /// Turns the shorthand people paste (`owner/repo`, `github.com/owner/repo`) into a URL git can
+    /// clone. Anything with a scheme, an scp-style `git@host:` form, or a local path is left alone.
+    static func normalizeRepoURL(_ raw: String) -> String {
+        let url = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if url.isEmpty || url.contains("://") || url.hasPrefix("git@") || url.hasPrefix("/")
+            || url.hasPrefix("~")
+        {
+            return url
+        }
+        if url.hasPrefix("github.com/") || url.hasPrefix("www.github.com/") { return "https://" + url }
+        let parts = url.split(separator: "/", omittingEmptySubsequences: false)
+        let slug = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.")
+        if parts.count == 2, parts.allSatisfy({ !$0.isEmpty && $0.unicodeScalars.allSatisfy(slug.contains) }) {
+            return "https://github.com/\(url)"
+        }
+        return url
+    }
+
     /// True when this marketplace points to a local folder rather than a remote Git repository.
     var isLocal: Bool { url.hasPrefix("/") || url.hasPrefix("file:///") }
 

@@ -53,7 +53,9 @@ enum MarketplaceFetcher {
             .appendingPathComponent("termq-mkt-\(UUID().uuidString)", isDirectory: true)
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
-        try await clone(gitPath: gitPath, url: marketplace.url, ref: marketplace.ref, into: tempDir)
+        try await clone(
+            gitPath: gitPath, url: Marketplace.normalizeRepoURL(marketplace.url), ref: marketplace.ref,
+            into: tempDir)
         return try parseIndex(in: tempDir, for: marketplace)
     }
 

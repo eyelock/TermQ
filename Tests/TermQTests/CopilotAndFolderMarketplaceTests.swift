@@ -29,6 +29,19 @@ final class CopilotAndFolderMarketplaceTests: XCTestCase {
         XCTAssertEqual(make(name: "").displayName, GitURLHelper.shortURL("https://github.com/o/r"))
     }
 
+    // MARK: URL shorthand
+
+    func test_normalizeRepoURL() {
+        let want = "https://github.com/github/awesome-copilot"
+        XCTAssertEqual(Marketplace.normalizeRepoURL("github.com/github/awesome-copilot"), want)
+        XCTAssertEqual(Marketplace.normalizeRepoURL("  github/awesome-copilot "), want)
+        XCTAssertEqual(Marketplace.normalizeRepoURL(want), want)
+        XCTAssertEqual(Marketplace.normalizeRepoURL("git@github.com:o/r.git"), "git@github.com:o/r.git")
+        XCTAssertEqual(Marketplace.normalizeRepoURL("/Users/me/mkt"), "/Users/me/mkt")
+        XCTAssertEqual(Marketplace.normalizeRepoURL("file:///x/y"), "file:///x/y")
+        XCTAssertEqual(Marketplace.normalizeRepoURL("a/b/c"), "a/b/c")
+    }
+
     // MARK: Folder
 
     func test_normalizeFolder() {
