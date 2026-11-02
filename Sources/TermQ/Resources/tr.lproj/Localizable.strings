@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Gözat…";
 "harnesses.launch.prompt" = "İstem";
 "harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
+"harnesses.launch.resume" = "Önceki oturuma devam et";
+"harnesses.launch.resume.help" = "Sıfırdan başlamak yerine önceki bir oturuma devam eder. Claude yalnızca bu kartın başlattığı oturuma devam eder, bu nedenle yeni bir kart sıfırdan başlar; diğer sağlayıcılar çalışma dizinindeki en son oturuma devam eder.";
 "harnesses.launch.button" = "Başlat";
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
 "harnesses.launch.cancel" = "İptal";
@@ -1203,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Açıklama";
 "harnesses.manifest.edit.description.hint" = "Harness listesinde ve ayrıntı başlığında gösterilir. Atlamak için boş bırakın.";
 "harnesses.manifest.edit.save" = "Değişiklikleri Kaydet";
+"harnesses.layout.legacy %@" = "YNH 0.14+ tarafından reddedilen eski .ynh-plugin/ düzenini kullanıyor. Çalıştırın: ynd migrate %@";
+"harnesses.layout.both" = "Hem .agents/harness/ hem de .ynh-plugin/ var; YNH 0.14+ bunu reddeder. .ynh-plugin/ dizinini kaldırın.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";

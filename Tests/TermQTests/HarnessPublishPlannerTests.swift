@@ -22,14 +22,14 @@ final class HarnessPublishPlannerTests: XCTestCase {
 
     /// Write a minimal valid manifest, optionally with extra top-level keys
     /// (hooks, profiles, mcp_servers, sensors) merged in.
-    private func writeManifest(extra: [String: Any] = [:]) throws {
+    private func writeManifest(extra: [String: Any] = [:], dir manifestDir: String = ".agents/harness") throws {
         var json: [String: Any] = [
             "name": "demo",
             "version": "0.1.0",
             "default_vendor": "claude",
         ]
         for (key, value) in extra { json[key] = value }
-        let dir = sourceDir.appendingPathComponent(".ynh-plugin")
+        let dir = sourceDir.appendingPathComponent(manifestDir)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         let data = try JSONSerialization.data(withJSONObject: json, options: [.sortedKeys])
         try data.write(to: dir.appendingPathComponent("plugin.json"))
@@ -136,7 +136,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
     }
 
     func test_plan_malformedManifest_throws() throws {
-        let dir = sourceDir.appendingPathComponent(".ynh-plugin")
+        let dir = sourceDir.appendingPathComponent(".agents/harness")
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         try Data("not json".utf8).write(to: dir.appendingPathComponent("plugin.json"))
         XCTAssertThrowsError(try plan()) { error in
@@ -166,8 +166,67 @@ final class HarnessPublishPlannerTests: XCTestCase {
         try touch(".DS_Store")
 
         let result = try plan(mode: .entireDirectory)
-        XCTAssertEqual(result.files, [".ynh-plugin", "README.md", "skills"])
+        XCTAssertEqual(result.files, [".agents/harness", "README.md", "skills"])
         XCTAssertTrue(result.unresolvedReferences.isEmpty)
+    }
+
+    // MARK: - Manifest layout
+
+    func test_entireDirectory_agentsDirExpanded_neverWholeAgents() throws {
+        try writeManifest()
+        try touch(".agents/skills/codex-skill/SKILL.md")
+        try touch("README.md")
+
+        try touch(".agents/AGENTS.md")
+
+        // Shared `.agents/<dir>` content is planned per entry, so a publish
+        // replaces only the source's own skills, never the whole directory.
+        let result = try plan(mode: .entireDirectory)
+        XCTAssertEqual(
+            result.files,
+            [".agents/AGENTS.md", ".agents/harness", ".agents/skills/codex-skill", "README.md"])
+        XCTAssertFalse(result.files.contains(".agents"))
+        XCTAssertFalse(result.files.contains(".agents/skills"))
+    }
+
+    func test_enumerated_rootsIncludeOnlyCanonicalManifestDir() throws {
+        try writeManifest()
+        try touch(".agents/skills/codex-skill/SKILL.md")
+        let result = try plan(composition: try makeComposition(), mode: .enumerated)
+        XCTAssertEqual(result.files, [".agents/harness"])
+    }
+
+    func test_plan_legacySource_refused() throws {
+        try writeManifest(dir: ".ynh-plugin")
+        XCTAssertThrowsError(try plan(mode: .entireDirectory)) { error in
+            guard case HarnessPublishPlannerError.unsupportedLayout(_, let state) = error else {
+                return XCTFail("expected unsupportedLayout, got \(error)")
+            }
+            XCTAssertEqual(state, .legacy)
+        }
+    }
+
+    func test_plan_bothLayoutsSource_refused() throws {
+        try writeManifest()
+        try writeManifest(dir: ".ynh-plugin")
+        XCTAssertThrowsError(try plan(mode: .entireDirectory)) { error in
+            guard case HarnessPublishPlannerError.unsupportedLayout(_, let state) = error else {
+                return XCTFail("expected unsupportedLayout, got \(error)")
+            }
+            XCTAssertEqual(state, .both)
+        }
+    }
+
+    func test_plan_legacyDestination_enumerableWhenAllowed() throws {
+        try writeManifest(dir: ".ynh-plugin")
+        let result = try HarnessPublishPlanner.plan(
+            sourcePath: sourceDir.path,
+            harnessName: "demo",
+            composition: try makeComposition(),
+            mode: .enumerated,
+            allowLegacyLayout: true
+        )
+        XCTAssertEqual(result.files, [".ynh-plugin"])
     }
 
     // MARK: - Enumerated mode: artifacts
@@ -182,7 +241,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         )
 
         let result = try plan(composition: composition, mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin", "agents/helper.md", "skills/mine"])
+        XCTAssertEqual(result.files, [".agents/harness", "agents/helper.md", "skills/mine"])
         XCTAssertTrue(result.unresolvedReferences.isEmpty)
     }
 
@@ -191,7 +250,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         let composition = try makeComposition(skills: [("ghost", "demo")])
 
         let result = try plan(composition: composition, mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin"])
+        XCTAssertEqual(result.files, [".agents/harness"])
         XCTAssertEqual(result.unresolvedReferences, ["skills/ghost"])
     }
 
@@ -201,7 +260,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         let composition = try makeComposition(agents: [("composite", "demo")])
 
         let result = try plan(composition: composition, mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin", "agents/composite"])
+        XCTAssertEqual(result.files, [".agents/harness", "agents/composite"])
     }
 
     // MARK: - Enumerated mode: script references
@@ -234,7 +293,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         XCTAssertEqual(
             result.files,
             [
-                ".ynh-plugin",
+                ".agents/harness",
                 "tools/hooks/build.sh",
                 "tools/hooks/guard.sh",
                 "tools/mcp/server.sh",
@@ -255,7 +314,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         ])
 
         let result = try plan(composition: try makeComposition(), mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin"])
+        XCTAssertEqual(result.files, [".agents/harness"])
         XCTAssertTrue(result.unresolvedReferences.isEmpty)
     }
 
@@ -268,7 +327,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         ])
 
         let result = try plan(composition: try makeComposition(), mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin"])
+        XCTAssertEqual(result.files, [".agents/harness"])
         XCTAssertTrue(result.unresolvedReferences.isEmpty)
     }
 
@@ -278,7 +337,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         ])
 
         let result = try plan(composition: try makeComposition(), mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin"])
+        XCTAssertEqual(result.files, [".agents/harness"])
         XCTAssertEqual(result.unresolvedReferences, ["tools/hooks/gone.sh"])
     }
 
@@ -288,7 +347,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         ])
 
         let result = try plan(composition: try makeComposition(), mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin"])
+        XCTAssertEqual(result.files, [".agents/harness"])
         XCTAssertEqual(result.unresolvedReferences, ["./../outside/evil.sh"])
     }
 
@@ -301,7 +360,7 @@ final class HarnessPublishPlannerTests: XCTestCase {
         let composition = try makeComposition(skills: [("mine", "demo")])
 
         let result = try plan(composition: composition, mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin", "skills/mine"])
+        XCTAssertEqual(result.files, [".agents/harness", "skills/mine"])
     }
 
     func test_enumerated_duplicateScriptRefs_deduped() throws {
@@ -314,6 +373,6 @@ final class HarnessPublishPlannerTests: XCTestCase {
         ])
 
         let result = try plan(composition: try makeComposition(), mode: .enumerated)
-        XCTAssertEqual(result.files, [".ynh-plugin", "tools/hooks/build.sh"])
+        XCTAssertEqual(result.files, [".agents/harness", "tools/hooks/build.sh"])
     }
 }

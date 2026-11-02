@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Explorar…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opcional para pasar al agente…";
+"harnesses.launch.resume" = "Reanudar la sesión anterior";
+"harnesses.launch.resume.help" = "Continúa una sesión anterior en lugar de empezar de cero. Claude solo continúa la sesión que inició esta tarjeta, por lo que una tarjeta nueva empieza de cero; otros proveedores continúan la sesión más reciente en el directorio de trabajo.";
 "harnesses.launch.button" = "Lanzar";
 "harnesses.launch.help" = "Lanzar este arnés en un nuevo terminal";
 "harnesses.launch.cancel" = "Cancelar";
@@ -1196,6 +1198,8 @@
 "harnesses.manifest.edit.description" = "Descripción";
 "harnesses.manifest.edit.description.hint" = "Se muestra en la lista de harnesses y en el encabezado de detalle. Dejar vacío para omitir.";
 "harnesses.manifest.edit.save" = "Guardar cambios";
+"harnesses.layout.legacy %@" = "Usa el diseño heredado .ynh-plugin/, que YNH 0.14+ rechaza. Ejecuta: ynd migrate %@";
+"harnesses.layout.both" = "Tiene tanto .agents/harness/ como .ynh-plugin/, y YNH 0.14+ lo rechaza. Elimina el directorio .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificado: %@ → %@";

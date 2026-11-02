@@ -157,15 +157,15 @@ final class PublishChangePreviewTests: XCTestCase {
     }
 
     func test_diff_reportsAddedModifiedRemoved() throws {
-        try write(".ynh-plugin/plugin.json", in: sourceDir, contents: "v2")
+        try write(".agents/harness/plugin.json", in: sourceDir, contents: "v2")
         try write("skills/new/SKILL.md", in: sourceDir, contents: "new")
-        try write(".ynh-plugin/plugin.json", in: destinationDir, contents: "v1")
+        try write(".agents/harness/plugin.json", in: destinationDir, contents: "v1")
         try write("skills/old/SKILL.md", in: destinationDir, contents: "old")
 
         let plan = HarnessPublishPlan(
             sourcePath: sourceDir.path,
             mode: .enumerated,
-            files: [".ynh-plugin", "skills"],
+            files: [".agents/harness", "skills"],
             unresolvedReferences: []
         )
         let changes = PublishChangePreview.diff(plan: plan, destinationPath: destinationDir.path)
@@ -173,7 +173,7 @@ final class PublishChangePreviewTests: XCTestCase {
         XCTAssertEqual(
             changes,
             [
-                PublishChange(path: ".ynh-plugin/plugin.json", kind: .modified),
+                PublishChange(path: ".agents/harness/plugin.json", kind: .modified),
                 PublishChange(path: "skills/new/SKILL.md", kind: .added),
                 PublishChange(path: "skills/old/SKILL.md", kind: .removed),
             ]
@@ -181,13 +181,13 @@ final class PublishChangePreviewTests: XCTestCase {
     }
 
     func test_diff_identicalTrees_reportNothing() throws {
-        try write(".ynh-plugin/plugin.json", in: sourceDir, contents: "same")
-        try write(".ynh-plugin/plugin.json", in: destinationDir, contents: "same")
+        try write(".agents/harness/plugin.json", in: sourceDir, contents: "same")
+        try write(".agents/harness/plugin.json", in: destinationDir, contents: "same")
 
         let plan = HarnessPublishPlan(
             sourcePath: sourceDir.path,
             mode: .enumerated,
-            files: [".ynh-plugin"],
+            files: [".agents/harness"],
             unresolvedReferences: []
         )
         XCTAssertTrue(
@@ -195,15 +195,15 @@ final class PublishChangePreviewTests: XCTestCase {
     }
 
     func test_diff_hostProjectFilesOutsidePlanRoots_neverReported() throws {
-        try write(".ynh-plugin/plugin.json", in: sourceDir, contents: "x")
-        try write(".ynh-plugin/plugin.json", in: destinationDir, contents: "x")
+        try write(".agents/harness/plugin.json", in: sourceDir, contents: "x")
+        try write(".agents/harness/plugin.json", in: destinationDir, contents: "x")
         // Host project file at a root-embedded destination — not a plan root.
         try write("services/api/main.go", in: destinationDir, contents: "package main")
 
         let plan = HarnessPublishPlan(
             sourcePath: sourceDir.path,
             mode: .enumerated,
-            files: [".ynh-plugin"],
+            files: [".agents/harness"],
             unresolvedReferences: []
         )
         XCTAssertTrue(

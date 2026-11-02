@@ -24,6 +24,7 @@ struct HarnessLaunchSheet: View {
     @State private var selectedBackend: TerminalBackend = .direct
     @State private var workingDirectory: String
     @State private var prompt: String = ""
+    @State private var resumeSession: Bool = false
     @Environment(SettingsStore.self) private var settings
 
     init(
@@ -51,6 +52,17 @@ struct HarnessLaunchSheet: View {
     /// The effective vendor ID for the command — empty when using the default.
     private var effectiveVendorID: String {
         selectedVendorID == defaultVendorTag ? "" : selectedVendorID
+    }
+
+    /// The vendor the launch will actually use: the explicit pick, or the
+    /// harness's own default when the default sentinel is selected.
+    private var effectiveVendorForResume: String {
+        effectiveVendorID.isEmpty ? harness.defaultVendor : effectiveVendorID
+    }
+
+    /// Resume is only offered when the effective vendor's CLI can continue a session.
+    private var showsResumeToggle: Bool {
+        vendors.first { $0.vendorID == effectiveVendorForResume }?.supportsResume ?? false
     }
 
     var body: some View {
@@ -134,6 +146,16 @@ struct HarnessLaunchSheet: View {
                     }
                 }
 
+                // Resume (only for vendors that can continue a session)
+                if showsResumeToggle {
+                    Section {
+                        Toggle(Strings.Harnesses.launchResume, isOn: $resumeSession)
+                        Text(Strings.Harnesses.launchResumeHelp)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+
                 // Prompt
                 Section {
                     TextField(
@@ -182,7 +204,8 @@ struct HarnessLaunchSheet: View {
                             backend: selectedBackend,
                             branch: initialBranch,
                             interactive: false,
-                            cardTitle: nil
+                            cardTitle: nil,
+                            resumeSession: showsResumeToggle && resumeSession
                         )
                         onLaunch(config)
                         dismiss()
@@ -217,6 +240,9 @@ struct HarnessLaunchSheet: View {
         }
         if !selectedFocus.isEmpty {
             parts.append(contentsOf: ["--focus", selectedFocus])
+        }
+        if showsResumeToggle && resumeSession {
+            parts.append("--resume")
         }
         if !prompt.isEmpty {
             parts.append("--")
@@ -265,12 +291,18 @@ struct HarnessLaunchConfig {
     let interactive: Bool
     /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
     let cardTitle: String?
+    /// Whether this launch should continue the vendor's most recent session in
+    /// the working directory. Declared with a default so existing memberwise
+    /// call sites keep compiling.
+    var resumeSession: Bool = false
 
     // Note: `--resume` is deliberately *not* emitted here. The init command is
     // persisted on the card and replayed on every open, so baking the flag in
     // would mean rewriting a stored (possibly hand-edited) command string every
     // time the card's resume setting changed. It is applied at send time
-    // instead — see ResumeFlagInjector and TerminalSessionManager.
+    // instead — see ResumeFlagInjector and TerminalSessionManager. This
+    // launch's `resumeSession` choice travels as the card's one-shot
+    // `resumeOverrideForNextLaunch`, not in the command string.
 
     /// Build the `ynh run` command string.
     /// Pass `sessionName` to bind the session to a specific tmux session name.

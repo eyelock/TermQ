@@ -41,6 +41,22 @@ struct ResumeFlagInjector {
         return head + " " + Self.flag + " " + tail
     }
 
+    /// Returns `command` without its trailing ` -- <prompt>` tail.
+    ///
+    /// Reopening a card should continue the session, not replay the prompt the
+    /// card was first launched with into it. Only `ynh run` commands are
+    /// touched, and the separator is found with the same quote-aware scan
+    /// `inject` uses, so a `--` inside a quoted argument is never cut.
+    func removingPrompt(from command: String) -> String {
+        let trimmed = command.trimmingCharacters(in: .whitespaces)
+        guard isYNHRunCommand(trimmed),
+            let separatorRange = promptSeparatorRange(in: trimmed)
+        else { return command }
+
+        return trimmed[trimmed.startIndex..<separatorRange.lowerBound]
+            .trimmingCharacters(in: .whitespaces)
+    }
+
     /// Whether the command already carries a resume flag in any form.
     func containsResumeFlag(_ command: String) -> Bool {
         tokens(of: command).contains {

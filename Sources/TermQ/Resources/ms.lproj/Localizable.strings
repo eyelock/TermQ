@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Semak imbas…";
 "harnesses.launch.prompt" = "Gesaan";
 "harnesses.launch.prompt.placeholder" = "Gesaan pilihan untuk dihantar kepada ejen…";
+"harnesses.launch.resume" = "Sambung sesi sebelumnya";
+"harnesses.launch.resume.help" = "Menyambung sesi sebelumnya dan bukannya bermula semula. Claude hanya menyambung sesi yang dimulakan oleh kad ini, jadi kad baharu bermula semula; vendor lain menyambung sesi terkini dalam direktori kerja.";
 "harnesses.launch.button" = "Lancarkan";
 "harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
 "harnesses.launch.cancel" = "Batal";
@@ -1201,6 +1203,8 @@
 "harnesses.manifest.edit.description" = "Penerangan";
 "harnesses.manifest.edit.description.hint" = "Dipaparkan dalam senarai harness dan pengepala butiran. Biarkan kosong untuk ditinggalkan.";
 "harnesses.manifest.edit.save" = "Simpan Perubahan";
+"harnesses.layout.legacy %@" = "Menggunakan susun atur lama .ynh-plugin/, yang ditolak oleh YNH 0.14+. Jalankan: ynd migrate %@";
+"harnesses.layout.both" = "Mempunyai kedua-dua .agents/harness/ dan .ynh-plugin/, yang ditolak oleh YNH 0.14+. Buang direktori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";

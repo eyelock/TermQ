@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Огляд…";
 "harnesses.launch.prompt" = "Запит";
 "harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
+"harnesses.launch.resume" = "Відновити попередній сеанс";
+"harnesses.launch.resume.help" = "Продовжує попередній сеанс замість запуску з нуля. Claude продовжує лише сеанс, запущений цією карткою, тому нова картка починає з нуля; інші постачальники продовжують останній сеанс у робочому каталозі.";
 "harnesses.launch.button" = "Запустити";
 "harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
 "harnesses.launch.cancel" = "Скасувати";
@@ -1203,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Опис";
 "harnesses.manifest.edit.description.hint" = "Відображається у списку наборів і в заголовку деталей. Залиште порожнім, щоб не вказувати.";
 "harnesses.manifest.edit.save" = "Зберегти зміни";
+"harnesses.layout.legacy %@" = "Використовує застарілу структуру .ynh-plugin/, яку YNH 0.14+ відхиляє. Виконайте: ynd migrate %@";
+"harnesses.layout.both" = "Містить і .agents/harness/, і .ynh-plugin/, що YNH 0.14+ відхиляє. Видаліть каталог .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Коміт upstream змінився: %@ → %@";

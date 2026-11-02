@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Pregledaj…";
 "harnesses.launch.prompt" = "Upit";
 "harnesses.launch.prompt.placeholder" = "Neobavezni upit za agenta…";
+"harnesses.launch.resume" = "Nastavi prethodnu sesiju";
+"harnesses.launch.resume.help" = "Nastavlja prethodnu sesiju umjesto pokretanja iznova. Claude nastavlja samo sesiju koju je pokrenula ova kartica, pa nova kartica počinje iznova; ostali pružatelji nastavljaju najnoviju sesiju u radnom direktoriju.";
 "harnesses.launch.button" = "Pokreni";
 "harnesses.launch.help" = "Pokreni ovaj harness u novom terminalu";
 "harnesses.launch.cancel" = "Odustani";
@@ -1202,6 +1204,8 @@
 "harnesses.manifest.edit.description" = "Opis";
 "harnesses.manifest.edit.description.hint" = "Prikazano na popisu harnessa i u zaglavlju detalja. Ostavite prazno za izostavljanje.";
 "harnesses.manifest.edit.save" = "Spremi promjene";
+"harnesses.layout.legacy %@" = "Koristi stari raspored .ynh-plugin/, koji YNH 0.14+ odbija. Pokrenite: ynd migrate %@";
+"harnesses.layout.both" = "Ima i .agents/harness/ i .ynh-plugin/, što YNH 0.14+ odbija. Uklonite direktorij .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit promijenjen: %@ → %@";

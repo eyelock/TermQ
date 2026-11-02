@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 import XCTest
 
 @testable import TermQ
@@ -50,7 +51,7 @@ final class HarnessManifestEditorTests: XCTestCase {
         tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent("manifest-editor-test-\(UUID().uuidString)")
         try FileManager.default.createDirectory(
-            at: tempDir.appendingPathComponent(".ynh-plugin"),
+            at: tempDir.appendingPathComponent(".agents/harness"),
             withIntermediateDirectories: true
         )
     }
@@ -60,12 +61,12 @@ final class HarnessManifestEditorTests: XCTestCase {
     }
 
     private func writeManifest(_ json: String) throws {
-        let url = tempDir.appendingPathComponent(".ynh-plugin/plugin.json")
+        let url = tempDir.appendingPathComponent(".agents/harness/plugin.json")
         try json.write(to: url, atomically: true, encoding: .utf8)
     }
 
     private func readManifest() throws -> [String: Any] {
-        let url = tempDir.appendingPathComponent(".ynh-plugin/plugin.json")
+        let url = tempDir.appendingPathComponent(".agents/harness/plugin.json")
         let data = try Data(contentsOf: url)
         return (try JSONSerialization.jsonObject(with: data) as? [String: Any]) ?? [:]
     }
@@ -168,5 +169,65 @@ final class HarnessManifestEditorTests: XCTestCase {
         let manifest = try readManifest()
         XCTAssertEqual(manifest["version"] as? String, "1.0.0")
         XCTAssertEqual(manifest["default_vendor"] as? String, "codex")
+    }
+}
+
+// MARK: - Manifest layout (canonical vs legacy)
+
+final class HarnessManifestEditorLayoutTests: XCTestCase {
+    private var tempDir: URL!
+
+    override func setUpWithError() throws {
+        tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("manifest-editor-layout-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+    }
+
+    override func tearDownWithError() throws {
+        try? FileManager.default.removeItem(at: tempDir)
+    }
+
+    private func put(_ dir: String, version: String) throws {
+        let url = tempDir.appendingPathComponent(dir)
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        try Data(
+            #"{"name":"h","version":"\#(version)","default_vendor":"claude"}"#.utf8
+        ).write(to: url.appendingPathComponent("plugin.json"))
+    }
+
+    private let fields = HarnessManifestFields(description: "", defaultVendor: "claude", version: "9.9.9")
+
+    func test_canonical_readAndWrite() throws {
+        try put(".agents/harness", version: "1.0.0")
+        XCTAssertEqual(try HarnessManifestEditor.read(at: tempDir.path).version, "1.0.0")
+        XCTAssertEqual(HarnessManifestEditor.layout(at: tempDir.path), .canonical)
+        try HarnessManifestEditor.write(at: tempDir.path, fields: fields)
+        XCTAssertEqual(try HarnessManifestEditor.read(at: tempDir.path).version, "9.9.9")
+    }
+
+    func test_legacy_stillRead_flagged_andEditedInPlace() throws {
+        try put(".ynh-plugin", version: "1.0.0")
+        XCTAssertEqual(try HarnessManifestEditor.read(at: tempDir.path).version, "1.0.0")
+        XCTAssertEqual(HarnessManifestEditor.layout(at: tempDir.path), .legacy)
+        try HarnessManifestEditor.write(at: tempDir.path, fields: fields)
+        // Edited where it was found — no silent move, no new canonical dir.
+        let legacy = try Data(contentsOf: tempDir.appendingPathComponent(".ynh-plugin/plugin.json"))
+        XCTAssertTrue(String(decoding: legacy, as: UTF8.self).contains("9.9.9"))
+        XCTAssertFalse(
+            FileManager.default.fileExists(atPath: tempDir.appendingPathComponent(".agents").path))
+    }
+
+    func test_both_prefersCanonical_andFlagged() throws {
+        try put(".agents/harness", version: "2.0.0")
+        try put(".ynh-plugin", version: "1.0.0")
+        XCTAssertEqual(try HarnessManifestEditor.read(at: tempDir.path).version, "2.0.0")
+        XCTAssertEqual(HarnessManifestEditor.layout(at: tempDir.path), .both)
+        try HarnessManifestEditor.write(at: tempDir.path, fields: fields)
+        let legacy = try Data(contentsOf: tempDir.appendingPathComponent(".ynh-plugin/plugin.json"))
+        XCTAssertTrue(String(decoding: legacy, as: UTF8.self).contains("1.0.0"))
+    }
+
+    func test_missing_throwsFileNotFound() {
+        XCTAssertThrowsError(try HarnessManifestEditor.read(at: tempDir.path))
     }
 }

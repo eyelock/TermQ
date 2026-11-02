@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Prehľadávať…";
 "harnesses.launch.prompt" = "Výzva";
 "harnesses.launch.prompt.placeholder" = "Voliteľná výzva pre agenta…";
+"harnesses.launch.resume" = "Obnoviť predchádzajúcu reláciu";
+"harnesses.launch.resume.help" = "Naviaže na predchádzajúcu reláciu namiesto spustenia od začiatku. Claude naviaže iba na reláciu, ktorú spustila táto karta, takže nová karta začína od začiatku; ostatní poskytovatelia naväzujú na poslednú reláciu v pracovnom adresári.";
 "harnesses.launch.button" = "Spustiť";
 "harnesses.launch.help" = "Spustiť tento postroj v novom termináli";
 "harnesses.launch.cancel" = "Zrušiť";
@@ -1196,6 +1198,8 @@
 "harnesses.manifest.edit.description" = "Popis";
 "harnesses.manifest.edit.description.hint" = "Zobrazené v zozname setov a v záhlaví detailov. Ponechajte prázdne pre vynechanie.";
 "harnesses.manifest.edit.save" = "Uložiť zmeny";
+"harnesses.layout.legacy %@" = "Používa starý formát .ynh-plugin/, ktorý YNH 0.14+ odmieta. Spustite: ynd migrate %@";
+"harnesses.layout.both" = "Obsahuje .agents/harness/ aj .ynh-plugin/, čo YNH 0.14+ odmieta. Odstráňte adresár .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream sa zmenil: %@ → %@";

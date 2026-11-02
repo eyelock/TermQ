@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "เลือก…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
+"harnesses.launch.resume" = "เริ่มเซสชันก่อนหน้าต่อ";
+"harnesses.launch.resume.help" = "ดำเนินการต่อจากเซสชันก่อนหน้าแทนการเริ่มใหม่ Claude จะดำเนินการต่อเฉพาะเซสชันที่การ์ดนี้เริ่มไว้ ดังนั้นการ์ดใหม่จะเริ่มใหม่ ส่วนผู้ให้บริการรายอื่นจะดำเนินการต่อจากเซสชันล่าสุดในไดเรกทอรีทำงาน";
 "harnesses.launch.button" = "เปิด";
 "harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
 "harnesses.launch.cancel" = "ยกเลิก";
@@ -1203,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "คำอธิบาย";
 "harnesses.manifest.edit.description.hint" = "แสดงในรายการ harness และส่วนหัวรายละเอียด เว้นว่างเพื่อละเว้น";
 "harnesses.manifest.edit.save" = "บันทึกการเปลี่ยนแปลง";
+"harnesses.layout.legacy %@" = "ใช้โครงสร้าง .ynh-plugin/ แบบเก่า ซึ่ง YNH 0.14+ ปฏิเสธ รันคำสั่ง: ynd migrate %@";
+"harnesses.layout.both" = "มีทั้ง .agents/harness/ และ .ynh-plugin/ ซึ่ง YNH 0.14+ ปฏิเสธ ให้ลบไดเรกทอรี .ynh-plugin/";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";

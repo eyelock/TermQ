@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Αναζήτηση…";
 "harnesses.launch.prompt" = "Ερώτημα";
 "harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
+"harnesses.launch.resume" = "Συνέχιση προηγούμενης συνεδρίας";
+"harnesses.launch.resume.help" = "Συνεχίζει μια προηγούμενη συνεδρία αντί να ξεκινά από την αρχή. Το Claude συνεχίζει μόνο τη συνεδρία που ξεκίνησε αυτή η κάρτα, επομένως μια νέα κάρτα ξεκινά από την αρχή· οι άλλοι πάροχοι συνεχίζουν την πιο πρόσφατη συνεδρία στον φάκελο εργασίας.";
 "harnesses.launch.button" = "Εκκίνηση";
 "harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
 "harnesses.launch.cancel" = "Ακύρωση";
@@ -1196,6 +1198,8 @@
 "harnesses.manifest.edit.description" = "Περιγραφή";
 "harnesses.manifest.edit.description.hint" = "Εμφανίζεται στη λίστα harness και στην κεφαλίδα λεπτομερειών. Αφήστε κενό για παράλειψη.";
 "harnesses.manifest.edit.save" = "Αποθήκευση αλλαγών";
+"harnesses.layout.legacy %@" = "Χρησιμοποιεί την παλιά διάταξη .ynh-plugin/, την οποία το YNH 0.14+ απορρίπτει. Εκτελέστε: ynd migrate %@";
+"harnesses.layout.both" = "Έχει και το .agents/harness/ και το .ynh-plugin/, κάτι που το YNH 0.14+ απορρίπτει. Αφαιρέστε τον κατάλογο .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";

@@ -364,6 +364,14 @@ extension Strings {
         static func removeDelegateConfirmMessage(_ source: String) -> String {
             String(format: localized("harnesses.delegate.remove.confirm.message %@"), source)
         }
+        // Manifest layout (YNH 0.14+ refuses legacy / dual layouts)
+        static func layoutMessage(_ state: HarnessManifestLayout.State, path: String) -> String? {
+            switch state {
+            case .canonical: return nil
+            case .legacy: return String(format: localized("harnesses.layout.legacy %@"), path)
+            case .both: return localized("harnesses.layout.both")
+            }
+        }
         // Manifest editor
         static var editManifestMenu: String { localized("harnesses.manifest.edit.menu") }
         static var editManifestTitle: String { localized("harnesses.manifest.edit.title") }
@@ -388,6 +396,8 @@ extension Strings {
         static var launchWorkingDirectory: String { localized("harnesses.launch.working.directory") }
         static var launchBrowse: String { localized("harnesses.launch.browse") }
         static var launchPrompt: String { localized("harnesses.launch.prompt") }
+        static var launchResume: String { localized("harnesses.launch.resume") }
+        static var launchResumeHelp: String { localized("harnesses.launch.resume.help") }
         static var launchPromptPlaceholder: String { localized("harnesses.launch.prompt.placeholder") }
         static var launchButton: String { localized("harnesses.launch.button") }
         static var launchHelp: String { localized("harnesses.launch.help") }
