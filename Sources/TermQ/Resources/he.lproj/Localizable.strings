@@ -1026,6 +1026,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
+"marketplace.add.folder.placeholder" = "תיקייה בתוך המאגר (אופציונלי, ריק = הרמה העליונה)";
+"marketplace.add.import.copilot" = "ייבוא מ-Copilot CLI";
+"marketplace.add.import.copilot.help" = "הוספת ה-marketplaces שהוגדרו ב-GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "יובאו %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "רענן את כל ה-marketplace-ים";
 "marketplace.restore.defaults" = "שחזר ברירות מחדל";

@@ -1020,6 +1020,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Ramură, tag sau SHA commit (opțional)";
+"marketplace.add.folder.placeholder" = "Dosar în depozit (opțional, gol = nivelul superior)";
+"marketplace.add.import.copilot" = "Importă din Copilot CLI";
+"marketplace.add.import.copilot.help" = "Adaugă marketplace-urile configurate în GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importate: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Reîmprospătează toate marketplace-urile";
 "marketplace.restore.defaults" = "Restaurează valorile implicite";

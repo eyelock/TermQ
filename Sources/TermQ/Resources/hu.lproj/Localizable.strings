@@ -1026,6 +1026,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";
+"marketplace.add.folder.placeholder" = "Mappa a tárolón belül (nem kötelező, üres = legfelső szint)";
+"marketplace.add.import.copilot" = "Importálás a Copilot CLI-ből";
+"marketplace.add.import.copilot.help" = "A GitHub Copilot CLI-ben beállított marketplace-ek hozzáadása (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importálva: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Összes marketplace frissítése";
 "marketplace.restore.defaults" = "Alapértelmezések visszaállítása";

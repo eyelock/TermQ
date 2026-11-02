@@ -1027,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
+"marketplace.add.folder.placeholder" = "Mapp i repositoryt (valfritt, tomt = översta nivån)";
+"marketplace.add.import.copilot" = "Importera från Copilot CLI";
+"marketplace.add.import.copilot.help" = "Lägg till de marketplaces som är konfigurerade i GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld importerade";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Uppdatera alla marketplaces";
 "marketplace.restore.defaults" = "Återställ standardvärden";

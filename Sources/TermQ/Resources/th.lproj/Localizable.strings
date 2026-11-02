@@ -1027,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
+"marketplace.add.folder.placeholder" = "โฟลเดอร์ภายในรีโพซิทอรี (ไม่บังคับ, เว้นว่าง = ระดับบนสุด)";
+"marketplace.add.import.copilot" = "นำเข้าจาก Copilot CLI";
+"marketplace.add.import.copilot.help" = "เพิ่ม marketplace ที่กำหนดค่าไว้ใน GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "นำเข้าแล้ว %lld";
 "marketplace.add.section.ref" = "อ้างอิง";
 "marketplace.refresh.all.help" = "รีเฟรช Marketplace ทั้งหมด";
 "marketplace.restore.defaults" = "คืนค่าเริ่มต้น";

@@ -11,9 +11,12 @@ struct AddMarketplaceSheet: View {
     @State private var customVendor: MarketplaceVendor = .claude
     @State private var customName = ""
     @State private var customRef = ""
+    @State private var customFolder = ""
     @State private var localPath = ""
     @State private var localVendor: MarketplaceVendor = .claude
     @State private var localName = ""
+    @State private var localFolder = ""
+    @State private var importedCount: Int?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -43,7 +46,7 @@ struct AddMarketplaceSheet: View {
             case .local: localTab
             }
         }
-        .frame(width: 460, height: 400)
+        .frame(width: 460, height: 460)
     }
 
     // MARK: - Known seeds
@@ -91,6 +94,16 @@ struct AddMarketplaceSheet: View {
                 Button(Strings.Common.cancel) { dismiss() }
                     .keyboardShortcut(.cancelAction)
                 Spacer()
+                if let importedCount {
+                    Text(Strings.Marketplace.addImportedCopilot(importedCount))
+                        .font(.caption).foregroundColor(.secondary)
+                }
+                Button(Strings.Marketplace.addImportCopilot) {
+                    let found = CopilotMarketplaceImporter.load()
+                    found.forEach(onAdd)
+                    importedCount = found.count
+                }
+                .help(Strings.Marketplace.addImportCopilotHelp)
             }
             .padding()
         }
@@ -104,12 +117,9 @@ struct AddMarketplaceSheet: View {
                 Section {
                     TextField("https://github.com/owner/repo", text: $customURL)
                         .textFieldStyle(.roundedBorder)
-                        .onChange(of: customURL) { _, val in
-                            if customName.isEmpty {
-                                customName = Self.extractOrgRepo(from: val)
-                            }
-                        }
                     TextField(Strings.Marketplace.addRefPlaceholder, text: $customRef)
+                        .textFieldStyle(.roundedBorder)
+                    TextField(Strings.Marketplace.addFolderPlaceholder, text: $customFolder)
                         .textFieldStyle(.roundedBorder)
                 } header: {
                     Text(Strings.Marketplace.addSectionGitURL)
@@ -157,7 +167,9 @@ struct AddMarketplaceSheet: View {
                         ref: trimRef.isEmpty ? nil : trimRef,
                         plugins: [],
                         lastFetched: nil,
-                        fetchError: nil
+                        fetchError: nil,
+                        folder: Marketplace.normalizeFolder(customFolder),
+                        customName: name.isEmpty ? nil : name
                     )
                     onAdd(marketplace)
                     dismiss()
@@ -178,11 +190,6 @@ struct AddMarketplaceSheet: View {
                     HStack {
                         TextField(Strings.Marketplace.addLocalPathPlaceholder, text: $localPath)
                             .textFieldStyle(.roundedBorder)
-                            .onChange(of: localPath) { _, val in
-                                if localName.isEmpty {
-                                    localName = URL(fileURLWithPath: val).lastPathComponent
-                                }
-                            }
                         Button(Strings.Marketplace.addLocalBrowse) {
                             Task { @MainActor in
                                 let panel = NSOpenPanel()
@@ -193,12 +200,13 @@ struct AddMarketplaceSheet: View {
                                 let response = await panel.begin()
                                 if response == .OK, let url = panel.url {
                                     localPath = url.path
-                                    if localName.isEmpty { localName = url.lastPathComponent }
                                 }
                             }
                         }
                         .buttonStyle(.bordered)
                     }
+                    TextField(Strings.Marketplace.addFolderPlaceholder, text: $localFolder)
+                        .textFieldStyle(.roundedBorder)
                 } header: {
                     Text(Strings.Marketplace.addSectionLocalPath)
                 }
@@ -243,7 +251,9 @@ struct AddMarketplaceSheet: View {
                         ref: nil,
                         plugins: [],
                         lastFetched: nil,
-                        fetchError: nil
+                        fetchError: nil,
+                        folder: Marketplace.normalizeFolder(localFolder),
+                        customName: name.isEmpty ? nil : name
                     )
                     onAdd(marketplace)
                     dismiss()

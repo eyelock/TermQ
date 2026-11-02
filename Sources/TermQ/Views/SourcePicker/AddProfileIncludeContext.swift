@@ -59,7 +59,7 @@ final class AddProfileIncludeContext: SourcePickerContext {
 
     var libraryResolvedSource: (url: String, path: String?)? {
         guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
-        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url)
+        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
         return (resolved.url, resolved.path)
     }
 
@@ -193,7 +193,7 @@ private struct AddProfileIncludeLibraryView: View {
         return allEntries.filter {
             $0.plugin.name.lowercased().contains(query)
                 || ($0.plugin.description?.lowercased().contains(query) ?? false)
-                || $0.marketplace.name.lowercased().contains(query)
+                || $0.marketplace.displayName.lowercased().contains(query)
         }
     }
 
@@ -205,7 +205,7 @@ private struct AddProfileIncludeLibraryView: View {
                 if let desc = entry.plugin.description, !desc.isEmpty {
                     Text(desc).font(.caption).foregroundColor(.secondary).lineLimit(2)
                 }
-                Text(entry.marketplace.name)
+                Text(entry.marketplace.displayName)
                     .font(.caption2)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)
@@ -283,7 +283,7 @@ private struct AddProfileIncludeLibraryView: View {
             if let desc = plugin.description, !desc.isEmpty {
                 Text(desc).font(.caption).foregroundColor(.secondary)
             }
-            Text(marketplace.name)
+            Text(marketplace.displayName)
                 .font(.caption2)
                 .padding(.horizontal, 5)
                 .padding(.vertical, 1)

@@ -1026,6 +1026,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";
+"marketplace.add.folder.placeholder" = "रिपॉज़िटरी के भीतर फ़ोल्डर (वैकल्पिक, खाली = शीर्ष स्तर)";
+"marketplace.add.import.copilot" = "Copilot CLI से आयात करें";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI में कॉन्फ़िगर किए गए मार्केटप्लेस जोड़ें (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld आयात किए गए";
 "marketplace.add.section.ref" = "संदर्भ";
 "marketplace.refresh.all.help" = "सभी marketplace रिफ्रेश करें";
 "marketplace.restore.defaults" = "डिफ़ॉल्ट पुनर्स्थापित करें";

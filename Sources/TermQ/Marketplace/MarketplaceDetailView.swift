@@ -71,7 +71,7 @@ struct MarketplaceDetailView: View {
         HStack(alignment: .top, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
-                    Text(marketplace.name)
+                    Text(marketplace.displayName)
                         .font(.title3).fontWeight(.semibold)
                     vendorBadge
                 }

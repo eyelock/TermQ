@@ -274,7 +274,7 @@ struct HarnessIncludePicker: View {
     }
 
     private var resolvedSource: (url: String, path: String?) {
-        plugin.source.resolved(marketplaceURL: marketplace.url)
+        plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
     }
 
     // MARK: - Progress & success

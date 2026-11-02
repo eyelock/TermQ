@@ -1020,6 +1020,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
+"marketplace.add.folder.placeholder" = "儲存庫內的資料夾（選填，留空 = 最上層）";
+"marketplace.add.import.copilot" = "從 Copilot CLI 匯入";
+"marketplace.add.import.copilot.help" = "加入在 GitHub Copilot CLI 中設定的市集（~/.copilot/settings.json）";
+"marketplace.add.imported.copilot %lld" = "已匯入 %lld 個";
 "marketplace.add.section.ref" = "參照";
 "marketplace.refresh.all.help" = "重新整理所有 Marketplace";
 "marketplace.restore.defaults" = "還原預設值";

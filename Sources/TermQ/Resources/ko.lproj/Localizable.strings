@@ -1025,6 +1025,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "브랜치, 태그 또는 커밋 SHA (선택 사항)";
+"marketplace.add.folder.placeholder" = "저장소 내 폴더(선택 사항, 비워 두면 최상위)";
+"marketplace.add.import.copilot" = "Copilot CLI에서 가져오기";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI에 설정된 마켓플레이스를 추가합니다(~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld개 가져옴";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "모든 marketplace 새로고침";
 "marketplace.restore.defaults" = "기본값 복원";

@@ -95,7 +95,7 @@ final class AddIncludeContext: SourcePickerContext {
     }
 
     func existingMatch(for plugin: MarketplacePlugin, in marketplace: Marketplace) -> IncludeEditTarget? {
-        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url)
+        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
         return existingIncludes.first { target in
             IncludeKey(url: target.sourceURL, path: target.path)
                 .matches(url: resolved.url, path: resolved.path)
@@ -134,7 +134,7 @@ final class AddIncludeContext: SourcePickerContext {
     /// Resolved `(url, path)` for the currently-configuring plugin.
     var libraryResolvedSource: (url: String, path: String?)? {
         guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
-        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url)
+        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
         return (resolved.url, resolved.path)
     }
 
@@ -344,7 +344,7 @@ private struct AddIncludeLibraryBrowseView: View {
         return allEntries.filter {
             $0.plugin.name.lowercased().contains(query)
                 || ($0.plugin.description?.lowercased().contains(query) ?? false)
-                || $0.marketplace.name.lowercased().contains(query)
+                || $0.marketplace.displayName.lowercased().contains(query)
         }
     }
 
@@ -370,7 +370,7 @@ private struct AddIncludeLibraryBrowseView: View {
                 if let desc = entry.plugin.description, !desc.isEmpty {
                     Text(desc).font(.caption).foregroundColor(.secondary).lineLimit(2)
                 }
-                Text(entry.marketplace.name)
+                Text(entry.marketplace.displayName)
                     .font(.caption2)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)
@@ -552,7 +552,7 @@ private struct AddIncludeLibraryConfigureView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            Text(marketplace.name)
+            Text(marketplace.displayName)
                 .font(.caption2)
                 .padding(.horizontal, 5)
                 .padding(.vertical, 1)

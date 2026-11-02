@@ -1020,6 +1020,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
+"marketplace.add.folder.placeholder" = "Φάκελος μέσα στο αποθετήριο (προαιρετικό, κενό = ανώτατο επίπεδο)";
+"marketplace.add.import.copilot" = "Εισαγωγή από το Copilot CLI";
+"marketplace.add.import.copilot.help" = "Προσθήκη των marketplace που έχουν ρυθμιστεί στο GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Εισήχθησαν: %lld";
 "marketplace.add.section.ref" = "Αναφορά";
 "marketplace.refresh.all.help" = "Ανανέωση όλων των marketplace";
 "marketplace.restore.defaults" = "Επαναφορά προεπιλογών";

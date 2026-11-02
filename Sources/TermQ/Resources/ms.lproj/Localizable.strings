@@ -1025,6 +1025,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";
+"marketplace.add.folder.placeholder" = "Folder dalam repositori (pilihan, kosong = peringkat teratas)";
+"marketplace.add.import.copilot" = "Import daripada Copilot CLI";
+"marketplace.add.import.copilot.help" = "Tambah marketplace yang dikonfigurasikan dalam GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld diimport";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Muat semula semua marketplace";
 "marketplace.restore.defaults" = "Pulihkan lalai";

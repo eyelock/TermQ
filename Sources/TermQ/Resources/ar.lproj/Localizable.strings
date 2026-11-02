@@ -1020,6 +1020,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
+"marketplace.add.folder.placeholder" = "المجلد داخل المستودع (اختياري، فارغ = المستوى الأعلى)";
+"marketplace.add.import.copilot" = "استيراد من Copilot CLI";
+"marketplace.add.import.copilot.help" = "إضافة الأسواق (marketplaces) المهيأة في GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "تم استيراد %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "تحديث جميع الـ marketplace";
 "marketplace.restore.defaults" = "استعادة الافتراضيات";
