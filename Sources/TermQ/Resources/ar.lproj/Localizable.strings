@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "لا توجد قطع أثرية مدرجة لهذه الإضافة.";
 "marketplace.plugin.no.artifacts.hint" = "سيتم تضمين كامل محتوى الإضافة.";
 "marketplace.plugin.artifacts.unavailable %@" = "القطع الأثرية غير متاحة: %@";
+"marketplace.plugin.unsupported %@" = "نوع المحتوى غير مدعوم: %@. لا يمكن إضافته إلى الحزمة.";
 "marketplace.picker.step.artifacts" = "القطع الأثرية";
 "marketplace.picker.step.harness" = "الحزمة";
 "marketplace.picker.step.apply" = "تطبيق";

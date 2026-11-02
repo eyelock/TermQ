@@ -1062,6 +1062,7 @@
 "marketplace.plugin.no.artifacts" = "No artifacts enumerated for this plugin.";
 "marketplace.plugin.no.artifacts.hint" = "All plugin contents will be included.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artifacts unavailable: %@";
+"marketplace.plugin.unsupported %@" = "Unsupported content type: %@. This can't be added to a harness.";
 
 // MARK: - Harness Include Picker
 "marketplace.picker.step.artifacts" = "Artifacts";

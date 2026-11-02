@@ -914,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "Brak artefaktów dla tej wtyczki.";
 "marketplace.plugin.no.artifacts.hint" = "Cała zawartość wtyczki zostanie uwzględniona.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakty niedostępne: %@";
+"marketplace.plugin.unsupported %@" = "Nieobsługiwany typ zawartości: %@. Nie można go dodać do wiązki.";
 "marketplace.picker.step.artifacts" = "Artefakty";
 "marketplace.picker.step.harness" = "Wiązka";
 "marketplace.picker.step.apply" = "Zastosuj";

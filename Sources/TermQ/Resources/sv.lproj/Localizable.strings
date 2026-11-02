@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Inga artefakter listade för detta plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Allt plugininnehåll inkluderas.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakter ej tillgängliga: %@";
+"marketplace.plugin.unsupported %@" = "Innehållstypen stöds inte: %@. Den kan inte läggas till i ett harness.";
 "marketplace.picker.step.artifacts" = "Artefakter";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Tillämpa";

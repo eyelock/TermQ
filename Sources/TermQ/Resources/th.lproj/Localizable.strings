@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "ไม่มีอาร์ติแฟกต์ที่ระบุสำหรับปลั๊กอินนี้";
 "marketplace.plugin.no.artifacts.hint" = "เนื้อหาทั้งหมดของปลั๊กอินจะถูกรวมไว้";
 "marketplace.plugin.artifacts.unavailable %@" = "อาร์ติแฟกต์ไม่พร้อมใช้งาน: %@";
+"marketplace.plugin.unsupported %@" = "ไม่รองรับประเภทเนื้อหา: %@ ไม่สามารถเพิ่มลงใน Harness ได้";
 "marketplace.picker.step.artifacts" = "อาร์ติแฟกต์";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "ใช้งาน";

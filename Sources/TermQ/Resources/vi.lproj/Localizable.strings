@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Không có artefact nào được liệt kê cho tiện ích này.";
 "marketplace.plugin.no.artifacts.hint" = "Toàn bộ nội dung tiện ích sẽ được bao gồm.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefact không khả dụng: %@";
+"marketplace.plugin.unsupported %@" = "Loại nội dung không được hỗ trợ: %@. Không thể thêm vào Harness.";
 "marketplace.picker.step.artifacts" = "Artefact";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Áp dụng";

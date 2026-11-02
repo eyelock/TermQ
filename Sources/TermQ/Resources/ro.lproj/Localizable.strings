@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Niciun artefact enumerat pentru acest plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Tot conținutul pluginului va fi inclus.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefacte indisponibile: %@";
+"marketplace.plugin.unsupported %@" = "Tip de conținut neacceptat: %@. Nu poate fi adăugat la un harness.";
 "marketplace.picker.step.artifacts" = "Artefacte";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Aplică";

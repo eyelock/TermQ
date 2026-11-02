@@ -915,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Aucun artefact répertorié pour ce plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Tout le contenu du plugin sera inclus.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefacts indisponibles : %@";
+"marketplace.plugin.unsupported %@" = "Type de contenu non pris en charge : %@. Il ne peut pas être ajouté à un harnais.";
 "marketplace.picker.step.artifacts" = "Artefacts";
 "marketplace.picker.step.harness" = "Harnais";
 "marketplace.picker.step.apply" = "Appliquer";

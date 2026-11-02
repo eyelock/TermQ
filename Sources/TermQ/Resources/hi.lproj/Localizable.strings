@@ -915,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "इस प्लगइन के लिए कोई आर्टिफैक्ट सूचीबद्ध नहीं।";
 "marketplace.plugin.no.artifacts.hint" = "प्लगइन की सभी सामग्री शामिल की जाएगी।";
 "marketplace.plugin.artifacts.unavailable %@" = "आर्टिफैक्ट उपलब्ध नहीं: %@";
+"marketplace.plugin.unsupported %@" = "असमर्थित सामग्री प्रकार: %@। इसे Harness में नहीं जोड़ा जा सकता।";
 "marketplace.picker.step.artifacts" = "आर्टिफैक्ट";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "लागू करें";

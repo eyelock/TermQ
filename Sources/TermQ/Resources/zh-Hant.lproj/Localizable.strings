@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "此外掛程式沒有列出成品。";
 "marketplace.plugin.no.artifacts.hint" = "將包含外掛程式的所有內容。";
 "marketplace.plugin.artifacts.unavailable %@" = "成品無法使用：%@";
+"marketplace.plugin.unsupported %@" = "不支援的內容類型:%@。無法新增至 Harness。";
 "marketplace.picker.step.artifacts" = "成品";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "套用";

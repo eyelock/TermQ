@@ -152,7 +152,7 @@ struct AddMarketplaceSheet: View {
                     .keyboardShortcut(.cancelAction)
                 Spacer()
                 Button(Strings.Common.add) {
-                    let trimURL = customURL.trimmingCharacters(in: .whitespaces)
+                    let trimURL = Marketplace.normalizeRepoURL(customURL)
                     let orgRepo = Self.extractOrgRepo(from: trimURL)
                     let name = customName.trimmingCharacters(in: .whitespaces)
                     let owner = orgRepo.components(separatedBy: "/").first ?? ""

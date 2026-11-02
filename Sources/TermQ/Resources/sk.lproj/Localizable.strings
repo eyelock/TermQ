@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Pre tento plugin nie sú uvedené žiadne artefakty.";
 "marketplace.plugin.no.artifacts.hint" = "Bude zahrnutý celý obsah pluginu.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakty nedostupné: %@";
+"marketplace.plugin.unsupported %@" = "Nepodporovaný typ obsahu: %@. Nedá sa pridať do sady.";
 "marketplace.picker.step.artifacts" = "Artefakty";
 "marketplace.picker.step.harness" = "Sada";
 "marketplace.picker.step.apply" = "Použiť";

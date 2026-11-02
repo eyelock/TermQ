@@ -915,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "לא רשומים פריטים לתוסף זה.";
 "marketplace.plugin.no.artifacts.hint" = "כל תוכן התוסף ייכלל.";
 "marketplace.plugin.artifacts.unavailable %@" = "פריטים אינם זמינים: %@";
+"marketplace.plugin.unsupported %@" = "סוג תוכן לא נתמך: %@. לא ניתן להוסיף אותו ל-Harness.";
 "marketplace.picker.step.artifacts" = "פריטים";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "החל";

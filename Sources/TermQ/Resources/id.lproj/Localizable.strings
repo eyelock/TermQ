@@ -909,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Tidak ada artefak yang terdaftar untuk plugin ini.";
 "marketplace.plugin.no.artifacts.hint" = "Semua konten plugin akan disertakan.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefak tidak tersedia: %@";
+"marketplace.plugin.unsupported %@" = "Jenis konten tidak didukung: %@. Ini tidak dapat ditambahkan ke Harness.";
 "marketplace.picker.step.artifacts" = "Artefak";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Terapkan";

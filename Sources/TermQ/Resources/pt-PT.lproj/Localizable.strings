@@ -914,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "Nenhum artefacto listado para este plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Todo o conteúdo do plugin será incluído.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefactos indisponíveis: %@";
+"marketplace.plugin.unsupported %@" = "Tipo de conteúdo não suportado: %@. Não pode ser adicionado a um harness.";
 "marketplace.picker.step.artifacts" = "Artefactos";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Aplicar";

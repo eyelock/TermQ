@@ -916,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Za ta vtičnik ni navedenih artefaktov.";
 "marketplace.plugin.no.artifacts.hint" = "Vsa vsebina vtičnika bo vključena.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakti niso na voljo: %@";
+"marketplace.plugin.unsupported %@" = "Nepodprta vrsta vsebine: %@. Ni je mogoče dodati v harness.";
 "marketplace.picker.step.artifacts" = "Artefakti";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Uporabi";
