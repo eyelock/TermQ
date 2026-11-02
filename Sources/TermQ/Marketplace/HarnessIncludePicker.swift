@@ -415,7 +415,7 @@ struct HarnessIncludePicker: View {
                 harness: harness,
                 sourceURL: sourceURL,
                 path: sourcePath,
-                ref: (marketplace.ref?.isEmpty == false) ? marketplace.ref : nil,
+                ref: plugin.source.effectiveRef(marketplaceRef: marketplace.ref),
                 pick: pick
             ),
             ynhPath: ynhPath,

@@ -141,8 +141,8 @@ final class AddIncludeContext: SourcePickerContext {
     /// Effective ref for the configuring plugin — inherited from its
     /// marketplace.
     var libraryResolvedRef: String? {
-        guard case .configuring(_, let marketplace) = libraryStage else { return nil }
-        return marketplace.ref
+        guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
+        return plugin.source.effectiveRef(marketplaceRef: marketplace.ref)
     }
 
     func libraryCommandPreview() -> String {
@@ -559,15 +559,17 @@ private struct AddIncludeLibraryConfigureView: View {
                 .background(Color.blue.opacity(0.15))
                 .foregroundColor(.blue)
                 .clipShape(Capsule())
-            if let inheritedRef = marketplace.ref, !inheritedRef.isEmpty {
+            if let inheritedRef = plugin.source.effectiveRef(marketplaceRef: marketplace.ref) {
                 HStack(spacing: 6) {
                     Image(systemName: "pin.fill").imageScale(.small)
                     Text("Pinned to ")
                         .font(.caption)
                     Text(inheritedRef)
                         .font(.system(size: 11, design: .monospaced))
-                    Text("(inherited from marketplace)")
-                        .font(.caption2)
+                    if plugin.source.type.isRelative {
+                        Text("(inherited from marketplace)")
+                            .font(.caption2)
+                    }
                 }
                 .foregroundColor(.secondary)
             } else {

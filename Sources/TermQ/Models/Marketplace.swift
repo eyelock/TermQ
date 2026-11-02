@@ -122,11 +122,17 @@ struct PluginSourceSpec: Codable, Sendable {
     var type: PluginSourceType
     var url: String  // relative path ("./plugins/foo") or external URL
     var path: String?  // optional subdirectory within the source
+    /// Branch or tag the index pins this source to (external sources only).
+    var ref: String?
+    /// Exact commit the index pins this source to (external sources only). Wins over `ref`.
+    var sha: String?
 
-    init(type: PluginSourceType, url: String, path: String? = nil) {
+    init(type: PluginSourceType, url: String, path: String? = nil, ref: String? = nil, sha: String? = nil) {
         self.type = type
         self.url = url
         self.path = path
+        self.ref = ref
+        self.sha = sha
     }
 
     // The vendor marketplace.json `source` field may be a plain string (relative path)
@@ -139,6 +145,8 @@ struct PluginSourceSpec: Codable, Sendable {
             self.type = isRemote ? .url : .relative
             self.url = str
             self.path = nil
+            self.ref = nil
+            self.sha = nil
             return
         }
         // Object form from vendor JSON: {"source": "github", "url": "..."}
@@ -156,10 +164,24 @@ struct PluginSourceSpec: Codable, Sendable {
             self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
         }
         self.path = try? container.decode(String.self, forKey: .path)
+        self.ref = (try? container.decode(String.self, forKey: .ref)).flatMap { $0.isEmpty ? nil : $0 }
+        self.sha = (try? container.decode(String.self, forKey: .sha)).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     private enum RawSourceCodingKeys: String, CodingKey {
-        case source, type, url, path, repo
+        case source, type, url, path, repo, ref, sha
+    }
+
+    /// The commit or ref to check out for an external source: the exact `sha` if the index gives one.
+    var pin: String? { sha ?? ref }
+
+    /// The ref to hand to `ynh include add --ref`.
+    ///
+    /// A plugin inside the marketplace repo follows the marketplace's own ref. An external plugin lives in
+    /// a different repository, so only its own pin applies; the marketplace's ref must not leak onto it.
+    func effectiveRef(marketplaceRef: String?) -> String? {
+        let ref = (type.isRelative || url.hasPrefix("./")) ? marketplaceRef : pin
+        return (ref?.isEmpty == false) ? ref : nil
     }
 }
 

@@ -64,8 +64,8 @@ final class AddProfileIncludeContext: SourcePickerContext {
     }
 
     var libraryResolvedRef: String? {
-        guard case .configuring(_, let marketplace) = libraryStage else { return nil }
-        return marketplace.ref
+        guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
+        return plugin.source.effectiveRef(marketplaceRef: marketplace.ref)
     }
 
     func gitURLCommandPreview() -> String {

@@ -113,7 +113,7 @@ enum MarketplaceFetcher {
     /// A `version.txt` sentinel in the cache dir enables version-based invalidation: if
     /// `plugin.version` changes between refreshes the old clone is discarded and re-fetched.
     static func fetchSkills(for plugin: MarketplacePlugin) async throws -> [String] {
-        let cacheDir = pluginCacheURL(for: plugin.source.url)
+        let cacheDir = pluginCacheURL(for: plugin.source.url, pin: plugin.source.pin)
         let versionFile = cacheDir.appendingPathComponent(".termq-cache-version")
 
         // Validate existing cache: hit only if version file matches current plugin version
@@ -137,7 +137,7 @@ enum MarketplaceFetcher {
             cloneURL = "https://github.com/\(cloneURL)"
         }
 
-        try await clone(gitPath: gitPath, url: cloneURL, ref: nil, into: cacheDir)
+        try await clone(gitPath: gitPath, url: cloneURL, ref: source.pin, into: cacheDir)
 
         // Stamp the version so future fetches can detect staleness
         try? (plugin.version ?? "").write(to: versionFile, atomically: true, encoding: .utf8)
@@ -376,7 +376,7 @@ enum MarketplaceFetcher {
     /// Cache directory for an external-source plugin, keyed by a stable FNV-1a hash of its source URL.
     /// Swift's `hashValue` is randomised per-process (hash-flood protection), so we use FNV-1a
     /// which produces the same result across launches for the same input.
-    private static func pluginCacheURL(for sourceURL: String) -> URL {
+    private static func pluginCacheURL(for sourceURL: String, pin: String?) -> URL {
         guard
             let appSupport = FileManager.default.urls(
                 for: .applicationSupportDirectory, in: .userDomainMask
@@ -389,7 +389,7 @@ enum MarketplaceFetcher {
         return
             appSupport
             .appendingPathComponent("TermQ/marketplace-cache", isDirectory: true)
-            .appendingPathComponent(fnv1a64(sourceURL), isDirectory: true)
+            .appendingPathComponent(fnv1a64(pin.map { "\(sourceURL)@\($0)" } ?? sourceURL), isDirectory: true)
     }
 
     /// FNV-1a 64-bit hash — deterministic across processes, no external dependencies.

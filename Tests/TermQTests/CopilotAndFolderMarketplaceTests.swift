@@ -209,6 +209,41 @@ final class CopilotAndFolderMarketplaceTests: XCTestCase {
         XCTAssertEqual(picks, ["skills/ok"])
     }
 
+    // MARK: Pinned plugin sources
+
+    func test_pluginSource_decodesRefAndShaAndPrefersSha() throws {
+        let json =
+            #"{"source":"github","repo":"o/r","path":"p","ref":"v1.2.0","sha":"44594ff1f61b8c8ff3fd1a26dd6744655a9204dd"}"#
+        let spec = try JSONDecoder().decode(PluginSourceSpec.self, from: Data(json.utf8))
+        XCTAssertEqual(spec.ref, "v1.2.0")
+        XCTAssertEqual(spec.pin, "44594ff1f61b8c8ff3fd1a26dd6744655a9204dd")
+        let refOnly = try JSONDecoder().decode(
+            PluginSourceSpec.self, from: Data(#"{"source":"github","repo":"o/r","ref":"v1"}"#.utf8))
+        XCTAssertEqual(refOnly.pin, "v1")
+        let none = try JSONDecoder().decode(
+            PluginSourceSpec.self, from: Data(#"{"source":"github","repo":"o/r"}"#.utf8))
+        XCTAssertNil(none.pin)
+    }
+
+    func test_pluginSource_pinSurvivesPersistenceRoundTrip() throws {
+        let spec = PluginSourceSpec(type: .github, url: "https://github.com/o/r", ref: "v1", sha: "abc1234")
+        let back = try JSONDecoder().decode(PluginSourceSpec.self, from: try JSONEncoder().encode(spec))
+        XCTAssertEqual(back.ref, "v1")
+        XCTAssertEqual(back.sha, "abc1234")
+    }
+
+    func test_effectiveRef_marketplaceRefOnlyForRelativePlugins() {
+        let relative = PluginSourceSpec(type: .relative, url: "./plugins/x")
+        XCTAssertEqual(relative.effectiveRef(marketplaceRef: "main"), "main")
+        XCTAssertNil(relative.effectiveRef(marketplaceRef: nil))
+        XCTAssertNil(relative.effectiveRef(marketplaceRef: ""))
+        // An external plugin is a different repo: the marketplace's ref must not leak onto it.
+        let external = PluginSourceSpec(type: .github, url: "https://github.com/o/r", ref: "v1", sha: "abc1234")
+        XCTAssertEqual(external.effectiveRef(marketplaceRef: "main"), "abc1234")
+        let unpinned = PluginSourceSpec(type: .github, url: "https://github.com/o/r")
+        XCTAssertNil(unpinned.effectiveRef(marketplaceRef: "main"))
+    }
+
     func test_unsupportedState_roundTripsAndIsResolved() throws {
         let data = try JSONEncoder().encode(SkillsLoadState.unsupported("extensions"))
         XCTAssertEqual(try JSONDecoder().decode(SkillsLoadState.self, from: data), .unsupported("extensions"))
