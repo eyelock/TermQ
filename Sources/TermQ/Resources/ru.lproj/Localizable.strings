@@ -1018,6 +1018,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Ветка, тег или SHA коммита (необязательно)";
+"marketplace.add.folder.placeholder" = "Папка в репозитории (необязательно, пусто = верхний уровень)";
+"marketplace.add.import.copilot" = "Импортировать из Copilot CLI";
+"marketplace.add.import.copilot.help" = "Добавить маркетплейсы, настроенные в GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Импортировано: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Обновить все marketplace";
 "marketplace.restore.defaults" = "Восстановить по умолчанию";

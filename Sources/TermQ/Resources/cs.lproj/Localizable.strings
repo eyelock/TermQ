@@ -1018,6 +1018,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
+"marketplace.add.folder.placeholder" = "Složka v repozitáři (volitelné, prázdné = nejvyšší úroveň)";
+"marketplace.add.import.copilot" = "Importovat z Copilot CLI";
+"marketplace.add.import.copilot.help" = "Přidat marketplaces nakonfigurované v GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importováno: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Obnovit všechny marketplace";
 "marketplace.restore.defaults" = "Obnovit výchozí";

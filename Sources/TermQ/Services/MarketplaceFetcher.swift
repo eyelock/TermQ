@@ -43,38 +43,8 @@ enum MarketplaceFetcher {
     }
 
     private static func fetchLocal(marketplace: Marketplace) async throws -> Marketplace {
-        let folderPath =
-            marketplace.url.hasPrefix("file:///")
-            ? String(marketplace.url.dropFirst(7))
-            : marketplace.url
-        let folderURL = URL(fileURLWithPath: folderPath)
-
-        let indexRelPath = marketplace.vendor.indexPath
-        let indexURL = folderURL.appendingPathComponent(indexRelPath)
-        guard FileManager.default.fileExists(atPath: indexURL.path) else {
-            throw FetchError.indexNotFound(indexRelPath)
-        }
-        let indexData: Data
-        do { indexData = try Data(contentsOf: indexURL) } catch {
-            throw FetchError.indexMalformed(error.localizedDescription)
-        }
-        let raw: RawMarketplaceIndex
-        do {
-            raw = try JSONDecoder().decode(RawMarketplaceIndex.self, from: indexData)
-        } catch {
-            throw FetchError.indexMalformed(error.localizedDescription)
-        }
-
-        let plugins = raw.plugins.map { mapPlugin($0, cloneRoot: folderURL) }
-
-        var updated = marketplace
-        updated.name = raw.name ?? marketplace.name
-        updated.owner = raw.owner ?? marketplace.owner
-        if let desc = raw.description { updated.description = desc }
-        updated.plugins = plugins
-        updated.lastFetched = Date()
-        updated.fetchError = nil
-        return updated
+        let folderURL = URL(fileURLWithPath: marketplace.localPath)
+        return try parseIndex(in: folderURL, for: marketplace)
     }
 
     private static func fetchRemote(marketplace: Marketplace) async throws -> Marketplace {
@@ -83,17 +53,29 @@ enum MarketplaceFetcher {
             .appendingPathComponent("termq-mkt-\(UUID().uuidString)", isDirectory: true)
         defer { try? FileManager.default.removeItem(at: tempDir) }
 
-        // Clone
         try await clone(gitPath: gitPath, url: marketplace.url, ref: marketplace.ref, into: tempDir)
+        return try parseIndex(in: tempDir, for: marketplace)
+    }
 
-        // Parse index
-        let indexRelPath = marketplace.vendor.indexPath
-        let indexURL = tempDir.appendingPathComponent(indexRelPath)
-        guard FileManager.default.fileExists(atPath: indexURL.path) else {
-            throw FetchError.indexNotFound(indexRelPath)
+    /// Locate and parse the vendor index under `repoRoot[/folder]`, mapping its plugins.
+    /// Relative plugin sources resolve against the marketplace root (`repoRoot` + `folder`).
+    static func parseIndex(in repoRoot: URL, for marketplace: Marketplace) throws -> Marketplace {
+        var root = repoRoot
+        if let folder = marketplace.normalizedFolder {
+            root = repoRoot.appendingPathComponent(folder, isDirectory: true)
+        }
+
+        let candidates = marketplace.vendor.indexPaths
+        guard
+            let indexRelPath = candidates.first(where: {
+                FileManager.default.fileExists(atPath: root.appendingPathComponent($0).path)
+            })
+        else {
+            let shown = (marketplace.normalizedFolder.map { "\($0)/" } ?? "") + marketplace.vendor.indexPath
+            throw FetchError.indexNotFound(shown)
         }
         let indexData: Data
-        do { indexData = try Data(contentsOf: indexURL) } catch {
+        do { indexData = try Data(contentsOf: root.appendingPathComponent(indexRelPath)) } catch {
             throw FetchError.indexMalformed(error.localizedDescription)
         }
         let raw: RawMarketplaceIndex
@@ -103,16 +85,11 @@ enum MarketplaceFetcher {
             throw FetchError.indexMalformed(error.localizedDescription)
         }
 
-        // Map plugins
-        let plugins = raw.plugins.map { rawPlugin in
-            mapPlugin(rawPlugin, cloneRoot: tempDir)
-        }
-
         var updated = marketplace
         updated.name = raw.name ?? marketplace.name
         updated.owner = raw.owner ?? marketplace.owner
         if let desc = raw.description { updated.description = desc }
-        updated.plugins = plugins
+        updated.plugins = raw.plugins.map { mapPlugin($0, cloneRoot: root) }
         updated.lastFetched = Date()
         updated.fetchError = nil
         return updated

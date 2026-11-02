@@ -1025,6 +1025,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
+"marketplace.add.folder.placeholder" = "Thư mục trong kho lưu trữ (tùy chọn, để trống = cấp cao nhất)";
+"marketplace.add.import.copilot" = "Nhập từ Copilot CLI";
+"marketplace.add.import.copilot.help" = "Thêm các marketplace đã cấu hình trong GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Đã nhập %lld";
 "marketplace.add.section.ref" = "Tham chiếu";
 "marketplace.refresh.all.help" = "Làm mới tất cả marketplace";
 "marketplace.restore.defaults" = "Khôi phục mặc định";

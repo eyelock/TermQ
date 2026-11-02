@@ -1018,6 +1018,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
+"marketplace.add.folder.placeholder" = "リポジトリ内のフォルダ（任意、空欄 = 最上位）";
+"marketplace.add.import.copilot" = "Copilot CLI からインポート";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI で設定されているマーケットプレイスを追加します（~/.copilot/settings.json）";
+"marketplace.add.imported.copilot %lld" = "%lld 件をインポートしました";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "すべてのマーケットプレイスを更新";
 "marketplace.restore.defaults" = "デフォルトに戻す";

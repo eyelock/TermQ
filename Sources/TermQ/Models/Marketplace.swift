@@ -15,6 +15,35 @@ struct Marketplace: Codable, Identifiable, Sendable {
     var plugins: [MarketplacePlugin]
     var lastFetched: Date?
     var fetchError: String?
+    /// Optional subfolder of the repository (or local folder) that holds the marketplace index.
+    /// nil/blank → the top level. Relative plugin sources resolve against this folder.
+    var folder: String?
+    /// User-assigned label. Survives refreshes, which overwrite `name` with the index's own name.
+    var customName: String?
+
+    /// Name shown in the UI: the user's label, else the index name, else the short repo path.
+    var displayName: String {
+        if let custom = customName?.trimmingCharacters(in: .whitespaces), !custom.isEmpty { return custom }
+        if !name.isEmpty { return name }
+        if isLocal { return URL(fileURLWithPath: localPath).lastPathComponent }
+        return GitURLHelper.shortURL(url)
+    }
+
+    /// Filesystem path for a local marketplace (strips a `file://` prefix).
+    var localPath: String { url.hasPrefix("file:///") ? String(url.dropFirst(7)) : url }
+
+    /// `folder` with surrounding whitespace/slashes removed; nil when blank.
+    var normalizedFolder: String? { Self.normalizeFolder(folder) }
+
+    static func normalizeFolder(_ raw: String?) -> String? {
+        guard let raw else { return nil }
+        var trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.hasPrefix("./") { trimmed = String(trimmed.dropFirst(2)) }
+        trimmed = trimmed.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        // Refuse parent-directory segments so a folder can never escape the repository root.
+        if trimmed.split(separator: "/").contains("..") { return nil }
+        return trimmed.isEmpty ? nil : trimmed
+    }
 
     /// True when this marketplace points to a local folder rather than a remote Git repository.
     var isLocal: Bool { url.hasPrefix("/") || url.hasPrefix("file:///") }
@@ -32,19 +61,25 @@ struct Marketplace: Codable, Identifiable, Sendable {
 enum MarketplaceVendor: String, Codable, Sendable, CaseIterable {
     case claude
     case cursor
+    case copilot
 
     var displayName: String {
         switch self {
         case .claude: return "Claude"
         case .cursor: return "Cursor"
+        case .copilot: return "Copilot"
         }
     }
 
     /// Relative path to the marketplace index inside the cloned repo.
-    var indexPath: String {
+    var indexPath: String { indexPaths[0] }
+
+    /// Candidate index locations, in lookup order. Copilot CLI also reads the Claude layout.
+    var indexPaths: [String] {
         switch self {
-        case .claude: return ".claude-plugin/marketplace.json"
-        case .cursor: return ".cursor-plugin/marketplace.json"
+        case .claude: return [".claude-plugin/marketplace.json"]
+        case .cursor: return [".cursor-plugin/marketplace.json"]
+        case .copilot: return [".github/plugin/marketplace.json", ".claude-plugin/marketplace.json"]
         }
     }
 }
@@ -113,7 +148,7 @@ extension PluginSourceSpec {
     /// Relative-source plugins live inside the marketplace repo, so the correct
     /// source URL is the marketplace git URL, not the relative path stored in
     /// the plugin spec (which is meaningless as a standalone git URL to YNH).
-    func resolved(marketplaceURL: String) -> (url: String, path: String?) {
+    func resolved(marketplaceURL: String, folder: String? = nil) -> (url: String, path: String?) {
         // Also catch persisted entries where type was corrupted to .unknown due to
         // the "source" vs "type" key mismatch in the old decoder.
         guard type.isRelative || url.hasPrefix("./") else {
@@ -129,7 +164,10 @@ extension PluginSourceSpec {
             return (url, path)
         }
         let rawPath = url.hasPrefix("./") ? String(url.dropFirst(2)) : url
-        let fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
+        var fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
+        if let folder = Marketplace.normalizeFolder(folder) {
+            fullPath = fullPath.isEmpty ? folder : "\(folder)/\(fullPath)"
+        }
         return (marketplaceURL, fullPath.isEmpty ? nil : fullPath)
     }
 }

@@ -1025,6 +1025,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
+"marketplace.add.folder.placeholder" = "Depo içindeki klasör (isteğe bağlı, boş = üst düzey)";
+"marketplace.add.import.copilot" = "Copilot CLI'dan içe aktar";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI'da yapılandırılmış marketplace'leri ekle (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld içe aktarıldı";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Tüm marketplace'leri yenile";
 "marketplace.restore.defaults" = "Varsayılanlara geri yükle";

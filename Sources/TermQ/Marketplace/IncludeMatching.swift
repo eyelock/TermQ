@@ -41,7 +41,7 @@ enum IncludePluginLookup {
         let needlePath = (path?.isEmpty == true) ? nil : path
         for market in marketplaces {
             for plugin in market.plugins {
-                let resolved = plugin.source.resolved(marketplaceURL: market.url)
+                let resolved = plugin.source.resolved(marketplaceURL: market.url, folder: market.folder)
                 let foundURL = GitURLNormalizer.normalize(resolved.url)
                 let foundPath = (resolved.path?.isEmpty == true) ? nil : resolved.path
                 if foundURL == needleURL && foundPath == needlePath {

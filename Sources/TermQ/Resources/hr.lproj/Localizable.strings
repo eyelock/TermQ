@@ -1024,6 +1024,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";
+"marketplace.add.folder.placeholder" = "Mapa unutar repozitorija (neobavezno, prazno = najviša razina)";
+"marketplace.add.import.copilot" = "Uvezi iz Copilot CLI-ja";
+"marketplace.add.import.copilot.help" = "Dodaj marketplaceove konfigurirane u GitHub Copilot CLI-ju (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Uvezeno: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Osvježi sve marketplace-ove";
 "marketplace.restore.defaults" = "Vrati zadane vrijednosti";

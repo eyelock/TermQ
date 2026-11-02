@@ -34,6 +34,12 @@ extension Strings {
         static var addSectionVendor: String { localized("marketplace.add.section.vendor") }
         static var addSectionRef: String { localized("marketplace.add.section.ref") }
         static var addRefPlaceholder: String { localized("marketplace.add.ref.placeholder") }
+        static var addFolderPlaceholder: String { localized("marketplace.add.folder.placeholder") }
+        static var addImportCopilot: String { localized("marketplace.add.import.copilot") }
+        static var addImportCopilotHelp: String { localized("marketplace.add.import.copilot.help") }
+        static func addImportedCopilot(_ count: Int) -> String {
+            localized("marketplace.add.imported.copilot %lld", count)
+        }
         static func rowPinnedHelp(_ ref: String) -> String { localized("marketplace.row.pinned.help %@", ref) }
         static func detailLastFetched(_ rel: String) -> String {
             localized("marketplace.detail.last.fetched %@", rel)

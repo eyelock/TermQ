@@ -1024,6 +1024,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
+"marketplace.add.folder.placeholder" = "Kansio repositoriossa (valinnainen, tyhjä = ylin taso)";
+"marketplace.add.import.copilot" = "Tuo Copilot CLI:stä";
+"marketplace.add.import.copilot.help" = "Lisää GitHub Copilot CLI:ssä määritetyt marketplacet (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Tuotu: %lld";
 "marketplace.add.section.ref" = "Viite";
 "marketplace.refresh.all.help" = "Päivitä kaikki marketplacet";
 "marketplace.restore.defaults" = "Palauta oletukset";

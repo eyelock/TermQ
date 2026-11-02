@@ -1016,6 +1016,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"marketplace.add.folder.placeholder" = "Folder within the repository (optional, blank = top level)";
+"marketplace.add.import.copilot" = "Import from Copilot CLI";
+"marketplace.add.import.copilot.help" = "Add the marketplaces configured in GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Imported %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Refresh all marketplaces";
 "marketplace.restore.defaults" = "Restore Defaults";

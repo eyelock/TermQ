@@ -133,7 +133,12 @@ final class MarketplaceStore: ObservableObject {
     // MARK: - Mutations
 
     func add(_ marketplace: Marketplace) {
-        guard !marketplaces.contains(where: { $0.url == marketplace.url && $0.vendor == marketplace.vendor }) else {
+        guard
+            !marketplaces.contains(where: {
+                $0.url == marketplace.url && $0.vendor == marketplace.vendor
+                    && $0.normalizedFolder == marketplace.normalizedFolder
+            })
+        else {
             return
         }
         // Adding a known-default URL clears its tombstone so future seed checks treat it as present.
