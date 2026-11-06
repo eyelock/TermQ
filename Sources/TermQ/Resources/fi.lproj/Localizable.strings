@@ -1248,6 +1248,14 @@
 "harnesses.focus.save" = "Tallenna";
 "harnesses.focus.cancel" = "Peruuta";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Kopioi tarkennos";
+"harnesses.focus.paste.button %@" = "Liitä tarkennos ”%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Näytä tiedot";
+"harnesses.profile.details.hide" = "Piilota tiedot";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Lisää profiili";
 "harnesses.profile.add.title" = "Lisää profiili";

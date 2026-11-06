@@ -1242,6 +1242,14 @@
 "harnesses.focus.save" = "Desa";
 "harnesses.focus.cancel" = "Cancel·la";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Copia el focus";
+"harnesses.focus.paste.button %@" = "Enganxa el focus «%@»";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Mostra els detalls";
+"harnesses.profile.details.hide" = "Amaga els detalls";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Afegeix perfil";
 "harnesses.profile.add.title" = "Afegeix perfil";

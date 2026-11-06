@@ -266,6 +266,12 @@ extension Strings {
         static var focusAddButton: String { localized("harnesses.focus.add.confirm") }
         static var focusSaveButton: String { localized("harnesses.focus.save") }
         static var focusCancelButton: String { localized("harnesses.focus.cancel") }
+        static var copyFocusButton: String { localized("harnesses.focus.copy.button") }
+        static func pasteFocusButton(_ name: String) -> String {
+            localized("harnesses.focus.paste.button %@", name)
+        }
+        static var profileShowDetails: String { localized("harnesses.profile.details.show") }
+        static var profileHideDetails: String { localized("harnesses.profile.details.hide") }
 
         // Profile editor
         static var addProfileButton: String { localized("harnesses.profile.add.button") }

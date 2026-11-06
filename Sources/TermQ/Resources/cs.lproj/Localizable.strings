@@ -1242,6 +1242,14 @@
 "harnesses.focus.save" = "Uložit";
 "harnesses.focus.cancel" = "Zrušit";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Kopírovat fokus";
+"harnesses.focus.paste.button %@" = "Vložit fokus „%@“";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Zobrazit podrobnosti";
+"harnesses.profile.details.hide" = "Skrýt podrobnosti";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Přidat profil";
 "harnesses.profile.add.title" = "Přidat profil";

@@ -1248,6 +1248,14 @@
 "harnesses.focus.save" = "Mentés";
 "harnesses.focus.cancel" = "Mégse";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Fókusz másolása";
+"harnesses.focus.paste.button %@" = "Fókusz beillesztése: „%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Részletek megjelenítése";
+"harnesses.profile.details.hide" = "Részletek elrejtése";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Profil hozzáadása";
 "harnesses.profile.add.title" = "Profil hozzáadása";

@@ -1242,6 +1242,14 @@
 "harnesses.focus.save" = "儲存";
 "harnesses.focus.cancel" = "取消";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "複製焦點";
+"harnesses.focus.paste.button %@" = "貼上焦點「%@」";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "顯示詳細資料";
+"harnesses.profile.details.hide" = "隱藏詳細資料";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "新增設定檔";
 "harnesses.profile.add.title" = "新增設定檔";

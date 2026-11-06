@@ -1242,6 +1242,14 @@
 "harnesses.focus.save" = "Simpan";
 "harnesses.focus.cancel" = "Batal";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Salin Fokus";
+"harnesses.focus.paste.button %@" = "Tempel Fokus “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Tampilkan Detail";
+"harnesses.profile.details.hide" = "Sembunyikan Detail";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Tambah Profil";
 "harnesses.profile.add.title" = "Tambah Profil";
