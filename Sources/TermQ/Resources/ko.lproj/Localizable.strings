@@ -1258,6 +1258,14 @@
 "harnesses.focus.save" = "저장";
 "harnesses.focus.cancel" = "취소";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "포커스 복사";
+"harnesses.focus.paste.button %@" = "포커스 “%@” 붙여넣기";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "세부 정보 보기";
+"harnesses.profile.details.hide" = "세부 정보 숨기기";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "프로필 추가";
 "harnesses.profile.add.title" = "프로필 추가";

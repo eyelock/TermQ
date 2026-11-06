@@ -1253,6 +1253,14 @@
 "harnesses.focus.save" = "保存";
 "harnesses.focus.cancel" = "取消";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "复制焦点";
+"harnesses.focus.paste.button %@" = "粘贴焦点“%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "显示详细信息";
+"harnesses.profile.details.hide" = "隐藏详细信息";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "添加配置文件";
 "harnesses.profile.add.title" = "添加配置文件";

@@ -1251,6 +1251,14 @@
 "harnesses.focus.save" = "保存";
 "harnesses.focus.cancel" = "キャンセル";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "フォーカスをコピー";
+"harnesses.focus.paste.button %@" = "フォーカス「%@」をペースト";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "詳細を表示";
+"harnesses.profile.details.hide" = "詳細を非表示";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "プロファイルを追加";
 "harnesses.profile.add.title" = "プロファイルを追加";

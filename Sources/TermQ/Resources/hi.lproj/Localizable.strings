@@ -1257,6 +1257,14 @@
 "harnesses.focus.save" = "सहेजें";
 "harnesses.focus.cancel" = "रद्द करें";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "फ़ोकस कॉपी करें";
+"harnesses.focus.paste.button %@" = "फ़ोकस “%@” पेस्ट करें";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "विवरण दिखाएँ";
+"harnesses.profile.details.hide" = "विवरण छिपाएँ";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "प्रोफ़ाइल जोड़ें";
 "harnesses.profile.add.title" = "प्रोफ़ाइल जोड़ें";

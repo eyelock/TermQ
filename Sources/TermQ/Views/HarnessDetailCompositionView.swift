@@ -10,6 +10,9 @@ struct HarnessDetailCompositionView: View {
     var profileEditor: HarnessProfileEditor?
     var hookEditor: HarnessHookEditor?
 
+    @ObservedObject private var clipboard = HarnessClipboard.shared
+    @State private var expandedProfiles: Set<String> = []
+
     init(
         composition: HarnessComposition,
         harnessID: String,
@@ -231,21 +234,45 @@ struct HarnessDetailCompositionView: View {
 
     @ViewBuilder
     private func profileCard(_ name: String, _ profile: ComposedProfile) -> some View {
+        let isExpanded = expandedProfiles.contains(name)
+        let hasDetails = !profileSummary(profile).isEmpty
         HStack(alignment: .firstTextBaseline) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(name)
-                    .font(.system(size: 12, weight: .medium, design: .monospaced))
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(Color.secondary.opacity(0.15))
-                    .clipShape(Capsule())
+                HStack(spacing: 4) {
+                    if hasDetails {
+                        Button {
+                            toggleProfile(name)
+                        } label: {
+                            Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                                .font(.system(size: 10, weight: .semibold))
+                                .foregroundColor(.secondary)
+                                .frame(width: 12)
+                        }
+                        .buttonStyle(.borderless)
+                        .help(isExpanded ? Strings.Harnesses.profileHideDetails : Strings.Harnesses.profileShowDetails)
+                    }
+
+                    Text(name)
+                        .font(.system(size: 12, weight: .medium, design: .monospaced))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Color.secondary.opacity(0.15))
+                        .clipShape(Capsule())
+                        .onTapGesture { if hasDetails { toggleProfile(name) } }
+                }
 
                 let summary = profileSummary(profile)
                 if !summary.isEmpty {
                     Text(summary)
                         .font(.system(size: 10))
                         .foregroundColor(.secondary)
-                        .padding(.leading, 8)
+                        .padding(.leading, 24)
+                }
+
+                if isExpanded {
+                    HarnessProfileDetailsView(profile: profile)
+                        .padding(.leading, 24)
+                        .padding(.top, 2)
                 }
             }
 
@@ -281,6 +308,14 @@ struct HarnessDetailCompositionView: View {
         return parts.joined(separator: " · ")
     }
 
+    private func toggleProfile(_ name: String) {
+        if expandedProfiles.contains(name) {
+            expandedProfiles.remove(name)
+        } else {
+            expandedProfiles.insert(name)
+        }
+    }
+
     // MARK: - Focuses
 
     private func focusesSection(_ focuses: [String: ComposedFocus]?) -> some View {
@@ -299,16 +334,48 @@ struct HarnessDetailCompositionView: View {
             }
 
             if let editor = focusEditor {
-                Button {
-                    editor.requestAdd()
-                } label: {
-                    Label(Strings.Harnesses.addFocusButton, systemImage: "plus.circle")
-                        .font(.system(size: 12))
+                HStack(spacing: 16) {
+                    Button {
+                        editor.requestAdd()
+                    } label: {
+                        Label(Strings.Harnesses.addFocusButton, systemImage: "plus.circle")
+                            .font(.system(size: 12))
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.accentColor)
+
+                    if let copied = clipboard.focus {
+                        Button {
+                            pasteFocus(copied, editor: editor)
+                        } label: {
+                            Label(Strings.Harnesses.pasteFocusButton(copied.name), systemImage: "doc.on.clipboard")
+                                .font(.system(size: 12))
+                        }
+                        .buttonStyle(.borderless)
+                        .foregroundColor(.accentColor)
+                    }
                 }
-                .buttonStyle(.borderless)
-                .foregroundColor(.accentColor)
             }
         }
+        .contextMenu {
+            if let editor = focusEditor, let copied = clipboard.focus {
+                Button(Strings.Harnesses.pasteFocusButton(copied.name)) {
+                    pasteFocus(copied, editor: editor)
+                }
+            }
+        }
+    }
+
+    private func copyFocus(_ name: String, _ focus: ComposedFocus) {
+        clipboard.copy(
+            CopiedFocus(name: name, prompt: focus.prompt, profile: focus.profile, sourceHarnessID: harnessID)
+        )
+    }
+
+    private func pasteFocus(_ copied: CopiedFocus, editor: HarnessFocusEditor) {
+        editor.requestPaste(
+            .pasting(copied, availableProfiles: composition.profiles.keys.sorted())
+        )
     }
 
     @ViewBuilder
@@ -340,19 +407,7 @@ struct HarnessDetailCompositionView: View {
             if let editor = focusEditor {
                 Spacer()
                 Menu {
-                    Button(Strings.Harnesses.editFocusButton) {
-                        editor.requestEdit(
-                            FocusEditTarget(
-                                name: name, prompt: focus.prompt, profile: focus.profile
-                            ))
-                    }
-                    Divider()
-                    Button(Strings.Harnesses.removeFocusButton, role: .destructive) {
-                        editor.requestRemove(
-                            FocusEditTarget(
-                                name: name, prompt: focus.prompt, profile: focus.profile
-                            ))
-                    }
+                    focusMenuItems(name, focus, editor: editor)
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .font(.system(size: 13))
@@ -360,6 +415,39 @@ struct HarnessDetailCompositionView: View {
                 }
                 .menuStyle(.borderlessButton)
                 .fixedSize()
+            }
+        }
+        .contentShape(Rectangle())
+        .contextMenu {
+            focusMenuItems(name, focus, editor: focusEditor)
+        }
+    }
+
+    /// Items shared by a focus row's "…" menu and its right-click menu.
+    @ViewBuilder
+    private func focusMenuItems(_ name: String, _ focus: ComposedFocus, editor: HarnessFocusEditor?) -> some View {
+        Button(Strings.Harnesses.copyFocusButton) {
+            copyFocus(name, focus)
+        }
+        if let editor {
+            if let copied = clipboard.focus {
+                Button(Strings.Harnesses.pasteFocusButton(copied.name)) {
+                    pasteFocus(copied, editor: editor)
+                }
+            }
+            Divider()
+            Button(Strings.Harnesses.editFocusButton) {
+                editor.requestEdit(
+                    FocusEditTarget(
+                        name: name, prompt: focus.prompt, profile: focus.profile
+                    ))
+            }
+            Divider()
+            Button(Strings.Harnesses.removeFocusButton, role: .destructive) {
+                editor.requestRemove(
+                    FocusEditTarget(
+                        name: name, prompt: focus.prompt, profile: focus.profile
+                    ))
             }
         }
     }

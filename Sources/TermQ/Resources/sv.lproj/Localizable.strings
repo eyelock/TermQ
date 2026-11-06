@@ -1258,6 +1258,14 @@
 "harnesses.focus.save" = "Spara";
 "harnesses.focus.cancel" = "Avbryt";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Kopiera fokus";
+"harnesses.focus.paste.button %@" = "Klistra in fokus ”%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Visa detaljer";
+"harnesses.profile.details.hide" = "Dölj detaljer";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Lägg till profil";
 "harnesses.profile.add.title" = "Lägg till profil";

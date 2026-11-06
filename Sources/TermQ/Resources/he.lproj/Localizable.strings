@@ -1257,6 +1257,14 @@
 "harnesses.focus.save" = "שמור";
 "harnesses.focus.cancel" = "ביטול";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "העתק מיקוד";
+"harnesses.focus.paste.button %@" = "הדבק מיקוד “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "הצג פרטים";
+"harnesses.profile.details.hide" = "הסתר פרטים";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "הוסף פרופיל";
 "harnesses.profile.add.title" = "הוסף פרופיל";

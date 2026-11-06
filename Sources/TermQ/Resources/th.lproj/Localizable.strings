@@ -1258,6 +1258,14 @@
 "harnesses.focus.save" = "บันทึก";
 "harnesses.focus.cancel" = "ยกเลิก";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "คัดลอกโฟกัส";
+"harnesses.focus.paste.button %@" = "วางโฟกัส “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "แสดงรายละเอียด";
+"harnesses.profile.details.hide" = "ซ่อนรายละเอียด";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "เพิ่มโปรไฟล์";
 "harnesses.profile.add.title" = "เพิ่มโปรไฟล์";

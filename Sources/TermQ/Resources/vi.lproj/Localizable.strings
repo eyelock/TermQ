@@ -1259,6 +1259,14 @@
 "harnesses.focus.save" = "Lưu";
 "harnesses.focus.cancel" = "Hủy";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Sao chép tiêu điểm";
+"harnesses.focus.paste.button %@" = "Dán tiêu điểm “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Hiện chi tiết";
+"harnesses.profile.details.hide" = "Ẩn chi tiết";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Thêm hồ sơ";
 "harnesses.profile.add.title" = "Thêm hồ sơ";

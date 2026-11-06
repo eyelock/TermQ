@@ -13,6 +13,8 @@ final class HarnessFocusEditor: ObservableObject {
     @Published var editingTarget: FocusEditTarget?
     @Published var removalTarget: FocusEditTarget?
     @Published var isAddingFocus = false
+    /// Values to prefill the add sheet with (set when pasting a copied focus).
+    @Published private(set) var addPrefill: FocusEditTarget?
     @Published private(set) var isMutating = false
     @Published var errorMessage: String?
 
@@ -32,6 +34,15 @@ final class HarnessFocusEditor: ObservableObject {
 
     func requestAdd() {
         errorMessage = nil
+        addPrefill = nil
+        isAddingFocus = true
+    }
+
+    /// Opens the add sheet prefilled with a copied focus, so the name and
+    /// profile can be adjusted before it is written to this harness.
+    func requestPaste(_ prefill: FocusEditTarget) {
+        errorMessage = nil
+        addPrefill = prefill
         isAddingFocus = true
     }
 
@@ -57,6 +68,7 @@ final class HarnessFocusEditor: ObservableObject {
 
         if mutator.succeeded {
             isAddingFocus = false
+            addPrefill = nil
             await reloadDetail(harnessID: harnessID)
         } else {
             errorMessage = mutator.errorMessage
@@ -193,6 +205,12 @@ struct AddFocusSheet: View {
         }
         .padding(20)
         .frame(width: 440)
+        .onAppear {
+            guard let prefill = editor.addPrefill else { return }
+            nameText = prefill.name
+            promptText = prefill.prompt
+            selectedProfile = prefill.profile ?? ""
+        }
     }
 }
 

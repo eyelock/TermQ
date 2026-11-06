@@ -1258,6 +1258,14 @@
 "harnesses.focus.save" = "Kaydet";
 "harnesses.focus.cancel" = "İptal";
 
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Odağı kopyala";
+"harnesses.focus.paste.button %@" = "“%@” odağını yapıştır";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Ayrıntıları göster";
+"harnesses.profile.details.hide" = "Ayrıntıları gizle";
+
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Profil ekle";
 "harnesses.profile.add.title" = "Profil ekle";
