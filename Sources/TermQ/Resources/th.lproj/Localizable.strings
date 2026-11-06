@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "เลือก…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
+"harnesses.launch.resume" = "เริ่มเซสชันก่อนหน้าต่อ";
+"harnesses.launch.resume.help" = "ดำเนินการต่อจากเซสชันก่อนหน้าแทนการเริ่มใหม่ Claude จะดำเนินการต่อเฉพาะเซสชันที่การ์ดนี้เริ่มไว้ ดังนั้นการ์ดใหม่จะเริ่มใหม่ ส่วนผู้ให้บริการรายอื่นจะดำเนินการต่อจากเซสชันล่าสุดในไดเรกทอรีทำงาน";
 "harnesses.launch.button" = "เปิด";
 "harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
 "harnesses.launch.cancel" = "ยกเลิก";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "ไม่มีอาร์ติแฟกต์ที่ระบุสำหรับปลั๊กอินนี้";
 "marketplace.plugin.no.artifacts.hint" = "เนื้อหาทั้งหมดของปลั๊กอินจะถูกรวมไว้";
 "marketplace.plugin.artifacts.unavailable %@" = "อาร์ติแฟกต์ไม่พร้อมใช้งาน: %@";
+"marketplace.plugin.unsupported %@" = "ไม่รองรับประเภทเนื้อหา: %@ ไม่สามารถเพิ่มลงใน Harness ได้";
 "marketplace.picker.step.artifacts" = "อาร์ติแฟกต์";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "ใช้งาน";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";
+"marketplace.add.folder.placeholder" = "โฟลเดอร์ภายในรีโพซิทอรี (ไม่บังคับ, เว้นว่าง = ระดับบนสุด)";
+"marketplace.add.import.copilot" = "นำเข้าจาก Copilot CLI";
+"marketplace.add.import.copilot.help" = "เพิ่ม marketplace ที่กำหนดค่าไว้ใน GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "นำเข้าแล้ว %lld";
 "marketplace.add.section.ref" = "อ้างอิง";
 "marketplace.refresh.all.help" = "รีเฟรช Marketplace ทั้งหมด";
 "marketplace.restore.defaults" = "คืนค่าเริ่มต้น";
@@ -1199,6 +1206,8 @@
 "harnesses.manifest.edit.description" = "คำอธิบาย";
 "harnesses.manifest.edit.description.hint" = "แสดงในรายการ harness และส่วนหัวรายละเอียด เว้นว่างเพื่อละเว้น";
 "harnesses.manifest.edit.save" = "บันทึกการเปลี่ยนแปลง";
+"harnesses.layout.legacy %@" = "ใช้โครงสร้าง .ynh-plugin/ แบบเก่า ซึ่ง YNH 0.14+ ปฏิเสธ รันคำสั่ง: ynd migrate %@";
+"harnesses.layout.both" = "มีทั้ง .agents/harness/ และ .ynh-plugin/ ซึ่ง YNH 0.14+ ปฏิเสธ ให้ลบไดเรกทอรี .ynh-plugin/";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit เปลี่ยนแปลง: %@ → %@";

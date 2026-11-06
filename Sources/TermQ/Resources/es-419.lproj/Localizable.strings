@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Explorar…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt opcional para pasar al agente…";
+"harnesses.launch.resume" = "Reanudar la sesión anterior";
+"harnesses.launch.resume.help" = "Continúa una sesión anterior en lugar de empezar de cero. Claude solo continúa la sesión que inició esta tarjeta, por lo que una tarjeta nueva empieza de cero; otros proveedores continúan la sesión más reciente en el directorio de trabajo.";
 "harnesses.launch.button" = "Lanzar";
 "harnesses.launch.help" = "Lanzar este arnés en un nuevo terminal";
 "harnesses.launch.cancel" = "Cancelar";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "No hay artefactos enumerados para este plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Se incluirá todo el contenido del plugin.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefactos no disponibles: %@";
+"marketplace.plugin.unsupported %@" = "Tipo de contenido no compatible: %@. No se puede agregar a un harness.";
 "marketplace.picker.step.artifacts" = "Artefactos";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Aplicar";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Rama, etiqueta o SHA de commit (opcional)";
+"marketplace.add.folder.placeholder" = "Carpeta dentro del repositorio (opcional, vacío = nivel superior)";
+"marketplace.add.import.copilot" = "Importar desde Copilot CLI";
+"marketplace.add.import.copilot.help" = "Agrega los marketplaces configurados en GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importados: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Actualizar todos los marketplaces";
 "marketplace.restore.defaults" = "Restaurar predeterminados";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Descripción";
 "harnesses.manifest.edit.description.hint" = "Se muestra en la lista de harnesses y en el encabezado de detalle. Dejar vacío para omitir.";
 "harnesses.manifest.edit.save" = "Guardar cambios";
+"harnesses.layout.legacy %@" = "Usa el diseño heredado .ynh-plugin/, que YNH 0.14+ rechaza. Ejecuta: ynd migrate %@";
+"harnesses.layout.both" = "Tiene tanto .agents/harness/ como .ynh-plugin/, y YNH 0.14+ lo rechaza. Elimina el directorio .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificado: %@ → %@";

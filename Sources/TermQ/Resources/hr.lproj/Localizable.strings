@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Pregledaj…";
 "harnesses.launch.prompt" = "Upit";
 "harnesses.launch.prompt.placeholder" = "Neobavezni upit za agenta…";
+"harnesses.launch.resume" = "Nastavi prethodnu sesiju";
+"harnesses.launch.resume.help" = "Nastavlja prethodnu sesiju umjesto pokretanja iznova. Claude nastavlja samo sesiju koju je pokrenula ova kartica, pa nova kartica počinje iznova; ostali pružatelji nastavljaju najnoviju sesiju u radnom direktoriju.";
 "harnesses.launch.button" = "Pokreni";
 "harnesses.launch.help" = "Pokreni ovaj harness u novom terminalu";
 "harnesses.launch.cancel" = "Odustani";
@@ -913,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Nema navedenih artefakata za ovaj dodatak.";
 "marketplace.plugin.no.artifacts.hint" = "Sav sadržaj dodatka bit će uključen.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakti nisu dostupni: %@";
+"marketplace.plugin.unsupported %@" = "Nepodržana vrsta sadržaja: %@. Ne može se dodati u harness.";
 "marketplace.picker.step.artifacts" = "Artefakti";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Primijeni";
@@ -1024,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";
+"marketplace.add.folder.placeholder" = "Mapa unutar repozitorija (neobavezno, prazno = najviša razina)";
+"marketplace.add.import.copilot" = "Uvezi iz Copilot CLI-ja";
+"marketplace.add.import.copilot.help" = "Dodaj marketplaceove konfigurirane u GitHub Copilot CLI-ju (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Uvezeno: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Osvježi sve marketplace-ove";
 "marketplace.restore.defaults" = "Vrati zadane vrijednosti";
@@ -1198,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Opis";
 "harnesses.manifest.edit.description.hint" = "Prikazano na popisu harnessa i u zaglavlju detalja. Ostavite prazno za izostavljanje.";
 "harnesses.manifest.edit.save" = "Spremi promjene";
+"harnesses.layout.legacy %@" = "Koristi stari raspored .ynh-plugin/, koji YNH 0.14+ odbija. Pokrenite: ynd migrate %@";
+"harnesses.layout.both" = "Ima i .agents/harness/ i .ynh-plugin/, što YNH 0.14+ odbija. Uklonite direktorij .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit promijenjen: %@ → %@";

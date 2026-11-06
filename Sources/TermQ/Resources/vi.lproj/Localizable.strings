@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Duyệt…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
+"harnesses.launch.resume" = "Tiếp tục phiên trước";
+"harnesses.launch.resume.help" = "Tiếp tục phiên trước đó thay vì bắt đầu lại từ đầu. Claude chỉ tiếp tục phiên mà thẻ này đã bắt đầu, nên thẻ mới sẽ bắt đầu lại từ đầu; các nhà cung cấp khác tiếp tục phiên gần nhất trong thư mục làm việc.";
 "harnesses.launch.button" = "Khởi chạy";
 "harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
 "harnesses.launch.cancel" = "Hủy";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Không có artefact nào được liệt kê cho tiện ích này.";
 "marketplace.plugin.no.artifacts.hint" = "Toàn bộ nội dung tiện ích sẽ được bao gồm.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefact không khả dụng: %@";
+"marketplace.plugin.unsupported %@" = "Loại nội dung không được hỗ trợ: %@. Không thể thêm vào Harness.";
 "marketplace.picker.step.artifacts" = "Artefact";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Áp dụng";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";
+"marketplace.add.folder.placeholder" = "Thư mục trong kho lưu trữ (tùy chọn, để trống = cấp cao nhất)";
+"marketplace.add.import.copilot" = "Nhập từ Copilot CLI";
+"marketplace.add.import.copilot.help" = "Thêm các marketplace đã cấu hình trong GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Đã nhập %lld";
 "marketplace.add.section.ref" = "Tham chiếu";
 "marketplace.refresh.all.help" = "Làm mới tất cả marketplace";
 "marketplace.restore.defaults" = "Khôi phục mặc định";
@@ -1200,6 +1207,8 @@
 "harnesses.manifest.edit.description" = "Mô tả";
 "harnesses.manifest.edit.description.hint" = "Hiển thị trong danh sách harness và tiêu đề chi tiết. Để trống để bỏ qua.";
 "harnesses.manifest.edit.save" = "Lưu thay đổi";
+"harnesses.layout.legacy %@" = "Dùng bố cục cũ .ynh-plugin/, mà YNH 0.14+ từ chối. Chạy: ynd migrate %@";
+"harnesses.layout.both" = "Có cả .agents/harness/ và .ynh-plugin/, YNH 0.14+ từ chối điều này. Hãy xóa thư mục .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit đã thay đổi: %@ → %@";

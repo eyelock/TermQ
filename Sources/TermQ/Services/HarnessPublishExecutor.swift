@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 
 /// Outcome of a publish copy — rendered step-by-step in the progress sheet.
 struct HarnessPublishReport: Equatable, Sendable {
@@ -27,7 +28,8 @@ enum HarnessPublishExecutorError: Error, Equatable {
 /// temp-dir fixtures.
 ///
 /// Deletion safety model (the part that earns the tests):
-/// - *Dedicated harness dir* (non-root destination containing `.ynh-plugin/`):
+/// - *Dedicated harness dir* (non-root destination containing `.agents/harness/`
+///   or the legacy `.ynh-plugin/`):
 ///   update-mode may wholesale-replace the directory.
 /// - *Root or shared destination*: never wholesale-deleted. Each plan root
 ///   is replaced individually; stale roots are deleted only when the
@@ -104,9 +106,7 @@ enum HarnessPublishExecutor {
             }
         } else {
             // New entry: the destination must not already hold a harness.
-            if fileManager.fileExists(
-                atPath: destinationURL.appendingPathComponent(".ynh-plugin").path)
-            {
+            if HarnessManifestLayout.hasManifestDir(at: destinationURL.path) {
                 throw HarnessPublishExecutorError.destinationOccupied(destinationRelativePath)
             }
         }
@@ -138,10 +138,25 @@ enum HarnessPublishExecutor {
         // Install provenance never ships — same rule as `ynh fork`.
         let installedJSON =
             destinationURL
-            .appendingPathComponent(".ynh-plugin")
-            .appendingPathComponent("installed.json")
+            .appendingPathComponent(HarnessManifestLayout.canonicalDir)
+            .appendingPathComponent(HarnessManifestLayout.installedFile)
         if fileManager.fileExists(atPath: installedJSON.path) {
             try? fileManager.removeItem(at: installedJSON)
+        }
+
+        // Updating an entry that still has the legacy layout: the canonical
+        // manifest dir was just written, and YNH 0.14+ refuses a tree holding
+        // both, so retire the entry's own legacy dir. Only when the new
+        // manifest is really there, and only on an explicit update.
+        if isUpdate, copiedRoots.contains(HarnessManifestLayout.canonicalDir),
+            HarnessManifestLayout.resolve(at: destinationURL.path)?.state == .both
+        {
+            let legacy = destinationURL.appendingPathComponent(HarnessManifestLayout.legacyDir)
+            try? fileManager.removeItem(at: legacy)
+            deletedPaths.append(
+                destinationRelativePath == "."
+                    ? HarnessManifestLayout.legacyDir
+                    : "\(destinationRelativePath)/\(HarnessManifestLayout.legacyDir)")
         }
 
         if let renameTo, !renameTo.isEmpty {
@@ -158,12 +173,12 @@ enum HarnessPublishExecutor {
     // MARK: - Destination rules
 
     /// True when the directory exists purely to hold a harness — it has a
-    /// `.ynh-plugin/` marker, making wholesale replacement safe.
+    /// `.agents/harness/` (or legacy `.ynh-plugin/`) marker, making
+    /// wholesale replacement safe. Wholesale replacement removes the whole
+    /// destination directory, which is why callers never apply it to a
+    /// root/shared destination whose `.agents/` may hold other content.
     static func isDedicatedHarnessDir(_ url: URL) -> Bool {
-        var isDirectory: ObjCBool = false
-        let marker = url.appendingPathComponent(".ynh-plugin").path
-        return FileManager.default.fileExists(atPath: marker, isDirectory: &isDirectory)
-            && isDirectory.boolValue
+        HarnessManifestLayout.hasManifestDir(at: url.path)
     }
 
     private static func resolveDestination(relative: String, under worktreeURL: URL) throws -> URL {
@@ -211,8 +226,8 @@ enum HarnessPublishExecutor {
     private static func rewriteManifestName(at destinationURL: URL, to newName: String) throws {
         let manifestURL =
             destinationURL
-            .appendingPathComponent(".ynh-plugin")
-            .appendingPathComponent("plugin.json")
+            .appendingPathComponent(HarnessManifestLayout.canonicalDir)
+            .appendingPathComponent(HarnessManifestLayout.manifestFile)
         do {
             let data = try Data(contentsOf: manifestURL)
             guard var json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {

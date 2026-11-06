@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Tallózás…";
 "harnesses.launch.prompt" = "Kérdés";
 "harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
+"harnesses.launch.resume" = "Előző munkamenet folytatása";
+"harnesses.launch.resume.help" = "Egy korábbi munkamenetet folytat az újrakezdés helyett. A Claude csak azt a munkamenetet folytatja, amelyet ez a kártya indított, így egy új kártya elölről kezdi; a többi szolgáltató a munkakönyvtár legutóbbi munkamenetét folytatja.";
 "harnesses.launch.button" = "Indítás";
 "harnesses.launch.help" = "Harness indítása új terminálban";
 "harnesses.launch.cancel" = "Mégse";
@@ -913,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Ehhez a bővítményhez nincsenek összetevők felsorolva.";
 "marketplace.plugin.no.artifacts.hint" = "A bővítmény teljes tartalma bele lesz foglalva.";
 "marketplace.plugin.artifacts.unavailable %@" = "Az összetevők nem érhetők el: %@";
+"marketplace.plugin.unsupported %@" = "Nem támogatott tartalomtípus: %@. Nem adható hozzá a harnesshez.";
 "marketplace.picker.step.artifacts" = "Összetevők";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Alkalmazás";
@@ -1024,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";
+"marketplace.add.folder.placeholder" = "Mappa a tárolón belül (nem kötelező, üres = legfelső szint)";
+"marketplace.add.import.copilot" = "Importálás a Copilot CLI-ből";
+"marketplace.add.import.copilot.help" = "A GitHub Copilot CLI-ben beállított marketplace-ek hozzáadása (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importálva: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Összes marketplace frissítése";
 "marketplace.restore.defaults" = "Alapértelmezések visszaállítása";
@@ -1198,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Leírás";
 "harnesses.manifest.edit.description.hint" = "Megjelenik a harness listában és a részletek fejlécében. Hagyja üresen az elhagyáshoz.";
 "harnesses.manifest.edit.save" = "Változtatások mentése";
+"harnesses.layout.legacy %@" = "A régi .ynh-plugin/ elrendezést használja, amelyet a YNH 0.14+ elutasít. Futtassa: ynd migrate %@";
+"harnesses.layout.both" = "A .agents/harness/ és a .ynh-plugin/ is megvan, amit a YNH 0.14+ elutasít. Törölje a .ynh-plugin/ könyvtárat.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit megváltozott: %@ → %@";

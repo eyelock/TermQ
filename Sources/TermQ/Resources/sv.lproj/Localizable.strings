@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Bläddra…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valfri prompt att skicka till agenten…";
+"harnesses.launch.resume" = "Återuppta föregående session";
+"harnesses.launch.resume.help" = "Fortsätter en tidigare session i stället för att börja om. Claude fortsätter bara den session som det här kortet startade, så ett nytt kort börjar om; andra leverantörer fortsätter den senaste sessionen i arbetskatalogen.";
 "harnesses.launch.button" = "Starta";
 "harnesses.launch.help" = "Starta denna harness i en ny terminal";
 "harnesses.launch.cancel" = "Avbryt";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Inga artefakter listade för detta plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Allt plugininnehåll inkluderas.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakter ej tillgängliga: %@";
+"marketplace.plugin.unsupported %@" = "Innehållstypen stöds inte: %@. Den kan inte läggas till i ett harness.";
 "marketplace.picker.step.artifacts" = "Artefakter";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Tillämpa";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tagg eller commit-SHA (valfritt)";
+"marketplace.add.folder.placeholder" = "Mapp i repositoryt (valfritt, tomt = översta nivån)";
+"marketplace.add.import.copilot" = "Importera från Copilot CLI";
+"marketplace.add.import.copilot.help" = "Lägg till de marketplaces som är konfigurerade i GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld importerade";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Uppdatera alla marketplaces";
 "marketplace.restore.defaults" = "Återställ standardvärden";
@@ -1199,6 +1206,8 @@
 "harnesses.manifest.edit.description" = "Beskrivning";
 "harnesses.manifest.edit.description.hint" = "Visas i harness-listan och detaljrubriken. Lämna tomt för att utelämna.";
 "harnesses.manifest.edit.save" = "Spara ändringar";
+"harnesses.layout.legacy %@" = "Använder den gamla layouten .ynh-plugin/, som YNH 0.14+ avvisar. Kör: ynd migrate %@";
+"harnesses.layout.both" = "Har både .agents/harness/ och .ynh-plugin/, vilket YNH 0.14+ avvisar. Ta bort katalogen .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ändrad: %@ → %@";

@@ -71,7 +71,7 @@ struct MarketplaceDetailView: View {
         HStack(alignment: .top, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
-                    Text(marketplace.name)
+                    Text(marketplace.displayName)
                         .font(.title3).fontWeight(.semibold)
                     vendorBadge
                 }
@@ -178,10 +178,18 @@ struct MarketplaceDetailView: View {
             } else {
                 Image(systemName: "storefront")
                     .font(.system(size: 36)).foregroundColor(.secondary)
-                Text(Strings.Marketplace.detailEmpty)
-                    .font(.callout).foregroundColor(.secondary)
-                Text(Strings.Marketplace.detailEmptyHint)
-                    .font(.caption).foregroundColor(.secondary)
+                if let error = marketplace.fetchError {
+                    Text(error)
+                        .font(.callout).foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .textSelection(.enabled)
+                        .padding(.horizontal)
+                } else {
+                    Text(Strings.Marketplace.detailEmpty)
+                        .font(.callout).foregroundColor(.secondary)
+                    Text(Strings.Marketplace.detailEmptyHint)
+                        .font(.caption).foregroundColor(.secondary)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

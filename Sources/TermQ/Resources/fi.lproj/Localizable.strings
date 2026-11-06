@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Selaa…";
 "harnesses.launch.prompt" = "Kehote";
 "harnesses.launch.prompt.placeholder" = "Valinnainen kehote agentille…";
+"harnesses.launch.resume" = "Jatka edellistä istuntoa";
+"harnesses.launch.resume.help" = "Jatkaa aiempaa istuntoa sen sijaan, että aloittaisi alusta. Claude jatkaa vain istuntoa, jonka tämä kortti aloitti, joten uusi kortti aloittaa alusta; muut toimittajat jatkavat työhakemiston viimeisintä istuntoa.";
 "harnesses.launch.button" = "Käynnistä";
 "harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
 "harnesses.launch.cancel" = "Peruuta";
@@ -913,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Tälle laajennukselle ei ole lueteltu artefakteja.";
 "marketplace.plugin.no.artifacts.hint" = "Kaikki laajennuksen sisältö sisällytetään.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefaktit ei saatavilla: %@";
+"marketplace.plugin.unsupported %@" = "Sisältötyyppiä ei tueta: %@. Sitä ei voi lisätä harnessiin.";
 "marketplace.picker.step.artifacts" = "Artefaktit";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Käytä";
@@ -1024,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
+"marketplace.add.folder.placeholder" = "Kansio repositoriossa (valinnainen, tyhjä = ylin taso)";
+"marketplace.add.import.copilot" = "Tuo Copilot CLI:stä";
+"marketplace.add.import.copilot.help" = "Lisää GitHub Copilot CLI:ssä määritetyt marketplacet (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Tuotu: %lld";
 "marketplace.add.section.ref" = "Viite";
 "marketplace.refresh.all.help" = "Päivitä kaikki marketplacet";
 "marketplace.restore.defaults" = "Palauta oletukset";
@@ -1198,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Kuvaus";
 "harnesses.manifest.edit.description.hint" = "Näytetään harness-listassa ja yksityiskohtien otsikossa. Jätä tyhjäksi jättääksesi pois.";
 "harnesses.manifest.edit.save" = "Tallenna muutokset";
+"harnesses.layout.legacy %@" = "Käyttää vanhaa .ynh-plugin/-rakennetta, jonka YNH 0.14+ hylkää. Suorita: ynd migrate %@";
+"harnesses.layout.both" = "Sisältää sekä .agents/harness/ että .ynh-plugin/, minkä YNH 0.14+ hylkää. Poista .ynh-plugin/-hakemisto.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit muuttunut: %@ → %@";

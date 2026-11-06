@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 import XCTest
 
 @testable import TermQ
@@ -32,7 +33,7 @@ final class HarnessPublishExecutorTests: XCTestCase {
 
     private func writeSourceManifest(name: String = "demo") throws {
         try write(
-            ".ynh-plugin/plugin.json", in: sourceDir,
+            ".agents/harness/plugin.json", in: sourceDir,
             contents: #"{"name":"\#(name)","version":"0.1.0","default_vendor":"claude"}"#)
     }
 
@@ -57,14 +58,14 @@ final class HarnessPublishExecutorTests: XCTestCase {
         try write("tools/hooks/guard.sh", in: sourceDir)
 
         let report = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "skills/mine", "tools/hooks/guard.sh"]),
+            plan: makePlan(files: [".agents/harness", "skills/mine", "tools/hooks/guard.sh"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: false
         )
 
-        XCTAssertEqual(report.copiedRoots, [".ynh-plugin", "skills/mine", "tools/hooks/guard.sh"])
-        XCTAssertTrue(exists("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir))
+        XCTAssertEqual(report.copiedRoots, [".agents/harness", "skills/mine", "tools/hooks/guard.sh"])
+        XCTAssertTrue(exists("ynh/demo/.agents/harness/plugin.json", in: worktreeDir))
         XCTAssertTrue(exists("ynh/demo/skills/mine/SKILL.md", in: worktreeDir))
         XCTAssertTrue(exists("ynh/demo/tools/hooks/guard.sh", in: worktreeDir))
         XCTAssertTrue(report.deletedPaths.isEmpty)
@@ -72,11 +73,11 @@ final class HarnessPublishExecutorTests: XCTestCase {
 
     func test_newEntry_existingHarnessAtDestination_throws() throws {
         try writeSourceManifest()
-        try write("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir)
+        try write("ynh/demo/.agents/harness/plugin.json", in: worktreeDir)
 
         XCTAssertThrowsError(
             try HarnessPublishExecutor.execute(
-                plan: makePlan(files: [".ynh-plugin"]),
+                plan: makePlan(files: [".agents/harness"]),
                 worktreePath: worktreeDir.path,
                 destinationRelativePath: "ynh/demo",
                 isUpdate: false
@@ -93,7 +94,7 @@ final class HarnessPublishExecutorTests: XCTestCase {
         for bad in ["../outside", "/absolute"] {
             XCTAssertThrowsError(
                 try HarnessPublishExecutor.execute(
-                    plan: makePlan(files: [".ynh-plugin"]),
+                    plan: makePlan(files: [".agents/harness"]),
                     worktreePath: worktreeDir.path,
                     destinationRelativePath: bad,
                     isUpdate: false
@@ -111,13 +112,13 @@ final class HarnessPublishExecutorTests: XCTestCase {
 
     func test_copy_skipsJunkAtAnyDepth_andStripsInstalledJSON() throws {
         try writeSourceManifest()
-        try write(".ynh-plugin/installed.json", in: sourceDir)
+        try write(".agents/harness/installed.json", in: sourceDir)
         try write("skills/mine/SKILL.md", in: sourceDir)
         try write("skills/mine/node_modules/dep/index.js", in: sourceDir)
         try write("skills/mine/.DS_Store", in: sourceDir)
 
         _ = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "skills/mine"]),
+            plan: makePlan(files: [".agents/harness", "skills/mine"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: false
@@ -126,8 +127,8 @@ final class HarnessPublishExecutorTests: XCTestCase {
         XCTAssertTrue(exists("ynh/demo/skills/mine/SKILL.md", in: worktreeDir))
         XCTAssertFalse(exists("ynh/demo/skills/mine/node_modules", in: worktreeDir))
         XCTAssertFalse(exists("ynh/demo/skills/mine/.DS_Store", in: worktreeDir))
-        XCTAssertFalse(exists("ynh/demo/.ynh-plugin/installed.json", in: worktreeDir))
-        XCTAssertTrue(exists("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir))
+        XCTAssertFalse(exists("ynh/demo/.agents/harness/installed.json", in: worktreeDir))
+        XCTAssertTrue(exists("ynh/demo/.agents/harness/plugin.json", in: worktreeDir))
     }
 
     func test_copy_preservesExecutablePermissions() throws {
@@ -138,7 +139,7 @@ final class HarnessPublishExecutorTests: XCTestCase {
             ofItemAtPath: sourceDir.appendingPathComponent("tools/guard.sh").path)
 
         _ = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "tools/guard.sh"]),
+            plan: makePlan(files: [".agents/harness", "tools/guard.sh"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: false
@@ -155,11 +156,11 @@ final class HarnessPublishExecutorTests: XCTestCase {
         try writeSourceManifest()
         try write("skills/mine/SKILL.md", in: sourceDir)
         // Existing entry has a file the source no longer ships.
-        try write("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir)
+        try write("ynh/demo/.agents/harness/plugin.json", in: worktreeDir)
         try write("ynh/demo/skills/obsolete/SKILL.md", in: worktreeDir)
 
         let report = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "skills/mine"]),
+            plan: makePlan(files: [".agents/harness", "skills/mine"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: true
@@ -177,15 +178,15 @@ final class HarnessPublishExecutorTests: XCTestCase {
         try write("skills/mine/SKILL.md", in: sourceDir)
         // The worktree root holds the host project AND the embedded harness.
         try write("services/api/main.go", in: worktreeDir)
-        try write(".ynh-plugin/plugin.json", in: worktreeDir)
+        try write(".agents/harness/plugin.json", in: worktreeDir)
         try write("skills/old/SKILL.md", in: worktreeDir)
 
         let report = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "skills/mine"]),
+            plan: makePlan(files: [".agents/harness", "skills/mine"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: ".",
             isUpdate: true,
-            existingFileRoots: [".ynh-plugin", "skills/old"]
+            existingFileRoots: [".agents/harness", "skills/old"]
         )
 
         // Host project untouched; stale harness root deleted; new root copied.
@@ -198,11 +199,11 @@ final class HarnessPublishExecutorTests: XCTestCase {
 
     func test_update_rootDestination_unknownExistingSet_skipsDeletionsWithWarning() throws {
         try writeSourceManifest()
-        try write(".ynh-plugin/plugin.json", in: worktreeDir)
+        try write(".agents/harness/plugin.json", in: worktreeDir)
         try write("skills/old/SKILL.md", in: worktreeDir)
 
         let report = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin"]),
+            plan: makePlan(files: [".agents/harness"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: ".",
             isUpdate: true,
@@ -218,12 +219,12 @@ final class HarnessPublishExecutorTests: XCTestCase {
         try writeSourceManifest()
         try write("skills/mine/SKILL.md", in: sourceDir)
         // Destination's copy of the same root has an extra nested file.
-        try write("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir)
+        try write("ynh/demo/.agents/harness/plugin.json", in: worktreeDir)
         try write("ynh/demo/skills/mine/SKILL.md", in: worktreeDir)
         try write("ynh/demo/skills/mine/references/stale.md", in: worktreeDir)
 
         _ = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin", "skills/mine"]),
+            plan: makePlan(files: [".agents/harness", "skills/mine"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: true
@@ -233,17 +234,135 @@ final class HarnessPublishExecutorTests: XCTestCase {
         XCTAssertFalse(exists("ynh/demo/skills/mine/references/stale.md", in: worktreeDir))
     }
 
+    // MARK: - Manifest layout
+
+    func test_publish_writesCanonicalDir_neverLegacy() throws {
+        try writeSourceManifest()
+        _ = try HarnessPublishExecutor.execute(
+            plan: makePlan(files: [".agents/harness"]),
+            worktreePath: worktreeDir.path,
+            destinationRelativePath: "ynh/demo",
+            isUpdate: false
+        )
+        XCTAssertTrue(exists("ynh/demo/.agents/harness/plugin.json", in: worktreeDir))
+        XCTAssertFalse(exists("ynh/demo/.ynh-plugin", in: worktreeDir))
+    }
+
+    func test_newEntry_legacyHarnessAtDestination_throws() throws {
+        try writeSourceManifest()
+        try write("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir)
+        XCTAssertThrowsError(
+            try HarnessPublishExecutor.execute(
+                plan: makePlan(files: [".agents/harness"]),
+                worktreePath: worktreeDir.path,
+                destinationRelativePath: "ynh/demo",
+                isUpdate: false
+            )
+        ) { error in
+            guard case HarnessPublishExecutorError.destinationOccupied = error else {
+                return XCTFail("expected destinationOccupied, got \(error)")
+            }
+        }
+    }
+
+    func test_dedicatedHarnessDir_acceptsEitherLayout() throws {
+        try write("a/.agents/harness/plugin.json", in: worktreeDir)
+        try write("b/.ynh-plugin/plugin.json", in: worktreeDir)
+        try write("c/.agents/skills/x/SKILL.md", in: worktreeDir)
+        XCTAssertTrue(
+            HarnessPublishExecutor.isDedicatedHarnessDir(worktreeDir.appendingPathComponent("a")))
+        XCTAssertTrue(
+            HarnessPublishExecutor.isDedicatedHarnessDir(worktreeDir.appendingPathComponent("b")))
+        // `.agents/` alone (Codex content) is not a harness marker.
+        XCTAssertFalse(
+            HarnessPublishExecutor.isDedicatedHarnessDir(worktreeDir.appendingPathComponent("c")))
+    }
+
+    func test_update_legacyDedicatedDestination_replacedWithCanonical() throws {
+        try writeSourceManifest()
+        try write("ynh/demo/.ynh-plugin/plugin.json", in: worktreeDir)
+
+        _ = try HarnessPublishExecutor.execute(
+            plan: makePlan(files: [".agents/harness"]),
+            worktreePath: worktreeDir.path,
+            destinationRelativePath: "ynh/demo",
+            isUpdate: true
+        )
+        XCTAssertTrue(exists("ynh/demo/.agents/harness/plugin.json", in: worktreeDir))
+        XCTAssertFalse(exists("ynh/demo/.ynh-plugin", in: worktreeDir))
+    }
+
+    func test_update_legacyRootDestination_retiresLegacyDir_keepsOtherAgentsContent() throws {
+        try writeSourceManifest()
+        try write(".ynh-plugin/plugin.json", in: worktreeDir)
+        try write(".agents/skills/codex/SKILL.md", in: worktreeDir)
+        try write("services/api/main.go", in: worktreeDir)
+
+        let report = try HarnessPublishExecutor.execute(
+            plan: makePlan(files: [".agents/harness"]),
+            worktreePath: worktreeDir.path,
+            destinationRelativePath: ".",
+            isUpdate: true,
+            existingFileRoots: nil
+        )
+        XCTAssertTrue(exists(".agents/harness/plugin.json", in: worktreeDir))
+        XCTAssertFalse(exists(".ynh-plugin", in: worktreeDir))
+        XCTAssertTrue(exists(".agents/skills/codex/SKILL.md", in: worktreeDir))
+        XCTAssertTrue(exists("services/api/main.go", in: worktreeDir))
+        XCTAssertTrue(report.deletedPaths.contains(".ynh-plugin"))
+    }
+
+    func test_update_rootDestination_replacingHarness_leavesSiblingAgentsContentUntouched() throws {
+        try writeSourceManifest()
+        try write(".agents/harness/plugin.json", in: worktreeDir, contents: "old")
+        try write(".agents/skills/codex/SKILL.md", in: worktreeDir)
+        try write(".agents/plugins/p/plugin.json", in: worktreeDir)
+
+        _ = try HarnessPublishExecutor.execute(
+            plan: makePlan(files: [".agents/harness"]),
+            worktreePath: worktreeDir.path,
+            destinationRelativePath: ".",
+            isUpdate: true,
+            existingFileRoots: [".agents/harness"]
+        )
+        XCTAssertNotEqual(
+            try String(
+                contentsOf: worktreeDir.appendingPathComponent(".agents/harness/plugin.json"),
+                encoding: .utf8), "old")
+        XCTAssertTrue(exists(".agents/skills/codex/SKILL.md", in: worktreeDir))
+        XCTAssertTrue(exists(".agents/plugins/p/plugin.json", in: worktreeDir))
+    }
+
+    func test_update_rootDestination_sourceSkillUnderAgents_keepsDestinationsOtherSkills() throws {
+        // The planner emits `.agents/skills/<name>` roots, so publishing the
+        // source's own skill must not take the destination's Codex skill with it.
+        try writeSourceManifest()
+        try write(".agents/skills/mine/SKILL.md", in: sourceDir, contents: "new")
+        try write(".agents/harness/plugin.json", in: worktreeDir, contents: "old")
+        try write(".agents/skills/codex/SKILL.md", in: worktreeDir)
+
+        _ = try HarnessPublishExecutor.execute(
+            plan: makePlan(files: [".agents/harness", ".agents/skills/mine"]),
+            worktreePath: worktreeDir.path,
+            destinationRelativePath: ".",
+            isUpdate: true,
+            existingFileRoots: [".agents/harness"]
+        )
+        XCTAssertTrue(exists(".agents/skills/mine/SKILL.md", in: worktreeDir))
+        XCTAssertTrue(exists(".agents/skills/codex/SKILL.md", in: worktreeDir))
+    }
+
     // MARK: - Rename
 
     func test_rename_rewritesManifestName_preservingOtherKeys() throws {
         try write(
-            ".ynh-plugin/plugin.json", in: sourceDir,
+            ".agents/harness/plugin.json", in: sourceDir,
             contents:
                 #"{"$schema":"s","name":"demo","version":"0.2.0","default_vendor":"claude","description":"d"}"#
         )
 
         _ = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin"]),
+            plan: makePlan(files: [".agents/harness"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/renamed",
             renameTo: "renamed",
@@ -251,7 +370,7 @@ final class HarnessPublishExecutorTests: XCTestCase {
         )
 
         let data = try Data(
-            contentsOf: worktreeDir.appendingPathComponent("ynh/renamed/.ynh-plugin/plugin.json"))
+            contentsOf: worktreeDir.appendingPathComponent("ynh/renamed/.agents/harness/plugin.json"))
         let json = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
         XCTAssertEqual(json["name"] as? String, "renamed")
         XCTAssertEqual(json["version"] as? String, "0.2.0")
@@ -262,17 +381,17 @@ final class HarnessPublishExecutorTests: XCTestCase {
     func test_noRename_manifestCopiedByteIdentical() throws {
         let original =
             #"{"$schema":"s","name":"demo","version":"0.1.0","default_vendor":"claude"}"#
-        try write(".ynh-plugin/plugin.json", in: sourceDir, contents: original)
+        try write(".agents/harness/plugin.json", in: sourceDir, contents: original)
 
         _ = try HarnessPublishExecutor.execute(
-            plan: makePlan(files: [".ynh-plugin"]),
+            plan: makePlan(files: [".agents/harness"]),
             worktreePath: worktreeDir.path,
             destinationRelativePath: "ynh/demo",
             isUpdate: false
         )
 
         let copied = try String(
-            contentsOf: worktreeDir.appendingPathComponent("ynh/demo/.ynh-plugin/plugin.json"),
+            contentsOf: worktreeDir.appendingPathComponent("ynh/demo/.agents/harness/plugin.json"),
             encoding: .utf8)
         XCTAssertEqual(copied, original)
     }

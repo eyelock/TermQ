@@ -42,7 +42,7 @@ public struct Harness: Codable, Equatable, Sendable, Identifiable {
 
     /// Coarse classification from YNH: "local-fork", "registry", "git", or
     /// "local-fork-broken" for pointer-installed forks whose on-disk
-    /// `.ynh-plugin/plugin.json` is missing or unreadable. Optional —
+    /// `.agents/harness/plugin.json` is missing or unreadable. Optional —
     /// older YNH envelopes don't emit it.
     public let kind: String?
 

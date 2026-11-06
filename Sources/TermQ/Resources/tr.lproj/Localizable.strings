@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Gözat…";
 "harnesses.launch.prompt" = "İstem";
 "harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
+"harnesses.launch.resume" = "Önceki oturuma devam et";
+"harnesses.launch.resume.help" = "Sıfırdan başlamak yerine önceki bir oturuma devam eder. Claude yalnızca bu kartın başlattığı oturuma devam eder, bu nedenle yeni bir kart sıfırdan başlar; diğer sağlayıcılar çalışma dizinindeki en son oturuma devam eder.";
 "harnesses.launch.button" = "Başlat";
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
 "harnesses.launch.cancel" = "İptal";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Bu eklenti için yapıt listelenmemiş.";
 "marketplace.plugin.no.artifacts.hint" = "Eklentinin tüm içeriği dahil edilecek.";
 "marketplace.plugin.artifacts.unavailable %@" = "Yapıtlar kullanılamıyor: %@";
+"marketplace.plugin.unsupported %@" = "Desteklenmeyen içerik türü: %@. Bir Harness'e eklenemez.";
 "marketplace.picker.step.artifacts" = "Yapıtlar";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Uygula";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";
+"marketplace.add.folder.placeholder" = "Depo içindeki klasör (isteğe bağlı, boş = üst düzey)";
+"marketplace.add.import.copilot" = "Copilot CLI'dan içe aktar";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI'da yapılandırılmış marketplace'leri ekle (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld içe aktarıldı";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Tüm marketplace'leri yenile";
 "marketplace.restore.defaults" = "Varsayılanlara geri yükle";
@@ -1199,6 +1206,8 @@
 "harnesses.manifest.edit.description" = "Açıklama";
 "harnesses.manifest.edit.description.hint" = "Harness listesinde ve ayrıntı başlığında gösterilir. Atlamak için boş bırakın.";
 "harnesses.manifest.edit.save" = "Değişiklikleri Kaydet";
+"harnesses.layout.legacy %@" = "YNH 0.14+ tarafından reddedilen eski .ynh-plugin/ düzenini kullanıyor. Çalıştırın: ynd migrate %@";
+"harnesses.layout.both" = "Hem .agents/harness/ hem de .ynh-plugin/ var; YNH 0.14+ bunu reddeder. .ynh-plugin/ dizinini kaldırın.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit değişti: %@ → %@";

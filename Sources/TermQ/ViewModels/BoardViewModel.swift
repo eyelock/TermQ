@@ -242,6 +242,13 @@ class BoardViewModel: ObservableObject {
             workspaceId: source.workspaceId
         )
 
+        // A duplicate must never resume the original's session on first open.
+        // Only set when there is a command to launch, or the override would sit
+        // pending until one is added and wrongly force that later reopen cold.
+        if !source.initCommand.isEmpty {
+            newCard.resumeOverrideForNextLaunch = false
+        }
+
         board.cards.append(newCard)
         objectWillChange.send()
         save()

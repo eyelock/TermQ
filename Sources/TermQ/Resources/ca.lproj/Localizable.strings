@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Navega…";
 "harnesses.launch.prompt" = "Indicació";
 "harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
+"harnesses.launch.resume" = "Represa la sessió anterior";
+"harnesses.launch.resume.help" = "Continua una sessió anterior en lloc de començar de zero. Claude només continua la sessió que ha iniciat aquesta targeta, de manera que una targeta nova comença de zero; els altres proveïdors continuen la sessió més recent al directori de treball.";
 "harnesses.launch.button" = "Inicia";
 "harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
 "harnesses.launch.cancel" = "Cancel·la";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "No hi ha artefactes enumerats per a aquest connector.";
 "marketplace.plugin.no.artifacts.hint" = "S'inclourà tot el contingut del connector.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefactes no disponibles: %@";
+"marketplace.plugin.unsupported %@" = "Tipus de contingut no compatible: %@. No es pot afegir a un harness.";
 "marketplace.picker.step.artifacts" = "Artefactes";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Aplica";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branca, etiqueta o SHA de commit (opcional)";
+"marketplace.add.folder.placeholder" = "Carpeta dins del repositori (opcional, buit = nivell superior)";
+"marketplace.add.import.copilot" = "Importa des de Copilot CLI";
+"marketplace.add.import.copilot.help" = "Afegeix els marketplaces configurats a GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importats: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Actualitza tots els marketplaces";
 "marketplace.restore.defaults" = "Restaura els valors predeterminats";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Descripció";
 "harnesses.manifest.edit.description.hint" = "Es mostra a la llista de harnesses i a la capçalera de detalls. Deixa en blanc per ometre.";
 "harnesses.manifest.edit.save" = "Desa els canvis";
+"harnesses.layout.legacy %@" = "Fa servir el disseny antic .ynh-plugin/, que YNH 0.14+ rebutja. Executa: ynd migrate %@";
+"harnesses.layout.both" = "Té alhora .agents/harness/ i .ynh-plugin/, i YNH 0.14+ ho rebutja. Elimina el directori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modificat: %@ → %@";

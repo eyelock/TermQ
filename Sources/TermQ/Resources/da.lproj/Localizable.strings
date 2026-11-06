@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Gennemse…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
+"harnesses.launch.resume" = "Genoptag forrige session";
+"harnesses.launch.resume.help" = "Fortsætter en tidligere session i stedet for at starte forfra. Claude fortsætter kun den session, som dette kort startede, så et nyt kort starter forfra; andre leverandører fortsætter den seneste session i arbejdsmappen.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
 "harnesses.launch.cancel" = "Annuller";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Ingen artefakter angivet for dette plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Alt pluginindhold medtages.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakter utilgængelige: %@";
+"marketplace.plugin.unsupported %@" = "Indholdstype understøttes ikke: %@. Den kan ikke føjes til et harness.";
 "marketplace.picker.step.artifacts" = "Artefakter";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Anvend";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tag eller commit-SHA (valgfrit)";
+"marketplace.add.folder.placeholder" = "Mappe i repositoryet (valgfrit, tom = øverste niveau)";
+"marketplace.add.import.copilot" = "Importér fra Copilot CLI";
+"marketplace.add.import.copilot.help" = "Tilføj de marketplaces, der er konfigureret i GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld importeret";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Opdatér alle marketplaces";
 "marketplace.restore.defaults" = "Gendan standarder";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Beskrivelse";
 "harnesses.manifest.edit.description.hint" = "Vises i harness-listen og detailoverskriften. Lad stå tomt for at udelade.";
 "harnesses.manifest.edit.save" = "Gem ændringer";
+"harnesses.layout.legacy %@" = "Bruger det gamle layout .ynh-plugin/, som YNH 0.14+ afviser. Kør: ynd migrate %@";
+"harnesses.layout.both" = "Har både .agents/harness/ og .ynh-plugin/, hvilket YNH 0.14+ afviser. Fjern mappen .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit ændret: %@ → %@";

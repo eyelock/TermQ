@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "Parcourir…";
 "harnesses.launch.prompt" = "Invite";
 "harnesses.launch.prompt.placeholder" = "Invite optionnelle à transmettre à l'agent…";
+"harnesses.launch.resume" = "Reprendre la session précédente";
+"harnesses.launch.resume.help" = "Poursuit une session précédente au lieu de repartir de zéro. Claude ne poursuit que la session démarrée par cette carte, donc une nouvelle carte repart de zéro ; les autres fournisseurs poursuivent la session la plus récente dans le répertoire de travail.";
 "harnesses.launch.button" = "Lancer";
 "harnesses.launch.help" = "Lancer ce harnais dans un nouveau terminal";
 "harnesses.launch.cancel" = "Annuler";
@@ -913,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "Aucun artefact répertorié pour ce plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Tout le contenu du plugin sera inclus.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefacts indisponibles : %@";
+"marketplace.plugin.unsupported %@" = "Type de contenu non pris en charge : %@. Il ne peut pas être ajouté à un harnais.";
 "marketplace.picker.step.artifacts" = "Artefacts";
 "marketplace.picker.step.harness" = "Harnais";
 "marketplace.picker.step.apply" = "Appliquer";
@@ -1024,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branche, tag ou SHA de commit (optionnel)";
+"marketplace.add.folder.placeholder" = "Dossier dans le dépôt (facultatif, vide = racine)";
+"marketplace.add.import.copilot" = "Importer depuis Copilot CLI";
+"marketplace.add.import.copilot.help" = "Ajouter les marketplaces configurées dans GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld importé(s)";
 "marketplace.add.section.ref" = "Référence";
 "marketplace.refresh.all.help" = "Actualiser tous les marketplaces";
 "marketplace.restore.defaults" = "Restaurer les valeurs par défaut";
@@ -1198,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "Description";
 "harnesses.manifest.edit.description.hint" = "Affiché dans la liste des harnais et l'en-tête de détail. Laisser vide pour omettre.";
 "harnesses.manifest.edit.save" = "Enregistrer les modifications";
+"harnesses.layout.legacy %@" = "Utilise l'ancienne disposition .ynh-plugin/, que YNH 0.14+ refuse. Exécutez : ynd migrate %@";
+"harnesses.layout.both" = "Contient à la fois .agents/harness/ et .ynh-plugin/, ce que YNH 0.14+ refuse. Supprimez le répertoire .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream modifié : %@ → %@";

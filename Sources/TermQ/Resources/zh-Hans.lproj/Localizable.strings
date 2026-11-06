@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "浏览…";
 "harnesses.launch.prompt" = "提示词";
 "harnesses.launch.prompt.placeholder" = "传递给代理的可选提示词…";
+"harnesses.launch.resume" = "恢复上一个会话";
+"harnesses.launch.resume.help" = "继续之前的会话，而不是重新开始。Claude 只会继续此卡片启动的会话，因此新卡片会重新开始；其他供应商则继续工作目录中最近的会话。";
 "harnesses.launch.button" = "启动";
 "harnesses.launch.help" = "在新终端中启动此 harness";
 "harnesses.launch.cancel" = "取消";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "此插件没有列出构件。";
 "marketplace.plugin.no.artifacts.hint" = "将包含插件的所有内容。";
 "marketplace.plugin.artifacts.unavailable %@" = "构件不可用：%@";
+"marketplace.plugin.unsupported %@" = "不支持的内容类型:%@。无法添加到 Harness。";
 "marketplace.picker.step.artifacts" = "构件";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "应用";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "分支、标签或提交 SHA（可选）";
+"marketplace.add.folder.placeholder" = "仓库内的文件夹（可选，留空 = 顶层）";
+"marketplace.add.import.copilot" = "从 Copilot CLI 导入";
+"marketplace.add.import.copilot.help" = "添加在 GitHub Copilot CLI 中配置的市场（~/.copilot/settings.json）";
+"marketplace.add.imported.copilot %lld" = "已导入 %lld 个";
 "marketplace.add.section.ref" = "引用";
 "marketplace.refresh.all.help" = "刷新所有 Marketplace";
 "marketplace.restore.defaults" = "恢复默认";
@@ -1194,6 +1201,8 @@
 "harnesses.manifest.edit.description" = "描述";
 "harnesses.manifest.edit.description.hint" = "显示在 harness 列表和详情标题中。留空则省略。";
 "harnesses.manifest.edit.save" = "保存更改";
+"harnesses.layout.legacy %@" = "使用旧版 .ynh-plugin/ 布局，YNH 0.14+ 会拒绝。请运行：ynd migrate %@";
+"harnesses.layout.both" = "同时存在 .agents/harness/ 和 .ynh-plugin/，YNH 0.14+ 会拒绝。请删除 .ynh-plugin/ 目录。";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已更改：%@ → %@";

@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "参照…";
 "harnesses.launch.prompt" = "プロンプト";
 "harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
+"harnesses.launch.resume" = "前回のセッションを再開";
+"harnesses.launch.resume.help" = "最初からやり直す代わりに、以前のセッションを続行します。Claude はこのカードが開始したセッションのみを続行するため、新しいカードは最初から始まります。他のベンダーは作業ディレクトリの最新のセッションを続行します。";
 "harnesses.launch.button" = "起動";
 "harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
 "harnesses.launch.cancel" = "キャンセル";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "このプラグインにはアーティファクトが列挙されていません。";
 "marketplace.plugin.no.artifacts.hint" = "プラグインのすべてのコンテンツが含まれます。";
 "marketplace.plugin.artifacts.unavailable %@" = "アーティファクトが利用できません: %@";
+"marketplace.plugin.unsupported %@" = "サポートされていないコンテンツタイプ: %@。ハーネスには追加できません。";
 "marketplace.picker.step.artifacts" = "アーティファクト";
 "marketplace.picker.step.harness" = "ハーネス";
 "marketplace.picker.step.apply" = "適用";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";
+"marketplace.add.folder.placeholder" = "リポジトリ内のフォルダ（任意、空欄 = 最上位）";
+"marketplace.add.import.copilot" = "Copilot CLI からインポート";
+"marketplace.add.import.copilot.help" = "GitHub Copilot CLI で設定されているマーケットプレイスを追加します（~/.copilot/settings.json）";
+"marketplace.add.imported.copilot %lld" = "%lld 件をインポートしました";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "すべてのマーケットプレイスを更新";
 "marketplace.restore.defaults" = "デフォルトに戻す";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "説明";
 "harnesses.manifest.edit.description.hint" = "harness リストとdetailヘッダーに表示されます。省略する場合は空のままにしてください。";
 "harnesses.manifest.edit.save" = "変更を保存";
+"harnesses.layout.legacy %@" = "従来の .ynh-plugin/ レイアウトを使用しており、YNH 0.14+ は受け付けません。実行してください: ynd migrate %@";
+"harnesses.layout.both" = "新旧両方の .agents/harness/ と .ynh-plugin/ が存在し、YNH 0.14+ は受け付けません。.ynh-plugin/ ディレクトリを削除してください。";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上流のコミットが変更されました：%@ → %@";

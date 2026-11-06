@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "تصفّح…";
 "harnesses.launch.prompt" = "موجّه الأوامر";
 "harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
+"harnesses.launch.resume" = "استئناف الجلسة السابقة";
+"harnesses.launch.resume.help" = "يتابع جلسة سابقة بدلاً من البدء من جديد. يتابع Claude فقط الجلسة التي بدأتها هذه البطاقة، لذا تبدأ البطاقة الجديدة من جديد؛ أما الموردون الآخرون فيتابعون أحدث جلسة في مجلد العمل.";
 "harnesses.launch.button" = "تشغيل";
 "harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
 "harnesses.launch.cancel" = "إلغاء";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "لا توجد قطع أثرية مدرجة لهذه الإضافة.";
 "marketplace.plugin.no.artifacts.hint" = "سيتم تضمين كامل محتوى الإضافة.";
 "marketplace.plugin.artifacts.unavailable %@" = "القطع الأثرية غير متاحة: %@";
+"marketplace.plugin.unsupported %@" = "نوع المحتوى غير مدعوم: %@. لا يمكن إضافته إلى الحزمة.";
 "marketplace.picker.step.artifacts" = "القطع الأثرية";
 "marketplace.picker.step.harness" = "الحزمة";
 "marketplace.picker.step.apply" = "تطبيق";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
+"marketplace.add.folder.placeholder" = "المجلد داخل المستودع (اختياري، فارغ = المستوى الأعلى)";
+"marketplace.add.import.copilot" = "استيراد من Copilot CLI";
+"marketplace.add.import.copilot.help" = "إضافة الأسواق (marketplaces) المهيأة في GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "تم استيراد %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "تحديث جميع الـ marketplace";
 "marketplace.restore.defaults" = "استعادة الافتراضيات";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "الوصف";
 "harnesses.manifest.edit.description.hint" = "يظهر في قائمة الـ harness وفي رأس التفاصيل. اتركه فارغًا للتخطي.";
 "harnesses.manifest.edit.save" = "حفظ التغييرات";
+"harnesses.layout.legacy %@" = "يستخدم تخطيط .ynh-plugin/ القديم الذي يرفضه YNH 0.14+. شغّل: ynd migrate %@";
+"harnesses.layout.both" = "يحتوي على كل من .agents/harness/ و .ynh-plugin/، وهو ما يرفضه YNH 0.14+. احذف المجلد .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "تغيّر الـ commit الأولي: %@ → %@";

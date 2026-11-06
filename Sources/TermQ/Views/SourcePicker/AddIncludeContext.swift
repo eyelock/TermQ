@@ -95,7 +95,7 @@ final class AddIncludeContext: SourcePickerContext {
     }
 
     func existingMatch(for plugin: MarketplacePlugin, in marketplace: Marketplace) -> IncludeEditTarget? {
-        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url)
+        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
         return existingIncludes.first { target in
             IncludeKey(url: target.sourceURL, path: target.path)
                 .matches(url: resolved.url, path: resolved.path)
@@ -134,15 +134,15 @@ final class AddIncludeContext: SourcePickerContext {
     /// Resolved `(url, path)` for the currently-configuring plugin.
     var libraryResolvedSource: (url: String, path: String?)? {
         guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
-        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url)
+        let resolved = plugin.source.resolved(marketplaceURL: marketplace.url, folder: marketplace.folder)
         return (resolved.url, resolved.path)
     }
 
     /// Effective ref for the configuring plugin — inherited from its
     /// marketplace.
     var libraryResolvedRef: String? {
-        guard case .configuring(_, let marketplace) = libraryStage else { return nil }
-        return marketplace.ref
+        guard case .configuring(let plugin, let marketplace) = libraryStage else { return nil }
+        return plugin.source.effectiveRef(marketplaceRef: marketplace.ref)
     }
 
     func libraryCommandPreview() -> String {
@@ -344,7 +344,7 @@ private struct AddIncludeLibraryBrowseView: View {
         return allEntries.filter {
             $0.plugin.name.lowercased().contains(query)
                 || ($0.plugin.description?.lowercased().contains(query) ?? false)
-                || $0.marketplace.name.lowercased().contains(query)
+                || $0.marketplace.displayName.lowercased().contains(query)
         }
     }
 
@@ -370,7 +370,7 @@ private struct AddIncludeLibraryBrowseView: View {
                 if let desc = entry.plugin.description, !desc.isEmpty {
                     Text(desc).font(.caption).foregroundColor(.secondary).lineLimit(2)
                 }
-                Text(entry.marketplace.name)
+                Text(entry.marketplace.displayName)
                     .font(.caption2)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)
@@ -552,22 +552,24 @@ private struct AddIncludeLibraryConfigureView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-            Text(marketplace.name)
+            Text(marketplace.displayName)
                 .font(.caption2)
                 .padding(.horizontal, 5)
                 .padding(.vertical, 1)
                 .background(Color.blue.opacity(0.15))
                 .foregroundColor(.blue)
                 .clipShape(Capsule())
-            if let inheritedRef = marketplace.ref, !inheritedRef.isEmpty {
+            if let inheritedRef = plugin.source.effectiveRef(marketplaceRef: marketplace.ref) {
                 HStack(spacing: 6) {
                     Image(systemName: "pin.fill").imageScale(.small)
                     Text("Pinned to ")
                         .font(.caption)
                     Text(inheritedRef)
                         .font(.system(size: 11, design: .monospaced))
-                    Text("(inherited from marketplace)")
-                        .font(.caption2)
+                    if plugin.source.type.isRelative {
+                        Text("(inherited from marketplace)")
+                            .font(.caption2)
+                    }
                 }
                 .foregroundColor(.secondary)
             } else {

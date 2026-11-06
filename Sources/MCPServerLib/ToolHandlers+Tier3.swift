@@ -106,7 +106,7 @@ extension TermQMCPServer {
         process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
         var args = ["ynh", "run", harness]
         if let prompt, !prompt.isEmpty {
-            args.append(contentsOf: ["--prompt", prompt])
+            args.append(contentsOf: ["--", prompt])
         }
         process.arguments = args
         process.currentDirectoryURL = URL(fileURLWithPath: workingDirectory)
