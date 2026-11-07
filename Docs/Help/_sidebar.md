@@ -16,13 +16,14 @@
   - [10. Harnesses](tutorials/harnesses.md)
   - [11. Remote PRs](tutorials/remote-prs.md)
   - [12. Stacked Branches & PRs](tutorials/stacked-branches.md)
+  - [13. Wheelhouses (Beta)](tutorials/wheelhouses.md)
 
 - **Tutorials: Automation & AI**
-  - [13. CLI Automation](tutorials/cli.md)
-  - [14. Persistent AI Context](tutorials/ai-context.md)
-  - [15. MCP Integration](tutorials/mcp.md)
-  - [16. MCP Resource Subscriptions](tutorials/mcp-subscriptions.md)
-  - [17. Queued Actions](tutorials/queued-actions.md)
+  - [14. CLI Automation](tutorials/cli.md)
+  - [15. Persistent AI Context](tutorials/ai-context.md)
+  - [16. MCP Integration](tutorials/mcp.md)
+  - [17. MCP Resource Subscriptions](tutorials/mcp-subscriptions.md)
+  - [18. Queued Actions](tutorials/queued-actions.md)
 
 - **Reference**
   - [Keyboard Shortcuts](reference/keyboard-shortcuts.md)
