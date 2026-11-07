@@ -24,9 +24,31 @@ final class WheelhouseStageLayoutTests: XCTestCase {
         XCTAssertEqual(stage.visitor, d)
     }
 
-    func testShowCardAlreadyOnStageOnlyFocuses() {
+    func testShowWithNothingPinnedKeepsOneCard() {
+        var stage = WheelhouseStageLayout()
+        stage.show(a)
+        stage.show(b)
+        XCTAssertEqual(stage.visible, [b])
+        XCTAssertEqual(stage.focused, b)
+    }
+
+    func testShowPinnedCardSendsVisitorAway() {
         var stage = WheelhouseStageLayout(pinned: [a], visitor: b, focused: b)
         stage.show(a)
+        XCTAssertEqual(stage.visible, [a])
+        XCTAssertEqual(stage.focused, a)
+    }
+
+    func testShowVisitorAgainOnlyFocuses() {
+        var stage = WheelhouseStageLayout(pinned: [a], visitor: b, focused: a)
+        stage.show(b)
+        XCTAssertEqual(stage.visible, [a, b])
+        XCTAssertEqual(stage.focused, b)
+    }
+
+    func testFocusPinnedPaneKeepsVisitor() {
+        var stage = WheelhouseStageLayout(pinned: [a], visitor: b, focused: b)
+        stage.focus(a)
         XCTAssertEqual(stage.visible, [a, b])
         XCTAssertEqual(stage.focused, a)
     }
@@ -60,19 +82,20 @@ final class WheelhouseStageLayoutTests: XCTestCase {
         XCTAssertEqual(stage.visible, [a, b])
     }
 
-    func testUnpinKeepsCardInPlace() {
-        var stage = WheelhouseStageLayout(pinned: [a, b], visitor: c)
+    func testUnpinKeepsCardInPlaceAndSendsOldVisitorAway() {
+        var stage = WheelhouseStageLayout(pinned: [a, b], visitor: c, focused: c)
         stage.unpin(a)
-        XCTAssertEqual(stage.visible, [a, b, c])
-        XCTAssertFalse(stage.isPinned(a))
+        XCTAssertEqual(stage.visible, [a, b])
+        XCTAssertEqual(stage.visitor, a)
+        XCTAssertEqual(stage.focused, a)
     }
 
-    func testShowReplacesLastUnpinnedInPlace() {
+    func testShowReplacesVisitorInPlace() {
         var stage = WheelhouseStageLayout(pinned: [a, b], visitor: c)
         stage.unpin(a)
         stage.show(d)
-        // c is the last unpinned card: d takes its place, a stays put.
-        XCTAssertEqual(stage.visible, [a, b, d])
+        // a is now the unpinned card: d takes its place, b stays put.
+        XCTAssertEqual(stage.visible, [d, b])
     }
 
     func testMoveReordersPanes() {
@@ -88,10 +111,17 @@ final class WheelhouseStageLayoutTests: XCTestCase {
     func testMoveCardOntoStageFromOutside() {
         var stage = WheelhouseStageLayout(pinned: [a], visitor: b)
         stage.move(c, before: a)
-        XCTAssertEqual(stage.visible, [c, a, b])
-        stage.move(d, before: a)
-        // Full: the last unpinned card other than d (b) leaves.
-        XCTAssertEqual(stage.visible, [c, d, a])
+        // c becomes the unpinned card, so b leaves.
+        XCTAssertEqual(stage.visible, [c, a])
+        stage.move(d, before: c)
+        XCTAssertEqual(stage.visible, [d, a])
+        XCTAssertEqual(stage.focused, d)
+    }
+
+    func testMovePinnedCardBeforeVisitor() {
+        var stage = WheelhouseStageLayout(pinned: [a, b], visitor: c)
+        stage.move(a, before: c)
+        XCTAssertEqual(stage.visible, [b, a, c])
     }
 
     func testMoveOntoItselfOrOffStageTargetDoesNothing() {
@@ -146,5 +176,77 @@ final class WheelhouseStageLayoutTests: XCTestCase {
     func testAttentionQueueTiesKeepCandidateOrder() {
         let time = Date()
         XCTAssertEqual(WheelhouseAttention.queue(candidates: [c, a], since: [a: time, c: time]), [c, a])
+    }
+
+    // MARK: - Anchor (the inbox)
+
+    func testAnchorIsPinnedAndRightmostWhenShown() {
+        let inbox = UUID()
+        let a = UUID()
+        var layout = WheelhouseStageLayout(anchor: inbox)
+        layout.show(a)
+        layout.show(inbox)
+        XCTAssertEqual(layout.cards, [a, inbox])
+        XCTAssertTrue(layout.isPinned(inbox))
+        XCTAssertFalse(layout.isPinned(a))
+    }
+
+    func testAnchorStaysRightWhenOthersArePinnedOrShown() {
+        let inbox = UUID()
+        let a = UUID()
+        let b = UUID()
+        let c = UUID()
+        var layout = WheelhouseStageLayout(anchor: inbox)
+        layout.show(inbox)
+        layout.show(a)
+        XCTAssertEqual(layout.cards, [a, inbox])
+        layout.pin(a)
+        layout.show(b)
+        XCTAssertEqual(layout.cards, [a, b, inbox])
+        layout.show(c)
+        XCTAssertEqual(layout.cards, [a, c, inbox])
+    }
+
+    func testAnchorNeverGivesWayWhenFull() {
+        let inbox = UUID()
+        let a = UUID()
+        let b = UUID()
+        let c = UUID()
+        var layout = WheelhouseStageLayout(anchor: inbox)
+        layout.show(inbox)
+        layout.pin(a)
+        layout.pin(b)
+        layout.show(c)
+        XCTAssertEqual(layout.cards, [a, c, inbox])
+        XCTAssertTrue(layout.isOnStage(inbox))
+    }
+
+    func testAnchorCannotBeUnpinnedOrMovedLeft() {
+        let inbox = UUID()
+        let a = UUID()
+        let b = UUID()
+        var layout = WheelhouseStageLayout(anchor: inbox)
+        layout.pin(a)
+        layout.show(inbox)
+        layout.unpin(inbox)
+        XCTAssertTrue(layout.isPinned(inbox))
+        layout.move(inbox, before: a)
+        XCTAssertEqual(layout.cards, [a, inbox])
+        layout.pin(b)
+        layout.move(b, before: inbox)
+        XCTAssertEqual(layout.cards.last, inbox)
+    }
+
+    func testShowingAnchorOnFullStageDropsAnUnpinnedCard() {
+        let inbox = UUID()
+        let a = UUID()
+        let b = UUID()
+        let c = UUID()
+        var layout = WheelhouseStageLayout(anchor: inbox)
+        layout.pin(a)
+        layout.pin(b)
+        layout.show(c)
+        layout.show(inbox)
+        XCTAssertEqual(layout.cards, [a, b, inbox])
     }
 }

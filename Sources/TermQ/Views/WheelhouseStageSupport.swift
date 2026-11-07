@@ -78,3 +78,44 @@ final class StagePaneClickMonitor {
         return nil
     }
 }
+
+/// The divider between two stage panes: a hairline with a wider grab area.
+/// Reports each drag step as points moved right since the last step.
+struct WheelhousePaneDivider: View {
+    let width: CGFloat
+    let onDrag: (CGFloat) -> Void
+    let onReset: () -> Void
+
+    @State private var lastTranslation: CGFloat = 0
+    @State private var hovering = false
+
+    var body: some View {
+        Rectangle()
+            .fill(Color(nsColor: .separatorColor))
+            .frame(width: width)
+            .frame(maxHeight: .infinity)
+            .overlay {
+                Color.clear
+                    .frame(width: 8)
+                    .contentShape(Rectangle())
+                    .onHover { inside in
+                        guard inside != hovering else { return }
+                        hovering = inside
+                        if inside { NSCursor.resizeLeftRight.push() } else { NSCursor.pop() }
+                    }
+                    .gesture(
+                        DragGesture(minimumDistance: 1, coordinateSpace: .global)
+                            .onChanged { value in
+                                onDrag(value.translation.width - lastTranslation)
+                                lastTranslation = value.translation.width
+                            }
+                            .onEnded { _ in lastTranslation = 0 }
+                    )
+                    .onTapGesture(count: 2) { onReset() }
+            }
+            .onDisappear {
+                if hovering { NSCursor.pop() }
+            }
+            .zIndex(1)
+    }
+}

@@ -33,6 +33,41 @@ final class WheelhouseCardMatcherTests: XCTestCase {
         XCTAssertFalse(WheelhouseCardMatcher.matches(wheelhouseOnly, wheelhouseRoot: "/w/ynw", seatCommand: "may"))
     }
 
+    func testQuickTerminalIsNotTheSeat() {
+        let tags = WheelhouseCardMatcher.quickTerminalTags(wheelhouseRoot: "/w/ynw", seatCommand: "eno", number: 2)
+        let quick = card(tags.map { ($0.key, $0.value) })
+        XCTAssertTrue(WheelhouseCardMatcher.isQuickTerminal(quick))
+        XCTAssertFalse(WheelhouseCardMatcher.isSeatCard(quick))
+        XCTAssertFalse(WheelhouseCardMatcher.matches(quick, wheelhouseRoot: "/w/ynw", seatCommand: "eno"))
+        XCTAssertTrue(WheelhouseCardMatcher.isWheelhouseCard(quick))
+        XCTAssertEqual(WheelhouseCardMatcher.quickTerminalNumber(quick), 2)
+    }
+
+    func testQuickTerminalsAreTheSeatsOwnByNumber() {
+        func quick(_ seat: String, _ number: Int, root: String = "/w/ynw", deleted: Bool = false) -> TerminalCard {
+            card(
+                WheelhouseCardMatcher.quickTerminalTags(wheelhouseRoot: root, seatCommand: seat, number: number)
+                    .map { ($0.key, $0.value) }, deleted: deleted)
+        }
+        let three = quick("eno", 3)
+        let one = quick("eno", 1)
+        let cards = [three, quick("marr", 2), one, quick("eno", 2, root: "/w/other"), quick("eno", 4, deleted: true)]
+        let found = WheelhouseCardMatcher.quickTerminals(in: cards, wheelhouseRoot: "/w/ynw", seatCommand: "eno")
+        XCTAssertEqual(found.map(\.id), [one.id, three.id])
+        XCTAssertEqual(WheelhouseCardMatcher.nextQuickTerminalNumber(existing: found), 2)
+        XCTAssertEqual(WheelhouseCardMatcher.nextQuickTerminalNumber(existing: []), 1)
+    }
+
+    func testGeneralTabsLeaveOutQuickTerminals() {
+        let quick = card(
+            WheelhouseCardMatcher.quickTerminalTags(wheelhouseRoot: "/w/ynw", seatCommand: "eno", number: 1)
+                .map { ($0.key, $0.value) })
+        let plain = card([("source", "worktree")])
+        XCTAssertEqual(
+            WheelhouseCardMatcher.generalTabCards([quick, plain], wheelhouseEnabled: true).map(\.id), [plain.id])
+        XCTAssertEqual(WheelhouseCardMatcher.generalTabCards([quick, plain], wheelhouseEnabled: false).count, 2)
+    }
+
     func testSameSeatNameInAnotherWheelhouseDoesNotMatch() {
         let other = card([("wheelhouse", "/w/other"), ("seat", "may")])
         XCTAssertFalse(WheelhouseCardMatcher.matches(other, wheelhouseRoot: "/w/ynw", seatCommand: "may"))

@@ -320,6 +320,25 @@ public enum WheelhouseLoader {
         URL(fileURLWithPath: root).appendingPathComponent(rosterRelativePath)
     }
 
+    /// A folder path as typed or pasted: whitespace and wrapping quotes
+    /// trimmed, `~` expanded, `file://` URLs read, and the result put in
+    /// standard form. Nil when nothing usable is left.
+    public static func normalizedRoot(_ input: String) -> String? {
+        var text = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        for quote in ["\"", "'"] where text.count >= 2 && text.hasPrefix(quote) && text.hasSuffix(quote) {
+            text = String(text.dropFirst().dropLast())
+        }
+        text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return nil }
+        if text.hasPrefix("file://"), let url = URL(string: text), url.isFileURL {
+            text = url.path
+        }
+        text = (text as NSString).expandingTildeInPath
+        guard text.hasPrefix("/") else { return nil }
+        let path = URL(fileURLWithPath: text).standardizedFileURL.path
+        return path.count > 1 && path.hasSuffix("/") ? String(path.dropLast()) : path
+    }
+
     /// Whether `root` holds a roster file.
     public static func isWheelhouse(root: String) -> Bool {
         FileManager.default.fileExists(atPath: rosterURL(root: root).path)

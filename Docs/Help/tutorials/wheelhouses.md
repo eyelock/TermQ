@@ -24,7 +24,7 @@ A steering-wheel icon joins the tabs at the top of the sidebar.
 
 A Wheelhouse is a repository with a roster at `skills/roster/assets/roster.json`. Any repository already in your Repositories list that has one appears in the tab automatically.
 
-To add one, click **＋** in the Wheelhouses header (or choose **Add Wheelhouse…** from the switcher) and pick its folder. TermQ checks for the roster and adds the folder as a repository. With more than one Wheelhouse, the switcher at the top of the tab picks one, or **All Wheelhouses**.
+To add one, click **＋** in the Wheelhouses header (or choose **Add Wheelhouse…** from the switcher), paste the folder's path — `~/…` and quoted paths work — and press **Add**. **Choose Folder…** picks it in a folder panel instead. TermQ checks for the roster and adds the folder as a repository. With more than one Wheelhouse, the switcher at the top of the tab picks one, or **All Wheelhouses**.
 
 ---
 
@@ -34,7 +34,8 @@ To add one, click **＋** in the Wheelhouses header (or choose **Add Wheelhouse�
 
 The sidebar lists every seat, grouped the way the plugin groups them — **Desk**, **Crew**, **Standing**, **Workers** — each with its role (Designer, Reviewer, Dispatcher, Builder · ynh, …). Hover a seat for its mandate.
 
-- **The dot** — filled when the seat's session is running, hollow when it isn't, orange when it needs you.
+- **The dot** — filled blue when the seat's session is running, green when it has no terminal here but is working on a bead (its heartbeat is less than 20 minutes old — a worker woken by the dispatcher, say), hollow when it is idle, orange when it needs you.
+- **Numbered badges** — the seat's Quick Terminals (see below). Click one to bring it up; right-click to close it.
 - **The line underneath** — the bead the seat is working on, read from the Wheelhouse's work graph, *waiting on #…* when it waits on a pull request, or *idle*.
 
 Click any seat to open it.
@@ -43,11 +44,15 @@ Click any seat to open it.
 
 ## 4 — The stage
 
-While the Wheelhouses tab is open, the main panel is the **stage**: up to three seats side by side, and only Wheelhouse seats — your other terminals stay in their own tabs, and seats stay out of theirs.
+While the Wheelhouses tab is open, the main panel is the **stage**: only Wheelhouse seats — your other terminals stay in their own tabs, and seats stay out of theirs.
 
-- The **tab bar** across the top lists every open seat, grouped Desk │ Crew │ Standing │ Workers. Click one to bring it onto the stage.
-- **Keep on Stage** (right-click a seat) keeps it there however many others you bring in. The **✕** on a pane takes it off.
+- With nothing pinned, the stage is **one seat, full width**: bringing up another seat replaces it.
+- **Pin** a seat (the pin on its pane, or **Keep on Stage** when you right-click it) and it stays, with one more column beside it for whichever seat you bring up next. Bringing up a pinned seat shows just the pinned ones. Up to three columns fit.
+- **Drag the divider** between panes to resize them; double-click it to make them equal again.
+- Drag a pane's header onto another to reorder them. The **✕** on a pane takes it off.
+- The **tab bar** across the top lists every open seat, grouped Desk │ Crew │ Standing │ Workers. With seats from more than one Wheelhouse open, it groups them under each Wheelhouse's name, and each pane says which Wheelhouse it's from.
 - Click into a pane to type in it; the pane you're in is outlined.
+- Going back to the Repositories tab puts you back in the terminal you left.
 
 ---
 
@@ -82,7 +87,30 @@ Right-click a seat (in the sidebar or the tab bar) for its actions:
 
 ---
 
-## 7 — Focus mode
+## 7 — Quick Terminals
+
+Sometimes you want a plain shell where a seat is working, without starting the seat. Right-click a seat and choose **New Quick Terminal**: a shell opens on the stage in the seat's current folder (or the Wheelhouse's, when the seat hasn't said where it is).
+
+Quick Terminals belong to their seat. They show as numbered badges beside it in the sidebar, not in the tab bar or your other tabs. Open as many as you like; close one with the button on its pane, or by right-clicking its badge.
+
+---
+
+## 8 — Your inbox
+
+Seats ask you for things through the work graph: beads assigned to the name a Wheelhouse uses for "a human" (`stakker` by default), or to your own name. When any are ready, an **Inbox** chip sits at the right of the **Needs you** rail — calm blue rather than orange, since not all of them are for you personally.
+
+Click it to open the inbox, pinned at the right of the stage. Each bead shows its priority, kind, title and who asked; **Show details** reveals the rest, and links open in your browser.
+
+- **Filter** by kind (decision, merge, …) with the chips under the header, or by clicking a bead's kind.
+- With more than one Wheelhouse, beads are grouped under each; click a heading to fold it away.
+- Right-click a bead (or use **⋯**) to **Send to** a seat — the request is typed into its session, starting it if needed — or to **Comment…**, **Close…**, copy its id or open its link. Comments and closes are made as the name the bead is assigned to.
+- The inbox refreshes every minute; the refresh button reads it now.
+
+Set the names in Settings › **Tools** › **YNH Harness Toolchain**, under **Show Wheelhouses sidebar tab**: **Inbox name for any human** and **Your own inbox name**.
+
+---
+
+## 9 — Focus mode
 
 **⌃⌘F** (or **Focus** at the top right) hides everything but the Wheelhouse: no toolbar, no other tabs. Press it again, or **Exit Focus**, to come back.
 
@@ -92,4 +120,4 @@ Right-click a seat (in the sidebar or the tab bar) for its actions:
 
 - "Needs you" relies on each CLI ringing the bell or sending a notification; one that does neither won't show there.
 - One session per seat. For more of the same work in parallel, seat another worker.
-- The work-graph line refreshes every minute.
+- The work-graph line, the working dot and the inbox refresh every minute.

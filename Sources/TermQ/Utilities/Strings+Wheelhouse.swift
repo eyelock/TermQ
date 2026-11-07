@@ -16,6 +16,10 @@ extension Strings {
         static var copyCommand: String { localized("wheelhouse.copy.command") }
         static var addWheelhouse: String { localized("wheelhouse.add") }
         static var addPanelMessage: String { localized("wheelhouse.add.panel.message") }
+        static var addPathPlaceholder: String { localized("wheelhouse.add.path.placeholder") }
+        static var addChooseFolder: String { localized("wheelhouse.add.choose.folder") }
+        static var addButton: String { localized("wheelhouse.add.button") }
+        static func addNoFolder(_ path: String) -> String { localized("wheelhouse.add.no.folder %@", path) }
         static var addFailedTitle: String { localized("wheelhouse.add.failed.title") }
         static func notAWheelhouse(_ name: String) -> String { localized("wheelhouse.not.a.wheelhouse %@", name) }
         static var workUnavailable: String { localized("wheelhouse.work.unavailable") }
@@ -24,6 +28,7 @@ extension Strings {
         static var openTerminal: String { localized("wheelhouse.open.terminal") }
         static var showTerminal: String { localized("wheelhouse.show.terminal") }
         static var statusIdle: String { localized("wheelhouse.status.idle") }
+        static var workingHelp: String { localized("wheelhouse.working.help") }
         static var pin: String { localized("wheelhouse.pin") }
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
         static func seatHarnessTitle(_ seat: String, _ wheelhouse: String) -> String {
@@ -105,6 +110,43 @@ extension Strings {
             }
         }
 
+        // Quick Terminals
+        static var newQuickTerminal: String { localized("wheelhouse.quick.terminal.new") }
+        static func quickTerminalTitle(_ number: Int) -> String {
+            localized("wheelhouse.quick.terminal.title %ld", number)
+        }
+        static func quickTerminalHelp(_ number: Int, _ seat: String) -> String {
+            localized("wheelhouse.quick.terminal.help %ld %@", number, seat)
+        }
+
+        // Inbox
+        static var inboxTitle: String { localized("wheelhouse.inbox.title") }
+        static func inboxHelp(_ names: String) -> String { localized("wheelhouse.inbox.help %@", names) }
+        static var inboxEmpty: String { localized("wheelhouse.inbox.empty") }
+        static var inboxUnavailable: String { localized("wheelhouse.inbox.unavailable") }
+        static func inboxFor(_ name: String) -> String { localized("wheelhouse.inbox.for %@", name) }
+        static func inboxFrom(_ seat: String) -> String { localized("wheelhouse.inbox.from %@", seat) }
+        static func inboxUnblocks(_ count: Int) -> String { localized("wheelhouse.inbox.unblocks %ld", count) }
+        static var inboxOpenLink: String { localized("wheelhouse.inbox.open.link") }
+        static var inboxCopyId: String { localized("wheelhouse.inbox.copy.id") }
+        static var inboxSendTo: String { localized("wheelhouse.inbox.send.to") }
+        static func inboxSendPrompt(_ id: String, _ title: String) -> String {
+            localized("wheelhouse.inbox.send.prompt %@ %@", id, title)
+        }
+        static var inboxShowDetails: String { localized("wheelhouse.inbox.show.details") }
+        static var inboxHideDetails: String { localized("wheelhouse.inbox.hide.details") }
+        static var inboxComment: String { localized("wheelhouse.inbox.comment") }
+        static var inboxClose: String { localized("wheelhouse.inbox.close") }
+        static var inboxCommentButton: String { localized("wheelhouse.inbox.comment.button") }
+        static var inboxCloseButton: String { localized("wheelhouse.inbox.close.button") }
+        static var inboxCommentPlaceholder: String { localized("wheelhouse.inbox.comment.placeholder") }
+        static var inboxClosePlaceholder: String { localized("wheelhouse.inbox.close.placeholder") }
+        static var inboxRespondFailed: String { localized("wheelhouse.inbox.respond.failed") }
+        static var inboxRefreshHelp: String { localized("wheelhouse.inbox.refresh.help") }
+        static var inboxFilterAll: String { localized("wheelhouse.inbox.filter.all") }
+        static func inboxFilterHelp(_ kind: String) -> String { localized("wheelhouse.inbox.filter.help %@", kind) }
+        static func inboxSentTo(_ seat: String) -> String { localized("wheelhouse.inbox.sent.to %@", seat) }
+
         /// Role label plus specialities, such as "Builder · ynh".
         static func roleLabel(for seat: WheelhouseSeat) -> String? {
             guard let role = seat.effectiveRole else { return nil }
@@ -128,5 +170,9 @@ extension Strings.Settings {
     enum Wheelhouse {
         static var enableTab: String { localized("settings.wheelhouse.enable.tab") }
         static var enableTabHelp: String { localized("settings.wheelhouse.enable.tab.help") }
+        static var inboxHumanName: String { localized("settings.wheelhouse.inbox.human.name") }
+        static var inboxHumanNameHelp: String { localized("settings.wheelhouse.inbox.human.name.help") }
+        static var inboxOwnName: String { localized("settings.wheelhouse.inbox.own.name") }
+        static var inboxOwnNameHelp: String { localized("settings.wheelhouse.inbox.own.name.help") }
     }
 }

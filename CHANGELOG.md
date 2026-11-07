@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Wheelhouses
+
+- **Quick Terminals.** A seat's menu gains **New Quick Terminal**: a plain shell in the seat's current folder that doesn't start the seat. They show as numbered badges beside the seat in the sidebar, stay out of the tab bar and the general tabs, and can sit on the stage beside the seat.
+- **Your inbox.** Beads that are ready and assigned to the name a Wheelhouse uses for "a human" (`stakker` by default, configurable) or to your own name show as an **Inbox** chip on the Needs you rail. The inbox pane, pinned at the right of the stage, filters by kind, groups and folds by Wheelhouse, and lets you send a bead to a seat, comment on it or close it.
+- **A working dot.** A seat with no terminal here but a fresh heartbeat on a bead, such as a worker woken by the dispatcher, shows a green dot.
+- **Resizable stage columns.** Drag the divider between panes; double-click it to reset.
+- **Add Wheelhouse takes a pasted path,** with the folder panel still a click away.
+
+### Changed — Wheelhouses
+
+- **Columns only for pinned seats.** With nothing pinned the stage shows one seat full width; bringing up another replaces it. Pinned seats keep their columns with one more for the seat you bring up.
+- With seats from more than one Wheelhouse open, the tab bar and panes say which Wheelhouse each seat is from.
+
+### Fixed — Wheelhouses
+
+- Coming back to the Repositories tab from the Wheelhouses tab returns to the terminal you were in instead of the board.
+
 ### Added — Diagnostics
 
 - **Help → Memory Report…** collects what we need to look into a "TermQ is using a lot of memory" report, ready to save or copy into an issue. It covers TermQ's current and peak memory, every terminal session it is holding (and whether that session's tab is open, closed, or its process has exited), and summaries from macOS's `footprint`, `heap` and `leaks` tools run against TermQ itself. TermQ may pause for a few seconds while those tools inspect it. The report contains only sizes, counts and object type names — no terminal output, card titles, paths or commands, with your home folder and user name redacted. For when TermQ is too unresponsive to use its own menu, `scripts/memory-report.sh` collects the same diagnostics from outside.

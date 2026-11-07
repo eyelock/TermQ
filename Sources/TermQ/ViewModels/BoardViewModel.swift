@@ -482,50 +482,6 @@ class BoardViewModel: ObservableObject {
 
     // MARK: - Quick Actions
 
-    /// Create a new transient terminal at a specific directory and select it.
-    /// Matches the board column and backend defaults of `quickNewTerminal`.
-    func newTerminal(at path: String, branch: String? = nil, repoName: String? = nil) {
-        let column: Column
-        if let current = selectedCard,
-            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
-        {
-            column = currentColumn
-        } else if let firstColumn = board.columns.first {
-            column = firstColumn
-        } else {
-            return
-        }
-
-        let existingTitles = Set(
-            board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
-        let defaults = newTerminalDefaults()
-
-        let card = TerminalCard(
-            title: nextTransientTitle(base: branch, existing: existingTitles),
-            tags: autoTags(
-                source: "worktree", backend: SettingsStore.shared.backend, branch: branch, repoName: repoName),
-            columnId: column.id,
-            workingDirectory: path,
-            safePasteEnabled: nil,
-            allowAutorun: defaults.allowAutorun,
-            allowOscClipboard: defaults.allowOscClipboard,
-            confirmExternalModifications: defaults.confirmExternalModifications,
-            backend: nil,
-            workspaceId: newCardWorkspaceId
-        )
-        card.isTransient = true
-        tabManager.addTransientCard(card)
-
-        if let current = selectedCard {
-            tabManager.insertTab(card.id, after: current.id)
-        } else {
-            tabManager.addTab(card.id)
-        }
-
-        objectWillChange.send()
-        selectedCard = card
-    }
-
     func quickNewTerminal() {
         let column: Column
         let workingDirectory: String
@@ -869,4 +825,60 @@ extension BoardViewModel {
     /// `nil` in "All" (unassigned). A card's workspace is fixed at creation;
     /// reassignment is a later feature.
     var newCardWorkspaceId: UUID? { activeWorkspaceProvider() }
+}
+
+// MARK: - Quick terminal at a path
+
+extension BoardViewModel {
+    /// Create a new transient terminal at a specific directory and select it.
+    /// Matches the board column and backend defaults of `quickNewTerminal`.
+    /// `title` and `extraTags` let a caller (a Wheelhouse seat's Quick
+    /// Terminal) name and mark the card.
+    @discardableResult
+    func newTerminal(
+        at path: String, branch: String? = nil, repoName: String? = nil, title: String? = nil,
+        extraTags: [(key: String, value: String)] = []
+    ) -> TerminalCard? {
+        let column: Column
+        if let current = selectedCard,
+            let currentColumn = board.columns.first(where: { $0.id == current.columnId })
+        {
+            column = currentColumn
+        } else if let firstColumn = board.columns.first {
+            column = firstColumn
+        } else {
+            return nil
+        }
+
+        let existingTitles = Set(
+            board.cards.map { $0.title } + tabManager.transientCards.values.map { $0.title })
+        let defaults = newTerminalDefaults()
+
+        let card = TerminalCard(
+            title: title ?? nextTransientTitle(base: branch, existing: existingTitles),
+            tags: autoTags(
+                source: "worktree", backend: SettingsStore.shared.backend, branch: branch, repoName: repoName)
+                + extraTags.map { Tag(key: $0.key, value: $0.value) },
+            columnId: column.id,
+            workingDirectory: path,
+            safePasteEnabled: nil,
+            allowAutorun: defaults.allowAutorun,
+            allowOscClipboard: defaults.allowOscClipboard,
+            confirmExternalModifications: defaults.confirmExternalModifications,
+            backend: nil,
+            workspaceId: newCardWorkspaceId
+        )
+        card.isTransient = true
+        tabManager.addTransientCard(card)
+
+        if let current = selectedCard {
+            tabManager.insertTab(card.id, after: current.id)
+        } else {
+            tabManager.addTab(card.id)
+        }
+
+        objectWillChange.send()
+        selectedCard = card
+        return card
+    }
 }

@@ -19,7 +19,7 @@ struct WheelhouseSidebarTab: View {
     @ObservedObject private var tabManager: TabManager = BoardViewModel.shared.tabManager
     @AppStorage("wheelhouse.selected") private var selectedRoot: String = ""
     @State private var collapsed: Set<String> = []
-    @State private var addError: String?
+    @State private var showingAdd = false
 
     private var roots: [String] { worktreeViewModel.repositories.map(\.path) }
 
@@ -54,13 +54,8 @@ struct WheelhouseSidebarTab: View {
         ) { _ in
             store.refresh(roots: roots)
         }
-        .alert(
-            Strings.Wheelhouse.addFailedTitle,
-            isPresented: Binding(get: { addError != nil }, set: { if !$0 { addError = nil } })
-        ) {
-            Button(Strings.Common.ok) { addError = nil }
-        } message: {
-            Text(addError ?? "")
+        .sheet(isPresented: $showingAdd) {
+            WheelhouseAddSheet { root in await addWheelhouse(root: root) }
         }
         .task {
             while !Task.isCancelled {
@@ -84,7 +79,7 @@ struct WheelhouseSidebarTab: View {
                     Button(wheelhouse.title) { selectedRoot = wheelhouse.root }
                 }
                 Divider()
-                Button(Strings.Wheelhouse.addWheelhouse) { chooseWheelhouseFolder() }
+                Button(Strings.Wheelhouse.addWheelhouse) { showingAdd = true }
             } label: {
                 Text(selectedTitle)
                     .font(.headline)
@@ -99,7 +94,7 @@ struct WheelhouseSidebarTab: View {
                 ProgressView().controlSize(.small)
             }
             Button {
-                chooseWheelhouseFolder()
+                showingAdd = true
             } label: {
                 Image(systemName: "plus")
             }
@@ -121,32 +116,22 @@ struct WheelhouseSidebarTab: View {
 
     // MARK: - Adding a Wheelhouse
 
-    /// Picks a folder, checks it holds a roster, and registers it as a
-    /// repository, which is where TermQ looks for Wheelhouses.
-    private func chooseWheelhouseFolder() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        panel.prompt = Strings.Wheelhouse.addWheelhouse
-        panel.message = Strings.Wheelhouse.addPanelMessage
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        let path = url.standardizedFileURL.path
-        guard WheelhouseLoader.isWheelhouse(root: path) else {
-            addError = Strings.Wheelhouse.notAWheelhouse(url.lastPathComponent)
-            return
+    /// Checks `root` holds a roster and registers it as a repository, which
+    /// is where TermQ looks for Wheelhouses. Nil on success, else why not.
+    private func addWheelhouse(root: String) async -> String? {
+        guard WheelhouseLoader.isWheelhouse(root: root) else {
+            return Strings.Wheelhouse.notAWheelhouse(URL(fileURLWithPath: root).lastPathComponent)
         }
-        selectedRoot = path
-        guard !roots.contains(where: { URL(fileURLWithPath: $0).standardizedFileURL.path == path }) else {
+        selectedRoot = root
+        guard !roots.contains(where: { URL(fileURLWithPath: $0).standardizedFileURL.path == root }) else {
             store.refresh(roots: roots)
-            return
+            return nil
         }
-        Task {
-            do {
-                try await worktreeViewModel.addRepository(path: path)
-            } catch {
-                addError = error.localizedDescription
-            }
+        do {
+            try await worktreeViewModel.addRepository(path: root)
+            return nil
+        } catch {
+            return error.localizedDescription
         }
     }
 
@@ -163,7 +148,7 @@ struct WheelhouseSidebarTab: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
-            Button(Strings.Wheelhouse.addWheelhouse) { chooseWheelhouseFolder() }
+            Button(Strings.Wheelhouse.addWheelhouse) { showingAdd = true }
                 .controlSize(.small)
         }
         .padding(20)
@@ -281,12 +266,15 @@ struct WheelhouseSidebarTab: View {
     }
 
     /// The dot means the same for every seat: orange when it needs you,
-    /// filled when its terminal's session is running, hollow otherwise (no
-    /// terminal, or one whose session isn't running yet).
-    private func dotKind(_ card: TerminalCard?) -> WheelhouseSeatDot.Kind {
-        guard let card else { return .closed }
-        if needsYou(card) { return .needsYou }
-        return boardVM.activeSessionCards.contains(card.id) ? .open : .closed
+    /// filled when its terminal's session is running, green when it has no
+    /// running terminal but checked in on a bead recently (a dispatcher may
+    /// be running it), hollow otherwise.
+    private func dotKind(
+        _ card: TerminalCard?, seat: WheelhouseSeat, in wheelhouse: Wheelhouse
+    ) -> WheelhouseSeatDot.Kind {
+        if let card, needsYou(card) { return .needsYou }
+        if let card, boardVM.activeSessionCards.contains(card.id) { return .open }
+        return store.isWorking(seat, in: wheelhouse) ? .working : .closed
     }
 
     private func attentionCount(in wheelhouse: Wheelhouse) -> Int {
@@ -297,7 +285,7 @@ struct WheelhouseSidebarTab: View {
 
     private func conversationRow(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> some View {
         let card = seatCard(seat, in: wheelhouse)
-        let dot = dotKind(card)
+        let dot = dotKind(card, seat: seat, in: wheelhouse)
         let onStage = card.map { stage.isOnStage($0.id) } ?? false
         let bead = store.currentBead(for: seat, in: wheelhouse)
         return Button {
@@ -321,6 +309,7 @@ struct WheelhouseSidebarTab: View {
                             .font(.system(size: 8))
                             .foregroundColor(.accentColor)
                     }
+                    quickTerminalBadges(seat, in: wheelhouse)
                     Spacer(minLength: 4)
                     WheelhouseRolePill(seat: seat)
                 }
@@ -351,7 +340,7 @@ struct WheelhouseSidebarTab: View {
         let extra = max(0, store.beadCount(for: seat, in: wheelhouse) - 1)
         // The dot means the same everywhere: does this seat have a terminal?
         // What it is working on is the line underneath.
-        let dot = dotKind(card)
+        let dot = dotKind(card, seat: seat, in: wheelhouse)
         return VStack(alignment: .leading, spacing: 1) {
             HStack(spacing: 8) {
                 WheelhouseSeatDot(kind: dot)
@@ -359,6 +348,7 @@ struct WheelhouseSidebarTab: View {
                     .font(.system(size: 12))
                     .foregroundColor(bead == nil ? .secondary : .primary)
                     .lineLimit(1)
+                quickTerminalBadges(seat, in: wheelhouse)
                 Spacer(minLength: 4)
                 WheelhouseRolePill(seat: seat)
             }
@@ -375,6 +365,34 @@ struct WheelhouseSidebarTab: View {
         }
         .help(seat.mandate ?? seat.name)
         .contextMenu { seatMenu(seat, in: wheelhouse, card: card) }
+    }
+
+    /// One numbered badge per Quick Terminal the seat has: click one to bring
+    /// it on stage, right-click to close it.
+    private func quickTerminalBadges(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> some View {
+        let terminals = WheelhouseCardMatcher.quickTerminals(
+            in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        return HStack(spacing: 3) {
+            ForEach(terminals, id: \.id) { card in
+                let number = WheelhouseCardMatcher.quickTerminalNumber(card) ?? 0
+                WheelhouseQuickTerminalBadge(
+                    number: number, running: boardVM.activeSessionCards.contains(card.id),
+                    onStage: stage.isOnStage(card.id)
+                )
+                .help(Strings.Wheelhouse.quickTerminalHelp(number, seat.name))
+                .highPriorityGesture(
+                    TapGesture().onEnded {
+                        stage.show(card.id)
+                        boardVM.selectCard(card)
+                    }
+                )
+                .contextMenu {
+                    Button(Strings.Wheelhouse.closeTerminal, role: .destructive) {
+                        stage.closeQuickTerminal(card)
+                    }
+                }
+            }
+        }
     }
 
     @ViewBuilder
@@ -438,6 +456,8 @@ struct WheelhouseSeatDot: View {
         case needsYou
         /// Its terminal's session is running.
         case open
+        /// No running terminal of its own, but it checked in on a bead recently.
+        case working
         /// No running session.
         case closed
     }
@@ -455,11 +475,35 @@ struct WheelhouseSeatDot: View {
             Circle()
                 .fill(Color.accentColor)
                 .frame(width: 8, height: 8)
+        case .working:
+            Circle()
+                .fill(Color.green)
+                .frame(width: 8, height: 8)
+                .help(Strings.Wheelhouse.workingHelp)
         case .closed:
             Circle()
                 .stroke(Color.secondary.opacity(0.7), lineWidth: 1.5)
                 .frame(width: 8, height: 8)
         }
+    }
+}
+
+/// A seat's Quick Terminal: its number in a small accent circle, solid
+/// while its shell runs, outlined once it has ended, ringed while on stage.
+struct WheelhouseQuickTerminalBadge: View {
+    let number: Int
+    let running: Bool
+    let onStage: Bool
+
+    var body: some View {
+        Text("\(number)")
+            .font(.system(size: 9, weight: .bold, design: .rounded))
+            .foregroundColor(running ? .white : .accentColor)
+            .frame(width: 15, height: 15)
+            .background(Circle().fill(running ? Color.accentColor : Color.clear))
+            .overlay(Circle().stroke(Color.accentColor, lineWidth: running ? 0 : 1))
+            .overlay(Circle().stroke(Color.accentColor.opacity(onStage ? 0.45 : 0), lineWidth: 2).padding(-2.5))
+            .contentShape(Circle())
     }
 }
 
@@ -484,12 +528,26 @@ struct WheelhouseRolePill: View {
     }
 }
 
-/// Settings toggle for the Wheelhouses sidebar tab (`feature.wheelhouseTab`).
+/// Settings toggle for the Wheelhouses sidebar tab (`feature.wheelhouseTab`),
+/// and, while it is on, the names whose beads make up the human's inbox.
 struct WheelhouseTabSettingToggle: View {
     @AppStorage("feature.wheelhouseTab") private var enabled = false
+    @AppStorage(WheelhouseStore.inboxHumanNameKey) private var humanName = WheelhouseInbox.defaultHumanName
+    @AppStorage(WheelhouseStore.inboxOwnNameKey) private var ownName = ""
 
     var body: some View {
         Toggle(Strings.Settings.Wheelhouse.enableTab, isOn: $enabled)
             .help(Strings.Settings.Wheelhouse.enableTabHelp)
+        if enabled {
+            TextField(
+                Strings.Settings.Wheelhouse.inboxHumanName, text: $humanName,
+                prompt: Text(WheelhouseInbox.defaultHumanName)
+            )
+            .help(Strings.Settings.Wheelhouse.inboxHumanNameHelp)
+            .onSubmit { WheelhouseStore.shared.refreshWork() }
+            TextField(Strings.Settings.Wheelhouse.inboxOwnName, text: $ownName)
+                .help(Strings.Settings.Wheelhouse.inboxOwnNameHelp)
+                .onSubmit { WheelhouseStore.shared.refreshWork() }
+        }
     }
 }

@@ -207,6 +207,7 @@ struct ContentView: View {
             .onChange(of: urlHandler.pendingTerminal?.id) { _, _ in
                 handlePendingTerminal()
             }
+            .onChange(of: showsWheelhouseStage) { wheelhouseStageVisibilityChanged(showing: $1) }
             .onChange(of: viewModel.selectedCard?.id) { _, newValue in
                 if newValue != nil {
                     harnessRepo.selectedHarnessId = nil

@@ -281,7 +281,29 @@ final class HarnessLaunchCoordinator {
             boardViewModel.killSession(for: card)
             boardViewModel.deleteTabCard(card)
             return card.id
+        case .quickTerminal:
+            return openQuickTerminal(for: seat, in: wheelhouse)
+        case .send(let text):
+            return launchSeat(seat, in: wheelhouse, prompt: text)
         }
+    }
+
+    /// Opens a Quick Terminal for a seat: a plain shell where the seat's
+    /// session last reported being (else the Wheelhouse root), numbered among
+    /// the seat's others. The seat's own session is not started or touched.
+    private func openQuickTerminal(for seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> UUID? {
+        let directory =
+            seatCard(seat, in: wheelhouse).flatMap {
+                TerminalSessionManager.shared.getCurrentDirectory(for: $0.id)
+            } ?? wheelhouse.root
+        let existing = WheelhouseCardMatcher.quickTerminals(
+            in: boardViewModel.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        let number = WheelhouseCardMatcher.nextQuickTerminalNumber(existing: existing)
+        return boardViewModel.newTerminal(
+            at: directory, title: "\(seat.name) \(number)",
+            extraTags: WheelhouseCardMatcher.quickTerminalTags(
+                wheelhouseRoot: wheelhouse.root, seatCommand: seat.command, number: number)
+        )?.id
     }
 
     /// Opens the harness detail page for a seat's harness, refreshing the
