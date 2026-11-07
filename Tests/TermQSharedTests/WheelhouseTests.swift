@@ -211,4 +211,14 @@ final class WheelhouseTests: XCTestCase {
         let data = try JSONEncoder().encode(seat)
         XCTAssertEqual(try JSONDecoder().decode(WheelhouseSeat.self, from: data), seat)
     }
+    func testNormalizedRoot() {
+        let home = NSHomeDirectory()
+        XCTAssertEqual(WheelhouseLoader.normalizedRoot("  ~/Workspace/ynw/ \n"), home + "/Workspace/ynw")
+        XCTAssertEqual(WheelhouseLoader.normalizedRoot("'/Users/a b/ynw'"), "/Users/a b/ynw")
+        XCTAssertEqual(WheelhouseLoader.normalizedRoot("\"/Users/a/ynw\""), "/Users/a/ynw")
+        XCTAssertEqual(WheelhouseLoader.normalizedRoot("file:///Users/a/ynw/"), "/Users/a/ynw")
+        XCTAssertEqual(WheelhouseLoader.normalizedRoot("/Users/a/./x/../ynw"), "/Users/a/ynw")
+        XCTAssertNil(WheelhouseLoader.normalizedRoot("   "))
+        XCTAssertNil(WheelhouseLoader.normalizedRoot("relative/path"))
+    }
 }

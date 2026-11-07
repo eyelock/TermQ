@@ -30,15 +30,51 @@ struct WheelhouseStageView: View {
         store.seatCards(in: boardVM.allTerminals, root: scopeRoot)
     }
 
+    /// What can be on the stage: a seat's card, one of its Quick Terminals,
+    /// or the inbox.
+    private enum StageEntry: Identifiable {
+        case card(TerminalCard)
+        case inbox
+
+        var id: UUID {
+            switch self {
+            case .card(let card): return card.id
+            case .inbox: return WheelhouseStage.inboxEntry
+            }
+        }
+    }
+
+    private var stageEntries: [StageEntry] {
+        let cards = store.stageCards(in: boardVM.allTerminals, root: scopeRoot)
+        return stage.visible.compactMap { id in
+            if id == WheelhouseStage.inboxEntry { return .inbox }
+            return cards.first { $0.id == id }.map(StageEntry.card)
+        }
+    }
+
     private var stageCards: [TerminalCard] {
-        let cards = seatCards
-        return stage.visible.compactMap { id in cards.first { $0.id == id } }
+        stageEntries.compactMap { entry in
+            if case .card(let card) = entry { return card }
+            return nil
+        }
+    }
+
+    /// The inbox for the Wheelhouse in view (every Wheelhouse's when none is picked).
+    private var inboxItems: [(wheelhouse: Wheelhouse, item: WheelhouseInboxItem)] {
+        store.inboxItems(root: scopeRoot)
+    }
+
+    /// A run of tabs in the strip: one seat group of one Wheelhouse.
+    private struct StripGroup {
+        let wheelhouse: Wheelhouse
+        let cards: [TerminalCard]
     }
 
     /// The tab bar: every open seat (running, waiting on you, or on stage),
-    /// desk first, then crew, standing and workers, each in roster order,
-    /// grouped so the strip can draw dividers between.
-    private var openSeatGroups: [[TerminalCard]] {
+    /// by Wheelhouse in sidebar order, then desk first, then crew, standing and
+    /// workers, each in roster order, grouped so the strip can draw dividers
+    /// between.
+    private var openSeatGroups: [StripGroup] {
         // A card that survived a relaunch with nothing running isn't open.
         let cards = seatCards.filter { card in
             stage.isOnStage(card.id) || boardVM.activeSessionCards.contains(card.id)
@@ -46,26 +82,42 @@ struct WheelhouseStageView: View {
         }
         struct Keyed {
             let card: TerminalCard
+            let wheelhouse: Wheelhouse
+            let wheelhouseOrder: Int
             let group: Int
             let order: Int
         }
         let keyed = cards.compactMap { card -> Keyed? in
             guard let found = store.seat(for: card) else { return nil }
             let order = found.wheelhouse.seats.firstIndex { $0.command == found.seat.command } ?? 0
-            return Keyed(card: card, group: found.seat.group.sortOrder, order: order)
+            let wheelhouseOrder = store.wheelhouses.firstIndex { $0.root == found.wheelhouse.root } ?? 0
+            return Keyed(
+                card: card, wheelhouse: found.wheelhouse, wheelhouseOrder: wheelhouseOrder,
+                group: found.seat.group.sortOrder, order: order)
         }
-        .sorted { $0.group != $1.group ? $0.group < $1.group : $0.order < $1.order }
-        var groups: [[TerminalCard]] = []
-        var lastGroup: Int?
+        .sorted {
+            ($0.wheelhouseOrder, $0.group, $0.order) < ($1.wheelhouseOrder, $1.group, $1.order)
+        }
+        var groups: [StripGroup] = []
         for entry in keyed {
-            if entry.group != lastGroup { groups.append([]) }
-            groups[groups.count - 1].append(entry.card)
-            lastGroup = entry.group
+            if let last = groups.last, last.wheelhouse.root == entry.wheelhouse.root,
+                store.seat(for: last.cards[0])?.seat.group.sortOrder == entry.group
+            {
+                groups[groups.count - 1] = StripGroup(wheelhouse: last.wheelhouse, cards: last.cards + [entry.card])
+            } else {
+                groups.append(StripGroup(wheelhouse: entry.wheelhouse, cards: [entry.card]))
+            }
         }
         return groups
     }
 
-    private var openSeatCards: [TerminalCard] { openSeatGroups.flatMap { $0 } }
+    /// Whether seats from more than one Wheelhouse are open, so tabs and
+    /// panes say which Wheelhouse each seat is from.
+    private var showsWheelhouseNames: Bool {
+        Set(openSeatGroups.map(\.wheelhouse.root)).count > 1
+    }
+
+    private var openSeatCards: [TerminalCard] { openSeatGroups.flatMap(\.cards) }
 
     /// Seats that rang, oldest first, including ones already on stage: a chip
     /// for one of those focuses its pane.
@@ -82,7 +134,7 @@ struct WheelhouseStageView: View {
             Divider()
             needsYouRail
             Divider()
-            if stageCards.isEmpty {
+            if stageEntries.isEmpty {
                 emptyStage
             } else {
                 panes
@@ -98,7 +150,7 @@ struct WheelhouseStageView: View {
                 else { return }
                 focus(card)
             }
-            stage.prune(keeping: Set(boardVM.allTerminals.map(\.id)))
+            stage.prune(keeping: Set(boardVM.allTerminals.map(\.id)).union([WheelhouseStage.inboxEntry]))
             if let focused = stage.focused, let card = stageCards.first(where: { $0.id == focused }) {
                 boardVM.selectCard(card)
             }
@@ -117,11 +169,18 @@ struct WheelhouseStageView: View {
                 Divider().frame(height: 16)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
-                        ForEach(Array(openSeatGroups.enumerated()), id: \.offset) { index, group in
+                        let groups = openSeatGroups
+                        let named = showsWheelhouseNames
+                        ForEach(Array(groups.enumerated()), id: \.offset) { index, group in
+                            let startsWheelhouse =
+                                index == 0 || groups[index - 1].wheelhouse.root != group.wheelhouse.root
                             if index > 0 {
-                                Divider().frame(height: 14).padding(.horizontal, 2)
+                                Divider().frame(height: startsWheelhouse && named ? 18 : 14).padding(.horizontal, 2)
                             }
-                            ForEach(group, id: \.id) { card in
+                            if named && startsWheelhouse {
+                                wheelhouseLabel(group.wheelhouse)
+                            }
+                            ForEach(group.cards, id: \.id) { card in
                                 openSeatChip(card)
                             }
                         }
@@ -184,6 +243,11 @@ struct WheelhouseStageView: View {
             Divider()
         }
         WheelhouseKeepOnStageToggle(cardId: card.id)
+        if store.parentSeat(of: card) != nil {
+            Button(Strings.Wheelhouse.closeTerminal, role: .destructive) {
+                stage.closeQuickTerminal(card)
+            }
+        }
     }
 
     /// Hover text for a seat chip: who it is, what kind of seat, what it's
@@ -232,6 +296,7 @@ struct WheelhouseStageView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
+            inboxChip
         }
         .padding(.horizontal, 12)
         .frame(height: queue.isEmpty ? 34 : 50)
@@ -287,38 +352,92 @@ struct WheelhouseStageView: View {
 
     // MARK: - Panes
 
+    private static let dividerWidth: CGFloat = 1
+    private static let minPaneWidth: CGFloat = 240
+
+    /// Panes side by side, each its weighted share of the width; drag a
+    /// divider to resize the two panes beside it, double-click it for equal.
     private var panes: some View {
-        HStack(spacing: 0) {
-            ForEach(Array(stageCards.enumerated()), id: \.element.id) { index, card in
-                if index > 0 { Divider() }
-                pane(card)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        GeometryReader { geometry in
+            let cards = stageEntries
+            let available = max(0, geometry.size.width - CGFloat(max(0, cards.count - 1)) * Self.dividerWidth)
+            let weights = cards.map { stage.weight(for: $0.id) }
+            let widths = WheelhousePaneSizing.widths(weights: weights, available: available)
+            HStack(spacing: 0) {
+                ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
+                    if index > 0 {
+                        WheelhousePaneDivider(width: Self.dividerWidth) { delta in
+                            let resized = WheelhousePaneSizing.resized(
+                                left: weights[index - 1], right: weights[index],
+                                weightPerPoint: WheelhousePaneSizing.weightPerPoint(
+                                    weights: weights, available: available),
+                                delta: delta, minWidth: Self.minPaneWidth)
+                            stage.setWeights(
+                                (cards[index - 1].id, resized.left), (card.id, resized.right))
+                        } onReset: {
+                            stage.resetWeights()
+                        }
+                    }
+                    entryPane(card)
+                        .frame(width: widths[index])
+                        .frame(maxHeight: .infinity)
+                }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func entryPane(_ entry: StageEntry) -> some View {
+        switch entry {
+        case .card(let card):
+            pane(card)
+        case .inbox:
+            WheelhouseInboxView(
+                items: inboxItems,
+                unavailable: !store.inboxUnavailable.isDisjoint(with: store.wheelhouses.map(\.root)),
+                refreshing: store.isRefreshingWork,
+                onRefresh: { store.refreshWork() },
+                onClose: { stage.remove(WheelhouseStage.inboxEntry) },
+                onSeatAction: onSeatAction,
+                onRespond: { root, item, response in await store.respond(response, to: item, root: root) })
         }
     }
 
     private func pane(_ card: TerminalCard) -> some View {
         let found = store.seat(for: card)
+        let parent = found == nil ? store.parentSeat(of: card) : nil
         let isFocused = stage.focused == card.id
         let ringing = tabManager.needsAttention.contains(card.id)
         let pinned = stage.isPinned(card.id)
         return VStack(spacing: 0) {
             HStack(spacing: 7) {
-                WheelhouseSeatDot(kind: ringing ? .needsYou : .open)
-                Text(found?.seat.name ?? card.title)
-                    .font(.system(size: 12.5, weight: .bold))
-                if let seat = found?.seat {
-                    WheelhouseRolePill(seat: seat)
-                }
-                if let found, let bead = store.currentBead(for: found.seat, in: found.wheelhouse) {
-                    Text(bead.title)
-                        .font(.system(size: 10.5))
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
+                if let parent {
+                    quickTerminalHeader(card, seat: parent.seat)
+                    if showsWheelhouseNames { wheelhouseLabel(parent.wheelhouse) }
+                } else {
+                    WheelhouseSeatDot(kind: ringing ? .needsYou : .open)
+                    Text(found?.seat.name ?? card.title)
+                        .font(.system(size: 12.5, weight: .bold))
+                    if let seat = found?.seat {
+                        WheelhouseRolePill(seat: seat)
+                    }
+                    if showsWheelhouseNames, let wheelhouse = found?.wheelhouse {
+                        wheelhouseLabel(wheelhouse)
+                    }
+                    if let found, let bead = store.currentBead(for: found.seat, in: found.wheelhouse) {
+                        Text(bead.title)
+                            .font(.system(size: 10.5))
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                    }
                 }
                 Spacer(minLength: 4)
                 if let found {
                     seatActionsMenu(found.wheelhouse, found.seat)
+                } else if parent != nil {
+                    paneButton("xmark.octagon", help: Strings.Wheelhouse.closeTerminal) {
+                        stage.closeQuickTerminal(card)
+                    }
                 }
                 paneButton(
                     pinned ? "pin.fill" : "pin", help: pinned ? Strings.Wheelhouse.unpin : Strings.Wheelhouse.pin
@@ -353,7 +472,7 @@ struct WheelhouseStageView: View {
                     dragged != card.id
                 else { return false }
                 stage.move(dragged, before: card.id)
-                if let moved = seatCards.first(where: { $0.id == dragged }) { boardVM.selectCard(moved) }
+                if let moved = boardVM.allTerminals.first(where: { $0.id == dragged }) { boardVM.selectCard(moved) }
                 return true
             } isTargeted: { over in
                 dropTarget = over ? card.id : (dropTarget == card.id ? nil : dropTarget)
@@ -451,6 +570,78 @@ struct WheelhouseStageView: View {
     }
 }
 
+// MARK: - Inbox chip and Quick Terminal header
+
+extension WheelhouseStageView {
+    /// Which Wheelhouse a run of tabs, or a pane, belongs to: shown only when
+    /// seats from more than one are open.
+    func wheelhouseLabel(_ wheelhouse: Wheelhouse) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: "steeringwheel")
+                .font(.system(size: 9))
+            Text(wheelhouse.title)
+                .font(.system(size: 10.5, weight: .medium))
+                .lineLimit(1)
+        }
+        .foregroundColor(.secondary)
+        .help(wheelhouse.root)
+    }
+
+    /// Beads waiting on the human: calmer than a seat ringing, since some are
+    /// for any human, and only there while there is something in the inbox.
+    @ViewBuilder
+    private var inboxChip: some View {
+        let count = inboxItems.count
+        if count > 0 {
+            let onStage = stage.isOnStage(WheelhouseStage.inboxEntry)
+            Button {
+                stage.show(WheelhouseStage.inboxEntry)
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "tray.full")
+                        .font(.system(size: 11))
+                    Text(Strings.Wheelhouse.inboxTitle)
+                        .font(.system(size: 11.5, weight: .semibold))
+                    Text("\(count)")
+                        .font(.system(size: 10.5, weight: .bold))
+                        .padding(.horizontal, 5)
+                        .background(Capsule().fill(Color.accentColor.opacity(0.25)))
+                }
+                .foregroundColor(.accentColor)
+                .padding(.horizontal, 9)
+                .frame(height: 24)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color.accentColor.opacity(onStage ? 0.22 : 0.1)))
+            }
+            .buttonStyle(.plain)
+            .help(Strings.Wheelhouse.inboxHelp(WheelhouseStore.inboxAssignees().joined(separator: ", ")))
+        }
+    }
+
+    /// A Quick Terminal's header: its badge, its seat, its number, and
+    /// where its shell is.
+    @ViewBuilder
+    private func quickTerminalHeader(_ card: TerminalCard, seat: WheelhouseSeat) -> some View {
+        let number = WheelhouseCardMatcher.quickTerminalNumber(card) ?? 0
+        WheelhouseQuickTerminalBadge(
+            number: number, running: boardVM.activeSessionCards.contains(card.id), onStage: false)
+        Text(seat.name)
+            .font(.system(size: 12.5, weight: .bold))
+        Text(Strings.Wheelhouse.quickTerminalTitle(number))
+            .font(.system(size: 10.5))
+            .foregroundColor(.secondary)
+        Text(
+            (TerminalSessionManager.shared.getCurrentDirectory(for: card.id) ?? card.workingDirectory)
+                .replacingOccurrences(of: NSHomeDirectory(), with: "~")
+        )
+        .font(.system(size: 10.5, design: .monospaced))
+        .foregroundColor(.secondary)
+        .lineLimit(1)
+        .truncationMode(.head)
+    }
+}
+
 /// Menu items for a seat: its harness focuses, hand off, and birth.
 struct WheelhouseSeatActionItems: View {
     let wheelhouse: Wheelhouse
@@ -495,6 +686,11 @@ struct WheelhouseSeatActionItems: View {
             }
         }
         Divider()
+        Button {
+            onSeatAction(wheelhouse, seat, .quickTerminal)
+        } label: {
+            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: "terminal")
+        }
         Button {
             onSeatAction(wheelhouse, seat, .harnessDetails)
         } label: {

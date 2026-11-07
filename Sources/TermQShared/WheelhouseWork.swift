@@ -7,12 +7,28 @@ public struct WheelhouseBead: Equatable, Sendable, Identifiable {
     public let assignee: String
     /// The pull request the bead waits on, from a `PR: <url>` line in its notes.
     public let pullRequestURL: String?
+    /// When the seat last checked in on the bead (`heartbeat_at`).
+    public let heartbeatAt: Date?
 
-    public init(id: String, title: String, assignee: String, pullRequestURL: String? = nil) {
+    public init(
+        id: String, title: String, assignee: String, pullRequestURL: String? = nil, heartbeatAt: Date? = nil
+    ) {
         self.id = id
         self.title = title
         self.assignee = assignee
         self.pullRequestURL = pullRequestURL
+        self.heartbeatAt = heartbeatAt
+    }
+
+    /// How recent a heartbeat must be for the seat to count as working.
+    /// Wider than the five-minute claim lease: workers check in less often
+    /// than that while they build, so a lapsed lease alone means little.
+    public static let workingWindow: TimeInterval = 20 * 60
+
+    /// Whether the seat checked in on this bead within `workingWindow` of `now`.
+    public func isWorking(now: Date = Date()) -> Bool {
+        guard let heartbeatAt else { return false }
+        return now.timeIntervalSince(heartbeatAt) < Self.workingWindow
     }
 
     /// Short form of the pull request URL, such as `ynh #754`.
@@ -30,8 +46,8 @@ public struct WheelhouseBead: Equatable, Sendable, Identifiable {
 /// read-only, no sync. Beads' JSON is an array, or `{"data": [...]}` with the
 /// Beads 2.0 envelope; both are accepted.
 public enum WheelhouseWork {
-    /// In-progress beads keyed by assignee (the seat's command), each list in
-    /// the order `bd` returned it.
+    /// In-progress beads keyed by assignee (the seat's command), each list
+    /// freshest heartbeat first, then in the order `bd` returned it.
     public static func parseInProgress(_ data: Data) -> [String: [WheelhouseBead]] {
         guard let json = try? JSONSerialization.jsonObject(with: data) else { return [:] }
         let items: [[String: Any]]
@@ -51,10 +67,28 @@ public enum WheelhouseWork {
             else { continue }
             let notes = item["notes"] as? String ?? ""
             let bead = WheelhouseBead(
-                id: id, title: title, assignee: assignee, pullRequestURL: lastPullRequestURL(in: notes))
+                id: id, title: title, assignee: assignee, pullRequestURL: lastPullRequestURL(in: notes),
+                heartbeatAt: (item["heartbeat_at"] as? String).flatMap(parseDate))
             result[assignee, default: []].append(bead)
         }
-        return result
+        // Stable: beads without a heartbeat keep bd's order, after the rest.
+        return result.mapValues { beads in
+            beads.enumerated()
+                .sorted { lhs, rhs in
+                    let left = lhs.element.heartbeatAt ?? .distantPast
+                    let right = rhs.element.heartbeatAt ?? .distantPast
+                    return left != right ? left > right : lhs.offset < rhs.offset
+                }
+                .map(\.element)
+        }
+    }
+
+    /// Beads' timestamps: ISO 8601, with or without fractional seconds.
+    static func parseDate(_ string: String) -> Date? {
+        let formatter = ISO8601DateFormatter()
+        if let date = formatter.date(from: string) { return date }
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.date(from: string)
     }
 
     /// The last `PR: <url>` in a bead's notes, as `wake.sh` reads it.

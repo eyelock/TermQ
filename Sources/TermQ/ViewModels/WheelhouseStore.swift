@@ -20,6 +20,24 @@ final class WheelhouseStore: ObservableObject {
     @Published private(set) var work: [String: [String: [WheelhouseBead]]] = [:]
     /// Wheelhouse roots whose work graph could not be read (no `bd`, or it failed).
     @Published private(set) var workUnavailable: Set<String> = []
+    /// Beads waiting on the human, per Wheelhouse root.
+    @Published private(set) var inbox: [String: [WheelhouseInboxItem]] = [:]
+    /// Wheelhouse roots whose inbox could not be read.
+    @Published private(set) var inboxUnavailable: Set<String> = []
+    /// Whether the work graph and inbox are being read right now.
+    @Published private(set) var isRefreshingWork = false
+
+    /// Settings: the name a Wheelhouse gives "a human", and the human's own.
+    static let inboxHumanNameKey = "wheelhouse.inbox.humanName"
+    static let inboxOwnNameKey = "wheelhouse.inbox.ownName"
+
+    /// The names whose ready beads make up the inbox.
+    static func inboxAssignees(defaults: UserDefaults = .standard) -> [String] {
+        WheelhouseInbox.assignees(
+            humanName: defaults.string(forKey: inboxHumanNameKey) ?? WheelhouseInbox.defaultHumanName,
+            ownName: defaults.string(forKey: inboxOwnNameKey) ?? "")
+    }
+
     /// Seat commands per Wheelhouse root known to have had no first session yet.
     @Published private(set) var unborn: [String: Set<String>] = [:]
 
@@ -44,19 +62,28 @@ final class WheelhouseStore: ObservableObject {
         }
     }
 
-    /// Re-reads every Wheelhouse's in-progress beads.
+    /// Re-reads every Wheelhouse's in-progress beads and the human's inbox.
     func refreshWork() {
         workTask?.cancel()
         let roots = wheelhouses.map(\.root)
+        let assignees = Self.inboxAssignees()
+        isRefreshingWork = true
         workTask = Task { [weak self] in
             var results: [String: [String: [WheelhouseBead]]] = [:]
             var unavailable: Set<String> = []
+            var inbox: [String: [WheelhouseInboxItem]] = [:]
+            var inboxUnavailable: Set<String> = []
             for root in roots {
                 if Task.isCancelled { return }
                 if let beads = await WheelhouseWork.fetchInProgress(root: root) {
                     results[root] = beads
                 } else {
                     unavailable.insert(root)
+                }
+                if let items = await WheelhouseInbox.fetch(root: root, assignees: assignees) {
+                    inbox[root] = items
+                } else {
+                    inboxUnavailable.insert(root)
                 }
             }
             guard !Task.isCancelled, let self else { return }
@@ -66,7 +93,25 @@ final class WheelhouseStore: ObservableObject {
                     + " unavailable=\(unavailable.count) beads=\(beads)")
             self.work = results
             self.workUnavailable = unavailable
+            self.inbox = inbox
+            self.inboxUnavailable = inboxUnavailable
+            self.isRefreshingWork = false
         }
+    }
+
+    /// Comments on or closes an inbox bead, then re-reads the inbox. Returns
+    /// nil on success, or what went wrong.
+    func respond(_ response: WheelhouseInbox.Response, to item: WheelhouseInboxItem, root: String) async -> String? {
+        let failure = await WheelhouseInbox.respond(response, to: item, root: root)
+        if failure != nil {
+            TermQLogger.ui.warning("wheelhouse inbox: bd update failed for \(item.id)")
+        } else {
+            TermQLogger.ui.info("wheelhouse inbox: updated \(item.id)")
+            // A closed bead leaves at once; the re-read below confirms it.
+            if case .close = response { inbox[root]?.removeAll { $0.id == item.id } }
+        }
+        refreshWork()
+        return failure
     }
 
     /// Checks, once per Wheelhouse, which seats have never had a first session.
@@ -114,6 +159,12 @@ final class WheelhouseStore: ObservableObject {
         work[wheelhouse.root]?[seat.command]?.first
     }
 
+    /// Whether the seat checked in on any of its beads recently: it is
+    /// working, even with no terminal of its own (a dispatcher may run it).
+    func isWorking(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, now: Date = Date()) -> Bool {
+        work[wheelhouse.root]?[seat.command]?.contains(where: { $0.isWorking(now: now) }) ?? false
+    }
+
     func beadCount(for seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> Int {
         work[wheelhouse.root]?[seat.command]?.count ?? 0
     }
@@ -127,6 +178,33 @@ final class WheelhouseStore: ObservableObject {
             let seat = wheelhouse.seats.first(where: { $0.command == command })
         else { return nil }
         return (wheelhouse, seat)
+    }
+
+    /// The inbox for `root`, or every Wheelhouse's when nil.
+    func inboxItems(root: String?) -> [(wheelhouse: Wheelhouse, item: WheelhouseInboxItem)] {
+        wheelhouses
+            .filter { root == nil || $0.root == root }
+            .flatMap { wheelhouse in (inbox[wheelhouse.root] ?? []).map { (wheelhouse, $0) } }
+    }
+
+    /// The seat a Quick Terminal was opened for, from its tags.
+    func parentSeat(of card: TerminalCard) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        guard
+            let root = card.tags.first(where: { $0.key == WheelhouseCardMatcher.wheelhouseTagKey })?.value,
+            let command = card.tags.first(where: { $0.key == WheelhouseCardMatcher.quickTerminalTagKey })?.value,
+            let wheelhouse = wheelhouses.first(where: { $0.root == root }),
+            let seat = wheelhouse.seats.first(where: { $0.command == command })
+        else { return nil }
+        return (wheelhouse, seat)
+    }
+
+    /// Cards that can go on the stage: seat cards and their Quick Terminals,
+    /// limited to `root` when given.
+    func stageCards(in cards: [TerminalCard], root: String? = nil) -> [TerminalCard] {
+        cards.filter { card in
+            guard card.deletedAt == nil, let found = seat(for: card) ?? parentSeat(of: card) else { return false }
+            return root == nil || found.wheelhouse.root == root
+        }
     }
 
     /// Seat cards among `cards`, limited to `root` when given.
