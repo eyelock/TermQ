@@ -536,6 +536,8 @@ class TermQTerminalView: LocalProcessTerminalView {
         let title = parts[1]
         let body = parts[2...].joined(separator: ";")
         showDesktopNotification(title: title, body: body)
+        // A CLI asking for a notification wants the human: same as a bell.
+        onBell?()
     }
 
     /// Handle OSC 9 simple notification (Windows Terminal format)
@@ -547,6 +549,7 @@ class TermQTerminalView: LocalProcessTerminalView {
             !message.hasPrefix("4;")
         else { return }
         showDesktopNotification(title: terminalTitle, body: message)
+        onBell?()
     }
 
     // MARK: - Visual Bell
@@ -781,6 +784,17 @@ struct TerminalHostView: NSViewRepresentable {
     var isSearching: Bool = false
     /// Token that changes when session should be restarted - forces view recreation
     var restartToken: Int = 0
+    /// How this view takes keyboard focus. `.always` refocuses on every
+    /// update (the single-terminal view). `.whenBecomingFocused` takes focus
+    /// only when `isFocusedPane` turns true, so several terminals side by side
+    /// don't fight over the keyboard and a click into another pane sticks.
+    var focusPolicy: FocusPolicy = .always
+    var isFocusedPane: Bool = true
+
+    enum FocusPolicy {
+        case always
+        case whenBecomingFocused
+    }
 
     func makeNSView(context: Context) -> TerminalContainerView {
         // Get or create session from the manager
@@ -801,8 +815,18 @@ struct TerminalHostView: NSViewRepresentable {
         let mouseDown = NSEvent.pressedMouseButtons != 0
         let dragInProgress = TerminalSessionManager.shared.isMouseDragInProgress
         let alreadyFocused = nsView.window?.firstResponder === nsView.terminal
-        if !isSearching && !dragInProgress && !mouseDown && !alreadyFocused {
-            nsView.focusTerminal()
+        switch focusPolicy {
+        case .always:
+            if !isSearching && !dragInProgress && !mouseDown && !alreadyFocused {
+                nsView.focusTerminal()
+            }
+        case .whenBecomingFocused:
+            let becameFocused = isFocusedPane && !context.coordinator.wasFocusedPane
+            context.coordinator.wasFocusedPane = isFocusedPane
+            if becameFocused && !alreadyFocused {
+                // Defer: the pane may be mid-layout when it first becomes focused.
+                DispatchQueue.main.async { nsView.focusTerminal() }
+            }
         }
     }
 
@@ -811,6 +835,8 @@ struct TerminalHostView: NSViewRepresentable {
     }
 
     class Coordinator: NSObject {
+        /// Last `isFocusedPane` seen, for `.whenBecomingFocused`.
+        var wasFocusedPane = false
         // Coordinator is now minimal since session management is handled by TerminalSessionManager
     }
 }

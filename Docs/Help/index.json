@@ -90,6 +90,12 @@
           "title": "Stacked Branches & PRs",
           "icon": "square.stack.3d.up",
           "keywords": ["stack", "stacked", "stacking", "git-spice", "spice", "gs", "gh stack", "gh-stack", "github stacked prs", "restack", "submit", "sync", "untrack", "break out", "breakout", "PR chain", "branch", "chain", "dependent", "rebase", "conflict", "trunk", "worktree"]
+        },
+        {
+          "id": "tutorials/wheelhouses",
+          "title": "Wheelhouses (Beta)",
+          "icon": "steeringwheel",
+          "keywords": ["wheelhouse", "seat", "seats", "desk", "crew", "standing", "worker", "dispatcher", "stage", "needs you", "attention", "bell", "focus mode", "handoff", "hand off", "birth", "roster", "beads", "yegge", "agents", "beta"]
         }
       ]
     },

@@ -291,6 +291,9 @@ struct HarnessLaunchConfig {
     let interactive: Bool
     /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
     let cardTitle: String?
+    /// Additional tags for the created card, such as a Wheelhouse seat's
+    /// `wheelhouse` and `seat` tags.
+    var extraTags: [(key: String, value: String)] = []
     /// Whether this launch should continue the vendor's most recent session in
     /// the working directory. Declared with a default so existing memberwise
     /// call sites keep compiling.
@@ -352,6 +355,7 @@ struct HarnessLaunchConfig {
         if let branch, !branch.isEmpty {
             result.append(("branch", branch))
         }
+        result.append(contentsOf: extraTags)
         return result
     }
 }

@@ -12,6 +12,10 @@ public final class TabManager: ObservableObject {
     /// Tabs that need attention (received a bell) - cleared when selected
     @Published private(set) var needsAttention: Set<UUID> = []
 
+    /// When each tab in `needsAttention` first rang, so attention can be
+    /// queued oldest first.
+    @Published private(set) var attentionSince: [UUID: Date] = [:]
+
     /// Transient terminals - not persisted, exist only as tabs until promoted
     private(set) var transientCards: [UUID: TerminalCard] = [:]
 
@@ -50,6 +54,7 @@ public final class TabManager: ObservableObject {
         // Clear transient cards - they don't survive restore
         transientCards.removeAll()
         needsAttention.removeAll()
+        attentionSince.removeAll()
 
         // Re-initialize session tabs from restored data
         let favouriteIds = Set(board.activeCards.filter { $0.isFavourite }.map { $0.id })
@@ -178,6 +183,7 @@ public final class TabManager: ObservableObject {
         #endif
         if currentSelection != cardId {
             needsAttention.insert(cardId)
+            if attentionSince[cardId] == nil { attentionSince[cardId] = Date() }
             updateDockBadge()
         }
     }
@@ -185,17 +191,16 @@ public final class TabManager: ObservableObject {
     /// Clear attention indicator for a card
     func clearAttention(_ cardId: UUID) {
         needsAttention.remove(cardId)
+        attentionSince.removeValue(forKey: cardId)
         updateDockBadge()
     }
 
     /// Update Dock badge to show count of terminals needing attention
     private func updateDockBadge() {
+        // No app (unit tests): nothing to badge.
+        guard let app = NSApp else { return }
         let count = needsAttention.count
-        if count > 0 {
-            NSApp.dockTile.badgeLabel = "\(count)"
-        } else {
-            NSApp.dockTile.badgeLabel = nil
-        }
+        app.dockTile.badgeLabel = count > 0 ? "\(count)" : nil
     }
 
     // MARK: - Transient Cards

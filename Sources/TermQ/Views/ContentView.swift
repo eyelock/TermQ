@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import TermQCore
+import TermQShared
 import UniformTypeIdentifiers
 
 struct ContentView: View {
@@ -22,7 +23,7 @@ struct ContentView: View {
     /// Owns harness launch flow: pending request, resolved sheet target,
     /// before-harness card capture/restore. Extracted from ContentView so
     /// the view's body stays focused on layout.
-    @State private var launchCoordinator = HarnessLaunchCoordinator()
+    @State var launchCoordinator = HarnessLaunchCoordinator()
 
     /// Owns harness install/uninstall/update/export/fork flows via CommandRunnerSheet-backed sheets.
     @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
@@ -40,6 +41,10 @@ struct ContentView: View {
     private var sidebarMaxWidth: CGFloat {
         max(320, windowWidth / 2)
     }
+
+    @AppStorage("feature.wheelhouseTab") var wheelhouseTabEnabled = false
+    @ObservedObject var sidebarState = SidebarState.shared
+    @ObservedObject var wheelhouseStage = WheelhouseStage.shared
 
     var body: some View {
         HSplitView {
@@ -91,7 +96,8 @@ struct ContentView: View {
                     onNewHarness: {},
                     quarantinedEntries: migrationCoordinator.quarantinedEntries,
                     onRestoreQuarantine: { name in restoreQuarantine(name: name) },
-                    onDropQuarantine: { name in dropQuarantine(name: name) }
+                    onDropQuarantine: { name in dropQuarantine(name: name) },
+                    onSeatAction: seatAction
                 )
                 .frame(minWidth: 180, idealWidth: 220, maxWidth: sidebarMaxWidth)
             }
@@ -99,7 +105,9 @@ struct ContentView: View {
             ZStack {
                 if harnessRepo.selectedHarness != nil {
                     harnessDetailView()
-                } else if let selectedCard = viewModel.selectedCard {
+                } else if showsWheelhouseStage {
+                    WheelhouseStageView(onSeatAction: seatAction)
+                } else if let selectedCard = selectedNonSeatCard {
                     // Expanded terminal view
                     ExpandedTerminalView(
                         card: selectedCard,
@@ -157,7 +165,7 @@ struct ContentView: View {
                             )
                             launchCoordinator.launchHarness(config)
                         },
-                        tabCards: viewModel.tabCards,
+                        tabCards: nonSeatTabCards,
                         columns: viewModel.board.columns,
                         needsAttention: viewModel.needsAttention,
                         processingCards: viewModel.processingCards,
@@ -324,6 +332,7 @@ struct ContentView: View {
                 SessionRecoveryView(viewModel: viewModel)
                     .frame(width: 500, height: 400)
             }
+            .toolbar(wheelhouseTabEnabled && wheelhouseStage.focusMode ? .hidden : .automatic, for: .windowToolbar)
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     Button {
@@ -816,7 +825,7 @@ extension ContentView {
         guard let pending = urlHandler.pendingTerminal else { return }
 
         // Find the target column
-        let targetColumn: Column
+        let targetColumn: TermQCore.Column
         if let columnName = pending.column,
             let found = viewModel.board.columns.first(where: {
                 $0.name.lowercased() == columnName.lowercased()
@@ -825,7 +834,8 @@ extension ContentView {
             targetColumn = found
         } else {
             // Default to first column
-            targetColumn = viewModel.board.columns.first ?? Column(name: Constants.Columns.fallbackName, orderIndex: 0)
+            targetColumn =
+                viewModel.board.columns.first ?? TermQCore.Column(name: Constants.Columns.fallbackName, orderIndex: 0)
         }
 
         // Create the card with optional pre-generated ID (from CLI/MCP).
@@ -913,20 +923,38 @@ extension ContentView {
                 updateAvailability: updateAvailabilityService,
                 capabilities: harnessRepo.lastCapabilities
             )
-            HarnessDetailView(
-                viewModel: vm,
-                onDismiss: { launchCoordinator.dismissHarnessDetail() },
-                onLaunch: { path in
-                    launchCoordinator.requestLaunch(
-                        harnessId: harness.id, workingDirectory: path, branch: nil)
-                },
-                onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
-                onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
-                onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
-                onExport: { id, dir in
-                    lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
+            let seatContext = launchCoordinator.seatDetailContext.flatMap {
+                $0.seat.command == harness.name ? $0 : nil
+            }
+            VStack(spacing: 0) {
+                if let seatContext {
+                    WheelhouseSeatHarnessBanner(
+                        wheelhouse: seatContext.wheelhouse, seat: seatContext.seat,
+                        onHandoff: { launchCoordinator.send(HarnessLaunchCoordinator.handoffRequest, toCard: $0.id) },
+                        onRestart: { launchCoordinator.restartFresh($0) })
                 }
-            )
+                HarnessDetailView(
+                    viewModel: vm,
+                    onDismiss: { launchCoordinator.dismissHarnessDetail() },
+                    onLaunch: { path in
+                        // Opened from a Wheelhouse seat: launch the seat itself, at
+                        // the Wheelhouse root, onto the stage.
+                        if let seatContext {
+                            launchCoordinator.dismissHarnessDetail()
+                            seatAction(seatContext.wheelhouse, seatContext.seat, .open)
+                            return
+                        }
+                        launchCoordinator.requestLaunch(
+                            harnessId: harness.id, workingDirectory: path, branch: nil)
+                    },
+                    onUpdate: { id in lifecycleCoordinator.updateHarness(id: id) },
+                    onUninstall: { id in lifecycleCoordinator.uninstallHarness(id: id) },
+                    onFork: { id in lifecycleCoordinator.forkHarness(id: id) },
+                    onExport: { id, dir in
+                        lifecycleCoordinator.exportHarness(id: id, outputDir: dir)
+                    }
+                )
+            }
         }
     }
 
