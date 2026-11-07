@@ -7,12 +7,14 @@ enum SidebarTab: String, CaseIterable, Sendable {
     case repositories
     case harnesses
     case marketplaces
+    case wheelhouses
 
     var icon: String {
         switch self {
         case .repositories: return "shippingbox"
         case .harnesses: return "puzzlepiece.extension"
         case .marketplaces: return "storefront"
+        case .wheelhouses: return "steeringwheel"
         }
     }
 
@@ -21,6 +23,7 @@ enum SidebarTab: String, CaseIterable, Sendable {
         case .repositories: return "Repositories"
         case .harnesses: return "Harnesses"
         case .marketplaces: return "Marketplaces"
+        case .wheelhouses: return "Wheelhouses"
         }
     }
 }

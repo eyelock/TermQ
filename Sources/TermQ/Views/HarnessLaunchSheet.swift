@@ -265,6 +265,9 @@ struct HarnessLaunchConfig {
     let interactive: Bool
     /// Optional override for the terminal card title. Falls back to branch ?? harnessID when nil.
     let cardTitle: String?
+    /// Additional tags for the created card, such as a Wheelhouse seat's
+    /// `wheelhouse` and `seat` tags.
+    var extraTags: [(key: String, value: String)] = []
 
     // Note: `--resume` is deliberately *not* emitted here. The init command is
     // persisted on the card and replayed on every open, so baking the flag in
@@ -320,6 +323,7 @@ struct HarnessLaunchConfig {
         if let branch, !branch.isEmpty {
             result.append(("branch", branch))
         }
+        result.append(contentsOf: extraTags)
         return result
     }
 }

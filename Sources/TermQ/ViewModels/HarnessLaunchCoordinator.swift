@@ -62,6 +62,23 @@ final class HarnessLaunchCoordinator {
     /// Restored on dismiss.
     var cardBeforeHarness: TerminalCard?
 
+    /// The Wheelhouse seat whose harness the detail page is showing, when it
+    /// was opened from a seat. Launch then opens the seat itself, and the page
+    /// says edits apply when the seat restarts.
+    var seatDetailContext: SeatDetailContext?
+
+    /// One-off seat launch state awaiting restore, per card: the card's own
+    /// init command and resume setting, and the tasks that put them back.
+    @ObservationIgnored private var pendingInitCommand: [UUID: String] = [:]
+    @ObservationIgnored private var pendingAutoResume: [UUID: Bool] = [:]
+    @ObservationIgnored private var restoreTasks: [UUID: Task<Void, Never>] = [:]
+    @ObservationIgnored private var resumeRestoreTasks: [UUID: Task<Void, Never>] = [:]
+
+    struct SeatDetailContext: Equatable {
+        let wheelhouse: Wheelhouse
+        let seat: WheelhouseSeat
+    }
+
     @ObservationIgnored private let harnessRepo: HarnessRepository
     @ObservationIgnored private let vendorService: VendorService
     @ObservationIgnored private let boardViewModel: BoardViewModel
@@ -127,6 +144,184 @@ final class HarnessLaunchCoordinator {
             vendorOverride: ynhPersistence.vendorOverride(for: harness.id)
         )
         pendingLaunch = nil
+    }
+
+    /// The phrase the wheelhouse plugin's handoff skill answers to.
+    static let handoffRequest = "Let's take a beat, and hand off."
+    /// Asks a seat on its first session to run the birth skill.
+    static let birthPrompt = "This is your first session in this seat. Use the birth skill."
+
+    /// Opens a Wheelhouse seat and returns its card.
+    ///
+    /// - With no `focus` or `prompt`: selects the seat's card if it has one,
+    ///   else launches its harness (which runs the harness's launch focus).
+    /// - With a `focus` or `prompt` and a running card: types the focus's
+    ///   prompt (or the prompt) into the seat, so the same session acts on it.
+    /// - With a `focus` or `prompt` and no card: launches the harness with it.
+    ///
+    /// New cards start at the Wheelhouse root, tagged with the Wheelhouse and
+    /// the seat so they are found again later.
+    @discardableResult
+    func launchSeat(
+        _ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, focus: WheelhouseFocus? = nil, prompt: String? = nil
+    ) -> UUID? {
+        let config = seatLaunchConfig(seat, in: wheelhouse, focus: focus, prompt: prompt)
+        if let existing = seatCard(seat, in: wheelhouse) {
+            let running = TerminalSessionManager.shared.hasActiveSession(for: existing.id)
+            if running, let text = focus?.prompt ?? prompt {
+                // The same session acts on it.
+                send(text, toCard: existing.id)
+            } else if !running, focus != nil || prompt != nil {
+                // Not running: start it with the focus this once, then put the
+                // card's own command back so later opens don't repeat it.
+                startOnce(existing, with: config)
+            }
+            boardViewModel.selectCard(existing)
+            return existing.id
+        }
+        launchHarness(config)
+        return seatCard(seat, in: wheelhouse)?.id
+    }
+
+    private func seatLaunchConfig(
+        _ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, focus: WheelhouseFocus?, prompt: String?
+    ) -> HarnessLaunchConfig {
+        let harness = harnessRepo.harnesses.first { $0.name == seat.command }
+        return HarnessLaunchConfig(
+            harnessID: harness?.id ?? "local/\(seat.command)",
+            vendorID: "",
+            defaultVendor: harness?.defaultVendor ?? "",
+            focus: focus?.name,
+            profile: nil,
+            workingDirectory: wheelhouse.root,
+            prompt: focus == nil ? prompt : nil,
+            instructions: nil,
+            backend: SettingsStore.shared.backend,
+            branch: nil,
+            interactive: focus != nil || prompt != nil,
+            cardTitle: seat.name,
+            extraTags: WheelhouseCardMatcher.tags(wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        )
+    }
+
+    /// Gives a card a one-off init command (a focus or prompt launch) for its
+    /// next session start, and restores the original once that session is up.
+    private func startOnce(_ card: TerminalCard, with config: HarnessLaunchConfig) {
+        // If a one-off is already pending, keep the original it captured.
+        let original = pendingInitCommand[card.id] ?? card.initCommand
+        let sessionName =
+            card.tags.first { $0.key == "session" }?.value
+            ?? Self.sessionName(inCommand: original)
+        card.initCommand = config.command(sessionName: sessionName)
+        pendingInitCommand[card.id] = original
+        restoreTasks[card.id]?.cancel()
+        restoreTasks[card.id] = restoreWhenRunning(card) { [weak self] in
+            card.initCommand = original
+            self?.pendingInitCommand[card.id] = nil
+        }
+    }
+
+    /// Restarts a seat's card as a new session, not a resumed one: after a
+    /// handoff the seat should wake on its own notes (and on an edited
+    /// harness), not carry on the old conversation.
+    func restartFresh(_ card: TerminalCard) {
+        let resume = pendingAutoResume[card.id] ?? card.autoResumeSession
+        card.autoResumeSession = false
+        pendingAutoResume[card.id] = resume
+        boardViewModel.restartSession(for: card)
+        resumeRestoreTasks[card.id]?.cancel()
+        resumeRestoreTasks[card.id] = restoreWhenRunning(card) { [weak self] in
+            card.autoResumeSession = resume
+            self?.pendingAutoResume[card.id] = nil
+        }
+    }
+
+    /// Waits (up to ~30s) for the card's session to start, then restores the
+    /// temporary change. Restores even on timeout, and skips a card that has
+    /// since been deleted. A newer call for the same card cancels this one.
+    private func restoreWhenRunning(
+        _ card: TerminalCard, restore: @escaping @MainActor () -> Void
+    ) -> Task<
+        Void, Never
+    > {
+        let cardId = card.id
+        return Task { @MainActor in
+            for _ in 0..<120 {
+                if Task.isCancelled { return }
+                if TerminalSessionManager.shared.hasActiveSession(for: cardId) { break }
+                try? await Task.sleep(for: .milliseconds(250))
+            }
+            try? await Task.sleep(for: .seconds(1))
+            guard !Task.isCancelled, card.deletedAt == nil else { return }
+            restore()
+        }
+    }
+
+    /// The `--session-name` value in a stored `ynh run` command.
+    static func sessionName(inCommand command: String) -> String? {
+        let parts = command.split(separator: " ")
+        guard let index = parts.firstIndex(of: "--session-name"), index + 1 < parts.count else { return nil }
+        return String(parts[index + 1])
+    }
+
+    /// Carries out a seat action from the Wheelhouse tab and returns the
+    /// seat's card, to bring onto the stage.
+    @discardableResult
+    func perform(_ action: WheelhouseSeatAction, seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> UUID? {
+        switch action {
+        case .open:
+            return launchSeat(seat, in: wheelhouse)
+        case .focus(let focus):
+            return launchSeat(seat, in: wheelhouse, focus: focus)
+        case .handoff:
+            guard let card = seatCard(seat, in: wheelhouse) else { return nil }
+            send(Self.handoffRequest, toCard: card.id)
+            return card.id
+        case .birth:
+            return launchSeat(seat, in: wheelhouse, prompt: Self.birthPrompt)
+        case .harnessDetails:
+            showHarnessDetails(for: seat, in: wheelhouse)
+            return nil
+        case .closeTerminal:
+            guard let card = seatCard(seat, in: wheelhouse) else { return nil }
+            boardViewModel.killSession(for: card)
+            boardViewModel.deleteTabCard(card)
+            return card.id
+        }
+    }
+
+    /// Opens the harness detail page for a seat's harness, refreshing the
+    /// installed harnesses first if it isn't among them yet.
+    private func showHarnessDetails(for seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+        seatDetailContext = SeatDetailContext(wheelhouse: wheelhouse, seat: seat)
+        let find = { [harnessRepo] in harnessRepo.harnesses.first { $0.name == seat.command } }
+        if let harness = find() {
+            harnessRepo.selectedHarnessId = harness.id
+            return
+        }
+        Task { [harnessRepo] in
+            await harnessRepo.refresh()
+            if let harness = find() { harnessRepo.selectedHarnessId = harness.id }
+        }
+    }
+
+    /// The seat's card, if it has one.
+    func seatCard(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> TerminalCard? {
+        WheelhouseCardMatcher.card(
+            in: boardViewModel.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+    }
+
+    /// Types `text` into a card's running terminal and submits it. Does
+    /// nothing when the card has no live terminal.
+    func send(_ text: String, toCard cardId: UUID) {
+        guard let terminal = TerminalSessionManager.shared.getTerminalView(for: cardId) else { return }
+        terminal.send(txt: text)
+        // Submit separately: TUIs treat a newline inside pasted text as part of the text.
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(150))
+            // Look it up again: the session may have gone in the meantime.
+            TerminalSessionManager.shared.getTerminalView(for: cardId)?.send(txt: "\r")
+        }
     }
 
     /// Launch a harness by creating a persistent card with `ynh run` as
@@ -310,6 +505,7 @@ final class HarnessLaunchCoordinator {
     /// Called from the harness detail view's dismiss path. Restores the
     /// previously-selected card if one was captured.
     func dismissHarnessDetail() {
+        seatDetailContext = nil
         harnessRepo.selectedHarnessId = nil
         if let card = cardBeforeHarness {
             boardViewModel.selectCard(card)

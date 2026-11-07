@@ -1,0 +1,132 @@
+import Foundation
+import TermQShared
+
+// MARK: - Wheelhouses sidebar tab
+
+extension Strings {
+    enum Wheelhouse {
+        static var title: String { localized("wheelhouse.title") }
+        static var allWheelhouses: String { localized("wheelhouse.all") }
+        static var refreshHelp: String { localized("wheelhouse.refresh.help") }
+        static var emptyTitle: String { localized("wheelhouse.empty.title") }
+        static var emptyMessage: String { localized("wheelhouse.empty.message") }
+        static func seatCount(_ count: Int) -> String { localized("wheelhouse.seat.count %ld", count) }
+        static func loadFailed(_ name: String) -> String { localized("wheelhouse.load.failed %@", name) }
+        static var revealInFinder: String { localized("wheelhouse.reveal.in.finder") }
+        static var copyCommand: String { localized("wheelhouse.copy.command") }
+        static var addWheelhouse: String { localized("wheelhouse.add") }
+        static var addPanelMessage: String { localized("wheelhouse.add.panel.message") }
+        static var addFailedTitle: String { localized("wheelhouse.add.failed.title") }
+        static func notAWheelhouse(_ name: String) -> String { localized("wheelhouse.not.a.wheelhouse %@", name) }
+        static var workUnavailable: String { localized("wheelhouse.work.unavailable") }
+        static var unbornHelp: String { localized("wheelhouse.unborn.help") }
+        static func waitingOn(_ pr: String) -> String { localized("wheelhouse.waiting.on %@", pr) }
+        static var openTerminal: String { localized("wheelhouse.open.terminal") }
+        static var showTerminal: String { localized("wheelhouse.show.terminal") }
+        static var statusIdle: String { localized("wheelhouse.status.idle") }
+        static var pin: String { localized("wheelhouse.pin") }
+        static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
+        static func seatHarnessTitle(_ seat: String, _ wheelhouse: String) -> String {
+            localized("wheelhouse.seat.harness.title %@ %@", seat, wheelhouse)
+        }
+        static func seatHarnessRunning(_ seat: String) -> String {
+            localized("wheelhouse.seat.harness.running %@", seat)
+        }
+        static func seatHarnessIdle(_ seat: String) -> String { localized("wheelhouse.seat.harness.idle %@", seat) }
+        static func restartSeat(_ seat: String) -> String { localized("wheelhouse.restart.seat %@", seat) }
+        static func stepHandoff(_ seat: String) -> String { localized("wheelhouse.step.handoff %@", seat) }
+        static func stepRestart(_ seat: String) -> String { localized("wheelhouse.step.restart %@", seat) }
+        static func seatHarnessHandingOff(_ seat: String) -> String {
+            localized("wheelhouse.seat.harness.handing.off %@", seat)
+        }
+        static var restartSeatHelp: String { localized("wheelhouse.restart.seat.help") }
+        static var unpin: String { localized("wheelhouse.unpin") }
+
+        // Stage
+        static var stageTitle: String { localized("wheelhouse.stage.title") }
+        static var enterFocus: String { localized("wheelhouse.focus.enter") }
+        static var exitFocus: String { localized("wheelhouse.focus.exit") }
+        static var focusHelp: String { localized("wheelhouse.focus.help") }
+        static var bringOnStage: String { localized("wheelhouse.bring.on.stage") }
+        static var takeOffStage: String { localized("wheelhouse.take.off.stage") }
+        static var needsYou: String { localized("wheelhouse.needs.you") }
+        static var nobodyWaiting: String { localized("wheelhouse.nobody.waiting") }
+        static func moreWaiting(_ count: Int) -> String { localized("wheelhouse.more.waiting %ld", count) }
+        static var rangTheBell: String { localized("wheelhouse.rang.the.bell") }
+        static var justNow: String { localized("wheelhouse.just.now") }
+        static var seatActions: String { localized("wheelhouse.seat.actions") }
+        static var emptyStageTitle: String { localized("wheelhouse.stage.empty.title") }
+        static var emptyStageMessage: String { localized("wheelhouse.stage.empty.message") }
+
+        // Seat actions
+        static var birth: String { localized("wheelhouse.action.birth") }
+        static var handoff: String { localized("wheelhouse.action.handoff") }
+        static var closeTerminal: String { localized("wheelhouse.action.close.terminal") }
+        static var harnessDetails: String { localized("wheelhouse.action.harness.details") }
+        static var askToFocus: String { localized("wheelhouse.action.ask.focus") }
+        static var launchWithFocus: String { localized("wheelhouse.action.launch.focus") }
+
+        // Group headers and their hints
+        static func groupLabel(_ group: WheelhouseGroup) -> String {
+            switch group {
+            case .desk: return localized("wheelhouse.group.desk")
+            case .crew: return localized("wheelhouse.group.crew")
+            case .standing: return localized("wheelhouse.group.standing")
+            case .workers: return localized("wheelhouse.group.workers")
+            case .other(let raw):
+                return raw.isEmpty ? localized("wheelhouse.group.other") : WheelhouseRole(rawValue: raw).titleCasedSlug
+            }
+        }
+
+        static func groupHint(_ group: WheelhouseGroup) -> String? {
+            switch group {
+            case .desk: return localized("wheelhouse.group.desk.hint")
+            case .crew: return localized("wheelhouse.group.crew.hint")
+            case .standing: return localized("wheelhouse.group.standing.hint")
+            case .workers: return localized("wheelhouse.group.workers.hint")
+            case .other: return nil
+            }
+        }
+
+        // Role labels
+        static func roleLabel(_ role: WheelhouseRole) -> String {
+            switch role {
+            case .desk: return localized("wheelhouse.role.desk")
+            case .designer: return localized("wheelhouse.role.designer")
+            case .reviewer: return localized("wheelhouse.role.reviewer")
+            case .dispatcher: return localized("wheelhouse.role.dispatcher")
+            case .ciWatcher: return localized("wheelhouse.role.ci.watcher")
+            case .releaser: return localized("wheelhouse.role.releaser")
+            case .verifier: return localized("wheelhouse.role.verifier")
+            case .programmeManager: return localized("wheelhouse.role.programme.manager")
+            case .tutor: return localized("wheelhouse.role.tutor")
+            case .specialistWorker, .worker: return localized("wheelhouse.role.builder")
+            case .other: return role.titleCasedSlug
+            }
+        }
+
+        /// Role label plus specialities, such as "Builder · ynh".
+        static func roleLabel(for seat: WheelhouseSeat) -> String? {
+            guard let role = seat.effectiveRole else { return nil }
+            let base = roleLabel(role)
+            let repos = seat.repositories
+            switch role {
+            case .worker where repos.isEmpty:
+                return localized("wheelhouse.role.builder.any")
+            case _ where repos.isEmpty:
+                return base
+            default:
+                return ([base] + repos).joined(separator: " · ")
+            }
+        }
+    }
+}
+
+// MARK: - Settings.Wheelhouse
+
+extension Strings.Settings {
+    enum Wheelhouse {
+        static var enableTab: String { localized("settings.wheelhouse.enable.tab") }
+        static var enableTabHelp: String { localized("settings.wheelhouse.enable.tab.help") }
+    }
+}

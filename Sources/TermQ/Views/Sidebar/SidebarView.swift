@@ -25,7 +25,9 @@ struct SidebarView: View {
     var quarantinedEntries: [QuarantineEntry] = []
     var onRestoreQuarantine: ((String) -> Void)?
     var onDropQuarantine: ((String) -> Void)?
+    var onSeatAction: ((Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void)?
     @AppStorage("feature.harnessTab") private var harnessTabEnabled = false
+    @AppStorage("feature.wheelhouseTab") private var wheelhouseTabEnabled = false
     @ObservedObject private var sidebarState = SidebarState.shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
@@ -53,14 +55,32 @@ struct SidebarView: View {
         return detector.status != .missing
     }
 
+    @ObservedObject private var wheelhouseStage: WheelhouseStage = .shared
+
+    /// Wheelhouse focus mode shows only the Wheelhouse, with no other tabs.
+    private var inWheelhouseFocus: Bool { wheelhouseTabEnabled && wheelhouseStage.focusMode }
+
+    private var showTabPicker: Bool { (showHarnessesTab || wheelhouseTabEnabled) && !inWheelhouseFocus }
+
+    /// Tabs shown in the picker, in order, for the enabled features.
+    private var visibleTabs: [SidebarTab] {
+        SidebarTab.allCases.filter { tab in
+            switch tab {
+            case .repositories: return true
+            case .harnesses, .marketplaces: return showHarnessesTab
+            case .wheelhouses: return wheelhouseTabEnabled
+            }
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            if showHarnessesTab {
+            if showTabPicker {
                 tabPicker
                 Divider()
             }
 
-            switch sidebarState.selectedTab {
+            switch inWheelhouseFocus ? .wheelhouses : sidebarState.selectedTab {
             case .repositories:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
@@ -89,6 +109,11 @@ struct SidebarView: View {
                     detector: detector,
                     harnessRepository: harnessRepository
                 )
+            case .wheelhouses where wheelhouseTabEnabled:
+                WheelhouseSidebarTab(
+                    worktreeViewModel: worktreeViewModel,
+                    onSeatAction: onSeatAction
+                )
             default:
                 WorktreeSidebarView(
                     viewModel: worktreeViewModel, onLaunchHarness: onLaunchHarnessInWorktree,
@@ -109,7 +134,12 @@ struct SidebarView: View {
         .onChange(of: harnessTabEnabled) { _, enabled in
             if enabled {
                 Task { await detector.detect() }
-            } else {
+            } else if sidebarState.selectedTab == .harnesses || sidebarState.selectedTab == .marketplaces {
+                sidebarState.selectedTab = .repositories
+            }
+        }
+        .onChange(of: wheelhouseTabEnabled) { _, enabled in
+            if !enabled && sidebarState.selectedTab == .wheelhouses {
                 sidebarState.selectedTab = .repositories
             }
         }
@@ -140,7 +170,7 @@ struct SidebarView: View {
 
     private var tabPicker: some View {
         HStack(spacing: 0) {
-            ForEach(SidebarTab.allCases, id: \.self) { tab in
+            ForEach(visibleTabs, id: \.self) { tab in
                 Button {
                     sidebarState.selectedTab = tab
                 } label: {

@@ -743,6 +743,8 @@ extension ToolsTabContent {
         )
         .help(Strings.Settings.Ynh.enableHarnessTabHelp)
 
+        WheelhouseTabSettingToggle()
+
         // Detected binary info (mirrors the tmux Version/Path pattern)
         ynhBinaryInfo
 
