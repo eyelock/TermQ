@@ -746,6 +746,8 @@
 "harnesses.launch.browse" = "עיין…";
 "harnesses.launch.prompt" = "פרומפט";
 "harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
+"harnesses.launch.resume" = "המשך את ההפעלה הקודמת";
+"harnesses.launch.resume.help" = "ממשיך הפעלה קודמת במקום להתחיל מחדש. Claude ממשיך רק את ההפעלה שהכרטיס הזה התחיל, ולכן כרטיס חדש מתחיל מחדש; ספקים אחרים ממשיכים את ההפעלה האחרונה בתיקיית העבודה.";
 "harnesses.launch.button" = "הפעל";
 "harnesses.launch.help" = "הפעל harness זה במסוף חדש";
 "harnesses.launch.cancel" = "ביטול";
@@ -913,6 +915,7 @@
 "marketplace.plugin.no.artifacts" = "לא רשומים פריטים לתוסף זה.";
 "marketplace.plugin.no.artifacts.hint" = "כל תוכן התוסף ייכלל.";
 "marketplace.plugin.artifacts.unavailable %@" = "פריטים אינם זמינים: %@";
+"marketplace.plugin.unsupported %@" = "סוג תוכן לא נתמך: %@. לא ניתן להוסיף אותו ל-Harness.";
 "marketplace.picker.step.artifacts" = "פריטים";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "החל";
@@ -1024,6 +1027,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";
+"marketplace.add.folder.placeholder" = "תיקייה בתוך המאגר (אופציונלי, ריק = הרמה העליונה)";
+"marketplace.add.import.copilot" = "ייבוא מ-Copilot CLI";
+"marketplace.add.import.copilot.help" = "הוספת ה-marketplaces שהוגדרו ב-GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "יובאו %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "רענן את כל ה-marketplace-ים";
 "marketplace.restore.defaults" = "שחזר ברירות מחדל";
@@ -1198,6 +1205,8 @@
 "harnesses.manifest.edit.description" = "תיאור";
 "harnesses.manifest.edit.description.hint" = "מוצג ברשימת ה-harness ובכותרת הפרטים. השאר ריק להשמטה.";
 "harnesses.manifest.edit.save" = "שמור שינויים";
+"harnesses.layout.legacy %@" = "משתמש בפריסה הישנה .ynh-plugin/ ש-YNH 0.14+ דוחה. הריצו: ynd migrate %@";
+"harnesses.layout.both" = "קיימים גם .agents/harness/ וגם .ynh-plugin/, ו-YNH 0.14+ דוחה זאת. הסירו את התיקייה .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "ה-commit העולמי השתנה: %@ → %@";
@@ -1247,6 +1256,14 @@
 "harnesses.focus.add.confirm" = "הוסף";
 "harnesses.focus.save" = "שמור";
 "harnesses.focus.cancel" = "ביטול";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "העתק מיקוד";
+"harnesses.focus.paste.button %@" = "הדבק מיקוד “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "הצג פרטים";
+"harnesses.profile.details.hide" = "הסתר פרטים";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "הוסף פרופיל";

@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Αναζήτηση…";
 "harnesses.launch.prompt" = "Ερώτημα";
 "harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
+"harnesses.launch.resume" = "Συνέχιση προηγούμενης συνεδρίας";
+"harnesses.launch.resume.help" = "Συνεχίζει μια προηγούμενη συνεδρία αντί να ξεκινά από την αρχή. Το Claude συνεχίζει μόνο τη συνεδρία που ξεκίνησε αυτή η κάρτα, επομένως μια νέα κάρτα ξεκινά από την αρχή· οι άλλοι πάροχοι συνεχίζουν την πιο πρόσφατη συνεδρία στον φάκελο εργασίας.";
 "harnesses.launch.button" = "Εκκίνηση";
 "harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
 "harnesses.launch.cancel" = "Ακύρωση";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Δεν υπάρχουν αντικείμενα για αυτό το πρόσθετο.";
 "marketplace.plugin.no.artifacts.hint" = "Θα συμπεριληφθεί όλο το περιεχόμενο του πρόσθετου.";
 "marketplace.plugin.artifacts.unavailable %@" = "Τα αντικείμενα δεν είναι διαθέσιμα: %@";
+"marketplace.plugin.unsupported %@" = "Μη υποστηριζόμενος τύπος περιεχομένου: %@. Δεν μπορεί να προστεθεί σε harness.";
 "marketplace.picker.step.artifacts" = "Αντικείμενα";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Εφαρμογή";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";
+"marketplace.add.folder.placeholder" = "Φάκελος μέσα στο αποθετήριο (προαιρετικό, κενό = ανώτατο επίπεδο)";
+"marketplace.add.import.copilot" = "Εισαγωγή από το Copilot CLI";
+"marketplace.add.import.copilot.help" = "Προσθήκη των marketplace που έχουν ρυθμιστεί στο GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Εισήχθησαν: %lld";
 "marketplace.add.section.ref" = "Αναφορά";
 "marketplace.refresh.all.help" = "Ανανέωση όλων των marketplace";
 "marketplace.restore.defaults" = "Επαναφορά προεπιλογών";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Περιγραφή";
 "harnesses.manifest.edit.description.hint" = "Εμφανίζεται στη λίστα harness και στην κεφαλίδα λεπτομερειών. Αφήστε κενό για παράλειψη.";
 "harnesses.manifest.edit.save" = "Αποθήκευση αλλαγών";
+"harnesses.layout.legacy %@" = "Χρησιμοποιεί την παλιά διάταξη .ynh-plugin/, την οποία το YNH 0.14+ απορρίπτει. Εκτελέστε: ynd migrate %@";
+"harnesses.layout.both" = "Έχει και το .agents/harness/ και το .ynh-plugin/, κάτι που το YNH 0.14+ απορρίπτει. Αφαιρέστε τον κατάλογο .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Το upstream commit άλλαξε: %@ → %@";
@@ -1241,6 +1250,14 @@
 "harnesses.focus.add.confirm" = "Προσθήκη";
 "harnesses.focus.save" = "Αποθήκευση";
 "harnesses.focus.cancel" = "Ακύρωση";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Αντιγραφή εστίασης";
+"harnesses.focus.paste.button %@" = "Επικόλληση εστίασης «%@»";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Εμφάνιση λεπτομερειών";
+"harnesses.profile.details.hide" = "Απόκρυψη λεπτομερειών";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Προσθήκη προφίλ";

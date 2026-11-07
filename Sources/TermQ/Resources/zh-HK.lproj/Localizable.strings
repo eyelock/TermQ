@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "瀏覽…";
 "harnesses.launch.prompt" = "提示詞";
 "harnesses.launch.prompt.placeholder" = "傳遞給代理程式的選用提示詞…";
+"harnesses.launch.resume" = "恢復上一個工作階段";
+"harnesses.launch.resume.help" = "繼續先前的工作階段，而不是重新開始。Claude 只會繼續此卡片啟動的工作階段，因此新卡片會重新開始；其他供應商則繼續工作目錄中最近的工作階段。";
 "harnesses.launch.button" = "啟動";
 "harnesses.launch.help" = "在新終端機中啟動此 harness";
 "harnesses.launch.cancel" = "取消";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "此外掛程式沒有列出成品。";
 "marketplace.plugin.no.artifacts.hint" = "將包含外掛程式的所有內容。";
 "marketplace.plugin.artifacts.unavailable %@" = "成品無法使用：%@";
+"marketplace.plugin.unsupported %@" = "不支援的內容類型:%@。無法新增至 Harness。";
 "marketplace.picker.step.artifacts" = "成品";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "套用";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "分支、標籤或提交 SHA（選填）";
+"marketplace.add.folder.placeholder" = "儲存庫內的資料夾（選填，留空 = 最上層）";
+"marketplace.add.import.copilot" = "從 Copilot CLI 匯入";
+"marketplace.add.import.copilot.help" = "加入在 GitHub Copilot CLI 中設定的市集（~/.copilot/settings.json）";
+"marketplace.add.imported.copilot %lld" = "已匯入 %lld 個";
 "marketplace.add.section.ref" = "參照";
 "marketplace.refresh.all.help" = "重新整理所有 Marketplace";
 "marketplace.restore.defaults" = "還原預設值";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "描述";
 "harnesses.manifest.edit.description.hint" = "顯示在 harness 清單和詳情標題中。留空則省略。";
 "harnesses.manifest.edit.save" = "儲存變更";
+"harnesses.layout.legacy %@" = "使用舊版 .ynh-plugin/ 配置，YNH 0.14+ 會拒絕。請執行：ynd migrate %@";
+"harnesses.layout.both" = "同時存在 .agents/harness/ 和 .ynh-plugin/，YNH 0.14+ 會拒絕。請刪除 .ynh-plugin/ 目錄。";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "上游提交已變更：%@ → %@";
@@ -1241,6 +1250,14 @@
 "harnesses.focus.add.confirm" = "新增";
 "harnesses.focus.save" = "儲存";
 "harnesses.focus.cancel" = "取消";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "複製焦點";
+"harnesses.focus.paste.button %@" = "貼上焦點「%@」";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "顯示詳細資料";
+"harnesses.profile.details.hide" = "隱藏詳細資料";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "新增設定檔";

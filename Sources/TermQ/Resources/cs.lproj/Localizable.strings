@@ -756,6 +756,8 @@
 "harnesses.launch.browse" = "Procházet…";
 "harnesses.launch.prompt" = "Výzva";
 "harnesses.launch.prompt.placeholder" = "Volitelná výzva pro agenta…";
+"harnesses.launch.resume" = "Obnovit předchozí relaci";
+"harnesses.launch.resume.help" = "Naváže na předchozí relaci místo spuštění od začátku. Claude navazuje pouze na relaci, kterou tato karta zahájila, takže nová karta začíná od začátku; ostatní poskytovatelé navazují na poslední relaci v pracovním adresáři.";
 "harnesses.launch.button" = "Spustit";
 "harnesses.launch.help" = "Spustit tento postroj v novém terminálu";
 "harnesses.launch.cancel" = "Zrušit";
@@ -907,6 +909,7 @@
 "marketplace.plugin.no.artifacts" = "Pro tento plugin nejsou uvedeny žádné artefakty.";
 "marketplace.plugin.no.artifacts.hint" = "Bude zahrnuto veškeré obsah pluginu.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakty nedostupné: %@";
+"marketplace.plugin.unsupported %@" = "Nepodporovaný typ obsahu: %@. Nelze jej přidat do sady.";
 "marketplace.picker.step.artifacts" = "Artefakty";
 "marketplace.picker.step.harness" = "Sada";
 "marketplace.picker.step.apply" = "Použít";
@@ -1018,6 +1021,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";
+"marketplace.add.folder.placeholder" = "Složka v repozitáři (volitelné, prázdné = nejvyšší úroveň)";
+"marketplace.add.import.copilot" = "Importovat z Copilot CLI";
+"marketplace.add.import.copilot.help" = "Přidat marketplaces nakonfigurované v GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Importováno: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Obnovit všechny marketplace";
 "marketplace.restore.defaults" = "Obnovit výchozí";
@@ -1192,6 +1199,8 @@
 "harnesses.manifest.edit.description" = "Popis";
 "harnesses.manifest.edit.description.hint" = "Zobrazeno v seznamu setů a v záhlaví detailů. Ponechte prázdné pro vynechání.";
 "harnesses.manifest.edit.save" = "Uložit změny";
+"harnesses.layout.legacy %@" = "Používá starý formát .ynh-plugin/, který YNH 0.14+ odmítá. Spusťte: ynd migrate %@";
+"harnesses.layout.both" = "Obsahuje .agents/harness/ i .ynh-plugin/, což YNH 0.14+ odmítá. Odstraňte adresář .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream se změnil: %@ → %@";
@@ -1241,6 +1250,14 @@
 "harnesses.focus.add.confirm" = "Přidat";
 "harnesses.focus.save" = "Uložit";
 "harnesses.focus.cancel" = "Zrušit";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Kopírovat fokus";
+"harnesses.focus.paste.button %@" = "Vložit fokus „%@“";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Zobrazit podrobnosti";
+"harnesses.profile.details.hide" = "Skrýt podrobnosti";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Přidat profil";

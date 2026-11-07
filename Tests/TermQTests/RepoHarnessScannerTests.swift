@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 import XCTest
 
 @testable import TermQ
@@ -19,9 +20,11 @@ final class RepoHarnessScannerTests: XCTestCase {
 
     // MARK: - Fixture helpers
 
-    private func writeEntry(name: String, at relative: String) throws {
+    private func writeEntry(
+        name: String, at relative: String, manifestDir: String = ".agents/harness"
+    ) throws {
         let base = relative == "." ? repoDir! : repoDir.appendingPathComponent(relative)
-        let pluginDir = base.appendingPathComponent(".ynh-plugin")
+        let pluginDir = base.appendingPathComponent(manifestDir)
         try FileManager.default.createDirectory(at: pluginDir, withIntermediateDirectories: true)
         let json = ["name": name, "version": "0.1.0", "default_vendor": "claude"]
         let data = try JSONSerialization.data(withJSONObject: json)
@@ -79,7 +82,7 @@ final class RepoHarnessScannerTests: XCTestCase {
     }
 
     func test_scan_malformedManifest_skippedNotFatal() throws {
-        let pluginDir = repoDir.appendingPathComponent("ynh/broken/.ynh-plugin")
+        let pluginDir = repoDir.appendingPathComponent("ynh/broken/.agents/harness")
         try FileManager.default.createDirectory(at: pluginDir, withIntermediateDirectories: true)
         try Data("not json".utf8).write(to: pluginDir.appendingPathComponent("plugin.json"))
         try writeEntry(name: "ok", at: "ynh/ok")
@@ -93,6 +96,51 @@ final class RepoHarnessScannerTests: XCTestCase {
         XCTAssertTrue(scan.entries.isEmpty)
         XCTAssertTrue(scan.suggestedParentDirs.isEmpty)
         XCTAssertFalse(scan.hasRegisterScript)
+    }
+
+    // MARK: - Manifest layouts
+
+    func test_scan_legacyLayout_discoveredAndFlagged() throws {
+        try writeEntry(name: "old", at: "ynh/old", manifestDir: ".ynh-plugin")
+        try writeEntry(name: "new", at: "ynh/new")
+
+        let scan = RepoHarnessScanner.scan(repoPath: repoDir.path)
+        XCTAssertEqual(
+            scan.entries,
+            [
+                RepoHarnessEntry(name: "new", relativePath: "ynh/new", layout: .canonical),
+                RepoHarnessEntry(name: "old", relativePath: "ynh/old", layout: .legacy),
+            ]
+        )
+    }
+
+    func test_scan_bothLayouts_reportedOnce_andFlagged() throws {
+        try writeEntry(name: "dual", at: "ynh/dual")
+        try writeEntry(name: "dual", at: "ynh/dual", manifestDir: ".ynh-plugin")
+
+        let scan = RepoHarnessScanner.scan(repoPath: repoDir.path)
+        XCTAssertEqual(
+            scan.entries, [RepoHarnessEntry(name: "dual", relativePath: "ynh/dual", layout: .both)])
+    }
+
+    func test_scan_bothLayouts_canonicalNameWins() throws {
+        try writeEntry(name: "canonical-name", at: "ynh/x")
+        try writeEntry(name: "legacy-name", at: "ynh/x", manifestDir: ".ynh-plugin")
+
+        let scan = RepoHarnessScanner.scan(repoPath: repoDir.path)
+        XCTAssertEqual(scan.entries.map(\.name), ["canonical-name"])
+    }
+
+    func test_scan_rootEmbedded_legacy() throws {
+        try writeEntry(name: "root", at: ".", manifestDir: ".ynh-plugin")
+        let scan = RepoHarnessScanner.scan(repoPath: repoDir.path)
+        XCTAssertEqual(scan.entries, [RepoHarnessEntry(name: "root", relativePath: ".", layout: .legacy)])
+    }
+
+    func test_scan_agentsDirWithoutHarness_isNotAnEntry() throws {
+        try mkdir("ynh/codex/.agents/skills/foo")
+        let scan = RepoHarnessScanner.scan(repoPath: repoDir.path)
+        XCTAssertTrue(scan.entries.isEmpty)
     }
 
     // MARK: - Suggestions

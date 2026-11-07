@@ -15,6 +15,53 @@ struct Marketplace: Codable, Identifiable, Sendable {
     var plugins: [MarketplacePlugin]
     var lastFetched: Date?
     var fetchError: String?
+    /// Optional subfolder of the repository (or local folder) that holds the marketplace index.
+    /// nil/blank → the top level. Relative plugin sources resolve against this folder.
+    var folder: String?
+    /// User-assigned label. Survives refreshes, which overwrite `name` with the index's own name.
+    var customName: String?
+
+    /// Name shown in the UI: the user's label, else the index name, else the short repo path.
+    var displayName: String {
+        if let custom = customName?.trimmingCharacters(in: .whitespaces), !custom.isEmpty { return custom }
+        if !name.isEmpty { return name }
+        if isLocal { return URL(fileURLWithPath: localPath).lastPathComponent }
+        return GitURLHelper.shortURL(url)
+    }
+
+    /// Filesystem path for a local marketplace (strips a `file://` prefix).
+    var localPath: String { url.hasPrefix("file:///") ? String(url.dropFirst(7)) : url }
+
+    /// `folder` with surrounding whitespace/slashes removed; nil when blank.
+    var normalizedFolder: String? { Self.normalizeFolder(folder) }
+
+    static func normalizeFolder(_ raw: String?) -> String? {
+        guard let raw else { return nil }
+        var trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.hasPrefix("./") { trimmed = String(trimmed.dropFirst(2)) }
+        trimmed = trimmed.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        // Refuse parent-directory segments so a folder can never escape the repository root.
+        if trimmed.split(separator: "/").contains("..") { return nil }
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    /// Turns the shorthand people paste (`owner/repo`, `github.com/owner/repo`) into a URL git can
+    /// clone. Anything with a scheme, an scp-style `git@host:` form, or a local path is left alone.
+    static func normalizeRepoURL(_ raw: String) -> String {
+        let url = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if url.isEmpty || url.contains("://") || url.hasPrefix("git@") || url.hasPrefix("/")
+            || url.hasPrefix("~")
+        {
+            return url
+        }
+        if url.hasPrefix("github.com/") || url.hasPrefix("www.github.com/") { return "https://" + url }
+        let parts = url.split(separator: "/", omittingEmptySubsequences: false)
+        let slug = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.")
+        if parts.count == 2, parts.allSatisfy({ !$0.isEmpty && $0.unicodeScalars.allSatisfy(slug.contains) }) {
+            return "https://github.com/\(url)"
+        }
+        return url
+    }
 
     /// True when this marketplace points to a local folder rather than a remote Git repository.
     var isLocal: Bool { url.hasPrefix("/") || url.hasPrefix("file:///") }
@@ -32,19 +79,25 @@ struct Marketplace: Codable, Identifiable, Sendable {
 enum MarketplaceVendor: String, Codable, Sendable, CaseIterable {
     case claude
     case cursor
+    case copilot
 
     var displayName: String {
         switch self {
         case .claude: return "Claude"
         case .cursor: return "Cursor"
+        case .copilot: return "Copilot"
         }
     }
 
     /// Relative path to the marketplace index inside the cloned repo.
-    var indexPath: String {
+    var indexPath: String { indexPaths[0] }
+
+    /// Candidate index locations, in lookup order. Copilot CLI also reads the Claude layout.
+    var indexPaths: [String] {
         switch self {
-        case .claude: return ".claude-plugin/marketplace.json"
-        case .cursor: return ".cursor-plugin/marketplace.json"
+        case .claude: return [".claude-plugin/marketplace.json"]
+        case .cursor: return [".cursor-plugin/marketplace.json"]
+        case .copilot: return [".github/plugin/marketplace.json", ".claude-plugin/marketplace.json"]
         }
     }
 }
@@ -69,20 +122,31 @@ struct PluginSourceSpec: Codable, Sendable {
     var type: PluginSourceType
     var url: String  // relative path ("./plugins/foo") or external URL
     var path: String?  // optional subdirectory within the source
+    /// Branch or tag the index pins this source to (external sources only).
+    var ref: String?
+    /// Exact commit the index pins this source to (external sources only). Wins over `ref`.
+    var sha: String?
 
-    init(type: PluginSourceType, url: String, path: String? = nil) {
+    init(type: PluginSourceType, url: String, path: String? = nil, ref: String? = nil, sha: String? = nil) {
         self.type = type
         self.url = url
         self.path = path
+        self.ref = ref
+        self.sha = sha
     }
 
     // The vendor marketplace.json `source` field may be a plain string (relative path)
     // or a JSON object. The object uses "source" as the type discriminator key (not "type").
     init(from decoder: Decoder) throws {
         if let str = try? decoder.singleValueContainer().decode(String.self) {
-            self.type = str.hasPrefix(".") ? .relative : .url
+            // A bare string is a path inside the marketplace repo ("./plugins/x", or "plugins/x" as
+            // Copilot's index writes it) unless it is clearly a remote URL.
+            let isRemote = str.contains("://") || str.hasPrefix("git@") || str.hasPrefix("github.com/")
+            self.type = isRemote ? .url : .relative
             self.url = str
             self.path = nil
+            self.ref = nil
+            self.sha = nil
             return
         }
         // Object form from vendor JSON: {"source": "github", "url": "..."}
@@ -100,10 +164,24 @@ struct PluginSourceSpec: Codable, Sendable {
             self.url = (try? container.decode(String.self, forKey: .url)) ?? ""
         }
         self.path = try? container.decode(String.self, forKey: .path)
+        self.ref = (try? container.decode(String.self, forKey: .ref)).flatMap { $0.isEmpty ? nil : $0 }
+        self.sha = (try? container.decode(String.self, forKey: .sha)).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     private enum RawSourceCodingKeys: String, CodingKey {
-        case source, type, url, path, repo
+        case source, type, url, path, repo, ref, sha
+    }
+
+    /// The commit or ref to check out for an external source: the exact `sha` if the index gives one.
+    var pin: String? { sha ?? ref }
+
+    /// The ref to hand to `ynh include add --ref`.
+    ///
+    /// A plugin inside the marketplace repo follows the marketplace's own ref. An external plugin lives in
+    /// a different repository, so only its own pin applies; the marketplace's ref must not leak onto it.
+    func effectiveRef(marketplaceRef: String?) -> String? {
+        let ref = (type.isRelative || url.hasPrefix("./")) ? marketplaceRef : pin
+        return (ref?.isEmpty == false) ? ref : nil
     }
 }
 
@@ -113,7 +191,7 @@ extension PluginSourceSpec {
     /// Relative-source plugins live inside the marketplace repo, so the correct
     /// source URL is the marketplace git URL, not the relative path stored in
     /// the plugin spec (which is meaningless as a standalone git URL to YNH).
-    func resolved(marketplaceURL: String) -> (url: String, path: String?) {
+    func resolved(marketplaceURL: String, folder: String? = nil) -> (url: String, path: String?) {
         // Also catch persisted entries where type was corrupted to .unknown due to
         // the "source" vs "type" key mismatch in the old decoder.
         guard type.isRelative || url.hasPrefix("./") else {
@@ -129,7 +207,10 @@ extension PluginSourceSpec {
             return (url, path)
         }
         let rawPath = url.hasPrefix("./") ? String(url.dropFirst(2)) : url
-        let fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
+        var fullPath = path.map { "\(rawPath)/\($0)" } ?? rawPath
+        if let folder = Marketplace.normalizeFolder(folder) {
+            fullPath = fullPath.isEmpty ? folder : "\(folder)/\(fullPath)"
+        }
         return (marketplaceURL, fullPath.isEmpty ? nil : fullPath)
     }
 }
@@ -153,6 +234,8 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
     case pending  // external source — not yet cloned
     case loading  // clone in progress
     case failed(String)
+    /// Recognised content TermQ/ynh cannot add (e.g. a Copilot "extensions" plugin). Holds the type name.
+    case unsupported(String)
 
     private enum CodingKeys: String, CodingKey { case type, message }
 
@@ -164,6 +247,9 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
         case "failed":
             let msg = (try? container.decode(String.self, forKey: .message)) ?? ""
             self = .failed(msg)
+        case "unsupported":
+            let kind = (try? container.decode(String.self, forKey: .message)) ?? ""
+            self = .unsupported(kind)
         default: self = .pending
         }
     }
@@ -179,12 +265,15 @@ enum SkillsLoadState: Codable, Sendable, Equatable {
         case .failed(let msg):
             try container.encode("failed", forKey: .type)
             try container.encode(msg, forKey: .message)
+        case .unsupported(let kind):
+            try container.encode("unsupported", forKey: .type)
+            try container.encode(kind, forKey: .message)
         }
     }
 
     var isResolved: Bool {
         switch self {
-        case .eager, .failed: return true
+        case .eager, .failed, .unsupported: return true
         default: return false
         }
     }

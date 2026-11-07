@@ -68,11 +68,9 @@ final class HarnessLaunchCoordinator {
     var seatDetailContext: SeatDetailContext?
 
     /// One-off seat launch state awaiting restore, per card: the card's own
-    /// init command and resume setting, and the tasks that put them back.
+    /// init command, and the task that puts it back.
     @ObservationIgnored private var pendingInitCommand: [UUID: String] = [:]
-    @ObservationIgnored private var pendingAutoResume: [UUID: Bool] = [:]
     @ObservationIgnored private var restoreTasks: [UUID: Task<Void, Never>] = [:]
-    @ObservationIgnored private var resumeRestoreTasks: [UUID: Task<Void, Never>] = [:]
 
     struct SeatDetailContext: Equatable {
         let wheelhouse: Wheelhouse
@@ -213,6 +211,8 @@ final class HarnessLaunchCoordinator {
             card.tags.first { $0.key == "session" }?.value
             ?? Self.sessionName(inCommand: original)
         card.initCommand = config.command(sessionName: sessionName)
+        // The focus or prompt is new intent: start cold, don't resume past it.
+        card.resumeOverrideForNextLaunch = false
         pendingInitCommand[card.id] = original
         restoreTasks[card.id]?.cancel()
         restoreTasks[card.id] = restoreWhenRunning(card) { [weak self] in
@@ -225,15 +225,9 @@ final class HarnessLaunchCoordinator {
     /// handoff the seat should wake on its own notes (and on an edited
     /// harness), not carry on the old conversation.
     func restartFresh(_ card: TerminalCard) {
-        let resume = pendingAutoResume[card.id] ?? card.autoResumeSession
-        card.autoResumeSession = false
-        pendingAutoResume[card.id] = resume
+        // One-shot: this restart starts cold; later reopens resume as usual.
+        card.resumeOverrideForNextLaunch = false
         boardViewModel.restartSession(for: card)
-        resumeRestoreTasks[card.id]?.cancel()
-        resumeRestoreTasks[card.id] = restoreWhenRunning(card) { [weak self] in
-            card.autoResumeSession = resume
-            self?.pendingAutoResume[card.id] = nil
-        }
     }
 
     /// Waits (up to ~30s) for the card's session to start, then restores the
@@ -385,11 +379,12 @@ final class HarnessLaunchCoordinator {
             backend: config.backend
         )
         card.allowAutorun = true
-        // Harness cards resume by default: the first launch has nothing to
-        // continue and starts cold anyway, so this only takes effect from the
-        // second launch onward — which is the behaviour people expect when
-        // reopening a terminal they were working in.
+        // Harness cards resume on reopen/restart by default. The first launch is
+        // NOT implicitly cold: YNH resumes the newest session in the working
+        // directory, which could belong to someone else, so the first launch's
+        // behaviour is set explicitly from the sheet's toggle (off by default).
         card.autoResumeSession = true
+        card.resumeOverrideForNextLaunch = config.resumeSession
         card.workspaceId = boardViewModel.newCardWorkspaceId
 
         boardViewModel.board.cards.append(card)
@@ -440,6 +435,9 @@ final class HarnessLaunchCoordinator {
         // launch path, which derives the same name from the card id).
         card.initCommand = config.command(sessionName: card.tmuxSessionName)
         card.allowAutorun = true
+        // A rewrite carries new intent (focus/prompt), so it starts cold unless
+        // the config explicitly asks to resume.
+        card.resumeOverrideForNextLaunch = config.resumeSession
 
         boardViewModel.save()
     }

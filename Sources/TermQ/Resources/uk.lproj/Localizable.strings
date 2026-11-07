@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Огляд…";
 "harnesses.launch.prompt" = "Запит";
 "harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
+"harnesses.launch.resume" = "Відновити попередній сеанс";
+"harnesses.launch.resume.help" = "Продовжує попередній сеанс замість запуску з нуля. Claude продовжує лише сеанс, запущений цією карткою, тому нова картка починає з нуля; інші постачальники продовжують останній сеанс у робочому каталозі.";
 "harnesses.launch.button" = "Запустити";
 "harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
 "harnesses.launch.cancel" = "Скасувати";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Для цього плагіна не зазначено артефактів.";
 "marketplace.plugin.no.artifacts.hint" = "Весь вміст плагіна буде включено.";
 "marketplace.plugin.artifacts.unavailable %@" = "Артефакти недоступні: %@";
+"marketplace.plugin.unsupported %@" = "Непідтримуваний тип вмісту: %@. Його не можна додати до харнесу.";
 "marketplace.picker.step.artifacts" = "Артефакти";
 "marketplace.picker.step.harness" = "Харнес";
 "marketplace.picker.step.apply" = "Застосувати";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
+"marketplace.add.folder.placeholder" = "Тека в репозиторії (необов'язково, порожньо = верхній рівень)";
+"marketplace.add.import.copilot" = "Імпортувати з Copilot CLI";
+"marketplace.add.import.copilot.help" = "Додати маркетплейси, налаштовані в GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Імпортовано: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Оновити всі marketplace";
 "marketplace.restore.defaults" = "Відновити типові";
@@ -1199,6 +1206,8 @@
 "harnesses.manifest.edit.description" = "Опис";
 "harnesses.manifest.edit.description.hint" = "Відображається у списку наборів і в заголовку деталей. Залиште порожнім, щоб не вказувати.";
 "harnesses.manifest.edit.save" = "Зберегти зміни";
+"harnesses.layout.legacy %@" = "Використовує застарілу структуру .ynh-plugin/, яку YNH 0.14+ відхиляє. Виконайте: ynd migrate %@";
+"harnesses.layout.both" = "Містить і .agents/harness/, і .ynh-plugin/, що YNH 0.14+ відхиляє. Видаліть каталог .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Коміт upstream змінився: %@ → %@";
@@ -1248,6 +1257,14 @@
 "harnesses.focus.add.confirm" = "Додати";
 "harnesses.focus.save" = "Зберегти";
 "harnesses.focus.cancel" = "Скасувати";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Копіювати фокус";
+"harnesses.focus.paste.button %@" = "Вставити фокус «%@»";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Показати деталі";
+"harnesses.profile.details.hide" = "Сховати деталі";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Додати профіль";

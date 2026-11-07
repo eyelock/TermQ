@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Semak imbas…";
 "harnesses.launch.prompt" = "Gesaan";
 "harnesses.launch.prompt.placeholder" = "Gesaan pilihan untuk dihantar kepada ejen…";
+"harnesses.launch.resume" = "Sambung sesi sebelumnya";
+"harnesses.launch.resume.help" = "Menyambung sesi sebelumnya dan bukannya bermula semula. Claude hanya menyambung sesi yang dimulakan oleh kad ini, jadi kad baharu bermula semula; vendor lain menyambung sesi terkini dalam direktori kerja.";
 "harnesses.launch.button" = "Lancarkan";
 "harnesses.launch.help" = "Lancarkan harness ini dalam terminal baharu";
 "harnesses.launch.cancel" = "Batal";
@@ -912,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "Tiada artifak disenaraikan untuk pemalam ini.";
 "marketplace.plugin.no.artifacts.hint" = "Semua kandungan pemalam akan disertakan.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artifak tidak tersedia: %@";
+"marketplace.plugin.unsupported %@" = "Jenis kandungan tidak disokong: %@. Ini tidak boleh ditambah ke Harness.";
 "marketplace.picker.step.artifacts" = "Artifak";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Guna";
@@ -1023,6 +1026,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";
+"marketplace.add.folder.placeholder" = "Folder dalam repositori (pilihan, kosong = peringkat teratas)";
+"marketplace.add.import.copilot" = "Import daripada Copilot CLI";
+"marketplace.add.import.copilot.help" = "Tambah marketplace yang dikonfigurasikan dalam GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld diimport";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Muat semula semua marketplace";
 "marketplace.restore.defaults" = "Pulihkan lalai";
@@ -1197,6 +1204,8 @@
 "harnesses.manifest.edit.description" = "Penerangan";
 "harnesses.manifest.edit.description.hint" = "Dipaparkan dalam senarai harness dan pengepala butiran. Biarkan kosong untuk ditinggalkan.";
 "harnesses.manifest.edit.save" = "Simpan Perubahan";
+"harnesses.layout.legacy %@" = "Menggunakan susun atur lama .ynh-plugin/, yang ditolak oleh YNH 0.14+. Jalankan: ynd migrate %@";
+"harnesses.layout.both" = "Mempunyai kedua-dua .agents/harness/ dan .ynh-plugin/, yang ditolak oleh YNH 0.14+. Buang direktori .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Commit upstream berubah: %@ → %@";
@@ -1246,6 +1255,14 @@
 "harnesses.focus.add.confirm" = "Tambah";
 "harnesses.focus.save" = "Simpan";
 "harnesses.focus.cancel" = "Batal";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Salin Fokus";
+"harnesses.focus.paste.button %@" = "Tampal Fokus “%@”";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Tunjukkan Butiran";
+"harnesses.profile.details.hide" = "Sembunyikan Butiran";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Tambah Profil";

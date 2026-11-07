@@ -378,17 +378,7 @@ struct MarketplaceRowView: View {
         return last < cutoff
     }
 
-    private var displayName: String {
-        if marketplace.isLocal {
-            if !marketplace.name.isEmpty { return marketplace.name }
-            let path =
-                marketplace.url.hasPrefix("file:///")
-                ? String(marketplace.url.dropFirst(7))
-                : marketplace.url
-            return URL(fileURLWithPath: path).lastPathComponent
-        }
-        return GitURLHelper.shortURL(marketplace.url)
-    }
+    private var displayName: String { marketplace.displayName }
 
     var body: some View {
         HStack(spacing: 8) {

@@ -747,6 +747,8 @@
 "harnesses.launch.browse" = "Brskaj…";
 "harnesses.launch.prompt" = "Poziv";
 "harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
+"harnesses.launch.resume" = "Nadaljuj prejšnjo sejo";
+"harnesses.launch.resume.help" = "Nadaljuje prejšnjo sejo namesto začetka znova. Claude nadaljuje samo sejo, ki jo je začela ta kartica, zato nova kartica začne znova; drugi ponudniki nadaljujejo zadnjo sejo v delovnem imeniku.";
 "harnesses.launch.button" = "Zaženi";
 "harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
 "harnesses.launch.cancel" = "Prekliči";
@@ -914,6 +916,7 @@
 "marketplace.plugin.no.artifacts" = "Za ta vtičnik ni navedenih artefaktov.";
 "marketplace.plugin.no.artifacts.hint" = "Vsa vsebina vtičnika bo vključena.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefakti niso na voljo: %@";
+"marketplace.plugin.unsupported %@" = "Nepodprta vrsta vsebine: %@. Ni je mogoče dodati v harness.";
 "marketplace.picker.step.artifacts" = "Artefakti";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Uporabi";
@@ -1025,6 +1028,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Veja, oznaka ali commit SHA (neobvezno)";
+"marketplace.add.folder.placeholder" = "Mapa znotraj repozitorija (neobvezno, prazno = najvišja raven)";
+"marketplace.add.import.copilot" = "Uvozi iz Copilot CLI";
+"marketplace.add.import.copilot.help" = "Dodaj marketplace, nastavljene v GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Uvoženo: %lld";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Osveži vse marketplace-e";
 "marketplace.restore.defaults" = "Obnovi privzete";
@@ -1199,6 +1206,8 @@
 "harnesses.manifest.edit.description" = "Opis";
 "harnesses.manifest.edit.description.hint" = "Prikazano na seznamu harnessov in v glavi podrobnosti. Pustite prazno za izpustitev.";
 "harnesses.manifest.edit.save" = "Shrani spremembe";
+"harnesses.layout.legacy %@" = "Uporablja staro postavitev .ynh-plugin/, ki jo YNH 0.14+ zavrača. Zaženite: ynd migrate %@";
+"harnesses.layout.both" = "Vsebuje tako .agents/harness/ kot .ynh-plugin/, kar YNH 0.14+ zavrača. Odstranite imenik .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit spremenjen: %@ → %@";
@@ -1248,6 +1257,14 @@
 "harnesses.focus.add.confirm" = "Dodaj";
 "harnesses.focus.save" = "Shrani";
 "harnesses.focus.cancel" = "Prekliči";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Kopiraj fokus";
+"harnesses.focus.paste.button %@" = "Prilepi fokus „%@“";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Pokaži podrobnosti";
+"harnesses.profile.details.hide" = "Skrij podrobnosti";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Dodaj profil";

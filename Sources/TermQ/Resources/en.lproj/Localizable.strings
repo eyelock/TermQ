@@ -880,6 +880,8 @@
 "harnesses.manifest.edit.description" = "Description";
 "harnesses.manifest.edit.description.hint" = "Shown in the harness list and detail header. Leave empty to omit.";
 "harnesses.manifest.edit.save" = "Save Changes";
+"harnesses.layout.legacy %@" = "Uses the legacy .ynh-plugin/ layout, which YNH 0.14+ refuses. Run: ynd migrate %@";
+"harnesses.layout.both" = "Has both .agents/harness/ and .ynh-plugin/, which YNH 0.14+ refuses. Remove the .ynh-plugin/ directory.";
 
 // Harnesses — launch
 "harnesses.launch.title" = "Launch Harness";
@@ -892,6 +894,8 @@
 "harnesses.launch.browse" = "Browse…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optional prompt to pass to the agent…";
+"harnesses.launch.resume" = "Resume previous session";
+"harnesses.launch.resume.help" = "Continues a previous session instead of starting fresh. Claude only continues the session this card started, so a new card starts fresh; other vendors continue the most recent session in the working directory.";
 "harnesses.launch.button" = "Launch";
 "harnesses.launch.help" = "Launch this harness in a new terminal";
 "harnesses.launch.cancel" = "Cancel";
@@ -1040,6 +1044,10 @@
 "marketplace.add.section.vendor" = "Vendor";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.add.ref.placeholder" = "Branch, tag, or commit SHA (optional)";
+"marketplace.add.folder.placeholder" = "Folder within the repository (optional, blank = top level)";
+"marketplace.add.import.copilot" = "Import from Copilot CLI";
+"marketplace.add.import.copilot.help" = "Add the marketplaces configured in GitHub Copilot CLI (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "Imported %lld";
 "marketplace.row.pinned.help %@" = "Pinned to %@";
 "marketplace.detail.last.fetched %@" = "Last fetched %@";
 "marketplace.detail.search.placeholder" = "Search plugins…";
@@ -1054,6 +1062,7 @@
 "marketplace.plugin.no.artifacts" = "No artifacts enumerated for this plugin.";
 "marketplace.plugin.no.artifacts.hint" = "All plugin contents will be included.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artifacts unavailable: %@";
+"marketplace.plugin.unsupported %@" = "Unsupported content type: %@. This can't be added to a harness.";
 
 // MARK: - Harness Include Picker
 "marketplace.picker.step.artifacts" = "Artifacts";
@@ -1321,6 +1330,14 @@
 "harnesses.focus.add.confirm" = "Add";
 "harnesses.focus.save" = "Save";
 "harnesses.focus.cancel" = "Cancel";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Copy Focus";
+"harnesses.focus.paste.button %@" = "Paste Focus \"%@\"";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Show Details";
+"harnesses.profile.details.hide" = "Hide Details";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Add Profile";

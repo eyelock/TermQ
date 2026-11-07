@@ -745,6 +745,8 @@
 "harnesses.launch.browse" = "Bladeren…";
 "harnesses.launch.prompt" = "Prompt";
 "harnesses.launch.prompt.placeholder" = "Optionele prompt voor de agent…";
+"harnesses.launch.resume" = "Vorige sessie hervatten";
+"harnesses.launch.resume.help" = "Zet een eerdere sessie voort in plaats van opnieuw te beginnen. Claude zet alleen de sessie voort die deze kaart heeft gestart, dus een nieuwe kaart begint opnieuw; andere leveranciers zetten de meest recente sessie in de werkmap voort.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Deze harness starten in een nieuwe terminal";
 "harnesses.launch.cancel" = "Annuleren";
@@ -912,6 +914,7 @@
 "marketplace.plugin.no.artifacts" = "Geen artefacten opgesomd voor deze plugin.";
 "marketplace.plugin.no.artifacts.hint" = "Alle plug-ininhoud wordt opgenomen.";
 "marketplace.plugin.artifacts.unavailable %@" = "Artefacten niet beschikbaar: %@";
+"marketplace.plugin.unsupported %@" = "Niet-ondersteund inhoudstype: %@. Dit kan niet aan een harness worden toegevoegd.";
 "marketplace.picker.step.artifacts" = "Artefacten";
 "marketplace.picker.step.harness" = "Harness";
 "marketplace.picker.step.apply" = "Toepassen";
@@ -1023,6 +1026,10 @@
 
 // MARK: - Marketplace (added sync)
 "marketplace.add.ref.placeholder" = "Branch, tag of commit-SHA (optioneel)";
+"marketplace.add.folder.placeholder" = "Map binnen de repository (optioneel, leeg = hoofdniveau)";
+"marketplace.add.import.copilot" = "Importeren uit Copilot CLI";
+"marketplace.add.import.copilot.help" = "Voeg de marketplaces toe die in GitHub Copilot CLI zijn geconfigureerd (~/.copilot/settings.json)";
+"marketplace.add.imported.copilot %lld" = "%lld geïmporteerd";
 "marketplace.add.section.ref" = "Ref";
 "marketplace.refresh.all.help" = "Alle marketplaces vernieuwen";
 "marketplace.restore.defaults" = "Standaard herstellen";
@@ -1197,6 +1204,8 @@
 "harnesses.manifest.edit.description" = "Beschrijving";
 "harnesses.manifest.edit.description.hint" = "Wordt weergegeven in de harness-lijst en de detailkoptekst. Leeg laten om weg te laten.";
 "harnesses.manifest.edit.save" = "Wijzigingen opslaan";
+"harnesses.layout.legacy %@" = "Gebruikt de verouderde indeling .ynh-plugin/, die YNH 0.14+ weigert. Voer uit: ynd migrate %@";
+"harnesses.layout.both" = "Bevat zowel .agents/harness/ als .ynh-plugin/, wat YNH 0.14+ weigert. Verwijder de map .ynh-plugin/.";
 
 // MARK: - Harnesses — unversioned drift (added sync)
 "harnesses.unversioned.drift.include.tooltip %@ %@" = "Upstream commit gewijzigd: %@ → %@";
@@ -1246,6 +1255,14 @@
 "harnesses.focus.add.confirm" = "Toevoegen";
 "harnesses.focus.save" = "Opslaan";
 "harnesses.focus.cancel" = "Annuleren";
+
+// MARK: - Focus copy and paste between harnesses
+"harnesses.focus.copy.button" = "Focus kopiëren";
+"harnesses.focus.paste.button %@" = "Focus “%@” plakken";
+
+// MARK: - Profile card — inline details
+"harnesses.profile.details.show" = "Details tonen";
+"harnesses.profile.details.hide" = "Details verbergen";
 
 // MARK: - Profile editor — section header buttons
 "harnesses.profile.add.button" = "Profiel toevoegen";
