@@ -45,9 +45,29 @@ enum WheelhouseMenuIcon {
     /// Repositories: New Worktree.
     static let add = "plus"
 
-    /// A harness focus: the wake focus has its own symbol, the rest share one.
+    /// Symbols for the focuses Wheelhouse seats commonly declare. A focus
+    /// not listed gets `focus`.
+    static let focusSymbols: [String: String] = [
+        "wake": wakeFocus,
+        "retro": "clock.arrow.circlepath",
+        "next": "forward.end",
+        "coach": "figure.mind.and.body",
+        "cycle": "arrow.triangle.2.circlepath",
+        "design": "pencil.and.ruler",
+        "review": "checkmark.seal",
+        "dispatch": "arrow.triangle.branch",
+        "patrol": "binoculars",
+        "plan-release": "shippingbox",
+        "verify": "checkmark.shield",
+        "sweep": "wand.and.stars",
+        "report": "doc.text.magnifyingglass",
+        "teach": "graduationcap",
+        "document": "doc.richtext",
+    ]
+
+    /// A harness focus's symbol: its own for a common focus, else `focus`.
     static func focus(named name: String) -> String {
-        name == "wake" ? wakeFocus : focus
+        focusSymbols[name.lowercased()] ?? focus
     }
 }
 

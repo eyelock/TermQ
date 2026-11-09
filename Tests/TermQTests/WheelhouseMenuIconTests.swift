@@ -24,9 +24,14 @@ final class WheelhouseMenuIconTests: XCTestCase {
         }
     }
 
-    func testWakeHasItsOwnFocusIcon() {
+    func testCommonFocusesHaveTheirOwnIconsAndOthersShareOne() {
         XCTAssertEqual(WheelhouseMenuIcon.focus(named: "wake"), WheelhouseMenuIcon.wakeFocus)
-        XCTAssertEqual(WheelhouseMenuIcon.focus(named: "coach"), WheelhouseMenuIcon.focus)
+        XCTAssertEqual(WheelhouseMenuIcon.focus(named: "Retro"), "clock.arrow.circlepath")
+        XCTAssertEqual(WheelhouseMenuIcon.focus(named: "plan-release"), "shippingbox")
+        XCTAssertEqual(WheelhouseMenuIcon.focus(named: "something-new"), WheelhouseMenuIcon.focus)
+        for (name, symbol) in WheelhouseMenuIcon.focusSymbols {
+            XCTAssertNotNil(NSImage(systemSymbolName: symbol, accessibilityDescription: nil), name)
+        }
     }
 
     func testStageShortcutsAreDistinctCommandKeys() {
