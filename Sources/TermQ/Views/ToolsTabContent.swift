@@ -41,14 +41,16 @@ struct ToolsTabContent: View {
         }.count
     }
 
+    var parts: Set<Part> = Set(Part.allCases)
+
     var body: some View {
-        statusSection
-        mcpSection
-        cliSection
-        tmuxSection
-        ghSection
-        stackProvidersSection
-        ynhSection
+        if parts.contains(.status) { statusSection }
+        if parts.contains(.mcp) { mcpSection }
+        if parts.contains(.cli) { cliSection }
+        if parts.contains(.tmux) { tmuxSection }
+        if parts.contains(.gh) { ghSection }
+        if parts.contains(.stackProviders) { stackProvidersSection }
+        if parts.contains(.ynh) { ynhSection }
     }
 }
 
@@ -742,8 +744,6 @@ extension ToolsTabContent {
             )
         )
         .help(Strings.Settings.Ynh.enableHarnessTabHelp)
-
-        WheelhouseTabSettingToggle()
 
         // Detected binary info (mirrors the tmux Version/Path pattern)
         ynhBinaryInfo

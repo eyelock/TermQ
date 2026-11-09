@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "설정";
 "settings.tab.general" = "일반";
-"settings.tab.tools" = "도구";
 
 // Settings - Terminal section
 "settings.section.terminal" = "터미널";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "마켓플레이스";
+"settings.tab.git.and.stacks" = "Git 및 스택";
+"settings.tab.integrations" = "통합";
 "settings.marketplaces.section.list" = "설정된 마켓플레이스";
 "settings.marketplaces.empty" = "아직 추가된 마켓플레이스가 없습니다.";
 "settings.marketplaces.add" = "마켓플레이스 추가…";

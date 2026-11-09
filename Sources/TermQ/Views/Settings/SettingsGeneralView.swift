@@ -34,198 +34,220 @@ struct SettingsGeneralView: View {
     // Remote PR feed cap (GitHub)
     @Binding var remotePRFeedCap: Int
 
+    /// The groups of settings this view shows: Settings spreads them over
+    /// its General, Terminal and Git & Stacks sections.
+    enum Part: CaseIterable {
+        case terminal, git, bin, updates, language, uninstall, about
+    }
+
+    var parts: Set<Part> = Set(Part.allCases)
+
     var body: some View {
         // Terminal section
-        Section {
-            Picker(Strings.Settings.fieldTheme, selection: $sessionManager.themeId) {
-                ForEach(TerminalTheme.allThemes) { theme in
-                    HStack {
-                        ThemePreviewSwatch(theme: theme)
-                        Text(theme.name)
+        if parts.contains(.terminal) {
+            Section {
+                Picker(Strings.Settings.fieldTheme, selection: $sessionManager.themeId) {
+                    ForEach(TerminalTheme.allThemes) { theme in
+                        HStack {
+                            ThemePreviewSwatch(theme: theme)
+                            Text(theme.name)
+                        }
+                        .tag(theme.id)
                     }
-                    .tag(theme.id)
                 }
-            }
-            .help(Strings.Settings.fieldThemeHelp)
+                .help(Strings.Settings.fieldThemeHelp)
 
-            Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
-                .help(Strings.Settings.fieldCopyOnSelectHelp)
+                Toggle(Strings.Settings.fieldCopyOnSelect, isOn: $copyOnSelect)
+                    .help(Strings.Settings.fieldCopyOnSelectHelp)
 
-            PathInputField(
-                label: Strings.Settings.fieldDefaultWorkingDirectory,
-                path: $defaultWorkingDirectory,
-                helpText: Strings.Settings.fieldDefaultWorkingDirectoryHelp,
-                validatePath: true
-            )
+                PathInputField(
+                    label: Strings.Settings.fieldDefaultWorkingDirectory,
+                    path: $defaultWorkingDirectory,
+                    helpText: Strings.Settings.fieldDefaultWorkingDirectoryHelp,
+                    validatePath: true
+                )
 
-            Picker(
-                Strings.Settings.fieldDefaultBackend,
-                selection: $defaultBackend
-            ) {
-                ForEach(TerminalBackend.allCases, id: \.self) { backend in
-                    Text(localizedName(for: backend)).tag(backend)
+                Picker(
+                    Strings.Settings.fieldDefaultBackend,
+                    selection: $defaultBackend
+                ) {
+                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                        Text(localizedName(for: backend)).tag(backend)
+                    }
                 }
-            }
-            .help(Strings.Settings.fieldDefaultBackendHelp)
+                .help(Strings.Settings.fieldDefaultBackendHelp)
 
-            ScrollbackField(lines: $scrollbackLines)
-                .help(Strings.Settings.scrollbackLinesHelp)
-        } header: {
-            Text(Strings.Settings.sectionTerminal)
+                ScrollbackField(lines: $scrollbackLines)
+                    .help(Strings.Settings.scrollbackLinesHelp)
+            } header: {
+                Text(Strings.Settings.sectionTerminal)
+            }
         }
 
         // Git section
-        Section {
-            TextField(
-                Strings.Settings.protectedBranchesLabel,
-                text: $protectedBranches,
-                prompt: Text(Strings.Settings.protectedBranchesPrompt)
-            )
-            Text(Strings.Settings.protectedBranchesHelp)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Toggle(Strings.Settings.initializeSubmodulesLabel, isOn: $initializeSubmodules)
-            Text(Strings.Settings.initializeSubmodulesHelp)
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Stepper(
-                value: $remotePRFeedCap,
-                in: 5...100,
-                step: 5
-            ) {
-                HStack {
-                    Text(Strings.Settings.githubFeedCapLabel)
-                    Spacer()
-                    Text("\(remotePRFeedCap)")
-                        .foregroundColor(.secondary)
-                        .monospacedDigit()
-                }
-            }
-            Text(Strings.Settings.githubFeedCapHelp)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        } header: {
-            Text(Strings.Settings.sectionGit)
-        }
-
-        // Bin section
-        Section {
-            Stepper(
-                Strings.Settings.autoEmpty(binRetentionDays),
-                value: $binRetentionDays,
-                in: 1...90
-            )
-            .help(Strings.Settings.autoEmptyHelp)
-
-            HStack {
-                let binCount = boardViewModel.binCards.count
-                Text(
-                    binCount == 0
-                        ? Strings.Settings.binEmpty : Strings.Settings.binItems(binCount)
+        if parts.contains(.git) {
+            Section {
+                TextField(
+                    Strings.Settings.protectedBranchesLabel,
+                    text: $protectedBranches,
+                    prompt: Text(Strings.Settings.protectedBranchesPrompt)
                 )
-                .foregroundColor(.secondary)
-
-                Spacer()
-
-                Button(Strings.Settings.emptyBinNow, role: .destructive) {
-                    boardViewModel.emptyBin()
-                }
-                .disabled(boardViewModel.binCards.isEmpty)
-            }
-        } header: {
-            Text(Strings.Settings.sectionBin)
-        }
-
-        // Updates section
-        Section {
-            #if DEBUG
-                // Warning for debug builds
-                HStack(spacing: 8) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.orange)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(Strings.Settings.debugUpdateWarningTitle)
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                        Text(Strings.Settings.debugUpdateWarningMessage)
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .padding(.vertical, 4)
-            #endif
-
-            Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
-                .help(Strings.Settings.autoCheckUpdatesHelp)
-
-            Toggle(Strings.Settings.includeBetaReleases, isOn: $updaterViewModel.includeBetaReleases)
-                .help(Strings.Settings.includeBetaReleasesHelp)
-
-            HStack {
-                Spacer()
-                Button(Strings.Settings.checkForUpdates) {
-                    updaterViewModel.checkForUpdates()
-                }
-            }
-        } header: {
-            Text(Strings.Settings.sectionUpdates)
-        }
-
-        // Language section
-        Section {
-            LanguagePickerView(selectedLanguage: $selectedLanguage)
-        } header: {
-            Text(Strings.Settings.sectionLanguage)
-        }
-
-        // Uninstall section (moved from Data & Security)
-        Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "trash")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(Strings.Uninstall.title)
-                            .font(.headline)
-                        Text(Strings.Uninstall.description)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
-                }
-
-                Divider()
-
-                Text(Strings.Uninstall.description)
+                Text(Strings.Settings.protectedBranchesHelp)
                     .font(.caption)
                     .foregroundColor(.secondary)
 
-                Button(Strings.Uninstall.buttonTitle, role: .destructive) {
-                    showUninstallSheet = true
+                Toggle(Strings.Settings.initializeSubmodulesLabel, isOn: $initializeSubmodules)
+                Text(Strings.Settings.initializeSubmodulesHelp)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Stepper(
+                    value: $remotePRFeedCap,
+                    in: 5...100,
+                    step: 5
+                ) {
+                    HStack {
+                        Text(Strings.Settings.githubFeedCapLabel)
+                        Spacer()
+                        Text("\(remotePRFeedCap)")
+                            .foregroundColor(.secondary)
+                            .monospacedDigit()
+                    }
                 }
+                Text(Strings.Settings.githubFeedCapHelp)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } header: {
+                Text(Strings.Settings.sectionGit)
             }
-            .padding(.vertical, 4)
-        } header: {
-            Text(Strings.Uninstall.sectionHeader)
+        }
+
+        // Bin section
+        if parts.contains(.bin) {
+            Section {
+                Stepper(
+                    Strings.Settings.autoEmpty(binRetentionDays),
+                    value: $binRetentionDays,
+                    in: 1...90
+                )
+                .help(Strings.Settings.autoEmptyHelp)
+
+                HStack {
+                    let binCount = boardViewModel.binCards.count
+                    Text(
+                        binCount == 0
+                            ? Strings.Settings.binEmpty : Strings.Settings.binItems(binCount)
+                    )
+                    .foregroundColor(.secondary)
+
+                    Spacer()
+
+                    Button(Strings.Settings.emptyBinNow, role: .destructive) {
+                        boardViewModel.emptyBin()
+                    }
+                    .disabled(boardViewModel.binCards.isEmpty)
+                }
+            } header: {
+                Text(Strings.Settings.sectionBin)
+            }
+        }
+
+        // Updates section
+        if parts.contains(.updates) {
+            Section {
+                #if DEBUG
+                    // Warning for debug builds
+                    HStack(spacing: 8) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.orange)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(Strings.Settings.debugUpdateWarningTitle)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                            Text(Strings.Settings.debugUpdateWarningMessage)
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                #endif
+
+                Toggle(Strings.Settings.autoCheckUpdates, isOn: $updaterViewModel.automaticallyChecksForUpdates)
+                    .help(Strings.Settings.autoCheckUpdatesHelp)
+
+                Toggle(Strings.Settings.includeBetaReleases, isOn: $updaterViewModel.includeBetaReleases)
+                    .help(Strings.Settings.includeBetaReleasesHelp)
+
+                HStack {
+                    Spacer()
+                    Button(Strings.Settings.checkForUpdates) {
+                        updaterViewModel.checkForUpdates()
+                    }
+                }
+            } header: {
+                Text(Strings.Settings.sectionUpdates)
+            }
+        }
+
+        // Language section
+        if parts.contains(.language) {
+            Section {
+                LanguagePickerView(selectedLanguage: $selectedLanguage)
+            } header: {
+                Text(Strings.Settings.sectionLanguage)
+            }
+        }
+
+        // Uninstall section (moved from Data & Security)
+        if parts.contains(.uninstall) {
+            Section {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Image(systemName: "trash")
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(Strings.Uninstall.title)
+                                .font(.headline)
+                            Text(Strings.Uninstall.description)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+                    }
+
+                    Divider()
+
+                    Text(Strings.Uninstall.description)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+
+                    Button(Strings.Uninstall.buttonTitle, role: .destructive) {
+                        showUninstallSheet = true
+                    }
+                }
+                .padding(.vertical, 4)
+            } header: {
+                Text(Strings.Uninstall.sectionHeader)
+            }
         }
 
         // About section (moved to end)
-        Section {
-            LabeledContent(
-                Strings.Settings.fieldVersion,
-                value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-            )
-            LabeledContent(
-                Strings.Settings.fieldBuild,
-                value: Bundle.main.infoDictionary?["TermQBuildSHA"] as? String ?? "Unknown"
-            )
-        } header: {
-            Text(Strings.Settings.sectionAbout)
+        if parts.contains(.about) {
+            Section {
+                LabeledContent(
+                    Strings.Settings.fieldVersion,
+                    value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+                )
+                LabeledContent(
+                    Strings.Settings.fieldBuild,
+                    value: Bundle.main.infoDictionary?["TermQBuildSHA"] as? String ?? "Unknown"
+                )
+            } header: {
+                Text(Strings.Settings.sectionAbout)
+            }
         }
     }
 

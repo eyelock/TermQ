@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Tetapan";
 "settings.tab.general" = "Umum";
-"settings.tab.tools" = "Alat";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Pasaran";
+"settings.tab.git.and.stacks" = "Git & Penindanan";
+"settings.tab.integrations" = "Integrasi";
 "settings.marketplaces.section.list" = "Pasaran yang dikonfigurasi";
 "settings.marketplaces.empty" = "Belum ada pasaran yang ditambah.";
 "settings.marketplaces.add" = "Tambah Pasaran…";

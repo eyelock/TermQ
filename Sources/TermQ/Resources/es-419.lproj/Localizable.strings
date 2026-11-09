@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Configuración";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Herramientas";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Mercados";
+"settings.tab.git.and.stacks" = "Git y apilado";
+"settings.tab.integrations" = "Integraciones";
 "settings.marketplaces.section.list" = "Mercados configurados";
 "settings.marketplaces.empty" = "Aún no se han agregado mercados.";
 "settings.marketplaces.add" = "Agregar mercado…";

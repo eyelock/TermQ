@@ -327,7 +327,7 @@ struct WorkspaceCommands: Commands {
                 }
                 Divider()
                 Button(Strings.Menu.repositorySettings) {
-                    SettingsCoordinator.shared.openSettings(tab: .general)
+                    SettingsCoordinator.shared.openSettings(tab: .gitAndStacks)
                     openSettings()
                 }
             }
@@ -354,7 +354,7 @@ struct WorkspaceCommands: Commands {
                     openSettings()
                 }
                 Button(Strings.Menu.harnessTools) {
-                    SettingsCoordinator.shared.openSettings(tab: .tools)
+                    SettingsCoordinator.shared.openSettings(tab: .harnesses)
                     openSettings()
                 }
             }

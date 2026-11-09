@@ -314,7 +314,6 @@
 // MARK: - Settings
 "settings.title" = "Settings";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Tools";
 "settings.tab.data.and.security" = "Data & Security";
 
 // Settings - Terminal section
@@ -512,6 +511,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "External Sources";
+"settings.tab.git.and.stacks" = "Git & Stacks";
+"settings.tab.integrations" = "Integrations";
 "settings.github.feed.cap.label" = "PRs per repository";
 "settings.github.feed.cap.help" = "Maximum number of pull requests shown per repository in the Remote sidebar. Checked-out PRs are always included.";
 "settings.marketplaces.section.list" = "Configured Marketplaces";

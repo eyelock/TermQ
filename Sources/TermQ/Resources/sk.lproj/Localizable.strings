@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "Nastavenia";
 "settings.tab.general" = "Všeobecné";
-"settings.tab.tools" = "Nástroje";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminál";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Trhoviská";
+"settings.tab.git.and.stacks" = "Git a skladanie";
+"settings.tab.integrations" = "Integrácie";
 "settings.marketplaces.section.list" = "Nakonfigurované trhoviská";
 "settings.marketplaces.empty" = "Zatiaľ neboli pridané žiadne trhoviská.";
 "settings.marketplaces.add" = "Pridať trhovisko…";

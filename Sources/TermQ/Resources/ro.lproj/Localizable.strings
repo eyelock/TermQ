@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "Setări";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Instrumente";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Piețe";
+"settings.tab.git.and.stacks" = "Git și stivuire";
+"settings.tab.integrations" = "Integrări";
 "settings.marketplaces.section.list" = "Piețe configurate";
 "settings.marketplaces.empty" = "Nu a fost adăugată nicio piață încă.";
 "settings.marketplaces.add" = "Adaugă piață…";

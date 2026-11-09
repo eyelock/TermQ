@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "設定";
 "settings.tab.general" = "一般";
-"settings.tab.tools" = "ツール";
 
 // Settings - Terminal section
 "settings.section.terminal" = "ターミナル";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "マーケットプレイス";
+"settings.tab.git.and.stacks" = "Git とスタック";
+"settings.tab.integrations" = "連携";
 "settings.marketplaces.section.list" = "設定済みのマーケットプレイス";
 "settings.marketplaces.empty" = "マーケットプレイスはまだ追加されていません。";
 "settings.marketplaces.add" = "マーケットプレイスを追加…";

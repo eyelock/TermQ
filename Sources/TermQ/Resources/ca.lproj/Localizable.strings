@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Configuració";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Eines";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Mercats";
+"settings.tab.git.and.stacks" = "Git i apilament";
+"settings.tab.integrations" = "Integracions";
 "settings.marketplaces.section.list" = "Mercats configurats";
 "settings.marketplaces.empty" = "Encara no s'ha afegit cap mercat.";
 "settings.marketplaces.add" = "Afegeix mercat…";

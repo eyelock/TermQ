@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "सेटिंग्स";
 "settings.tab.general" = "सामान्य";
-"settings.tab.tools" = "उपकरण";
 
 // Settings - Terminal section
 "settings.section.terminal" = "टर्मिनल";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "मार्केटप्लेस";
+"settings.tab.git.and.stacks" = "Git और स्टैकिंग";
+"settings.tab.integrations" = "इंटीग्रेशन";
 "settings.marketplaces.section.list" = "कॉन्फ़िगर किए गए मार्केटप्लेस";
 "settings.marketplaces.empty" = "अभी तक कोई मार्केटप्लेस नहीं जोड़ा गया।";
 "settings.marketplaces.add" = "मार्केटप्लेस जोड़ें…";

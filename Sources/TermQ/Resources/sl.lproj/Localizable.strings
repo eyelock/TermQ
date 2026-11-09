@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Nastavitve";
 "settings.tab.general" = "Splošno";
-"settings.tab.tools" = "Orodja";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Tržnice";
+"settings.tab.git.and.stacks" = "Git in zlaganje";
+"settings.tab.integrations" = "Integracije";
 "settings.marketplaces.section.list" = "Konfigurirane tržnice";
 "settings.marketplaces.empty" = "Še nobena tržnica ni dodana.";
 "settings.marketplaces.add" = "Dodaj tržnico…";

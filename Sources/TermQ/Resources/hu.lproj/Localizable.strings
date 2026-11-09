@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Beállítások";
 "settings.tab.general" = "Általános";
-"settings.tab.tools" = "Eszközök";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminál";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Piacterek";
+"settings.tab.git.and.stacks" = "Git és verem";
+"settings.tab.integrations" = "Integrációk";
 "settings.marketplaces.section.list" = "Beállított piacterek";
 "settings.marketplaces.empty" = "Még nem lett piactér hozzáadva.";
 "settings.marketplaces.add" = "Piactér hozzáadása…";

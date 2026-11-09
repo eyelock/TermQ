@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "設定";
 "settings.tab.general" = "一般";
-"settings.tab.tools" = "工具";
 
 // Settings - Terminal section
 "settings.section.terminal" = "終端機";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "市場";
+"settings.tab.git.and.stacks" = "Git 與堆疊";
+"settings.tab.integrations" = "整合";
 "settings.marketplaces.section.list" = "已設定的市場";
 "settings.marketplaces.empty" = "尚未新增任何市場。";
 "settings.marketplaces.add" = "新增市場…";

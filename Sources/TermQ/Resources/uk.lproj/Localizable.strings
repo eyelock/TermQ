@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Налаштування";
 "settings.tab.general" = "Загальні";
-"settings.tab.tools" = "Інструменти";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Термінал";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Маркетплейси";
+"settings.tab.git.and.stacks" = "Git і стек";
+"settings.tab.integrations" = "Інтеграції";
 "settings.marketplaces.section.list" = "Налаштовані маркетплейси";
 "settings.marketplaces.empty" = "Маркетплейси ще не додано.";
 "settings.marketplaces.add" = "Додати маркетплейс…";

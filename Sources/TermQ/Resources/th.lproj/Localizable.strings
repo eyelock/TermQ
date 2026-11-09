@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "การตั้งค่า";
 "settings.tab.general" = "ทั่วไป";
-"settings.tab.tools" = "เครื่องมือ";
 
 // Settings - Terminal section
 "settings.section.terminal" = "เทอร์มินัล";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "มาร์เก็ตเพลส";
+"settings.tab.git.and.stacks" = "Git และการทำสแต็ก";
+"settings.tab.integrations" = "การเชื่อมต่อ";
 "settings.marketplaces.section.list" = "มาร์เก็ตเพลสที่กำหนดค่าไว้";
 "settings.marketplaces.empty" = "ยังไม่มีมาร์เก็ตเพลสที่เพิ่มไว้";
 "settings.marketplaces.add" = "เพิ่มมาร์เก็ตเพลส…";

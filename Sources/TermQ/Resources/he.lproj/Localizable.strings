@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "הגדרות";
 "settings.tab.general" = "כללי";
-"settings.tab.tools" = "כלים";
 
 // Settings - Terminal section
 "settings.section.terminal" = "מסוף";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "שווקים";
+"settings.tab.git.and.stacks" = "Git וערימה";
+"settings.tab.integrations" = "אינטגרציות";
 "settings.marketplaces.section.list" = "שווקים מוגדרים";
 "settings.marketplaces.empty" = "טרם נוספו שווקים.";
 "settings.marketplaces.add" = "הוסף שוק…";

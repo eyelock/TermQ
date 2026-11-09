@@ -45,20 +45,64 @@ struct SettingsView: View {
     // Updater (Sparkle) - injected from app level
     @EnvironmentObject var updaterViewModel: UpdaterViewModel
 
-    enum SettingsTab: CaseIterable {
+    /// The sections in Settings' sidebar, in order. Add a case to add a
+    /// section.
+    enum SettingsTab: CaseIterable, Hashable {
         case general
+        case terminal
         case environment
-        case tools
-        case dataAndSecurity
+        case gitAndStacks
+        case integrations
+        case harnesses
+        case wheelhouses
         case marketplaces
+        case dataAndSecurity
 
         var title: String {
             switch self {
             case .general: return Strings.Settings.tabGeneral
+            case .terminal: return Strings.Settings.sectionTerminal
             case .environment: return Strings.Settings.tabEnvironment
-            case .tools: return Strings.Settings.tabTools
-            case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
+            case .gitAndStacks: return Strings.Settings.tabGitAndStacks
+            case .integrations: return Strings.Settings.tabIntegrations
+            case .harnesses: return Strings.Menu.workspaceHarnesses
+            case .wheelhouses: return Strings.Wheelhouse.title
             case .marketplaces: return Strings.Settings.tabMarketplaces
+            case .dataAndSecurity: return Strings.Settings.tabDataAndSecurity
+            }
+        }
+
+        var icon: String {
+            switch self {
+            case .general: return "gearshape"
+            case .terminal: return "terminal"
+            case .environment: return "list.bullet.rectangle"
+            case .gitAndStacks: return "arrow.triangle.branch"
+            case .integrations: return "puzzlepiece"
+            case .harnesses: return "puzzlepiece.extension"
+            case .wheelhouses: return "steeringwheel"
+            case .marketplaces: return "storefront"
+            case .dataAndSecurity: return "lock.shield"
+            }
+        }
+
+        /// Which of the General view's groups this section shows.
+        var generalParts: Set<SettingsGeneralView.Part> {
+            switch self {
+            case .general: return [.updates, .language, .uninstall, .about]
+            case .terminal: return [.terminal, .bin]
+            case .gitAndStacks: return [.git]
+            default: return []
+            }
+        }
+
+        /// Which of the Tools view's groups this section shows.
+        var toolsParts: Set<ToolsTabContent.Part> {
+            switch self {
+            case .gitAndStacks: return [.gh, .stackProviders]
+            case .integrations: return [.status, .mcp, .cli, .tmux]
+            case .harnesses: return [.ynh]
+            default: return []
             }
         }
     }
@@ -68,38 +112,28 @@ struct SettingsView: View {
 
     var body: some View {
         @Bindable var settings = settings
-        return VStack(spacing: 0) {
-            // Tab picker
-            Picker("", selection: $selectedTab) {
-                ForEach(SettingsTab.allCases, id: \.self) { tab in
-                    Text(tab.title).tag(tab)
-                }
+        return HStack(spacing: 0) {
+            // Sections on the left, each one's settings on the right.
+            List(SettingsTab.allCases, id: \.self, selection: selectedTabOrNil) { tab in
+                Label(tab.title, systemImage: tab.icon)
             }
-            .pickerStyle(.segmented)
-            .padding()
+            .listStyle(.sidebar)
+            .frame(width: 190)
+
+            Divider()
 
             Form {
+                if !selectedTab.generalParts.isEmpty {
+                    generalContent(parts: selectedTab.generalParts)
+                }
+                if !selectedTab.toolsParts.isEmpty {
+                    toolsContent(parts: selectedTab.toolsParts)
+                }
                 switch selectedTab {
-                case .general:
-                    SettingsGeneralView(
-                        sessionManager: sessionManager,
-                        copyOnSelect: $settings.copyOnSelect,
-                        defaultWorkingDirectory: $settings.defaultWorkingDirectory,
-                        defaultBackend: $settings.backend,
-                        scrollbackLines: $settings.terminalScrollbackLines,
-                        binRetentionDays: $settings.binRetentionDays,
-                        boardViewModel: boardViewModel,
-                        updaterViewModel: updaterViewModel,
-                        selectedLanguage: $selectedLanguage,
-                        showUninstallSheet: $showUninstallSheet,
-                        protectedBranches: $gitConfig.globalProtectedBranches,
-                        initializeSubmodules: $gitConfig.initializeSubmodules,
-                        remotePRFeedCap: $settings.remotePRFeedCap
-                    )
                 case .environment:
                     SettingsEnvironmentView()
-                case .tools:
-                    toolsContent
+                case .wheelhouses:
+                    WheelhouseSettingsSection()
                 case .dataAndSecurity:
                     SettingsDataSecurityView(
                         enableTerminalAutorun: $settings.enableTerminalAutorun,
@@ -110,11 +144,14 @@ struct SettingsView: View {
                     )
                 case .marketplaces:
                     SettingsMarketplacesView()
+                default:
+                    EmptyView()
                 }
             }
             .formStyle(.grouped)
+            .frame(maxWidth: .infinity)
         }
-        .frame(width: 500, height: 750)
+        .frame(width: 720, height: 750)
         .sheet(isPresented: $showUninstallSheet) {
             UninstallView()
         }
@@ -145,10 +182,35 @@ struct SettingsView: View {
         self.initialTab = initialTab
     }
 
-    // MARK: - Tools Tab Content
+    // MARK: - Section content
+
+    /// The list's selection: the section shown, never deselected.
+    private var selectedTabOrNil: Binding<SettingsTab?> {
+        Binding(get: { selectedTab }, set: { if let tab = $0 { selectedTab = tab } })
+    }
+
+    private func generalContent(parts: Set<SettingsGeneralView.Part>) -> some View {
+        @Bindable var settings = settings
+        return SettingsGeneralView(
+            sessionManager: sessionManager,
+            copyOnSelect: $settings.copyOnSelect,
+            defaultWorkingDirectory: $settings.defaultWorkingDirectory,
+            defaultBackend: $settings.backend,
+            scrollbackLines: $settings.terminalScrollbackLines,
+            binRetentionDays: $settings.binRetentionDays,
+            boardViewModel: boardViewModel,
+            updaterViewModel: updaterViewModel,
+            selectedLanguage: $selectedLanguage,
+            showUninstallSheet: $showUninstallSheet,
+            protectedBranches: $gitConfig.globalProtectedBranches,
+            initializeSubmodules: $gitConfig.initializeSubmodules,
+            remotePRFeedCap: $settings.remotePRFeedCap,
+            parts: parts
+        )
+    }
 
     @ViewBuilder
-    private var toolsContent: some View {
+    private func toolsContent(parts: Set<ToolsTabContent.Part>) -> some View {
         ToolsTabContent(
             isInstallingMCP: $isInstallingMCP,
             configCopied: $configCopied,
@@ -161,7 +223,8 @@ struct SettingsView: View {
             uninstallMCPServer: uninstallMCPServer,
             copyMCPConfig: copyMCPConfig,
             installCLI: installCLI,
-            uninstallCLI: uninstallCLI
+            uninstallCLI: uninstallCLI,
+            parts: parts
         )
     }
 

@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "الإعدادات";
 "settings.tab.general" = "عام";
-"settings.tab.tools" = "الأدوات";
 
 // Settings - Terminal section
 "settings.section.terminal" = "الطرفية";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "الأسواق";
+"settings.tab.git.and.stacks" = "Git والتكديس";
+"settings.tab.integrations" = "التكاملات";
 "settings.marketplaces.section.list" = "الأسواق المُهيَّأة";
 "settings.marketplaces.empty" = "لم تُضَف أسواق بعد.";
 "settings.marketplaces.add" = "إضافة سوق…";

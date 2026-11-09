@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Asetukset";
 "settings.tab.general" = "Yleiset";
-"settings.tab.tools" = "Työkalut";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminaali";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Markkinapaikat";
+"settings.tab.git.and.stacks" = "Git ja pinoaminen";
+"settings.tab.integrations" = "Integraatiot";
 "settings.marketplaces.section.list" = "Määritetyt markkinapaikat";
 "settings.marketplaces.empty" = "Markkinapaikkoja ei ole vielä lisätty.";
 "settings.marketplaces.add" = "Lisää markkinapaikka…";

@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Ayarlar";
 "settings.tab.general" = "Genel";
-"settings.tab.tools" = "Araçlar";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Pazar Yerleri";
+"settings.tab.git.and.stacks" = "Git ve Yığınlama";
+"settings.tab.integrations" = "Entegrasyonlar";
 "settings.marketplaces.section.list" = "Yapılandırılmış pazar yerleri";
 "settings.marketplaces.empty" = "Henüz pazar yeri eklenmedi.";
 "settings.marketplaces.add" = "Pazar yeri ekle…";

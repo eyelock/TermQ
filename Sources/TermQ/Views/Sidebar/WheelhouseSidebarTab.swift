@@ -568,6 +568,17 @@ struct WheelhouseRolePill: View {
     }
 }
 
+/// Settings' Wheelhouses section. More Wheelhouse settings go here.
+struct WheelhouseSettingsSection: View {
+    var body: some View {
+        Section {
+            WheelhouseTabSettingToggle()
+        } header: {
+            Text(Strings.Wheelhouse.title)
+        }
+    }
+}
+
 /// Settings toggle for the Wheelhouses sidebar tab (`feature.wheelhouseTab`),
 /// and, while it is on, the names whose beads make up the human's inbox.
 struct WheelhouseTabSettingToggle: View {

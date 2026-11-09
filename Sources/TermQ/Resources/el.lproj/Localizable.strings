@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Ρυθμίσεις";
 "settings.tab.general" = "Γενικά";
-"settings.tab.tools" = "Εργαλεία";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Τερματικό";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Αγορές";
+"settings.tab.git.and.stacks" = "Git και στοίβα";
+"settings.tab.integrations" = "Ενσωματώσεις";
 "settings.marketplaces.section.list" = "Διαμορφωμένες αγορές";
 "settings.marketplaces.empty" = "Δεν έχουν προστεθεί αγορές ακόμα.";
 "settings.marketplaces.add" = "Προσθήκη αγοράς…";

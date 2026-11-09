@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Cài đặt";
 "settings.tab.general" = "Chung";
-"settings.tab.tools" = "Công cụ";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Chợ ứng dụng";
+"settings.tab.git.and.stacks" = "Git & xếp chồng";
+"settings.tab.integrations" = "Tích hợp";
 "settings.marketplaces.section.list" = "Chợ ứng dụng đã cấu hình";
 "settings.marketplaces.empty" = "Chưa có chợ ứng dụng nào được thêm.";
 "settings.marketplaces.add" = "Thêm chợ ứng dụng…";
