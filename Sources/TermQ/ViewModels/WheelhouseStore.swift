@@ -171,13 +171,7 @@ final class WheelhouseStore: ObservableObject {
 
     /// The Wheelhouse and seat a card was launched for, from its tags.
     func seat(for card: TerminalCard) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
-        guard
-            let root = card.tags.first(where: { $0.key == WheelhouseCardMatcher.wheelhouseTagKey })?.value,
-            let command = card.tags.first(where: { $0.key == WheelhouseCardMatcher.seatTagKey })?.value,
-            let wheelhouse = wheelhouses.first(where: { $0.root == root }),
-            let seat = wheelhouse.seats.first(where: { $0.command == command })
-        else { return nil }
-        return (wheelhouse, seat)
+        Self.seat(for: card, tagKey: WheelhouseCardMatcher.seatTagKey, in: wheelhouses)
     }
 
     /// The inbox for `root`, or every Wheelhouse's when nil.
@@ -189,9 +183,44 @@ final class WheelhouseStore: ObservableObject {
 
     /// The seat a Quick Terminal was opened for, from its tags.
     func parentSeat(of card: TerminalCard) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        Self.seat(for: card, tagKey: WheelhouseCardMatcher.quickTerminalTagKey, in: wheelhouses)
+    }
+
+    /// The seat a card belongs to: its own, or a Quick Terminal's parent.
+    func owningSeat(of card: TerminalCard) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        Self.owningSeat(of: card, in: wheelhouses)
+    }
+
+    /// The seat of the card `id` among `cards`: what the stage's shortcuts
+    /// act on for the focused pane. Nil for the inbox or a deleted card.
+    func owningSeat(ofCardId id: UUID?, in cards: [TerminalCard]) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        Self.owningSeat(ofCardId: id, in: cards, wheelhouses: wheelhouses)
+    }
+
+    nonisolated static func owningSeat(
+        of card: TerminalCard, in wheelhouses: [Wheelhouse]
+    ) -> (
+        wheelhouse: Wheelhouse, seat: WheelhouseSeat
+    )? {
+        seat(for: card, tagKey: WheelhouseCardMatcher.seatTagKey, in: wheelhouses)
+            ?? seat(for: card, tagKey: WheelhouseCardMatcher.quickTerminalTagKey, in: wheelhouses)
+    }
+
+    nonisolated static func owningSeat(
+        ofCardId id: UUID?, in cards: [TerminalCard], wheelhouses: [Wheelhouse]
+    ) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        guard let id, let card = cards.first(where: { $0.id == id && $0.deletedAt == nil }) else { return nil }
+        return owningSeat(of: card, in: wheelhouses)
+    }
+
+    /// The seat named by the card's `tagKey` tag (a seat's own, or a Quick
+    /// Terminal's parent) in the card's Wheelhouse.
+    nonisolated private static func seat(
+        for card: TerminalCard, tagKey: String, in wheelhouses: [Wheelhouse]
+    ) -> (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
         guard
             let root = card.tags.first(where: { $0.key == WheelhouseCardMatcher.wheelhouseTagKey })?.value,
-            let command = card.tags.first(where: { $0.key == WheelhouseCardMatcher.quickTerminalTagKey })?.value,
+            let command = card.tags.first(where: { $0.key == tagKey })?.value,
             let wheelhouse = wheelhouses.first(where: { $0.root == root }),
             let seat = wheelhouse.seats.first(where: { $0.command == command })
         else { return nil }
@@ -202,7 +231,7 @@ final class WheelhouseStore: ObservableObject {
     /// limited to `root` when given.
     func stageCards(in cards: [TerminalCard], root: String? = nil) -> [TerminalCard] {
         cards.filter { card in
-            guard card.deletedAt == nil, let found = seat(for: card) ?? parentSeat(of: card) else { return false }
+            guard card.deletedAt == nil, let found = owningSeat(of: card) else { return false }
             return root == nil || found.wheelhouse.root == root
         }
     }

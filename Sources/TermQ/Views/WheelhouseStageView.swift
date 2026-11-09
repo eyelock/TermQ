@@ -237,17 +237,24 @@ struct WheelhouseStageView: View {
 
     /// The right-click menu for a seat card, the same on its tab and on its
     /// pane header.
-    @ViewBuilder
     private func seatCardMenu(_ card: TerminalCard) -> some View {
+        seatCardMenuItems(card).labelStyle(.titleAndIcon)
+    }
+
+    @ViewBuilder
+    private func seatCardMenuItems(_ card: TerminalCard) -> some View {
         if let found = store.seat(for: card) {
             WheelhouseSeatActionItems(
-                wheelhouse: found.wheelhouse, seat: found.seat, hasTerminal: true, onSeatAction: onSeatAction)
+                wheelhouse: found.wheelhouse, seat: found.seat, hasTerminal: true,
+                showsShortcuts: stage.focused == card.id, onSeatAction: onSeatAction)
             Divider()
         }
-        WheelhouseKeepOnStageToggle(cardId: card.id)
+        WheelhouseKeepOnStageToggle(cardId: card.id, showsShortcut: stage.focused == card.id)
         if store.parentSeat(of: card) != nil {
-            Button(Strings.Wheelhouse.closeTerminal, role: .destructive) {
+            Button(role: .destructive) {
                 stage.closeQuickTerminal(card)
+            } label: {
+                Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
             }
         }
     }
@@ -515,7 +522,9 @@ struct WheelhouseStageView: View {
     private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat) -> some View {
         Menu {
             WheelhouseSeatActionItems(
-                wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction)
+                wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction
+            )
+            .labelStyle(.titleAndIcon)
         } label: {
             Image(systemName: "ellipsis.circle")
                 .font(.system(size: 11))
@@ -555,10 +564,20 @@ struct WheelhouseStageView: View {
         stage.focus(card.id)
         boardVM.selectCard(card)
     }
+}
+
+// MARK: - Shortcuts
+
+extension WheelhouseStageView {
+    /// The seat of the focused pane: its own, or a Quick Terminal's parent.
+    fileprivate var focusedSeat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        store.owningSeat(ofCardId: stage.focused, in: stageCards)
+    }
 
     /// ⌘J: the seat that has waited longest comes on stage.
     /// ⌃⌘F: Wheelhouse focus mode on and off.
-    private var shortcuts: some View {
+    /// ⌘I: the focused seat's harness details. ⌘P: keep it on stage, or not.
+    var shortcuts: some View {
         ZStack {
             Button("") {
                 if let next = attentionQueue.first { show(next) }
@@ -566,6 +585,12 @@ struct WheelhouseStageView: View {
             .keyboardShortcut("j", modifiers: .command)
             Button("") { stage.focusMode.toggle() }
                 .keyboardShortcut("f", modifiers: [.command, .control])
+            Button("") {
+                if let found = focusedSeat { onSeatAction(found.wheelhouse, found.seat, .harnessDetails) }
+            }
+            .keyboardShortcut(WheelhouseStageShortcut.harnessDetails)
+            Button("") { stage.togglePinFocused() }
+                .keyboardShortcut(WheelhouseStageShortcut.keepOnStage)
         }
         .opacity(0)
         .accessibilityHidden(true)
@@ -644,12 +669,16 @@ extension WheelhouseStageView {
     }
 }
 
-/// Menu items for a seat: its harness focuses, hand off, and birth.
+/// Menu items for a seat: its harness focuses, hand off, and birth. Every
+/// item has its `WheelhouseMenuIcon`.
 struct WheelhouseSeatActionItems: View {
     let wheelhouse: Wheelhouse
     let seat: WheelhouseSeat
     let hasTerminal: Bool
     var unborn: Bool = false
+    /// Show the stage's shortcuts beside the items they trigger: only in a
+    /// right-click menu on the stage, where they act on the focused seat.
+    var showsShortcuts: Bool = false
     let onSeatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void
 
     var body: some View {
@@ -657,7 +686,7 @@ struct WheelhouseSeatActionItems: View {
             Button {
                 onSeatAction(wheelhouse, seat, .birth)
             } label: {
-                Label(Strings.Wheelhouse.birth, systemImage: "sparkles")
+                Label(Strings.Wheelhouse.birth, systemImage: WheelhouseMenuIcon.birth)
             }
             Divider()
         }
@@ -668,7 +697,7 @@ struct WheelhouseSeatActionItems: View {
                     Button {
                         onSeatAction(wheelhouse, seat, .focus(focus))
                     } label: {
-                        Label(focus.name.capitalized, systemImage: focus.name == "wake" ? "sunrise" : "scope")
+                        Label(focus.name.capitalized, systemImage: WheelhouseMenuIcon.focus(named: focus.name))
                     }
                     .help(focus.prompt)
                 }
@@ -679,24 +708,26 @@ struct WheelhouseSeatActionItems: View {
             Button {
                 onSeatAction(wheelhouse, seat, .handoff)
             } label: {
-                Label(Strings.Wheelhouse.handoff, systemImage: "moon.zzz")
+                Label(Strings.Wheelhouse.handoff, systemImage: WheelhouseMenuIcon.handoff)
             }
             Button(role: .destructive) {
                 onSeatAction(wheelhouse, seat, .closeTerminal)
             } label: {
-                Label(Strings.Wheelhouse.closeTerminal, systemImage: "xmark.octagon")
+                Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
             }
         }
         Divider()
         Button {
             onSeatAction(wheelhouse, seat, .quickTerminal)
         } label: {
-            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: "terminal")
+            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: WheelhouseMenuIcon.quickTerminal)
         }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.quickTerminal : nil)
         Button {
             onSeatAction(wheelhouse, seat, .harnessDetails)
         } label: {
-            Label(Strings.Wheelhouse.harnessDetails, systemImage: "puzzlepiece.extension")
+            Label(Strings.Wheelhouse.harnessDetails, systemImage: WheelhouseMenuIcon.harnessDetails)
         }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.harnessDetails : nil)
     }
 }

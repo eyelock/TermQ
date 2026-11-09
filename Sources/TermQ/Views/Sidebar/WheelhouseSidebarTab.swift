@@ -71,15 +71,30 @@ struct WheelhouseSidebarTab: View {
     private var header: some View {
         HStack(spacing: 6) {
             Menu {
-                if !stage.focusMode {
-                    Button(Strings.Wheelhouse.allWheelhouses) { selectedRoot = "" }
-                    if !store.wheelhouses.isEmpty { Divider() }
+                Group {
+                    if !stage.focusMode {
+                        Button {
+                            selectedRoot = ""
+                        } label: {
+                            Label(Strings.Wheelhouse.allWheelhouses, systemImage: WheelhouseMenuIcon.allWheelhouses)
+                        }
+                        if !store.wheelhouses.isEmpty { Divider() }
+                    }
+                    ForEach(store.wheelhouses) { wheelhouse in
+                        Button {
+                            selectedRoot = wheelhouse.root
+                        } label: {
+                            Label(wheelhouse.title, systemImage: WheelhouseMenuIcon.wheelhouse)
+                        }
+                    }
+                    Divider()
+                    Button {
+                        showingAdd = true
+                    } label: {
+                        Label(Strings.Wheelhouse.addWheelhouse, systemImage: WheelhouseMenuIcon.add)
+                    }
                 }
-                ForEach(store.wheelhouses) { wheelhouse in
-                    Button(wheelhouse.title) { selectedRoot = wheelhouse.root }
-                }
-                Divider()
-                Button(Strings.Wheelhouse.addWheelhouse) { showingAdd = true }
+                .labelStyle(.titleAndIcon)
             } label: {
                 Text(selectedTitle)
                     .font(.headline)
@@ -387,8 +402,11 @@ struct WheelhouseSidebarTab: View {
                     }
                 )
                 .contextMenu {
-                    Button(Strings.Wheelhouse.closeTerminal, role: .destructive) {
+                    Button(role: .destructive) {
                         stage.closeQuickTerminal(card)
+                    } label: {
+                        Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
+                            .labelStyle(.titleAndIcon)
                     }
                 }
             }
@@ -418,11 +436,21 @@ struct WheelhouseSidebarTab: View {
         }
     }
 
-    @ViewBuilder
     private func seatMenu(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, card: TerminalCard?) -> some View {
+        seatMenuItems(seat, in: wheelhouse, card: card).labelStyle(.titleAndIcon)
+    }
+
+    @ViewBuilder
+    private func seatMenuItems(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, card: TerminalCard?) -> some View {
         // Same shape for every seat: open first, then the seat's own actions.
-        Button(card == nil ? Strings.Wheelhouse.openTerminal : Strings.Wheelhouse.showTerminal) {
+        Button {
             onSeatAction?(wheelhouse, seat, .open)
+        } label: {
+            if card == nil {
+                Label(Strings.Wheelhouse.openTerminal, systemImage: WheelhouseMenuIcon.openTerminal)
+            } else {
+                Label(Strings.Wheelhouse.showTerminal, systemImage: WheelhouseMenuIcon.showTerminal)
+            }
         }
         Divider()
         if let onSeatAction {
@@ -434,14 +462,18 @@ struct WheelhouseSidebarTab: View {
         if let card {
             WheelhouseKeepOnStageToggle(cardId: card.id)
         }
-        Button(Strings.Wheelhouse.copyCommand) {
+        Button {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(seat.command, forType: .string)
+        } label: {
+            Label(Strings.Wheelhouse.copyCommand, systemImage: WheelhouseMenuIcon.copy)
         }
         if let harness = seat.harness {
-            Button(Strings.Wheelhouse.revealInFinder) {
+            Button {
                 let url = URL(fileURLWithPath: wheelhouse.root).appendingPathComponent(harness)
                 NSWorkspace.shared.activateFileViewerSelecting([url])
+            } label: {
+                Label(Strings.Wheelhouse.revealInFinder, systemImage: WheelhouseMenuIcon.revealInFinder)
             }
         }
     }

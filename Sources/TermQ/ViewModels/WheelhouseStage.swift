@@ -104,6 +104,13 @@ final class WheelhouseStage: ObservableObject {
         if isPinned(card) { unpin(card) } else { pin(card) }
     }
 
+    /// ⌘P: keep the focused pane on stage, or stop keeping it. The inbox is
+    /// not pinned.
+    func togglePinFocused() {
+        guard let card = focused, card != Self.inboxEntry else { return }
+        togglePin(card)
+    }
+
     private func mutate(_ change: (inout WheelhouseStageLayout) -> Void) {
         var next = layout
         change(&next)

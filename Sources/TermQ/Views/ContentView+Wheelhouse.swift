@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 import TermQShared
@@ -21,6 +22,27 @@ extension ContentView {
             case .send where TerminalSessionManager.shared.hasActiveSession(for: card): break
             default: wheelhouseStage.show(card)
             }
+        }
+    }
+
+    /// The seat of the stage's focused pane: its own, or a Quick Terminal's
+    /// parent. What the stage's shortcuts act on.
+    var focusedStageSeat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        WheelhouseStore.shared.owningSeat(ofCardId: wheelhouseStage.focused, in: viewModel.allTerminals)
+    }
+
+    /// ⌘T: on the stage, a Quick Terminal for the focused seat (nothing when
+    /// no seat is focused, such as the inbox: a general terminal would be
+    /// hidden by the stage); elsewhere a new terminal.
+    func quickNewTerminalOrSeatQuickTerminal() {
+        guard showsWheelhouseStage else {
+            viewModel.quickNewTerminal()
+            return
+        }
+        if let found = focusedStageSeat {
+            seatAction(found.wheelhouse, found.seat, .quickTerminal)
+        } else {
+            NSSound.beep()
         }
     }
 

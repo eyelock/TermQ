@@ -6,6 +6,8 @@ import SwiftUI
 /// it off.
 struct WheelhouseKeepOnStageToggle: View {
     let cardId: UUID
+    /// Show ⌘P beside it: only on the stage, for the focused seat.
+    var showsShortcut = false
     @ObservedObject private var stage: WheelhouseStage = .shared
 
     var body: some View {
@@ -15,8 +17,11 @@ struct WheelhouseKeepOnStageToggle: View {
         Button {
             if pinned { stage.unpin(cardId) } else { stage.pin(cardId) }
         } label: {
-            Label(Strings.Wheelhouse.keepOnStage, systemImage: pinned ? "pin.fill" : "pin")
+            Label(
+                Strings.Wheelhouse.keepOnStage, systemImage: pinned ? WheelhouseMenuIcon.pinned : WheelhouseMenuIcon.pin
+            )
         }
+        .stageShortcut(showsShortcut ? WheelhouseStageShortcut.keepOnStage : nil)
     }
 }
 
@@ -71,7 +76,7 @@ final class StagePaneClickMonitor {
 
     func stop() { removeMonitors() }
 
-    private nonisolated func removeMonitors() {
+    nonisolated private func removeMonitors() {
         if let monitor { NSEvent.removeMonitor(monitor) }
         if let keyMonitor { NSEvent.removeMonitor(keyMonitor) }
         monitor = nil
@@ -138,5 +143,26 @@ struct WheelhousePaneDivider: View {
                 if hovering { NSCursor.pop() }
             }
             .zIndex(1)
+    }
+}
+
+/// The stage's shortcuts for the focused seat. ⌘T is the File menu's Quick New
+/// Terminal, which on the stage opens a Quick Terminal for the focused seat;
+/// ⌘I and ⌘P are carried by the stage itself.
+enum WheelhouseStageShortcut {
+    static let quickTerminal = KeyboardShortcut("t", modifiers: .command)
+    static let harnessDetails = KeyboardShortcut("i", modifiers: .command)
+    static let keepOnStage = KeyboardShortcut("p", modifiers: .command)
+}
+
+extension View {
+    /// Shows `shortcut` beside a menu item, or nothing when nil.
+    @ViewBuilder
+    func stageShortcut(_ shortcut: KeyboardShortcut?) -> some View {
+        if let shortcut {
+            keyboardShortcut(shortcut)
+        } else {
+            self
+        }
     }
 }

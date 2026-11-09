@@ -236,7 +236,7 @@ struct WheelhouseInboxView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 9)
         .contentShape(Rectangle())
-        .contextMenu { rowMenu(item, in: wheelhouse) }
+        .contextMenu { rowMenu(item, in: wheelhouse).labelStyle(.titleAndIcon) }
     }
 
     /// "for stakker · from ynw · unblocks 1".
@@ -264,7 +264,8 @@ struct WheelhouseInboxView: View {
                 NSWorkspace.shared.open(url)
             } label: {
                 Label(
-                    item.externalRefShortName ?? Strings.Wheelhouse.inboxOpenLink, systemImage: "arrow.up.right.square"
+                    item.externalRefShortName ?? Strings.Wheelhouse.inboxOpenLink,
+                    systemImage: WheelhouseMenuIcon.openLink
                 )
                 .font(.system(size: 10.5))
             }
@@ -272,7 +273,7 @@ struct WheelhouseInboxView: View {
             .help(ref)
         }
         Menu {
-            rowMenu(item, in: wheelhouse)
+            rowMenu(item, in: wheelhouse).labelStyle(.titleAndIcon)
         } label: {
             Image(systemName: "ellipsis.circle")
                 .font(.system(size: 11))
@@ -288,27 +289,37 @@ struct WheelhouseInboxView: View {
     private func rowMenu(_ item: WheelhouseInboxItem, in wheelhouse: Wheelhouse) -> some View {
         Section(Strings.Wheelhouse.inboxSendTo) {
             ForEach(wheelhouse.seats.filter { $0.group.isConversational }) { seat in
-                Button(seat.name) {
+                Button {
                     onSeatAction(wheelhouse, seat, .send(Strings.Wheelhouse.inboxSendPrompt(item.id, item.title)))
                     sentTo[item.id] = seat.name
+                } label: {
+                    Label(seat.name, systemImage: WheelhouseMenuIcon.sendToSeat)
                 }
             }
         }
         Divider()
-        Button(Strings.Wheelhouse.inboxComment) {
+        Button {
             responding = InboxResponseRequest(root: wheelhouse.root, item: item, closing: false)
+        } label: {
+            Label(Strings.Wheelhouse.inboxComment, systemImage: WheelhouseMenuIcon.comment)
         }
-        Button(Strings.Wheelhouse.inboxClose) {
+        Button {
             responding = InboxResponseRequest(root: wheelhouse.root, item: item, closing: true)
+        } label: {
+            Label(Strings.Wheelhouse.inboxClose, systemImage: WheelhouseMenuIcon.closeBead)
         }
         Divider()
-        Button(Strings.Wheelhouse.inboxCopyId) {
+        Button {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(item.id, forType: .string)
+        } label: {
+            Label(Strings.Wheelhouse.inboxCopyId, systemImage: WheelhouseMenuIcon.copy)
         }
         if let ref = item.externalRef {
-            Button(Strings.Wheelhouse.inboxOpenLink) {
+            Button {
                 if let url = URL(string: ref) { NSWorkspace.shared.open(url) }
+            } label: {
+                Label(Strings.Wheelhouse.inboxOpenLink, systemImage: WheelhouseMenuIcon.openLink)
             }
         }
     }

@@ -575,7 +575,7 @@ extension ContentView {
 
     var terminalActions: TerminalActions {
         TerminalActions(
-            quickNewTerminal: { viewModel.quickNewTerminal() },
+            quickNewTerminal: { quickNewTerminalOrSeatQuickTerminal() },
             newTerminalWithDialog: {
                 if let firstColumn = viewModel.board.columns.first {
                     viewModel.addTerminal(to: firstColumn)

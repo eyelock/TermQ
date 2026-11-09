@@ -177,6 +177,10 @@ struct TermQApp: App {
             // View menu — ⌃⌘R/H/M/W pick a sidebar tab.
             SidebarTabCommands()
 
+            // TermQ has nothing to print; dropping File > Print frees ⌘P for
+            // the Wheelhouse stage's Keep on Stage.
+            CommandGroup(replacing: .printItem) {}
+
             // Help menu
             CommandGroup(replacing: .help) {
                 Button(Strings.Menu.help) {
