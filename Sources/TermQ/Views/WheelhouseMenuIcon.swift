@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// One SF Symbol per Wheelhouse menu action, so an action looks the same in
 /// every menu it appears in (sidebar row, stage chip, pane header, inbox).
@@ -27,6 +28,10 @@ enum WheelhouseMenuIcon {
     static let copy = "doc.on.clipboard"
     /// Repositories: Reveal in Finder.
     static let revealInFinder = "folder"
+    /// Repositories: Open in Terminal.
+    static let openInTerminal = "apple.terminal"
+    /// Repositories: Open In ▸ (editors).
+    static let openIn = "arrow.up.forward.app"
     static let sendToSeat = "paperplane"
     static let comment = "text.bubble"
     static let closeBead = "checkmark.circle"
@@ -43,5 +48,40 @@ enum WheelhouseMenuIcon {
     /// A harness focus: the wake focus has its own symbol, the rest share one.
     static func focus(named name: String) -> String {
         name == "wake" ? wakeFocus : focus
+    }
+}
+
+/// The Repositories tab's path block for a Wheelhouse folder (a seat's
+/// harness, or the Wheelhouse root): Reveal in Finder, Open in Terminal,
+/// Copy Pathname, and Open In ▸ each available editor.
+struct WheelhousePathMenuItems: View {
+    let path: String
+    @ObservedObject private var editors: EditorRegistry = .shared
+
+    var body: some View {
+        Button {
+            PathActions.revealInFinder(path: path)
+        } label: {
+            Label(Strings.Wheelhouse.revealInFinder, systemImage: WheelhouseMenuIcon.revealInFinder)
+        }
+        Button {
+            PathActions.openInTerminal(path: path)
+        } label: {
+            Label(Strings.Sidebar.openInTerminal, systemImage: WheelhouseMenuIcon.openInTerminal)
+        }
+        Button {
+            PathActions.copyPathname(path)
+        } label: {
+            Label(Strings.Sidebar.copyPathname, systemImage: WheelhouseMenuIcon.copy)
+        }
+        if !editors.available.isEmpty {
+            Menu {
+                ForEach(editors.available) { editor in
+                    Button(editor.displayName) { PathActions.openIn(editor: editor, path: path) }
+                }
+            } label: {
+                Label(Strings.Sidebar.openIn, systemImage: WheelhouseMenuIcon.openIn)
+            }
+        }
     }
 }

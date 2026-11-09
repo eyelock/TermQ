@@ -13,7 +13,9 @@ final class WheelhouseMenuIconTests: XCTestCase {
         WheelhouseMenuIcon.pin, WheelhouseMenuIcon.pinned, WheelhouseMenuIcon.copy,
         WheelhouseMenuIcon.revealInFinder, WheelhouseMenuIcon.sendToSeat, WheelhouseMenuIcon.comment,
         WheelhouseMenuIcon.closeBead, WheelhouseMenuIcon.openLink, WheelhouseMenuIcon.wheelhouse,
-        WheelhouseMenuIcon.allWheelhouses, WheelhouseMenuIcon.add,
+        WheelhouseMenuIcon.allWheelhouses, WheelhouseMenuIcon.add, WheelhouseMenuIcon.openInTerminal,
+        WheelhouseMenuIcon.openIn, WheelhouseMenuIcon.install, WheelhouseMenuIcon.actionRequired,
+        WheelhouseMenuIcon.zoom, WheelhouseMenuIcon.exitZoom,
     ]
 
     func testEveryIconIsASystemSymbol() {

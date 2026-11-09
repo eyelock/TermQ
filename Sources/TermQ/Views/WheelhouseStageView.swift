@@ -247,6 +247,13 @@ struct WheelhouseStageView: View {
         }
         WheelhouseKeepOnStageToggle(cardId: card.id, showsShortcut: stage.focused == card.id)
         zoomMenuItem(card)
+        if let found = store.owningSeat(of: card) {
+            let folder = WheelhouseSeatHealth.harnessDirectory(root: found.wheelhouse.root, seat: found.seat)
+            if FileManager.default.fileExists(atPath: folder) {
+                Divider()
+                WheelhousePathMenuItems(path: folder)
+            }
+        }
         if store.parentSeat(of: card) != nil {
             Button(role: .destructive) {
                 stage.closeQuickTerminal(card)

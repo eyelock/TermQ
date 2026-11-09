@@ -253,6 +253,9 @@ struct WheelhouseSidebarTab: View {
         }
         .buttonStyle(.plain)
         .help(wheelhouse.root)
+        .contextMenu {
+            WheelhousePathMenuItems(path: wheelhouse.root).labelStyle(.titleAndIcon)
+        }
 
         if !isCollapsed {
             if store.workUnavailable.contains(wheelhouse.root) {
@@ -502,13 +505,10 @@ struct WheelhouseSidebarTab: View {
         } label: {
             Label(Strings.Wheelhouse.copyCommand, systemImage: WheelhouseMenuIcon.copy)
         }
-        if let harness = seat.harness {
-            Button {
-                let url = URL(fileURLWithPath: wheelhouse.root).appendingPathComponent(harness)
-                NSWorkspace.shared.activateFileViewerSelecting([url])
-            } label: {
-                Label(Strings.Wheelhouse.revealInFinder, systemImage: WheelhouseMenuIcon.revealInFinder)
-            }
+        let folder = WheelhouseSeatHealth.harnessDirectory(root: wheelhouse.root, seat: seat)
+        if FileManager.default.fileExists(atPath: folder) {
+            Divider()
+            WheelhousePathMenuItems(path: folder)
         }
     }
 }
