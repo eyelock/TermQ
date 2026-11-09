@@ -26,7 +26,7 @@ struct ContentView: View {
     @State var launchCoordinator = HarnessLaunchCoordinator()
 
     /// Owns harness install/uninstall/update/export/fork flows via CommandRunnerSheet-backed sheets.
-    @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
+    @State var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
     /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
     @State private var runWithFocusCardContext: RunWithFocusContext?

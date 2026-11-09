@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "關閉：仍在執行的席位會離開舞台並繼續執行；已停止的席位則會被關閉";
 "wheelhouse.show.quick.terminals" = "顯示快速終端機";
 "wheelhouse.hide.quick.terminals" = "隱藏快速終端機";
+"wheelhouse.install" = "安裝";
+"wheelhouse.needs.first %@ %@" = "%1$@(需先 %2$@)";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "無人等待";
 "wheelhouse.more.waiting %ld" = "還有 +%ld";

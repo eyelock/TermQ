@@ -1606,6 +1606,8 @@
 "wheelhouse.smart.close.help" = "Sluiten: een plek die nog draait verlaat het podium en blijft draaien; een gestopte plek wordt gesloten";
 "wheelhouse.show.quick.terminals" = "Snelle terminals tonen";
 "wheelhouse.hide.quick.terminals" = "Snelle terminals verbergen";
+"wheelhouse.install" = "Installeren";
+"wheelhouse.needs.first %@ %@" = "%1$@ (heeft eerst %2$@ nodig)";
 "wheelhouse.needs.you" = "Heeft je nodig";
 "wheelhouse.nobody.waiting" = "niemand wacht";
 "wheelhouse.more.waiting %ld" = "+%ld meer";

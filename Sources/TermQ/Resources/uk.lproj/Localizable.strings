@@ -1608,6 +1608,8 @@
 "wheelhouse.smart.close.help" = "Закрити: місце, яке ще працює, залишає сцену й продовжує працювати; зупинене закривається";
 "wheelhouse.show.quick.terminals" = "Показати швидкі термінали";
 "wheelhouse.hide.quick.terminals" = "Приховати швидкі термінали";
+"wheelhouse.install" = "Встановити";
+"wheelhouse.needs.first %@ %@" = "%1$@ (спочатку потрібно: %2$@)";
 "wheelhouse.needs.you" = "Чекає на вас";
 "wheelhouse.nobody.waiting" = "ніхто не чекає";
 "wheelhouse.more.waiting %ld" = "ще +%ld";

@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Zavřít: místo, které stále běží, opustí pódium a běží dál; zastavené se zavře";
 "wheelhouse.show.quick.terminals" = "Zobrazit rychlé terminály";
 "wheelhouse.hide.quick.terminals" = "Skrýt rychlé terminály";
+"wheelhouse.install" = "Nainstalovat";
+"wheelhouse.needs.first %@ %@" = "%1$@ (nejdřív vyžaduje: %2$@)";
 "wheelhouse.needs.you" = "Potřebuje vás";
 "wheelhouse.nobody.waiting" = "nikdo nečeká";
 "wheelhouse.more.waiting %ld" = "+%ld dalších";

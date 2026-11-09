@@ -279,6 +279,8 @@ enum WheelhouseSeatAction: Equatable {
     case handoff
     /// Start the seat's first session with the birth skill.
     case birth
+    /// Install the seat's harness with ynh (`ynh install <its harness dir>`).
+    case install
     /// Close the seat's terminal: a seat whose harness still runs only leaves
     /// the stage; one whose harness has exited is closed out (its session
     /// killed and its card removed), so the next open launches it afresh.

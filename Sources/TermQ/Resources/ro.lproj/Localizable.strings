@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Închide: un loc care încă rulează părăsește scena și continuă să ruleze; unul oprit se închide";
 "wheelhouse.show.quick.terminals" = "Afișează terminalele rapide";
 "wheelhouse.hide.quick.terminals" = "Ascunde terminalele rapide";
+"wheelhouse.install" = "Instalare";
+"wheelhouse.needs.first %@ %@" = "%1$@ (necesită mai întâi %2$@)";
 "wheelhouse.needs.you" = "Are nevoie de tine";
 "wheelhouse.nobody.waiting" = "nimeni nu așteaptă";
 "wheelhouse.more.waiting %ld" = "încă +%ld";

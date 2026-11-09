@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "إغلاق: المقعد الذي لا يزال قيد التشغيل يغادر المسرح ويواصل العمل؛ أما الذي توقف فيُغلق";
 "wheelhouse.show.quick.terminals" = "إظهار الطرفيات السريعة";
 "wheelhouse.hide.quick.terminals" = "إخفاء الطرفيات السريعة";
+"wheelhouse.install" = "تثبيت";
+"wheelhouse.needs.first %@ %@" = "%1$@ (يتطلب %2$@ أولاً)";
 "wheelhouse.needs.you" = "يحتاج إليك";
 "wheelhouse.nobody.waiting" = "لا أحد ينتظر";
 "wheelhouse.more.waiting %ld" = "+%ld أخرى";

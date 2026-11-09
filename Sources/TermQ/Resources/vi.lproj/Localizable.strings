@@ -1609,6 +1609,8 @@
 "wheelhouse.smart.close.help" = "Đóng: ghế đang chạy sẽ rời sân khấu và tiếp tục chạy; ghế đã dừng sẽ bị đóng";
 "wheelhouse.show.quick.terminals" = "Hiện Terminal nhanh";
 "wheelhouse.hide.quick.terminals" = "Ẩn Terminal nhanh";
+"wheelhouse.install" = "Cài đặt";
+"wheelhouse.needs.first %@ %@" = "%1$@ (cần %2$@ trước)";
 "wheelhouse.needs.you" = "Cần bạn";
 "wheelhouse.nobody.waiting" = "không ai đang chờ";
 "wheelhouse.more.waiting %ld" = "+%ld nữa";

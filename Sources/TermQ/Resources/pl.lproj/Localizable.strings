@@ -1606,6 +1606,8 @@
 "wheelhouse.smart.close.help" = "Zamknij: miejsce, które nadal działa, opuszcza scenę i działa dalej; zatrzymane zostaje zamknięte";
 "wheelhouse.show.quick.terminals" = "Pokaż szybkie terminale";
 "wheelhouse.hide.quick.terminals" = "Ukryj szybkie terminale";
+"wheelhouse.install" = "Zainstaluj";
+"wheelhouse.needs.first %@ %@" = "%1$@ (najpierw wymaga: %2$@)";
 "wheelhouse.needs.you" = "Potrzebuje cię";
 "wheelhouse.nobody.waiting" = "nikt nie czeka";
 "wheelhouse.more.waiting %ld" = "+%ld więcej";

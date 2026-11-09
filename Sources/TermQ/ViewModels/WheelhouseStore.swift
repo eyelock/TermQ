@@ -41,7 +41,15 @@ final class WheelhouseStore: ObservableObject {
     /// Seat commands per Wheelhouse root known to have had no first session yet.
     @Published private(set) var unborn: [String: Set<String>] = [:]
 
+    /// Delegate issues per Wheelhouse root and seat command, from the seats'
+    /// manifests and git. Refreshed with every load.
+    @Published private(set) var delegateIssues: [String: [String: [WheelhouseSeatIssue]]] = [:]
+
+    /// The error line of a seat's last failed launch, per root and command.
+    @Published private(set) var launchFailures: [String: [String: String]] = [:]
+
     private var refreshTask: Task<Void, Never>?
+    private var healthTask: Task<Void, Never>?
     private var workTask: Task<Void, Never>?
     private var identityTask: Task<Void, Never>?
     private var identityChecked: Set<String> = []
@@ -59,7 +67,48 @@ final class WheelhouseStore: ObservableObject {
             self.isLoading = false
             self.refreshWork()
             self.refreshIdentities()
+            self.refreshDelegateIssues()
         }
+    }
+
+    // MARK: - Seat health
+
+    /// Re-reads every seat's own-repository delegates against git.
+    func refreshDelegateIssues() {
+        healthTask?.cancel()
+        let seats = wheelhouses.flatMap { wheelhouse in wheelhouse.seats.map { (wheelhouse.root, $0) } }
+        healthTask = Task { [weak self] in
+            var found: [String: [String: [WheelhouseSeatIssue]]] = [:]
+            for (root, seat) in seats {
+                if Task.isCancelled { return }
+                let issues = await WheelhouseSeatHealth.delegateIssues(root: root, seat: seat)
+                if !issues.isEmpty { found[root, default: [:]][seat.command] = issues }
+            }
+            guard !Task.isCancelled, let self else { return }
+            self.delegateIssues = found
+        }
+    }
+
+    func recordLaunchFailure(_ message: String?, for seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+        guard launchFailures[wheelhouse.root]?[seat.command] != message else { return }
+        launchFailures[wheelhouse.root, default: [:]][seat.command] = message
+    }
+
+    /// What stops a seat from running. `installed` is nil while the installed
+    /// harnesses aren't known, so nothing is claimed about them.
+    func issues(for seat: WheelhouseSeat, in wheelhouse: Wheelhouse, installed: Bool?) -> [WheelhouseSeatIssue] {
+        Self.issues(
+            installed: installed, delegates: delegateIssues[wheelhouse.root]?[seat.command] ?? [],
+            launchFailure: launchFailures[wheelhouse.root]?[seat.command])
+    }
+
+    nonisolated static func issues(
+        installed: Bool?, delegates: [WheelhouseSeatIssue], launchFailure: String?
+    ) -> [WheelhouseSeatIssue] {
+        var issues: [WheelhouseSeatIssue] = installed == false ? [.notInstalled] : []
+        issues += delegates
+        if let launchFailure { issues.append(.launchFailed(launchFailure)) }
+        return issues
     }
 
     /// Re-reads every Wheelhouse's in-progress beads and the human's inbox.

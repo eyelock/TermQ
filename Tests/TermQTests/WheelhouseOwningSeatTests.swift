@@ -66,3 +66,16 @@ final class WheelhouseOwningSeatTests: XCTestCase {
         XCTAssertFalse(stage.isPinned(seat))
     }
 }
+
+/// Which issues a seat shows.
+final class WheelhouseSeatIssuesTests: XCTestCase {
+    func testIssuesCombineInstallDelegatesAndTheLastLaunch() {
+        XCTAssertEqual(
+            WheelhouseStore.issues(installed: false, delegates: [], launchFailure: nil), [.notInstalled])
+        XCTAssertEqual(WheelhouseStore.issues(installed: nil, delegates: [], launchFailure: nil), [])
+        XCTAssertEqual(
+            WheelhouseStore.issues(
+                installed: true, delegates: [.delegatesNotCommitted(["harnesses/io"])], launchFailure: "boom"),
+            [.delegatesNotCommitted(["harnesses/io"]), .launchFailed("boom")])
+    }
+}

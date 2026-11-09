@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "閉じる: 実行中の席はステージから外れて実行を続け、停止した席は閉じられます";
 "wheelhouse.show.quick.terminals" = "クイックターミナルを表示";
 "wheelhouse.hide.quick.terminals" = "クイックターミナルを非表示";
+"wheelhouse.install" = "インストール";
+"wheelhouse.needs.first %@ %@" = "%1$@(先に %2$@ が必要)";
 "wheelhouse.needs.you" = "あなたを待っています";
 "wheelhouse.nobody.waiting" = "待っている人はいません";
 "wheelhouse.more.waiting %ld" = "他 +%ld";

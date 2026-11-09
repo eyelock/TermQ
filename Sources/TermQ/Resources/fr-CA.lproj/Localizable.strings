@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "Fermer : un poste encore en cours d’exécution quitte la scène et continue de tourner ; un poste arrêté est fermé";
 "wheelhouse.show.quick.terminals" = "Afficher les terminaux rapides";
 "wheelhouse.hide.quick.terminals" = "Masquer les terminaux rapides";
+"wheelhouse.install" = "Installer";
+"wheelhouse.needs.first %@ %@" = "%1$@ (nécessite d'abord %2$@)";
 "wheelhouse.needs.you" = "Vous attend";
 "wheelhouse.nobody.waiting" = "personne n’attend";
 "wheelhouse.more.waiting %ld" = "+%ld de plus";

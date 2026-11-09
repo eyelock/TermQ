@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Schließen: Ein Platz, der noch läuft, verlässt die Bühne und läuft weiter; ein beendeter wird geschlossen";
 "wheelhouse.show.quick.terminals" = "Schnellterminals einblenden";
 "wheelhouse.hide.quick.terminals" = "Schnellterminals ausblenden";
+"wheelhouse.install" = "Installieren";
+"wheelhouse.needs.first %@ %@" = "%1$@ (benötigt zuerst %2$@)";
 "wheelhouse.needs.you" = "Braucht dich";
 "wheelhouse.nobody.waiting" = "niemand wartet";
 "wheelhouse.more.waiting %ld" = "+%ld weitere";

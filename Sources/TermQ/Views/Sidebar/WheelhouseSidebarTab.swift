@@ -17,6 +17,7 @@ struct WheelhouseSidebarTab: View {
     @ObservedObject private var stage: WheelhouseStage = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var tabManager: TabManager = BoardViewModel.shared.tabManager
+    @ObservedObject private var harnessRepo: HarnessRepository = .shared
     @State private var collapsed: Set<String> = []
     @State private var showingAdd = false
 
@@ -46,13 +47,21 @@ struct WheelhouseSidebarTab: View {
                 list
             }
         }
-        .onAppear { store.refresh(roots: roots) }
+        .onAppear {
+            store.refresh(roots: roots)
+            // Seat health needs to know which harnesses ynh has.
+            if !harnessRepo.listState.isLoaded, case .ready = YNHDetector.shared.status {
+                Task { await harnessRepo.refresh() }
+            }
+        }
         .onChange(of: roots) { _, newRoots in store.refresh(roots: newRoots) }
         .onReceive(
             NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)
         ) { _ in
             store.refresh(roots: roots)
         }
+        // An install or uninstall changes what a seat needs.
+        .onChange(of: harnessRepo.harnesses.map(\.name)) { store.refreshDelegateIssues() }
         .sheet(isPresented: $showingAdd) {
             WheelhouseAddSheet { root in await addWheelhouse(root: root) }
         }
@@ -61,6 +70,8 @@ struct WheelhouseSidebarTab: View {
                 try? await Task.sleep(for: WheelhouseStore.workRefreshInterval)
                 guard !Task.isCancelled else { return }
                 store.refreshWork()
+                // Commits made in a terminal show up without leaving the app.
+                store.refreshDelegateIssues()
             }
         }
     }
@@ -274,6 +285,12 @@ struct WheelhouseSidebarTab: View {
             in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
     }
 
+    /// What stops the seat from running, if anything. A seat's command is its
+    /// ynh harness name, so that is what "installed" looks for.
+    private func seatIssues(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> [WheelhouseSeatIssue] {
+        store.issues(for: seat, in: wheelhouse, installed: harnessRepo.isInstalled(name: seat.command))
+    }
+
     private func needsYou(_ card: TerminalCard?) -> Bool {
         guard let card else { return false }
         return tabManager.needsAttention.contains(card.id)
@@ -422,9 +439,11 @@ struct WheelhouseSidebarTab: View {
         }
         Divider()
         if let onSeatAction {
+            let issues = seatIssues(seat, in: wheelhouse)
             WheelhouseSeatActionItems(
                 wheelhouse: wheelhouse, seat: seat, hasTerminal: card != nil,
-                unborn: store.isUnborn(seat, in: wheelhouse), onSeatAction: onSeatAction)
+                unborn: store.isUnborn(seat, in: wheelhouse), installed: harnessRepo.isInstalled(name: seat.command),
+                blockedBy: WheelhouseSeatHealth.blockingDelegates(in: issues), onSeatAction: onSeatAction)
             Divider()
         }
         if let card {

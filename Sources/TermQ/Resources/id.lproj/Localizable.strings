@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Tutup: kursi yang masih berjalan meninggalkan Panggung dan terus berjalan; kursi yang sudah berhenti ditutup";
 "wheelhouse.show.quick.terminals" = "Tampilkan Terminal Cepat";
 "wheelhouse.hide.quick.terminals" = "Sembunyikan Terminal Cepat";
+"wheelhouse.install" = "Pasang";
+"wheelhouse.needs.first %@ %@" = "%1$@ (perlu %2$@ terlebih dahulu)";
 "wheelhouse.needs.you" = "Membutuhkan Anda";
 "wheelhouse.nobody.waiting" = "tidak ada yang menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";

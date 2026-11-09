@@ -1608,6 +1608,8 @@
 "wheelhouse.smart.close.help" = "닫기: 아직 실행 중인 좌석은 무대에서 빠지고 계속 실행되며, 중지된 좌석은 닫힙니다";
 "wheelhouse.show.quick.terminals" = "빠른 터미널 보기";
 "wheelhouse.hide.quick.terminals" = "빠른 터미널 숨기기";
+"wheelhouse.install" = "설치";
+"wheelhouse.needs.first %@ %@" = "%1$@ (먼저 %2$@ 필요)";
 "wheelhouse.needs.you" = "도움 필요";
 "wheelhouse.nobody.waiting" = "기다리는 좌석 없음";
 "wheelhouse.more.waiting %ld" = "+%ld개 더";

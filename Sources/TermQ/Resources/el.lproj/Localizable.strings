@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Κλείσιμο: μια θέση που εκτελείται ακόμη φεύγει από τη σκηνή και συνεχίζει να εκτελείται· μια θέση που έχει σταματήσει κλείνει";
 "wheelhouse.show.quick.terminals" = "Εμφάνιση γρήγορων τερματικών";
 "wheelhouse.hide.quick.terminals" = "Απόκρυψη γρήγορων τερματικών";
+"wheelhouse.install" = "Εγκατάσταση";
+"wheelhouse.needs.first %@ %@" = "%1$@ (απαιτεί πρώτα %2$@)";
 "wheelhouse.needs.you" = "Σας χρειάζεται";
 "wheelhouse.nobody.waiting" = "κανείς δεν περιμένει";
 "wheelhouse.more.waiting %ld" = "+%ld ακόμη";

@@ -1606,6 +1606,8 @@
 "wheelhouse.smart.close.help" = "Tutup: kerusi yang masih berjalan meninggalkan Pentas dan terus berjalan; kerusi yang telah berhenti ditutup";
 "wheelhouse.show.quick.terminals" = "Papar Terminal Pantas";
 "wheelhouse.hide.quick.terminals" = "Sembunyikan Terminal Pantas";
+"wheelhouse.install" = "Pasang";
+"wheelhouse.needs.first %@ %@" = "%1$@ (perlukan %2$@ dahulu)";
 "wheelhouse.needs.you" = "Memerlukan anda";
 "wheelhouse.nobody.waiting" = "tiada siapa menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";

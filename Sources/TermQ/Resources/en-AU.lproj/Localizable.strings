@@ -1599,6 +1599,8 @@
 "wheelhouse.smart.close.help" = "Close: a seat still running leaves the stage and keeps running; one that has stopped is closed";
 "wheelhouse.show.quick.terminals" = "Show Quick Terminals";
 "wheelhouse.hide.quick.terminals" = "Hide Quick Terminals";
+"wheelhouse.install" = "Install";
+"wheelhouse.needs.first %@ %@" = "%1$@ (needs %2$@ first)";
 "wheelhouse.needs.you" = "Needs you";
 "wheelhouse.nobody.waiting" = "nobody waiting";
 "wheelhouse.more.waiting %ld" = "+%ld more";

@@ -14,6 +14,10 @@ extension ContentView {
 
     var seatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void {
         { wheelhouse, seat, action in
+            if action == .install {
+                installSeat(seat, in: wheelhouse)
+                return
+            }
             guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
             switch action {
             case .closeTerminal: wheelhouseStage.remove(card)
@@ -25,6 +29,15 @@ extension ContentView {
             default: wheelhouseStage.show(card)
             }
         }
+    }
+
+    /// Installs a seat's harness from its directory in the Wheelhouse, through
+    /// the same progress sheet as any harness install.
+    func installSeat(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+        lifecycleCoordinator.installHarness(
+            HarnessInstallConfig(
+                displayName: seat.name,
+                installArgs: [WheelhouseSeatHealth.harnessDirectory(root: wheelhouse.root, seat: seat)]))
     }
 
     /// The seat of the stage's focused pane: its own, or a Quick Terminal's

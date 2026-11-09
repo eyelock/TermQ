@@ -762,17 +762,35 @@ struct WheelhouseSeatActionItems: View {
     let seat: WheelhouseSeat
     let hasTerminal: Bool
     var unborn: Bool = false
+    /// Whether ynh has the seat's harness; nil while unknown.
+    var installed: Bool?
+    /// Delegates the seat waits on (not committed or missing), named for the
+    /// "needs … first" warning.
+    var blockedBy: [String] = []
     /// Show the stage's shortcuts beside the items they trigger: only in a
     /// right-click menu on the stage, where they act on the focused seat.
     var showsShortcuts: Bool = false
     let onSeatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void
 
+    /// "Install", or "Install (needs io first)" while its delegates aren't
+    /// ready: still clickable, it just says what else is needed.
+    private func withNeeds(_ title: String) -> String {
+        blockedBy.isEmpty ? title : Strings.Wheelhouse.needsFirst(title, blockedBy.joined(separator: ", "))
+    }
+
     var body: some View {
-        if unborn && !hasTerminal {
+        if installed == false {
+            Button {
+                onSeatAction(wheelhouse, seat, .install)
+            } label: {
+                Label(withNeeds(Strings.Wheelhouse.install), systemImage: WheelhouseMenuIcon.install)
+            }
+            Divider()
+        } else if unborn && !hasTerminal {
             Button {
                 onSeatAction(wheelhouse, seat, .birth)
             } label: {
-                Label(Strings.Wheelhouse.birth, systemImage: WheelhouseMenuIcon.birth)
+                Label(withNeeds(Strings.Wheelhouse.birth), systemImage: WheelhouseMenuIcon.birth)
             }
             Divider()
         }

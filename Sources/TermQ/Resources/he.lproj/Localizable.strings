@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "סגור: מושב שעדיין פועל יוצא מהבמה וממשיך לפעול; מושב שהפסיק לפעול נסגר";
 "wheelhouse.show.quick.terminals" = "הצג טרמינלים מהירים";
 "wheelhouse.hide.quick.terminals" = "הסתר טרמינלים מהירים";
+"wheelhouse.install" = "התקנה";
+"wheelhouse.needs.first %@ %@" = "%1$@ (דורש קודם: %2$@)";
 "wheelhouse.needs.you" = "זקוק לך";
 "wheelhouse.nobody.waiting" = "אף אחד לא ממתין";
 "wheelhouse.more.waiting %ld" = "+%ld נוספים";

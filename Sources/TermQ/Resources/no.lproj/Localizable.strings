@@ -1606,6 +1606,8 @@
 "wheelhouse.smart.close.help" = "Lukk: en plass som fortsatt kjører forlater scenen og kjører videre; en som har stoppet, lukkes";
 "wheelhouse.show.quick.terminals" = "Vis hurtigterminaler";
 "wheelhouse.hide.quick.terminals" = "Skjul hurtigterminaler";
+"wheelhouse.install" = "Installer";
+"wheelhouse.needs.first %@ %@" = "%1$@ (krever %2$@ først)";
 "wheelhouse.needs.you" = "Trenger deg";
 "wheelhouse.nobody.waiting" = "ingen venter";
 "wheelhouse.more.waiting %ld" = "+%ld til";

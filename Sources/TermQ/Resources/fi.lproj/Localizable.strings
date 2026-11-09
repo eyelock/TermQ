@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "Sulje: paikka, joka on yhä käynnissä, poistuu lavalta ja jatkaa toimintaansa; pysähtynyt paikka suljetaan";
 "wheelhouse.show.quick.terminals" = "Näytä pikateminaalit";
 "wheelhouse.hide.quick.terminals" = "Piilota pikateminaalit";
+"wheelhouse.install" = "Asenna";
+"wheelhouse.needs.first %@ %@" = "%1$@ (vaatii ensin: %2$@)";
 "wheelhouse.needs.you" = "Tarvitsee sinua";
 "wheelhouse.nobody.waiting" = "kukaan ei odota";
 "wheelhouse.more.waiting %ld" = "+%ld lisää";

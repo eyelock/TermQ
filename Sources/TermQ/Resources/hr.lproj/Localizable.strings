@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "Zatvori: mjesto koje još radi napušta pozornicu i nastavlja raditi; zaustavljeno se zatvara";
 "wheelhouse.show.quick.terminals" = "Prikaži brze terminale";
 "wheelhouse.hide.quick.terminals" = "Sakrij brze terminale";
+"wheelhouse.install" = "Instaliraj";
+"wheelhouse.needs.first %@ %@" = "%1$@ (prvo treba: %2$@)";
 "wheelhouse.needs.you" = "Treba te";
 "wheelhouse.nobody.waiting" = "nitko ne čeka";
 "wheelhouse.more.waiting %ld" = "još +%ld";

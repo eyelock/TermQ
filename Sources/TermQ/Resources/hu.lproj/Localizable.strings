@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "Bezárás: a még futó hely lekerül a színpadról, és tovább fut; a leállt hely bezárul";
 "wheelhouse.show.quick.terminals" = "Gyors terminálok megjelenítése";
 "wheelhouse.hide.quick.terminals" = "Gyors terminálok elrejtése";
+"wheelhouse.install" = "Telepítés";
+"wheelhouse.needs.first %@ %@" = "%1$@ (előbb ez kell: %2$@)";
 "wheelhouse.needs.you" = "Szüksége van rád";
 "wheelhouse.nobody.waiting" = "senki sem vár";
 "wheelhouse.more.waiting %ld" = "+%ld további";

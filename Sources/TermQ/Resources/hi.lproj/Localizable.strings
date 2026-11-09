@@ -1607,6 +1607,8 @@
 "wheelhouse.smart.close.help" = "बंद करें: जो सीट अब भी चल रही है वह मंच से हट जाती है और चलती रहती है; जो रुक चुकी है उसे बंद कर दिया जाता है";
 "wheelhouse.show.quick.terminals" = "त्वरित टर्मिनल दिखाएँ";
 "wheelhouse.hide.quick.terminals" = "त्वरित टर्मिनल छिपाएँ";
+"wheelhouse.install" = "इंस्टॉल करें";
+"wheelhouse.needs.first %@ %@" = "%1$@ (पहले %2$@ आवश्यक)";
 "wheelhouse.needs.you" = "आपकी ज़रूरत है";
 "wheelhouse.nobody.waiting" = "कोई प्रतीक्षा में नहीं";
 "wheelhouse.more.waiting %ld" = "+%ld और";

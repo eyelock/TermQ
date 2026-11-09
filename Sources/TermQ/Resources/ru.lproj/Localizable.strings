@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Закрыть: место, которое ещё работает, уходит со сцены и продолжает работу; остановленное закрывается";
 "wheelhouse.show.quick.terminals" = "Показать быстрые терминалы";
 "wheelhouse.hide.quick.terminals" = "Скрыть быстрые терминалы";
+"wheelhouse.install" = "Установить";
+"wheelhouse.needs.first %@ %@" = "%1$@ (сначала нужно: %2$@)";
 "wheelhouse.needs.you" = "Ждёт вас";
 "wheelhouse.nobody.waiting" = "никто не ждёт";
 "wheelhouse.more.waiting %ld" = "ещё +%ld";

@@ -299,6 +299,9 @@ final class HarnessLaunchCoordinator {
         case .harnessDetails:
             showHarnessDetails(for: seat, in: wheelhouse)
             return nil
+        case .install:
+            // Run by ContentView, which owns the install progress sheet.
+            return nil
         case .closeTerminal:
             guard let card = seatCard(seat, in: wheelhouse) else { return nil }
             WheelhouseStage.shared.smartClose(card, board: boardViewModel)

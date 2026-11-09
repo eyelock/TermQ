@@ -1601,6 +1601,8 @@
 "wheelhouse.smart.close.help" = "Chiudi: una postazione ancora in esecuzione lascia il palco e continua a funzionare; una già ferma viene chiusa";
 "wheelhouse.show.quick.terminals" = "Mostra terminali rapidi";
 "wheelhouse.hide.quick.terminals" = "Nascondi terminali rapidi";
+"wheelhouse.install" = "Installa";
+"wheelhouse.needs.first %@ %@" = "%1$@ (richiede prima %2$@)";
 "wheelhouse.needs.you" = "Ha bisogno di te";
 "wheelhouse.nobody.waiting" = "nessuno in attesa";
 "wheelhouse.more.waiting %ld" = "altri +%ld";

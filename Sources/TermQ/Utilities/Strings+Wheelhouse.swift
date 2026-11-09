@@ -32,6 +32,11 @@ extension Strings {
         static var pin: String { localized("wheelhouse.pin") }
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
         static var zoomTerminal: String { localized("wheelhouse.zoom.terminal") }
+        static var install: String { localized("wheelhouse.install") }
+        /// "Install (needs io, titan first)".
+        static func needsFirst(_ action: String, _ names: String) -> String {
+            localized("wheelhouse.needs.first %@ %@", action, names)
+        }
         static var showQuickTerminals: String { localized("wheelhouse.show.quick.terminals") }
         static var hideQuickTerminals: String { localized("wheelhouse.hide.quick.terminals") }
         static var exitZoom: String { localized("wheelhouse.exit.zoom") }

@@ -82,6 +82,12 @@ final class HarnessRepository: ObservableObject {
     /// Use `listState` directly when readiness vs. emptiness matters.
     var harnesses: [Harness] { listState.value ?? [] }
 
+    /// Whether a harness by `name` is installed; nil until the list is loaded.
+    func isInstalled(name: String) -> Bool? {
+        guard listState.isLoaded else { return nil }
+        return harnesses.contains { $0.name == name }
+    }
+
     /// True while a `refresh()` is in flight, regardless of whether a
     /// previously-loaded list is being kept visible (stale-while-revalidate).
     @Published private(set) var isRefreshing = false

@@ -1603,6 +1603,8 @@
 "wheelhouse.smart.close.help" = "关闭：仍在运行的席位会离开舞台并继续运行；已停止的席位则会被关闭";
 "wheelhouse.show.quick.terminals" = "显示快速终端";
 "wheelhouse.hide.quick.terminals" = "隐藏快速终端";
+"wheelhouse.install" = "安装";
+"wheelhouse.needs.first %@ %@" = "%1$@(需要先 %2$@)";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "无人等待";
 "wheelhouse.more.waiting %ld" = "还有 +%ld";

@@ -9,6 +9,10 @@ enum WheelhouseMenuIcon {
     static let openTerminal = "play.fill"
     static let showTerminal = "macwindow"
     static let birth = "sparkles"
+    /// Install a seat's harness (the same arrow Repositories uses to bring
+    /// something down).
+    static let install = "arrow.down.circle"
+    static let actionRequired = "exclamationmark.triangle.fill"
     static let wakeFocus = "sunrise"
     static let focus = "scope"
     static let handoff = "moon.zzz"

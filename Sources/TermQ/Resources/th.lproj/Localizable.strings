@@ -1608,6 +1608,8 @@
 "wheelhouse.smart.close.help" = "ปิด: ที่นั่งที่ยังทำงานอยู่จะออกจากเวทีและทำงานต่อไป ส่วนที่นั่งที่หยุดแล้วจะถูกปิด";
 "wheelhouse.show.quick.terminals" = "แสดงเทอร์มินัลด่วน";
 "wheelhouse.hide.quick.terminals" = "ซ่อนเทอร์มินัลด่วน";
+"wheelhouse.install" = "ติดตั้ง";
+"wheelhouse.needs.first %@ %@" = "%1$@ (ต้องมี %2$@ ก่อน)";
 "wheelhouse.needs.you" = "ต้องการคุณ";
 "wheelhouse.nobody.waiting" = "ไม่มีใครรอ";
 "wheelhouse.more.waiting %ld" = "อีก +%ld";

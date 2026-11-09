@@ -1608,6 +1608,8 @@
 "wheelhouse.smart.close.help" = "Kapat: hâlâ çalışan bir koltuk sahneden ayrılır ve çalışmaya devam eder; durmuş olan kapatılır";
 "wheelhouse.show.quick.terminals" = "Hızlı Terminalleri göster";
 "wheelhouse.hide.quick.terminals" = "Hızlı Terminalleri gizle";
+"wheelhouse.install" = "Kur";
+"wheelhouse.needs.first %@ %@" = "%1$@ (önce %2$@ gerekli)";
 "wheelhouse.needs.you" = "Sizi bekliyor";
 "wheelhouse.nobody.waiting" = "kimse beklemiyor";
 "wheelhouse.more.waiting %ld" = "+%ld daha";
