@@ -53,7 +53,7 @@ enum WheelhouseMenuIcon {
 
 /// The Repositories tab's path block for a Wheelhouse folder (a seat's
 /// harness, or the Wheelhouse root): Reveal in Finder, Open in Terminal,
-/// Copy Pathname, and Open In ▸ each available editor.
+/// Copy Pathname, and an "Open In" section with each available editor.
 struct WheelhousePathMenuItems: View {
     let path: String
     @ObservedObject private var editors: EditorRegistry = .shared
@@ -74,13 +74,17 @@ struct WheelhousePathMenuItems: View {
         } label: {
             Label(Strings.Sidebar.copyPathname, systemImage: WheelhouseMenuIcon.copy)
         }
+        // A titled section, not a submenu: Wheelhouse rows re-render as seats
+        // work, and a re-render closes an open submenu under the pointer.
         if !editors.available.isEmpty {
-            Menu {
+            Section(Strings.Sidebar.openIn) {
                 ForEach(editors.available) { editor in
-                    Button(editor.displayName) { PathActions.openIn(editor: editor, path: path) }
+                    Button {
+                        PathActions.openIn(editor: editor, path: path)
+                    } label: {
+                        Label(editor.displayName, systemImage: WheelhouseMenuIcon.openIn)
+                    }
                 }
-            } label: {
-                Label(Strings.Sidebar.openIn, systemImage: WheelhouseMenuIcon.openIn)
             }
         }
     }

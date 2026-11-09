@@ -9,8 +9,6 @@ import TermQShared
 struct TermQApp: App {
     @NSApplicationDelegateAdaptor(TermQAppDelegate.self) var appDelegate
     @StateObject private var urlHandler = URLHandler.shared
-    @FocusedValue(\.terminalActions) private var terminalActions
-    @FocusedValue(\.windowMenu) private var windowMenu
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openSettings) private var openSettings
 
@@ -50,123 +48,12 @@ struct TermQApp: App {
                 }
             #endif
 
-            // Window commands — close the window (hides it, preserving the
-            // session) and favourite the current terminal. The live list of
-            // open terminals (⌘1–⌘9) will be added as a separate group.
-            CommandGroup(after: .windowArrangement) {
-                Button(Strings.Common.closeWindow) {
-                    // Close the current window (won't quit app due to applicationShouldTerminateAfterLastWindowClosed)
-                    NSApp.keyWindow?.close()
-                }
-                .keyboardShortcut("w", modifiers: .command)
-
-                Button(Strings.Menu.favouriteCurrentTerminal) {
-                    terminalActions?.toggleFavourite()
-                }
-                .keyboardShortcut("d", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                // Live jump list of open terminals (⌘1–⌘9), favourites first.
-                // Capped at nine; "All Terminals…" routes overflow to the
-                // Command Palette.
-                if let windowMenu, !windowMenu.openTerminals.isEmpty {
-                    Divider()
-
-                    ForEach(Array(windowMenu.openTerminals.enumerated()), id: \.element.id) { index, item in
-                        Button {
-                            windowMenu.jumpToTerminal(item.id)
-                        } label: {
-                            Text(item.isFavourite ? "★ \(item.title)" : item.title)
-                        }
-                        .keyboardShortcut(KeyEquivalent(Character("\(index + 1)")), modifiers: .command)
-                    }
-
-                    if windowMenu.totalOpen > windowMenu.openTerminals.count {
-                        Button(Strings.Menu.allTerminals) {
-                            terminalActions?.showCommandPalette()
-                        }
-                    }
-                }
-            }
-
-            // Edit menu — terminal search (Find) in its conventional home,
-            // below the Cut/Copy/Paste section.
-            CommandGroup(after: .pasteboard) {
-                Button(Strings.Menu.find) {
-                    terminalActions?.toggleSearch()
-                }
-                .keyboardShortcut("f", modifiers: .command)
-                .disabled(terminalActions == nil)
-            }
-
-            // View menu — layout, terminal navigation, and text-size controls.
-            // macOS convention places sidebar / zoom / text-size under View
-            // (cf. Messages, Safari, Terminal). Navigation (Back to Board, tab
-            // switching) and the Command Palette live here too, so the File
-            // menu can return to plain new / export / close work.
-            CommandGroup(after: .sidebar) {
-                Button(Strings.Sidebar.menuToggle) {
-                    terminalActions?.toggleSidebar()
-                }
-                .keyboardShortcut("l", modifiers: [.command, .shift])
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.toggleZoom) {
-                    terminalActions?.toggleZoom()
-                }
-                .keyboardShortcut("z", modifiers: [.command, .option])
-                .disabled(terminalActions == nil)
-
-                Divider()
-
-                Button(Strings.Menu.back) {
-                    terminalActions?.goBack()
-                }
-                .keyboardShortcut("b", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.nextTab) {
-                    terminalActions?.nextTab()
-                }
-                .keyboardShortcut("]", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.previousTab) {
-                    terminalActions?.previousTab()
-                }
-                .keyboardShortcut("[", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Divider()
-
-                Button(Strings.Menu.commandPalette) {
-                    terminalActions?.showCommandPalette()
-                }
-                .keyboardShortcut("k", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Divider()
-
-                Button(Strings.Menu.increaseFontSize) {
-                    terminalActions?.increaseFontSize()
-                }
-                .keyboardShortcut("+", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.decreaseFontSize) {
-                    terminalActions?.decreaseFontSize()
-                }
-                .keyboardShortcut("-", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.resetFontSize) {
-                    terminalActions?.resetFontSize()
-                }
-                .keyboardShortcut("0", modifiers: .command)
-                .disabled(terminalActions == nil)
-
-                Divider()
-            }
+            // Window, Edit, View and File items that act on the focused
+            // terminal. In their own Commands type, so that the focused values
+            // changing (about once a second while agents work) rebuilds only
+            // these, not the Workspace menu: a rebuilt menu closes any submenu
+            // the pointer is in.
+            TerminalCommands()
 
             // Single "Workspace" menu — Repositories / Harnesses / Marketplaces
             // as flyout submenus plus Logging & Diagnostics (the old Utilities
@@ -193,61 +80,6 @@ struct TermQApp: App {
                 Button(Strings.Menu.memoryReport) {
                     MemoryReportWindowController.shared.show()
                 }
-            }
-
-            // File menu — terminal/document lifecycle only. Navigation, zoom,
-            // sidebar, find, and the command palette moved to View / Edit /
-            // Window, so this reads as plain new / export / close work.
-            // The "New" section is replaced to drop the default "New Window"
-            // command: TermQ is single-window because terminal NSViews can
-            // only have one parent.
-            CommandGroup(replacing: .newItem) {
-                Button(Strings.Menu.newTerminalQuick) {
-                    terminalActions?.quickNewTerminal()
-                }
-                .keyboardShortcut("t", modifiers: .command)
-
-                Button(Strings.Menu.newTerminal) {
-                    terminalActions?.newTerminalWithDialog()
-                }
-                .keyboardShortcut("n", modifiers: .command)
-
-                Button(Strings.Menu.newColumn) {
-                    terminalActions?.newColumn()
-                }
-                .keyboardShortcut("n", modifiers: [.command, .shift])
-
-                Divider()
-
-                Button(Strings.Menu.openInTerminalApp) {
-                    terminalActions?.openInTerminalApp()
-                }
-                .keyboardShortcut("t", modifiers: [.command, .shift])
-
-                Button(Strings.Menu.exportSession) {
-                    terminalActions?.exportSession()
-                }
-                .keyboardShortcut("s", modifiers: [.command, .shift])
-
-                Divider()
-
-                Button(Strings.Menu.closeTab) {
-                    terminalActions?.closeTab()
-                }
-                .keyboardShortcut("w", modifiers: [.command, .shift])
-                .disabled(terminalActions == nil)
-
-                Button(Strings.Menu.deleteTerminal) {
-                    terminalActions?.deleteTerminal()
-                }
-                .keyboardShortcut(.delete, modifiers: .command)
-
-                Divider()
-
-                Button(Strings.Menu.showBin) {
-                    terminalActions?.showBin()
-                }
-                .keyboardShortcut(.delete, modifiers: [.command, .shift])
             }
 
             #if DEBUG
@@ -292,6 +124,190 @@ struct TermQApp: App {
     private func checkForOrphanedBackup() {
         if let backupURL = BackupManager.checkAndOfferRestore() {
             backupToRestore = IdentifiableURL(url: backupURL)
+        }
+    }
+}
+
+/// The menu items that act on the focused terminal (Window, Edit, View and
+/// File). They read the focused values, which ContentView republishes often;
+/// kept apart from the other commands so only these rebuild.
+@MainActor
+struct TerminalCommands: Commands {
+    @FocusedValue(\.terminalActions) private var terminalActions
+    @FocusedValue(\.windowMenu) private var windowMenu
+
+    var body: some Commands {
+        // Window commands — close the window (hides it, preserving the
+        // session) and favourite the current terminal. The live list of
+        // open terminals (⌘1–⌘9) will be added as a separate group.
+        CommandGroup(after: .windowArrangement) {
+            Button(Strings.Common.closeWindow) {
+                // Close the current window (won't quit app due to applicationShouldTerminateAfterLastWindowClosed)
+                NSApp.keyWindow?.close()
+            }
+            .keyboardShortcut("w", modifiers: .command)
+
+            Button(Strings.Menu.favouriteCurrentTerminal) {
+                terminalActions?.toggleFavourite()
+            }
+            .keyboardShortcut("d", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            // Live jump list of open terminals (⌘1–⌘9), favourites first.
+            // Capped at nine; "All Terminals…" routes overflow to the
+            // Command Palette.
+            if let windowMenu, !windowMenu.openTerminals.isEmpty {
+                Divider()
+
+                ForEach(Array(windowMenu.openTerminals.enumerated()), id: \.element.id) { index, item in
+                    Button {
+                        windowMenu.jumpToTerminal(item.id)
+                    } label: {
+                        Text(item.isFavourite ? "★ \(item.title)" : item.title)
+                    }
+                    .keyboardShortcut(KeyEquivalent(Character("\(index + 1)")), modifiers: .command)
+                }
+
+                if windowMenu.totalOpen > windowMenu.openTerminals.count {
+                    Button(Strings.Menu.allTerminals) {
+                        terminalActions?.showCommandPalette()
+                    }
+                }
+            }
+        }
+
+        // Edit menu — terminal search (Find) in its conventional home,
+        // below the Cut/Copy/Paste section.
+        CommandGroup(after: .pasteboard) {
+            Button(Strings.Menu.find) {
+                terminalActions?.toggleSearch()
+            }
+            .keyboardShortcut("f", modifiers: .command)
+            .disabled(terminalActions == nil)
+        }
+
+        // View menu — layout, terminal navigation, and text-size controls.
+        // macOS convention places sidebar / zoom / text-size under View
+        // (cf. Messages, Safari, Terminal). Navigation (Back to Board, tab
+        // switching) and the Command Palette live here too, so the File
+        // menu can return to plain new / export / close work.
+        CommandGroup(after: .sidebar) {
+            Button(Strings.Sidebar.menuToggle) {
+                terminalActions?.toggleSidebar()
+            }
+            .keyboardShortcut("l", modifiers: [.command, .shift])
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.toggleZoom) {
+                terminalActions?.toggleZoom()
+            }
+            .keyboardShortcut("z", modifiers: [.command, .option])
+            .disabled(terminalActions == nil)
+
+            Divider()
+
+            Button(Strings.Menu.back) {
+                terminalActions?.goBack()
+            }
+            .keyboardShortcut("b", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.nextTab) {
+                terminalActions?.nextTab()
+            }
+            .keyboardShortcut("]", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.previousTab) {
+                terminalActions?.previousTab()
+            }
+            .keyboardShortcut("[", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Divider()
+
+            Button(Strings.Menu.commandPalette) {
+                terminalActions?.showCommandPalette()
+            }
+            .keyboardShortcut("k", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Divider()
+
+            Button(Strings.Menu.increaseFontSize) {
+                terminalActions?.increaseFontSize()
+            }
+            .keyboardShortcut("+", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.decreaseFontSize) {
+                terminalActions?.decreaseFontSize()
+            }
+            .keyboardShortcut("-", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.resetFontSize) {
+                terminalActions?.resetFontSize()
+            }
+            .keyboardShortcut("0", modifiers: .command)
+            .disabled(terminalActions == nil)
+
+            Divider()
+        }
+
+        // File menu — terminal/document lifecycle only. Navigation, zoom,
+        // sidebar, find, and the command palette moved to View / Edit /
+        // Window, so this reads as plain new / export / close work.
+        // The "New" section is replaced to drop the default "New Window"
+        // command: TermQ is single-window because terminal NSViews can
+        // only have one parent.
+        CommandGroup(replacing: .newItem) {
+            Button(Strings.Menu.newTerminalQuick) {
+                terminalActions?.quickNewTerminal()
+            }
+            .keyboardShortcut("t", modifiers: .command)
+
+            Button(Strings.Menu.newTerminal) {
+                terminalActions?.newTerminalWithDialog()
+            }
+            .keyboardShortcut("n", modifiers: .command)
+
+            Button(Strings.Menu.newColumn) {
+                terminalActions?.newColumn()
+            }
+            .keyboardShortcut("n", modifiers: [.command, .shift])
+
+            Divider()
+
+            Button(Strings.Menu.openInTerminalApp) {
+                terminalActions?.openInTerminalApp()
+            }
+            .keyboardShortcut("t", modifiers: [.command, .shift])
+
+            Button(Strings.Menu.exportSession) {
+                terminalActions?.exportSession()
+            }
+            .keyboardShortcut("s", modifiers: [.command, .shift])
+
+            Divider()
+
+            Button(Strings.Menu.closeTab) {
+                terminalActions?.closeTab()
+            }
+            .keyboardShortcut("w", modifiers: [.command, .shift])
+            .disabled(terminalActions == nil)
+
+            Button(Strings.Menu.deleteTerminal) {
+                terminalActions?.deleteTerminal()
+            }
+            .keyboardShortcut(.delete, modifiers: .command)
+
+            Divider()
+
+            Button(Strings.Menu.showBin) {
+                terminalActions?.showBin()
+            }
+            .keyboardShortcut(.delete, modifiers: [.command, .shift])
         }
     }
 }
