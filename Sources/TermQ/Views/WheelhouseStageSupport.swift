@@ -22,19 +22,36 @@ struct WheelhouseKeepOnStageToggle: View {
 
 /// Watches mouse-downs so a click into a stage pane's terminal makes that pane
 /// the focused one. The terminal takes the keyboard itself (AppKit); this
-/// keeps the stage, and the selected card, in step with it.
+/// keeps the stage, and the selected card, in step with it. It also watches
+/// key-downs, so typing into a pane can answer that pane's bell.
 @MainActor
 final class StagePaneClickMonitor {
-    /// `nonisolated(unsafe)` so `deinit` can remove it: the monitor is only
-    /// ever touched on the main thread.
+    /// `nonisolated(unsafe)` so `deinit` can remove them: the monitors are
+    /// only ever touched on the main thread.
     nonisolated(unsafe) private var monitor: Any?
+    nonisolated(unsafe) private var keyMonitor: Any?
 
-    deinit {
-        if let monitor { NSEvent.removeMonitor(monitor) }
+    deinit { removeMonitors() }
+
+    /// Whether a key-down is typing into the terminal: a ⌘ shortcut is a
+    /// command to the app, not an answer to the seat.
+    nonisolated static func countsAsTyping(_ flags: NSEvent.ModifierFlags) -> Bool {
+        !flags.contains(.command)
     }
 
-    func start(onClickInPane: @escaping @MainActor (UUID) -> Void) {
+    func start(
+        onClickInPane: @escaping @MainActor (UUID) -> Void,
+        onTypeInPane: @escaping @MainActor (UUID) -> Void
+    ) {
         stop()
+        keyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            guard Self.countsAsTyping(event.modifierFlags) else { return event }
+            let window = event.window
+            MainActor.assumeIsolated {
+                if let card = Self.focusedCardId(in: window) { onTypeInPane(card) }
+            }
+            return event
+        }
         monitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
             let window = event.window
             let hit = MainActor.assumeIsolated { Self.cardId(under: event) }
@@ -52,9 +69,13 @@ final class StagePaneClickMonitor {
         }
     }
 
-    func stop() {
+    func stop() { removeMonitors() }
+
+    private nonisolated func removeMonitors() {
         if let monitor { NSEvent.removeMonitor(monitor) }
+        if let keyMonitor { NSEvent.removeMonitor(keyMonitor) }
         monitor = nil
+        keyMonitor = nil
     }
 
     private static func cardId(under event: NSEvent) -> UUID? {

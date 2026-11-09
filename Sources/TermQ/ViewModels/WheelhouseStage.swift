@@ -85,6 +85,21 @@ final class WheelhouseStage: ObservableObject {
         if next != before { mutate { $0 = next } }
     }
 
+    /// A click landed in a stage pane's terminal. Clicking answers the pane's
+    /// bell. Returns true when the pane should now be focused (it wasn't).
+    func paneClicked(_ card: UUID, tabs: TabManager) -> Bool {
+        guard isOnStage(card) else { return false }
+        guard focused == card else { return true }
+        tabs.clearAttention(card)
+        return false
+    }
+
+    /// Someone typed into a stage pane's terminal: that answers its bell.
+    func paneTyped(_ card: UUID, tabs: TabManager) {
+        guard isOnStage(card), tabs.needsAttention.contains(card) else { return }
+        tabs.clearAttention(card)
+    }
+
     func togglePin(_ card: UUID) {
         if isPinned(card) { unpin(card) } else { pin(card) }
     }

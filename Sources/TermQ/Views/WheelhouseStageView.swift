@@ -145,10 +145,12 @@ struct WheelhouseStageView: View {
         .onDisappear { clickMonitor.stop() }
         .onAppear {
             clickMonitor.start { cardId in
-                guard stage.isOnStage(cardId), stage.focused != cardId,
+                guard stage.paneClicked(cardId, tabs: tabManager),
                     let card = stageCards.first(where: { $0.id == cardId })
                 else { return }
                 focus(card)
+            } onTypeInPane: { cardId in
+                stage.paneTyped(cardId, tabs: tabManager)
             }
             stage.prune(keeping: Set(boardVM.allTerminals.map(\.id)).union([WheelhouseStage.inboxEntry]))
             if let focused = stage.focused, let card = stageCards.first(where: { $0.id == focused }) {
@@ -486,7 +488,7 @@ struct WheelhouseStageView: View {
             TerminalHostView(
                 card: card,
                 onExit: {},
-                onBell: { boardVM.markNeedsAttention(card.id) },
+                onBell: { tabManager.markStageBell(card.id) },
                 focusPolicy: .whenBecomingFocused,
                 isFocusedPane: isFocused
             )
