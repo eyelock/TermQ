@@ -16,14 +16,15 @@ final class WheelhouseQuickTerminalPlacementTests: XCTestCase {
         defaults = UserDefaults(suiteName: "WheelhouseQuickTerminalPlacementTests-\(UUID().uuidString)")
     }
 
-    func testStagedIsTheDefaultAndThePlacementPersists() {
-        XCTAssertEqual(WheelhouseStage(defaults: defaults).quickTerminalPlacement, .staged)
-        WheelhouseStage(defaults: defaults).quickTerminalPlacement = .split
+    func testSplitIsTheDefaultAndThePlacementPersists() {
         XCTAssertEqual(WheelhouseStage(defaults: defaults).quickTerminalPlacement, .split)
+        WheelhouseStage(defaults: defaults).quickTerminalPlacement = .staged
+        XCTAssertEqual(WheelhouseStage(defaults: defaults).quickTerminalPlacement, .staged)
     }
 
     func testStagedPutsTheQuickTerminalOnTheStage() {
         let stage = WheelhouseStage(defaults: defaults)
+        stage.quickTerminalPlacement = .staged
         let seat = UUID()
         let quick = UUID()
         stage.showQuickTerminal(quick, seatCard: seat)

@@ -104,7 +104,7 @@ final class WheelhouseStage: ObservableObject {
         self.selectedRoot = defaults.string(forKey: Self.selectedRootKey) ?? ""
         self.quickTerminalPlacement =
             defaults.string(forKey: Self.quickTerminalPlacementKey).flatMap(WheelhouseQuickTerminalPlacement.init)
-            ?? .staged
+            ?? .split
     }
 
     // MARK: - Quick Terminal placement
@@ -276,7 +276,7 @@ final class WheelhouseStage: ObservableObject {
 enum WheelhouseQuickTerminalPlacement: String, CaseIterable, Sendable {
     /// Each takes its own place on the stage, like a seat.
     case staged
-    /// In a panel beneath the seat's own pane.
+    /// In a panel beneath the seat's own pane. The default.
     case split
 }
 
