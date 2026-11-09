@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "تركيز Wheelhouse: إخفاء كل شيء ما عدا هذا Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "إحضار إلى المسرح";
 "wheelhouse.take.off.stage" = "إزالة من المسرح";
+"wheelhouse.zoom.terminal" = "تكبير الطرفية";
+"wheelhouse.exit.zoom" = "إنهاء التكبير";
 "wheelhouse.needs.you" = "يحتاج إليك";
 "wheelhouse.nobody.waiting" = "لا أحد ينتظر";
 "wheelhouse.more.waiting %ld" = "+%ld أخرى";

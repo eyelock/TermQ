@@ -30,6 +30,9 @@ enum WheelhouseMenuIcon {
     static let openLink = "network"
     static let wheelhouse = "steeringwheel"
     static let allWheelhouses = "square.grid.2x2"
+    /// The board's Zoom.
+    static let zoom = "arrow.up.left.and.arrow.down.right"
+    static let exitZoom = "arrow.down.right.and.arrow.up.left"
     /// Repositories: New Worktree.
     static let add = "plus"
 

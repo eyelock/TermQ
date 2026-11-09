@@ -106,20 +106,30 @@ struct WheelhouseStageView: View {
         return order.compactMap { id in cards.first { $0.id == id } }
     }
 
+    /// The pane zoomed to fill the window, while it is on stage.
+    private var zoomedCard: TerminalCard? {
+        stage.zoomed.flatMap { id in stageCards.first { $0.id == id } }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            topBar
-            Divider()
-            needsYouRail
-            Divider()
-            if stageEntries.isEmpty {
-                emptyStage
+            if let zoomedCard {
+                pane(zoomedCard)
             } else {
-                panes
+                topBar
+                Divider()
+                needsYouRail
+                Divider()
+                if stageEntries.isEmpty {
+                    emptyStage
+                } else {
+                    panes
+                }
             }
         }
         .background(Color(nsColor: .windowBackgroundColor))
         .background(shortcuts)
+        .onChange(of: stageCards.map(\.id)) { _, ids in stage.healZoom(visible: Set(ids)) }
         .onDisappear { clickMonitor.stop() }
         .onAppear {
             clickMonitor.start { cardId in
@@ -228,6 +238,7 @@ struct WheelhouseStageView: View {
             Divider()
         }
         WheelhouseKeepOnStageToggle(cardId: card.id, showsShortcut: stage.focused == card.id)
+        zoomMenuItem(card)
         if store.parentSeat(of: card) != nil {
             Button(role: .destructive) {
                 stage.closeQuickTerminal(card)
@@ -419,12 +430,20 @@ struct WheelhouseStageView: View {
                     }
                 }
                 Spacer(minLength: 4)
+                if stage.zoomed == card.id { zoomedNeedsYouBadge }
                 if let found {
-                    seatActionsMenu(found.wheelhouse, found.seat)
+                    seatActionsMenu(found.wheelhouse, found.seat, card: card)
                 } else if parent != nil {
                     paneButton("xmark.octagon", help: Strings.Wheelhouse.closeTerminal) {
                         stage.closeQuickTerminal(card)
                     }
+                }
+                let zoomed = stage.zoomed == card.id
+                paneButton(
+                    zoomed ? WheelhouseMenuIcon.exitZoom : WheelhouseMenuIcon.zoom,
+                    help: zoomed ? Strings.Wheelhouse.exitZoom : Strings.Wheelhouse.zoomTerminal
+                ) {
+                    if zoomed { stage.exitZoom() } else { zoom(card) }
                 }
                 paneButton(
                     pinned ? "pin.fill" : "pin", help: pinned ? Strings.Wheelhouse.unpin : Strings.Wheelhouse.pin
@@ -497,11 +516,14 @@ struct WheelhouseStageView: View {
         .help(help)
     }
 
-    private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat) -> some View {
+    private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat, card: TerminalCard) -> some View {
         Menu {
-            WheelhouseSeatActionItems(
-                wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction
-            )
+            Group {
+                WheelhouseSeatActionItems(
+                    wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction)
+                Divider()
+                zoomMenuItem(card, showsShortcut: false)
+            }
             .labelStyle(.titleAndIcon)
         } label: {
             Image(systemName: "ellipsis.circle")
@@ -542,11 +564,55 @@ struct WheelhouseStageView: View {
         stage.focus(card.id)
         boardVM.selectCard(card)
     }
+
+    private func zoom(_ card: TerminalCard) {
+        stage.zoom(card.id)
+        boardVM.selectCard(card)
+    }
 }
 
 // MARK: - Shortcuts
 
 extension WheelhouseStageView {
+    /// Zoom Terminal, or Exit Zoom while this pane is zoomed. Its ⌥⌘Z shows in
+    /// the focused pane's right-click menu.
+    func zoomMenuItem(_ card: TerminalCard, showsShortcut: Bool? = nil) -> some View {
+        let zoomed = stage.zoomed == card.id
+        return Button {
+            if zoomed { stage.exitZoom() } else { zoom(card) }
+        } label: {
+            Label(
+                zoomed ? Strings.Wheelhouse.exitZoom : Strings.Wheelhouse.zoomTerminal,
+                systemImage: zoomed ? WheelhouseMenuIcon.exitZoom : WheelhouseMenuIcon.zoom)
+        }
+        .stageShortcut((showsShortcut ?? (stage.focused == card.id)) ? WheelhouseStageShortcut.zoom : nil)
+    }
+
+    /// While a pane is zoomed, seats that rang still reach the human: a small
+    /// badge in its header; clicking it comes back to the stage with the
+    /// longest-waiting seat up.
+    @ViewBuilder
+    var zoomedNeedsYouBadge: some View {
+        let waiting = attentionQueue.filter { $0.id != stage.zoomed }
+        if let first = waiting.first {
+            Button {
+                show(first)
+            } label: {
+                HStack(spacing: 5) {
+                    Circle().fill(Color.orange).frame(width: 7, height: 7)
+                    Text("\(Strings.Wheelhouse.needsYou) · \(waiting.count)")
+                        .font(.system(size: 10.5, weight: .semibold))
+                }
+                .padding(.horizontal, 8)
+                .frame(height: 20)
+                .background(Capsule().fill(Color.orange.opacity(0.2)))
+                .overlay(Capsule().stroke(Color.orange.opacity(0.8), lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .help(chipHelp(first))
+        }
+    }
+
     /// The seat of the focused pane: its own, or a Quick Terminal's parent.
     fileprivate var focusedSeat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
         store.owningSeat(ofCardId: stage.focused, in: stageCards)

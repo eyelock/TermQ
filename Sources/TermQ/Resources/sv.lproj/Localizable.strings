@@ -1602,6 +1602,8 @@
 "wheelhouse.focus.help" = "Wheelhouse-fokus: dölj allt utom detta Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Ta upp på scenen";
 "wheelhouse.take.off.stage" = "Ta bort från scenen";
+"wheelhouse.zoom.terminal" = "Zooma terminal";
+"wheelhouse.exit.zoom" = "Avsluta zoom";
 "wheelhouse.needs.you" = "Behöver dig";
 "wheelhouse.nobody.waiting" = "ingen väntar";
 "wheelhouse.more.waiting %ld" = "+%ld till";

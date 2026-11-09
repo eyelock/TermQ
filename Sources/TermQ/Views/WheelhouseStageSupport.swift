@@ -148,11 +148,14 @@ struct WheelhousePaneDivider: View {
 
 /// The stage's shortcuts for the focused seat. ⌘T is the File menu's Quick New
 /// Terminal, which on the stage opens a Quick Terminal for the focused seat;
-/// ⌘I and ⌘P are carried by the stage itself.
+/// ⌥⌘Z is the View menu's Toggle Zoom, which on the stage zooms the focused
+/// pane; ⌘I and ⌘P are carried by the stage itself.
 enum WheelhouseStageShortcut {
     static let quickTerminal = KeyboardShortcut("t", modifiers: .command)
     static let harnessDetails = KeyboardShortcut("i", modifiers: .command)
     static let keepOnStage = KeyboardShortcut("p", modifiers: .command)
+    /// The board's Toggle Zoom.
+    static let zoom = KeyboardShortcut("z", modifiers: [.command, .option])
 }
 
 extension View {

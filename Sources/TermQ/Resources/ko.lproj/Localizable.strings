@@ -1602,6 +1602,8 @@
 "wheelhouse.focus.help" = "Wheelhouse 집중: 이 Wheelhouse 외의 모든 것을 숨깁니다 (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "무대로 가져오기";
 "wheelhouse.take.off.stage" = "무대에서 내리기";
+"wheelhouse.zoom.terminal" = "터미널 확대";
+"wheelhouse.exit.zoom" = "확대 종료";
 "wheelhouse.needs.you" = "도움 필요";
 "wheelhouse.nobody.waiting" = "기다리는 좌석 없음";
 "wheelhouse.more.waiting %ld" = "+%ld개 더";

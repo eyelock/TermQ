@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Focalizare Wheelhouse: ascunde tot în afară de acest Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Adu pe scenă";
 "wheelhouse.take.off.stage" = "Scoate de pe scenă";
+"wheelhouse.zoom.terminal" = "Mărește terminalul";
+"wheelhouse.exit.zoom" = "Ieși din zoom";
 "wheelhouse.needs.you" = "Are nevoie de tine";
 "wheelhouse.nobody.waiting" = "nimeni nu așteaptă";
 "wheelhouse.more.waiting %ld" = "încă +%ld";

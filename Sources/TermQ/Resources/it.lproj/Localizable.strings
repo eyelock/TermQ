@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Focus Wheelhouse: nascondi tutto tranne questo Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Porta sul palco";
 "wheelhouse.take.off.stage" = "Togli dal palco";
+"wheelhouse.zoom.terminal" = "Zoom sul terminale";
+"wheelhouse.exit.zoom" = "Esci dallo zoom";
 "wheelhouse.needs.you" = "Ha bisogno di te";
 "wheelhouse.nobody.waiting" = "nessuno in attesa";
 "wheelhouse.more.waiting %ld" = "altri +%ld";

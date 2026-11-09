@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Wheelhouse 聚焦：隱藏除此 Wheelhouse 以外的所有內容 (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "帶到舞台";
 "wheelhouse.take.off.stage" = "移出舞台";
+"wheelhouse.zoom.terminal" = "縮放終端機";
+"wheelhouse.exit.zoom" = "結束縮放";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "無人等待";
 "wheelhouse.more.waiting %ld" = "還有 +%ld";

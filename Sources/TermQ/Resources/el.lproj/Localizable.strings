@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Εστίαση Wheelhouse: απόκρυψη όλων εκτός από αυτό το Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Μεταφορά στη σκηνή";
 "wheelhouse.take.off.stage" = "Αφαίρεση από τη σκηνή";
+"wheelhouse.zoom.terminal" = "Ζουμ τερματικού";
+"wheelhouse.exit.zoom" = "Έξοδος από το ζουμ";
 "wheelhouse.needs.you" = "Σας χρειάζεται";
 "wheelhouse.nobody.waiting" = "κανείς δεν περιμένει";
 "wheelhouse.more.waiting %ld" = "+%ld ακόμη";

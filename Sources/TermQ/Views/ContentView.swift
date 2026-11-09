@@ -47,7 +47,7 @@ struct ContentView: View {
 
     var body: some View {
         HSplitView {
-            if !isSidebarCollapsed {
+            if !isSidebarCollapsed && !stageZoomed {
                 SidebarView(
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
@@ -616,11 +616,7 @@ extension ContentView {
                     viewModel.showDeleteConfirmation = true
                 }
             },
-            toggleZoom: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isZoomed.toggle()
-                }
-            },
+            toggleZoom: { toggleZoomOrStageZoom() },
             toggleSearch: {
                 withAnimation(.easeInOut(duration: 0.15)) {
                     isSearching.toggle()
@@ -654,9 +650,7 @@ extension ContentView {
         case .newColumn:
             viewModel.addColumn()
         case .toggleZoom:
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isZoomed.toggle()
-            }
+            toggleZoomOrStageZoom()
         case .toggleSearch:
             withAnimation(.easeInOut(duration: 0.15)) {
                 isSearching.toggle()

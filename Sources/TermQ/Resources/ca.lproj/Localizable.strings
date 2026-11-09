@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Enfocament de Wheelhouse: amaga tot excepte aquest Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Porta a l’escenari";
 "wheelhouse.take.off.stage" = "Treu de l’escenari";
+"wheelhouse.zoom.terminal" = "Amplia el terminal";
+"wheelhouse.exit.zoom" = "Surt del zoom";
 "wheelhouse.needs.you" = "Et necessita";
 "wheelhouse.nobody.waiting" = "ningú no espera";
 "wheelhouse.more.waiting %ld" = "+%ld més";

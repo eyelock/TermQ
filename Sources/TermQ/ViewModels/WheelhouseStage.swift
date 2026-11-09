@@ -23,6 +23,35 @@ final class WheelhouseStage: ObservableObject {
         didSet { defaults.set(selectedRoot, forKey: Self.selectedRootKey) }
     }
 
+    /// The pane zoomed to fill the window (⌥⌘Z), if any. Not persisted: a
+    /// relaunch comes back to the whole stage.
+    @Published private(set) var zoomed: UUID?
+
+    /// ⌥⌘Z: zoom the focused pane, or come back to the whole stage. The inbox
+    /// isn't zoomed.
+    func toggleZoom() {
+        if zoomed != nil {
+            zoomed = nil
+        } else if let card = focused, card != Self.inboxEntry {
+            zoom(card)
+        }
+    }
+
+    /// Zoom `card`'s pane, focusing it.
+    func zoom(_ card: UUID) {
+        guard card != Self.inboxEntry else { return }
+        show(card)
+        zoomed = card
+    }
+
+    func exitZoom() { zoomed = nil }
+
+    /// Drops a zoom whose pane is no longer among `visible` (closed, or out of
+    /// the Wheelhouse in view), so the stage never stays half-zoomed.
+    func healZoom(visible: Set<UUID>) {
+        if let zoomed, !visible.contains(zoomed) || !isOnStage(zoomed) { self.zoomed = nil }
+    }
+
     /// The general terminal selected when the stage came up, to return to
     /// when it goes away. Not published: only read on that change.
     var cardBeforeStage: UUID?
@@ -74,7 +103,12 @@ final class WheelhouseStage: ObservableObject {
     func isPinned(_ card: UUID) -> Bool { layout.isPinned(card) }
     func isOnStage(_ card: UUID) -> Bool { layout.isOnStage(card) }
 
-    func show(_ card: UUID) { mutate { $0.show(card) } }
+    /// Brings `card` on stage and focuses it. Asking for another pane while
+    /// one is zoomed comes back to the whole stage.
+    func show(_ card: UUID) {
+        if let zoomed, zoomed != card { self.zoomed = nil }
+        mutate { $0.show(card) }
+    }
     /// Pinning or unpinning keeps the pane's width: its weight moves with it
     /// between the unpinned slot and the card's own.
     func pin(_ card: UUID) {
@@ -87,8 +121,15 @@ final class WheelhouseStage: ObservableObject {
         mutate { $0.unpin(card) }
         paneWeights[Self.unpinnedSlot] = weight
     }
-    func remove(_ card: UUID) { mutate { $0.remove(card) } }
-    func focus(_ card: UUID) { mutate { $0.focus(card) } }
+    func remove(_ card: UUID) {
+        if zoomed == card { zoomed = nil }
+        mutate { $0.remove(card) }
+    }
+    /// Focusing another pane while one is zoomed comes back to the whole stage.
+    func focus(_ card: UUID) {
+        if let zoomed, zoomed != card { self.zoomed = nil }
+        mutate { $0.focus(card) }
+    }
     func move(_ card: UUID, before target: UUID) { mutate { $0.move(card, before: target) } }
 
     /// Drag payload for a seat card, so a drop can tell it from other strings.
@@ -102,6 +143,7 @@ final class WheelhouseStage: ObservableObject {
         var next = layout
         next.prune(keeping: existing)
         if next != before { mutate { $0 = next } }
+        if let zoomed, !next.isOnStage(zoomed) { self.zoomed = nil }
     }
 
     /// A click landed in a stage pane's terminal. Clicking answers the pane's

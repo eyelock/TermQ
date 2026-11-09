@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Fokus Wheelhouse: sembunyikan semuanya kecuali Wheelhouse ini (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Bawa ke panggung";
 "wheelhouse.take.off.stage" = "Turunkan dari panggung";
+"wheelhouse.zoom.terminal" = "Zoom Terminal";
+"wheelhouse.exit.zoom" = "Keluar dari Zoom";
 "wheelhouse.needs.you" = "Membutuhkan Anda";
 "wheelhouse.nobody.waiting" = "tidak ada yang menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";

@@ -1600,6 +1600,8 @@
 "wheelhouse.focus.help" = "Skupienie na Wheelhouse: ukryj wszystko poza tym Wheelhouse’em (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Wprowadź na scenę";
 "wheelhouse.take.off.stage" = "Zdejmij ze sceny";
+"wheelhouse.zoom.terminal" = "Powiększ terminal";
+"wheelhouse.exit.zoom" = "Wyjdź z powiększenia";
 "wheelhouse.needs.you" = "Potrzebuje cię";
 "wheelhouse.nobody.waiting" = "nikt nie czeka";
 "wheelhouse.more.waiting %ld" = "+%ld więcej";

@@ -1601,6 +1601,8 @@
 "wheelhouse.focus.help" = "מיקוד Wheelhouse: הסתר הכול מלבד ה-Wheelhouse הזה (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "הבא לבמה";
 "wheelhouse.take.off.stage" = "הורד מהבמה";
+"wheelhouse.zoom.terminal" = "הגדל טרמינל";
+"wheelhouse.exit.zoom" = "יציאה מזום";
 "wheelhouse.needs.you" = "זקוק לך";
 "wheelhouse.nobody.waiting" = "אף אחד לא ממתין";
 "wheelhouse.more.waiting %ld" = "+%ld נוספים";

@@ -1601,6 +1601,8 @@
 "wheelhouse.focus.help" = "Wheelhouse फ़ोकस: इस Wheelhouse के अलावा सब कुछ छिपाएँ (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "मंच पर लाएँ";
 "wheelhouse.take.off.stage" = "मंच से हटाएँ";
+"wheelhouse.zoom.terminal" = "टर्मिनल ज़ूम करें";
+"wheelhouse.exit.zoom" = "ज़ूम से बाहर निकलें";
 "wheelhouse.needs.you" = "आपकी ज़रूरत है";
 "wheelhouse.nobody.waiting" = "कोई प्रतीक्षा में नहीं";
 "wheelhouse.more.waiting %ld" = "+%ld और";

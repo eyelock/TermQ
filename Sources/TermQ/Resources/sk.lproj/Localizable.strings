@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Zameranie Wheelhouse: skryť všetko okrem tohto Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Preniesť na pódium";
 "wheelhouse.take.off.stage" = "Odobrať z pódia";
+"wheelhouse.zoom.terminal" = "Priblížiť terminál";
+"wheelhouse.exit.zoom" = "Ukončiť priblíženie";
 "wheelhouse.needs.you" = "Potrebuje vás";
 "wheelhouse.nobody.waiting" = "nikto nečaká";
 "wheelhouse.more.waiting %ld" = "+%ld ďalších";

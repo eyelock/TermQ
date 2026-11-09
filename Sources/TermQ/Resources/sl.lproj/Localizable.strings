@@ -1602,6 +1602,8 @@
 "wheelhouse.focus.help" = "Fokus Wheelhouse: skrij vse razen tega Wheelhousa (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Pripelji na oder";
 "wheelhouse.take.off.stage" = "Odstrani z odra";
+"wheelhouse.zoom.terminal" = "Povečaj terminal";
+"wheelhouse.exit.zoom" = "Zapri povečavo";
 "wheelhouse.needs.you" = "Potrebuje vas";
 "wheelhouse.nobody.waiting" = "nihče ne čaka";
 "wheelhouse.more.waiting %ld" = "še +%ld";

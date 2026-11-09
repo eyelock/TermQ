@@ -46,6 +46,23 @@ extension ContentView {
         }
     }
 
+    /// A stage pane fills the window: the sidebar steps aside too.
+    var stageZoomed: Bool {
+        showsWheelhouseStage && wheelhouseStage.zoomed.map(wheelhouseStage.isOnStage) == true
+    }
+
+    /// ⌥⌘Z: on the stage, zoom the focused pane or come back; elsewhere the
+    /// board's zoom.
+    func toggleZoomOrStageZoom() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            if showsWheelhouseStage {
+                wheelhouseStage.toggleZoom()
+            } else {
+                isZoomed.toggle()
+            }
+        }
+    }
+
     /// Outside the Wheelhouse view, seat terminals stay out of the general
     /// tab strip and the main panel: they live on the stage.
     var nonSeatTabCards: [TerminalCard] {
@@ -66,6 +83,8 @@ extension ContentView {
             wheelhouseStage.cardBeforeStage = selectedNonSeatCard?.id
             return
         }
+        // Zoom belongs to the stage: coming back shows the whole stage.
+        wheelhouseStage.exitZoom()
         defer { wheelhouseStage.cardBeforeStage = nil }
         guard selectedNonSeatCard == nil else { return }
         if let id = wheelhouseStage.cardBeforeStage,

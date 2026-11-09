@@ -1595,6 +1595,8 @@
 "wheelhouse.focus.help" = "Фокус Wheelhouse: скрыть всё, кроме этого Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Вывести на сцену";
 "wheelhouse.take.off.stage" = "Убрать со сцены";
+"wheelhouse.zoom.terminal" = "Масштабировать терминал";
+"wheelhouse.exit.zoom" = "Выйти из масштабирования";
 "wheelhouse.needs.you" = "Ждёт вас";
 "wheelhouse.nobody.waiting" = "никто не ждёт";
 "wheelhouse.more.waiting %ld" = "ещё +%ld";

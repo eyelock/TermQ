@@ -1601,6 +1601,8 @@
 "wheelhouse.focus.help" = "Wheelhouse-keskitys: piilota kaikki paitsi tämä Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Tuo lavalle";
 "wheelhouse.take.off.stage" = "Poista lavalta";
+"wheelhouse.zoom.terminal" = "Zoomaa pääte";
+"wheelhouse.exit.zoom" = "Poistu zoomauksesta";
 "wheelhouse.needs.you" = "Tarvitsee sinua";
 "wheelhouse.nobody.waiting" = "kukaan ei odota";
 "wheelhouse.more.waiting %ld" = "+%ld lisää";

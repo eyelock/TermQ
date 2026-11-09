@@ -1603,6 +1603,8 @@
 "wheelhouse.focus.help" = "Tập trung Wheelhouse: ẩn mọi thứ trừ Wheelhouse này (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Đưa lên sân khấu";
 "wheelhouse.take.off.stage" = "Đưa xuống khỏi sân khấu";
+"wheelhouse.zoom.terminal" = "Phóng to terminal";
+"wheelhouse.exit.zoom" = "Thoát phóng to";
 "wheelhouse.needs.you" = "Cần bạn";
 "wheelhouse.nobody.waiting" = "không ai đang chờ";
 "wheelhouse.more.waiting %ld" = "+%ld nữa";

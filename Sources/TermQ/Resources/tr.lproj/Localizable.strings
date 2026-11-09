@@ -1602,6 +1602,8 @@
 "wheelhouse.focus.help" = "Wheelhouse odağı: bu Wheelhouse dışındaki her şeyi gizle (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Sahneye getir";
 "wheelhouse.take.off.stage" = "Sahneden al";
+"wheelhouse.zoom.terminal" = "Terminali Yakınlaştır";
+"wheelhouse.exit.zoom" = "Yakınlaştırmadan Çık";
 "wheelhouse.needs.you" = "Sizi bekliyor";
 "wheelhouse.nobody.waiting" = "kimse beklemiyor";
 "wheelhouse.more.waiting %ld" = "+%ld daha";

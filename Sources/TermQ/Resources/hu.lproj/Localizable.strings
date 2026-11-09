@@ -1601,6 +1601,8 @@
 "wheelhouse.focus.help" = "Wheelhouse-fókusz: minden elrejtése, kivéve ezt a Wheelhouse-t (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Színpadra hozás";
 "wheelhouse.take.off.stage" = "Levétel a színpadról";
+"wheelhouse.zoom.terminal" = "Terminál nagyítása";
+"wheelhouse.exit.zoom" = "Kilépés a nagyításból";
 "wheelhouse.needs.you" = "Szüksége van rád";
 "wheelhouse.nobody.waiting" = "senki sem vár";
 "wheelhouse.more.waiting %ld" = "+%ld további";

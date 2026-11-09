@@ -31,6 +31,8 @@ extension Strings {
         static var workingHelp: String { localized("wheelhouse.working.help") }
         static var pin: String { localized("wheelhouse.pin") }
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
+        static var zoomTerminal: String { localized("wheelhouse.zoom.terminal") }
+        static var exitZoom: String { localized("wheelhouse.exit.zoom") }
         static func seatHarnessTitle(_ seat: String, _ wheelhouse: String) -> String {
             localized("wheelhouse.seat.harness.title %@ %@", seat, wheelhouse)
         }

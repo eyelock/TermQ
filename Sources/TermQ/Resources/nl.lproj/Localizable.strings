@@ -1600,6 +1600,8 @@
 "wheelhouse.focus.help" = "Wheelhouse-focus: verberg alles behalve dit Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Op het podium brengen";
 "wheelhouse.take.off.stage" = "Van het podium halen";
+"wheelhouse.zoom.terminal" = "Terminal zoomen";
+"wheelhouse.exit.zoom" = "Zoom verlaten";
 "wheelhouse.needs.you" = "Heeft je nodig";
 "wheelhouse.nobody.waiting" = "niemand wacht";
 "wheelhouse.more.waiting %ld" = "+%ld meer";
