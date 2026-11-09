@@ -14,6 +14,12 @@ final class WheelhouseStore: ObservableObject {
     static let workRefreshInterval: Duration = .seconds(60)
 
     @Published private(set) var wheelhouses: [Wheelhouse] = []
+
+    /// `wheelhouses` seeds the store for tests; the app loads them with
+    /// `refresh(roots:)`.
+    init(wheelhouses: [Wheelhouse] = []) {
+        self.wheelhouses = wheelhouses
+    }
     @Published private(set) var failures: [WheelhouseLoader.Discovery.Failure] = []
     @Published private(set) var isLoading = false
     /// In-progress beads per Wheelhouse root, keyed by assignee.
@@ -86,6 +92,67 @@ final class WheelhouseStore: ObservableObject {
             }
             guard !Task.isCancelled, let self else { return }
             self.delegateIssues = found
+        }
+    }
+
+    /// How long after a session starts its launch is judged: an `Error:` line
+    /// from ynh shows up within seconds, and anything older in the
+    /// scrollback says nothing about the seat now.
+    static let launchWindow: TimeInterval = 90
+
+    /// Looks at each seat terminal. A young session whose harness is not
+    /// running records ynh's `Error:` line as the seat's launch failure; a
+    /// recorded failure clears once the harness runs or the terminal is gone.
+    func checkLaunches(
+        cards: [TerminalCard], probe: any TerminalForegroundProbing, now: Date = Date(),
+        lines: (UUID) -> [String] = { TerminalSessionManager.shared.recentLines(for: $0) }
+    ) async {
+        let seatCards = seatCards(in: cards)
+        // Failures whose seat no longer has a terminal are over.
+        for (root, failures) in launchFailures {
+            for command in failures.keys
+            where !seatCards.contains(where: {
+                WheelhouseCardMatcher.matches($0, wheelhouseRoot: root, seatCommand: command)
+                    && probe.sessionStart(for: $0.id) != nil
+            }) {
+                launchFailures[root]?[command] = nil
+            }
+        }
+        for card in seatCards {
+            guard let found = seat(for: card), let started = probe.sessionStart(for: card.id) else { continue }
+            let young = now.timeIntervalSince(started) < Self.launchWindow
+            let failed = launchFailures[found.wheelhouse.root]?[found.seat.command] != nil
+            // An old session is only asked about to clear a failure.
+            guard young || failed else { continue }
+            let running = await probe.isForegroundProgramRunning(for: card)
+            // The answer is about this session only.
+            guard probe.sessionStart(for: card.id) == started else { continue }
+            let check = Self.launchCheck(running: running, lines: { young ? lines(card.id) : [] })
+            switch check {
+            case .record(nil):
+                if running == true || young { recordLaunchFailure(nil, for: found.seat, in: found.wheelhouse) }
+            case .record(let message?):
+                recordLaunchFailure(message, for: found.seat, in: found.wheelhouse)
+            case .unknown:
+                break
+            }
+        }
+    }
+
+    /// What a launch check concludes about a seat's terminal.
+    enum LaunchCheck: Equatable {
+        /// Can't tell: leave the seat as it is.
+        case unknown
+        /// Record this failure; nil when the harness runs, or the shell is
+        /// idle without an `Error:` line.
+        case record(String?)
+    }
+
+    nonisolated static func launchCheck(running: Bool?, lines: () -> [String]) -> LaunchCheck {
+        switch running {
+        case nil: return .unknown
+        case true?: return .record(nil)
+        case false?: return .record(WheelhouseSeatHealth.launchError(fromLines: lines()))
         }
     }
 

@@ -2,7 +2,7 @@ import Foundation
 
 /// Something that stops a Wheelhouse seat from running, and that the human
 /// can fix.
-public enum WheelhouseSeatIssue: Equatable, Sendable {
+public enum WheelhouseSeatIssue: Equatable, Hashable, Sendable {
     /// ynh has no harness by the seat's command: `ynh run` says "not found".
     case notInstalled
     /// Delegates read from the Wheelhouse's own repository (`"git": "."`)
@@ -89,7 +89,11 @@ public enum WheelhouseSeatHealth {
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .first { $0.hasPrefix("Error:") }
             .map { String($0.dropFirst("Error:".count)).trimmingCharacters(in: .whitespaces) }
+            .map { $0.count > maxErrorLength ? String($0.prefix(maxErrorLength)) + "…" : $0 }
     }
+
+    /// Longest error kept: it is terminal output, shown in a tooltip.
+    public static let maxErrorLength = 200
 
     /// The delegates (by their path's last component, such as `io`) a seat
     /// waits on, for "Install (needs io first)".

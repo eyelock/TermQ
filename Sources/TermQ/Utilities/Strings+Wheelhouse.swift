@@ -33,6 +33,24 @@ extension Strings {
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
         static var zoomTerminal: String { localized("wheelhouse.zoom.terminal") }
         static var install: String { localized("wheelhouse.install") }
+        static var actionRequired: String { localized("wheelhouse.action.required") }
+        static var actionRequiredHelp: String { localized("wheelhouse.action.required.help") }
+        static func fixTitle(_ seat: String) -> String { localized("wheelhouse.fix.title %@", seat) }
+        static var fixAllClear: String { localized("wheelhouse.fix.all.clear") }
+        static var issueNotInstalled: String { localized("wheelhouse.issue.not.installed") }
+        static func issueNotInstalledDetail(_ command: String) -> String {
+            localized("wheelhouse.issue.not.installed.detail %@", command)
+        }
+        static func issueNotCommitted(_ names: String) -> String {
+            localized("wheelhouse.issue.not.committed %@", names)
+        }
+        static var issueNotCommittedDetail: String { localized("wheelhouse.issue.not.committed.detail") }
+        static func issueMissing(_ names: String) -> String { localized("wheelhouse.issue.missing %@", names) }
+        static var issueMissingDetail: String { localized("wheelhouse.issue.missing.detail") }
+        static var issueLaunchFailed: String { localized("wheelhouse.issue.launch.failed") }
+        static var copyCommitCommand: String { localized("wheelhouse.copy.commit.command") }
+        static var tryAgain: String { localized("wheelhouse.try.again") }
+        static var openAnyway: String { localized("wheelhouse.open.anyway") }
         /// "Install (needs io, titan first)".
         static func needsFirst(_ action: String, _ names: String) -> String {
             localized("wheelhouse.needs.first %@ %@", action, names)

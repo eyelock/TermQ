@@ -16,6 +16,8 @@ struct WheelhouseStageView: View {
     @State private var clickMonitor = StagePaneClickMonitor()
     /// The pane header a dragged seat is over, to highlight it.
     @State private var dropTarget: UUID?
+    /// The seat whose "action required" fix panel is open.
+    @State private var fixing: WheelhouseSeatFixRequest?
 
     /// Only the selected Wheelhouse's seats in focus mode or when one is picked.
     private var scopeRoot: String? { stage.scopeRoot(in: store.wheelhouses) }
@@ -134,6 +136,7 @@ struct WheelhouseStageView: View {
         .background(shortcuts)
         .onChange(of: stageCards.map(\.id)) { _, ids in stage.healZoom(visible: Set(ids)) }
         .onChange(of: stage.quickTerminalPlacement) { moveQuickTerminalsIntoPanels() }
+        .sheet(item: $fixing) { WheelhouseSeatFixSheet(request: $0, onSeatAction: onSeatAction) }
         .onDisappear { clickMonitor.stop() }
         .onAppear {
             clickMonitor.start { cardId in
@@ -425,6 +428,7 @@ struct WheelhouseStageView: View {
                         WheelhouseRolePill(seat: seat)
                     }
                     if let found {
+                        actionRequiredButton(found.wheelhouse, found.seat)
                         WheelhouseQuickTerminalBadges(wheelhouse: found.wheelhouse, seat: found.seat)
                     }
                     if showsWheelhouseNames, let wheelhouse = found?.wheelhouse {
@@ -518,28 +522,6 @@ struct WheelhouseStageView: View {
         )
     }
 
-    private func seatTerminal(_ card: TerminalCard, isFocused: Bool) -> some View {
-        TerminalHostView(
-            card: card,
-            onExit: {},
-            onBell: { tabManager.markStageBell(card.id) },
-            focusPolicy: .whenBecomingFocused,
-            isFocusedPane: isFocused
-        )
-        .id(card.id)
-    }
-
-    private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: symbol)
-                .font(.system(size: 10))
-                .frame(width: 20, height: 20)
-        }
-        .buttonStyle(.plain)
-        .foregroundColor(.secondary)
-        .help(help)
-    }
-
     private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat, card: TerminalCard) -> some View {
         Menu {
             Group {
@@ -574,6 +556,55 @@ struct WheelhouseStageView: View {
     private func zoom(_ card: TerminalCard) {
         stage.zoom(card.id)
         boardVM.selectCard(card)
+    }
+}
+
+// MARK: - Pane pieces
+
+extension WheelhouseStageView {
+    private func seatTerminal(_ card: TerminalCard, isFocused: Bool) -> some View {
+        TerminalHostView(
+            card: card,
+            onExit: {},
+            onBell: { tabManager.markStageBell(card.id) },
+            focusPolicy: .whenBecomingFocused,
+            isFocusedPane: isFocused
+        )
+        .id(card.id)
+    }
+
+    private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: 10))
+                .frame(width: 20, height: 20)
+        }
+        .buttonStyle(.plain)
+        .foregroundColor(.secondary)
+        .help(help)
+    }
+}
+
+// MARK: - Action required
+
+extension WheelhouseStageView {
+    /// A warning in a seat's pane header while something stops it (such as
+    /// its last launch failing): hover for what, click for the fix panel.
+    @ViewBuilder
+    func actionRequiredButton(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat) -> some View {
+        let issues = store.issues(
+            for: seat, in: wheelhouse, installed: HarnessRepository.shared.isInstalled(name: seat.command))
+        if !issues.isEmpty {
+            Button {
+                fixing = WheelhouseSeatFixRequest(wheelhouse: wheelhouse, seat: seat)
+            } label: {
+                Label(Strings.Wheelhouse.actionRequired, systemImage: WheelhouseMenuIcon.actionRequired)
+                    .font(.system(size: 10.5, weight: .medium))
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.orange)
+            .help(WheelhouseSeatFixSheet.tooltip(for: issues, seat: seat))
+        }
     }
 }
 

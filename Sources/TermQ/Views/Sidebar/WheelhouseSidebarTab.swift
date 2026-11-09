@@ -20,6 +20,8 @@ struct WheelhouseSidebarTab: View {
     @ObservedObject private var harnessRepo: HarnessRepository = .shared
     @State private var collapsed: Set<String> = []
     @State private var showingAdd = false
+    /// The seat whose "action required" fix panel is open.
+    @State private var fixing: WheelhouseSeatFixRequest?
 
     private var roots: [String] { worktreeViewModel.repositories.map(\.path) }
 
@@ -44,7 +46,12 @@ struct WheelhouseSidebarTab: View {
             if store.wheelhouses.isEmpty && !store.isLoading {
                 emptyState
             } else {
-                list
+                // Its own host, apart from the Add sheet on the tab.
+                list.sheet(item: $fixing) { request in
+                    WheelhouseSeatFixSheet(request: request) { wheelhouse, seat, action in
+                        onSeatAction?(wheelhouse, seat, action)
+                    }
+                }
             }
         }
         .onAppear {
@@ -62,6 +69,14 @@ struct WheelhouseSidebarTab: View {
         }
         // An install or uninstall changes what a seat needs.
         .onChange(of: harnessRepo.harnesses.map(\.name)) { store.refreshDelegateIssues() }
+        .task {
+            // Notice a seat whose harness has exited with an error, and one
+            // that has recovered, sooner than the work refresh.
+            while !Task.isCancelled {
+                await store.checkLaunches(cards: boardVM.allTerminals, probe: TerminalSessionManager.shared)
+                try? await Task.sleep(for: .seconds(15))
+            }
+        }
         .sheet(isPresented: $showingAdd) {
             WheelhouseAddSheet { root in await addWheelhouse(root: root) }
         }
@@ -319,8 +334,9 @@ struct WheelhouseSidebarTab: View {
         let dot = dotKind(card, seat: seat, in: wheelhouse)
         let onStage = card.map { stage.isOnStage($0.id) } ?? false
         let bead = store.currentBead(for: seat, in: wheelhouse)
+        let issues = seatIssues(seat, in: wheelhouse)
         return Button {
-            onSeatAction?(wheelhouse, seat, .open)
+            openOrFix(seat, in: wheelhouse, issues: issues)
         } label: {
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 8) {
@@ -329,6 +345,7 @@ struct WheelhouseSidebarTab: View {
                         .font(.system(size: 13, weight: onStage ? .semibold : .regular))
                         .foregroundColor(.primary)
                         .lineLimit(1)
+                    actionRequiredIcon(issues, seat: seat)
                     if store.isUnborn(seat, in: wheelhouse) && card == nil {
                         Image(systemName: "sparkles")
                             .font(.system(size: 9))
@@ -345,8 +362,11 @@ struct WheelhouseSidebarTab: View {
                     WheelhouseRolePill(seat: seat)
                 }
                 // Same line as every other seat: its bead, or idle.
-                statusLine(bead: bead, extra: max(0, store.beadCount(for: seat, in: wheelhouse) - 1))
-                    .padding(.leading, 16)
+                statusLine(
+                    bead: bead, extra: max(0, store.beadCount(for: seat, in: wheelhouse) - 1),
+                    actionRequired: !issues.isEmpty
+                )
+                .padding(.leading, 16)
             }
             .padding(.leading, 28)
             .padding(.trailing, 10)
@@ -369,6 +389,7 @@ struct WheelhouseSidebarTab: View {
         let card = seatCard(seat, in: wheelhouse)
         let bead = store.currentBead(for: seat, in: wheelhouse)
         let extra = max(0, store.beadCount(for: seat, in: wheelhouse) - 1)
+        let issues = seatIssues(seat, in: wheelhouse)
         // The dot means the same everywhere: does this seat have a terminal?
         // What it is working on is the line underneath.
         let dot = dotKind(card, seat: seat, in: wheelhouse)
@@ -379,11 +400,12 @@ struct WheelhouseSidebarTab: View {
                     .font(.system(size: 12))
                     .foregroundColor(bead == nil ? .secondary : .primary)
                     .lineLimit(1)
+                actionRequiredIcon(issues, seat: seat)
                 WheelhouseQuickTerminalBadges(wheelhouse: wheelhouse, seat: seat)
                 Spacer(minLength: 4)
                 WheelhouseRolePill(seat: seat)
             }
-            statusLine(bead: bead, extra: extra)
+            statusLine(bead: bead, extra: extra, actionRequired: !issues.isEmpty)
                 .padding(.leading, 16)
         }
         .padding(.leading, 28)
@@ -391,16 +413,41 @@ struct WheelhouseSidebarTab: View {
         .padding(.vertical, 3)
         .contentShape(Rectangle())
         .onTapGesture {
-            // One rule for every seat: a click opens it.
-            onSeatAction?(wheelhouse, seat, .open)
+            // One rule for every seat: a click opens it, or shows what it
+            // needs first.
+            openOrFix(seat, in: wheelhouse, issues: issues)
         }
         .help(seat.mandate ?? seat.name)
         .contextMenu { seatMenu(seat, in: wheelhouse, card: card) }
     }
 
+    /// A click on a seat: open it, or, while something stops it from running,
+    /// show the fix panel instead of a launch that would fail.
+    private func openOrFix(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, issues: [WheelhouseSeatIssue]) {
+        if issues.isEmpty {
+            onSeatAction?(wheelhouse, seat, .open)
+        } else {
+            fixing = WheelhouseSeatFixRequest(wheelhouse: wheelhouse, seat: seat)
+        }
+    }
+
     @ViewBuilder
-    private func statusLine(bead: WheelhouseBead?, extra: Int) -> some View {
-        if let bead {
+    private func actionRequiredIcon(_ issues: [WheelhouseSeatIssue], seat: WheelhouseSeat) -> some View {
+        if !issues.isEmpty {
+            Image(systemName: WheelhouseMenuIcon.actionRequired)
+                .font(.system(size: 9.5))
+                .foregroundColor(.orange)
+                .help(WheelhouseSeatFixSheet.tooltip(for: issues, seat: seat))
+        }
+    }
+
+    @ViewBuilder
+    private func statusLine(bead: WheelhouseBead?, extra: Int, actionRequired: Bool = false) -> some View {
+        if actionRequired {
+            Text(Strings.Wheelhouse.actionRequired)
+                .font(.system(size: 10.5, weight: .medium))
+                .foregroundColor(.orange)
+        } else if let bead {
             // One line that truncates as a whole, so a narrow sidebar never
             // splits the bead id across lines.
             (Text(bead.id).font(.system(size: 10, design: .monospaced))

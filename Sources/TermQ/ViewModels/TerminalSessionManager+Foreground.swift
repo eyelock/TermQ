@@ -26,6 +26,18 @@ extension TerminalSessionManager: TerminalForegroundProbing {
 
     func sessionStart(for cardId: UUID) -> Date? { sessions[cardId]?.startedAt }
 
+    /// The last `count` non-empty lines of the card's terminal, scrollback
+    /// included. Terminal output is user data: read it for a decision, never
+    /// log it.
+    func recentLines(for cardId: UUID, count: Int = 40) -> [String] {
+        guard let terminal = sessions[cardId]?.terminal else { return [] }
+        let rows = TerminalSelectionGapTrimmer.rawRows(fromBufferData: terminal.getBufferAsData(kind: .active))
+        return Array(
+            rows.map { $0.replacingOccurrences(of: "\u{0}", with: "") }
+                .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+                .suffix(count))
+    }
+
     func isForegroundProgramRunning(for card: TerminalCard) async -> Bool? {
         let shellName = card.tags.first { $0.key == "shell" }?.value
         guard let session = sessions[card.id] else {
