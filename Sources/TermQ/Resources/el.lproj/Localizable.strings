@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Όλα";
 "wheelhouse.inbox.filter.help %@" = "Εμφάνιση μόνο των bead τύπου %@";
 "wheelhouse.inbox.sent.to %@" = "εστάλη σε %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Ενέργειες";
+"actions.termq.only" = "Μόνο τα αποθετήρια του TermQ";
+"actions.empty" = "Κανένα PR δεν περιμένει την αναθεώρησή σας.";
+"actions.load.failed %@" = "Δεν ήταν δυνατή η φόρτωση των αιτημάτων αναθεώρησης: %@";
+"actions.draft" = "Πρόχειρο";
+"actions.copy.link" = "Αντιγραφή συνδέσμου";
+"actions.truncated %ld" = "Εμφάνιση των πρώτων %ld· ορισμένα ενδέχεται να λείπουν.";
+"actions.wait.today" = "Σήμερα";
+"actions.wait.this.week" = "Αυτή την εβδομάδα";
+"actions.wait.this.month" = "Αυτόν τον μήνα";
+"actions.wait.older" = "Παλαιότερα";

@@ -1676,3 +1676,16 @@
 "wheelhouse.inbox.filter.all" = "Tất cả";
 "wheelhouse.inbox.filter.help %@" = "Chỉ hiện bead loại %@";
 "wheelhouse.inbox.sent.to %@" = "đã gửi cho %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Hành động";
+"actions.termq.only" = "Chỉ kho của TermQ";
+"actions.empty" = "Không có PR nào đang chờ bạn xem xét.";
+"actions.load.failed %@" = "Không thể tải các yêu cầu xem xét của bạn: %@";
+"actions.draft" = "Bản nháp";
+"actions.copy.link" = "Sao chép liên kết";
+"actions.truncated %ld" = "Đang hiển thị %ld mục đầu tiên; một số mục có thể bị thiếu.";
+"actions.wait.today" = "Hôm nay";
+"actions.wait.this.week" = "Tuần này";
+"actions.wait.this.month" = "Tháng này";
+"actions.wait.older" = "Cũ hơn";

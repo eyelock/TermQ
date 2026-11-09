@@ -1675,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Усі";
 "wheelhouse.inbox.filter.help %@" = "Показувати лише bead типу %@";
 "wheelhouse.inbox.sent.to %@" = "надіслано: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Дії";
+"actions.termq.only" = "Лише репозиторії TermQ";
+"actions.empty" = "Немає PR, що очікують на ваш огляд.";
+"actions.load.failed %@" = "Не вдалося завантажити запити на огляд: %@";
+"actions.draft" = "Чернетка";
+"actions.copy.link" = "Скопіювати посилання";
+"actions.truncated %ld" = "Показано перші %ld; деякі можуть бути відсутні.";
+"actions.wait.today" = "Сьогодні";
+"actions.wait.this.week" = "Цього тижня";
+"actions.wait.this.month" = "Цього місяця";
+"actions.wait.older" = "Раніше";

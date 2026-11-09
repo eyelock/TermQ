@@ -1670,3 +1670,16 @@
 "wheelhouse.inbox.filter.all" = "全部";
 "wheelhouse.inbox.filter.help %@" = "仅显示 %@ bead";
 "wheelhouse.inbox.sent.to %@" = "已发送给 %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "待办";
+"actions.termq.only" = "仅限 TermQ 的仓库";
+"actions.empty" = "没有等待你审查的 PR。";
+"actions.load.failed %@" = "无法加载你的审查请求：%@";
+"actions.draft" = "草稿";
+"actions.copy.link" = "复制链接";
+"actions.truncated %ld" = "显示前 %ld 项;可能有部分缺失。";
+"actions.wait.today" = "今天";
+"actions.wait.this.week" = "本周";
+"actions.wait.this.month" = "本月";
+"actions.wait.older" = "更早";

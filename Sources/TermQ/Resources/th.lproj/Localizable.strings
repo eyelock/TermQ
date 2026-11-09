@@ -1675,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "ทั้งหมด";
 "wheelhouse.inbox.filter.help %@" = "แสดงเฉพาะ bead ประเภท %@";
 "wheelhouse.inbox.sent.to %@" = "ส่งให้ %@ แล้ว";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "การดำเนินการ";
+"actions.termq.only" = "เฉพาะที่เก็บของ TermQ";
+"actions.empty" = "ไม่มี PR ที่รอการตรวจสอบจากคุณ";
+"actions.load.failed %@" = "ไม่สามารถโหลดคำขอตรวจสอบของคุณได้: %@";
+"actions.draft" = "ร่าง";
+"actions.copy.link" = "คัดลอกลิงก์";
+"actions.truncated %ld" = "แสดง %ld รายการแรก; บางรายการอาจขาดหายไป";
+"actions.wait.today" = "วันนี้";
+"actions.wait.this.week" = "สัปดาห์นี้";
+"actions.wait.this.month" = "เดือนนี้";
+"actions.wait.older" = "เก่ากว่า";

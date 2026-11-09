@@ -29,10 +29,12 @@ struct ConvertWorktreeContext: Identifiable {
 
 // MARK: - Sidebar Mode
 
-/// Whether the Repositories panel is showing local worktrees or remote PRs.
+/// Whether the Repositories panel is showing local worktrees, remote PRs,
+/// or the human's actions (reviews waiting on them, across GitHub).
 enum SidebarMode {
     case local
     case remote
+    case actions
 }
 
 // MARK: - Checkout PR Context

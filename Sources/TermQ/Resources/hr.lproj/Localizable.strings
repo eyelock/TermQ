@@ -1674,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Sve";
 "wheelhouse.inbox.filter.help %@" = "Prikaži samo beadove vrste %@";
 "wheelhouse.inbox.sent.to %@" = "poslano: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Radnje";
+"actions.termq.only" = "Samo TermQ repozitoriji";
+"actions.empty" = "Nijedan PR ne čeka vaš pregled.";
+"actions.load.failed %@" = "Nije moguće učitati vaše zahtjeve za pregled: %@";
+"actions.draft" = "Nacrt";
+"actions.copy.link" = "Kopiraj poveznicu";
+"actions.truncated %ld" = "Prikazano je prvih %ld; neki možda nedostaju.";
+"actions.wait.today" = "Danas";
+"actions.wait.this.week" = "Ovaj tjedan";
+"actions.wait.this.month" = "Ovaj mjesec";
+"actions.wait.older" = "Starije";

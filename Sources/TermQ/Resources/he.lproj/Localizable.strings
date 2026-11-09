@@ -1674,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "הכול";
 "wheelhouse.inbox.filter.help %@" = "הצג רק bead מסוג %@";
 "wheelhouse.inbox.sent.to %@" = "נשלח אל %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "פעולות";
+"actions.termq.only" = "רק המאגרים של TermQ";
+"actions.empty" = "אין PR-ים שממתינים לסקירה שלך.";
+"actions.load.failed %@" = "לא ניתן לטעון את בקשות הסקירה שלך: %@";
+"actions.draft" = "טיוטה";
+"actions.copy.link" = "העתק קישור";
+"actions.truncated %ld" = "מוצגים %ld הראשונים; ייתכן שחלקם חסרים.";
+"actions.wait.today" = "היום";
+"actions.wait.this.week" = "השבוע";
+"actions.wait.this.month" = "החודש";
+"actions.wait.older" = "ישנים יותר";

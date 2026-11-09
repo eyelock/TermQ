@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "الكل";
 "wheelhouse.inbox.filter.help %@" = "عرض bead من نوع %@ فقط";
 "wheelhouse.inbox.sent.to %@" = "أُرسل إلى %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "إجراءات";
+"actions.termq.only" = "مستودعات TermQ فقط";
+"actions.empty" = "لا توجد PR في انتظار مراجعتك.";
+"actions.load.failed %@" = "تعذّر تحميل طلبات المراجعة الخاصة بك: %@";
+"actions.draft" = "مسودة";
+"actions.copy.link" = "نسخ الرابط";
+"actions.truncated %ld" = "يتم عرض أول %ld؛ وقد تكون بعض العناصر مفقودة.";
+"actions.wait.today" = "اليوم";
+"actions.wait.this.week" = "هذا الأسبوع";
+"actions.wait.this.month" = "هذا الشهر";
+"actions.wait.older" = "أقدم";

@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Все";
 "wheelhouse.inbox.filter.help %@" = "Показывать только bead типа %@";
 "wheelhouse.inbox.sent.to %@" = "отправлено: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Действия";
+"actions.termq.only" = "Только репозитории TermQ";
+"actions.empty" = "Нет PR, ожидающих вашего ревью.";
+"actions.load.failed %@" = "Не удалось загрузить запросы на ревью: %@";
+"actions.draft" = "Черновик";
+"actions.copy.link" = "Копировать ссылку";
+"actions.truncated %ld" = "Показаны первые %ld; некоторые могут отсутствовать.";
+"actions.wait.today" = "Сегодня";
+"actions.wait.this.week" = "На этой неделе";
+"actions.wait.this.month" = "В этом месяце";
+"actions.wait.older" = "Ранее";

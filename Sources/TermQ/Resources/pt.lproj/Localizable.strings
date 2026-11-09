@@ -1673,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Todos";
 "wheelhouse.inbox.filter.help %@" = "Mostrar apenas beads de %@";
 "wheelhouse.inbox.sent.to %@" = "enviado para %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Ações";
+"actions.termq.only" = "Somente repositórios do TermQ";
+"actions.empty" = "Nenhuma PR está aguardando sua revisão.";
+"actions.load.failed %@" = "Não foi possível carregar suas solicitações de revisão: %@";
+"actions.draft" = "Rascunho";
+"actions.copy.link" = "Copiar link";
+"actions.truncated %ld" = "Mostrando os primeiros %ld; alguns podem estar faltando.";
+"actions.wait.today" = "Hoje";
+"actions.wait.this.week" = "Esta semana";
+"actions.wait.this.month" = "Este mês";
+"actions.wait.older" = "Mais antigas";

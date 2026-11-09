@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Tots";
 "wheelhouse.inbox.filter.help %@" = "Mostra només els beads de tipus %@";
 "wheelhouse.inbox.sent.to %@" = "enviat a %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Accions";
+"actions.termq.only" = "Només els repositoris de TermQ";
+"actions.empty" = "Cap PR està esperant la teva revisió.";
+"actions.load.failed %@" = "No s'han pogut carregar les teves sol·licituds de revisió: %@";
+"actions.draft" = "Esborrany";
+"actions.copy.link" = "Copia l'enllaç";
+"actions.truncated %ld" = "Es mostren els primers %ld; pot ser que'n falti alguns.";
+"actions.wait.today" = "Avui";
+"actions.wait.this.week" = "Aquesta setmana";
+"actions.wait.this.month" = "Aquest mes";
+"actions.wait.older" = "Més antics";

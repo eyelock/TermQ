@@ -1675,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Alla";
 "wheelhouse.inbox.filter.help %@" = "Visa bara %@-beads";
 "wheelhouse.inbox.sent.to %@" = "skickad till %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Åtgärder";
+"actions.termq.only" = "Endast TermQ:s repositorier";
+"actions.empty" = "Inga PR väntar på din granskning.";
+"actions.load.failed %@" = "Det gick inte att läsa in dina granskningsförfrågningar: %@";
+"actions.draft" = "Utkast";
+"actions.copy.link" = "Kopiera länk";
+"actions.truncated %ld" = "Visar de första %ld; vissa kan saknas.";
+"actions.wait.today" = "Idag";
+"actions.wait.this.week" = "Den här veckan";
+"actions.wait.this.month" = "Den här månaden";
+"actions.wait.older" = "Äldre";

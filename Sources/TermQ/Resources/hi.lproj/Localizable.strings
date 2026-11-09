@@ -1674,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "सभी";
 "wheelhouse.inbox.filter.help %@" = "केवल %@ bead दिखाएँ";
 "wheelhouse.inbox.sent.to %@" = "%@ को भेजा गया";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "कार्रवाइयाँ";
+"actions.termq.only" = "केवल TermQ की रिपॉजिटरी";
+"actions.empty" = "कोई PR आपकी समीक्षा की प्रतीक्षा में नहीं है।";
+"actions.load.failed %@" = "आपके समीक्षा अनुरोध लोड नहीं हो सके: %@";
+"actions.draft" = "मसौदा";
+"actions.copy.link" = "लिंक कॉपी करें";
+"actions.truncated %ld" = "पहले %ld दिखाए जा रहे हैं; कुछ छूट सकते हैं।";
+"actions.wait.today" = "आज";
+"actions.wait.this.week" = "इस सप्ताह";
+"actions.wait.this.month" = "इस महीने";
+"actions.wait.older" = "पुराने";

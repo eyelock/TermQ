@@ -1674,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Mind";
 "wheelhouse.inbox.filter.help %@" = "Csak a(z) %@ beadek megjelenítése";
 "wheelhouse.inbox.sent.to %@" = "elküldve: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Teendők";
+"actions.termq.only" = "Csak a TermQ tárolói";
+"actions.empty" = "Nincs felülvizsgálatra váró PR.";
+"actions.load.failed %@" = "Nem sikerült betölteni a felülvizsgálati kéréseket: %@";
+"actions.draft" = "Vázlat";
+"actions.copy.link" = "Hivatkozás másolása";
+"actions.truncated %ld" = "Az első %ld látható; néhány hiányozhat.";
+"actions.wait.today" = "Ma";
+"actions.wait.this.week" = "Ezen a héten";
+"actions.wait.this.month" = "Ebben a hónapban";
+"actions.wait.older" = "Régebbi";

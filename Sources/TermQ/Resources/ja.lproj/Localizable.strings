@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "すべて";
 "wheelhouse.inbox.filter.help %@" = "%@ の bead のみ表示";
 "wheelhouse.inbox.sent.to %@" = "%@ に送信済み";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "アクション";
+"actions.termq.only" = "TermQのリポジトリのみ";
+"actions.empty" = "レビュー待ちのPRはありません。";
+"actions.load.failed %@" = "レビュー依頼を読み込めませんでした：%@";
+"actions.draft" = "下書き";
+"actions.copy.link" = "リンクをコピー";
+"actions.truncated %ld" = "最初の %ld 件を表示しています。一部が表示されていない可能性があります。";
+"actions.wait.today" = "今日";
+"actions.wait.this.week" = "今週";
+"actions.wait.this.month" = "今月";
+"actions.wait.older" = "それ以前";

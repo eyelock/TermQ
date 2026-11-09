@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Toate";
 "wheelhouse.inbox.filter.help %@" = "Afișează doar bead-urile de tip %@";
 "wheelhouse.inbox.sent.to %@" = "trimis către %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Acțiuni";
+"actions.termq.only" = "Doar depozitele TermQ";
+"actions.empty" = "Niciun PR nu așteaptă revizuirea ta.";
+"actions.load.failed %@" = "Nu s-au putut încărca cererile tale de revizuire: %@";
+"actions.draft" = "Ciornă";
+"actions.copy.link" = "Copiază linkul";
+"actions.truncated %ld" = "Se afișează primele %ld; unele pot lipsi.";
+"actions.wait.today" = "Astăzi";
+"actions.wait.this.week" = "Săptămâna aceasta";
+"actions.wait.this.month" = "Luna aceasta";
+"actions.wait.older" = "Mai vechi";

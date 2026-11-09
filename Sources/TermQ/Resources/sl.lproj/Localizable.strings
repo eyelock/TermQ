@@ -1675,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Vse";
 "wheelhouse.inbox.filter.help %@" = "Pokaži samo beade vrste %@";
 "wheelhouse.inbox.sent.to %@" = "poslano: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Dejanja";
+"actions.termq.only" = "Samo repozitoriji TermQ";
+"actions.empty" = "Nobena zahteva PR ne čaka na vaš pregled.";
+"actions.load.failed %@" = "Zahtev za pregled ni bilo mogoče naložiti: %@";
+"actions.draft" = "Osnutek";
+"actions.copy.link" = "Kopiraj povezavo";
+"actions.truncated %ld" = "Prikazanih je prvih %ld; nekateri morda manjkajo.";
+"actions.wait.today" = "Danes";
+"actions.wait.this.week" = "Ta teden";
+"actions.wait.this.month" = "Ta mesec";
+"actions.wait.older" = "Starejše";

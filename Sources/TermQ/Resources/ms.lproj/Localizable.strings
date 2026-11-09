@@ -1673,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Semua";
 "wheelhouse.inbox.filter.help %@" = "Tunjukkan bead %@ sahaja";
 "wheelhouse.inbox.sent.to %@" = "dihantar kepada %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Tindakan";
+"actions.termq.only" = "Hanya repositori TermQ";
+"actions.empty" = "Tiada PR yang menunggu ulasan anda.";
+"actions.load.failed %@" = "Tidak dapat memuatkan permintaan ulasan anda: %@";
+"actions.draft" = "Draf";
+"actions.copy.link" = "Salin Pautan";
+"actions.truncated %ld" = "Memaparkan %ld yang pertama; sesetengahnya mungkin tiada.";
+"actions.wait.today" = "Hari ini";
+"actions.wait.this.week" = "Minggu ini";
+"actions.wait.this.month" = "Bulan ini";
+"actions.wait.older" = "Lebih lama";

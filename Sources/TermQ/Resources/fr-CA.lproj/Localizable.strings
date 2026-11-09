@@ -1674,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Tous";
 "wheelhouse.inbox.filter.help %@" = "Afficher uniquement les beads de type %@";
 "wheelhouse.inbox.sent.to %@" = "envoyé à %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Actions";
+"actions.termq.only" = "Uniquement les dépôts de TermQ";
+"actions.empty" = "Aucune PR n'attend votre revue.";
+"actions.load.failed %@" = "Impossible de charger vos demandes de revue : %@";
+"actions.draft" = "Brouillon";
+"actions.copy.link" = "Copier le lien";
+"actions.truncated %ld" = "Affichage des %ld premiers ; certains peuvent manquer.";
+"actions.wait.today" = "Aujourd'hui";
+"actions.wait.this.week" = "Cette semaine";
+"actions.wait.this.month" = "Ce mois-ci";
+"actions.wait.older" = "Plus anciennes";

@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Vše";
 "wheelhouse.inbox.filter.help %@" = "Zobrazit pouze beady typu %@";
 "wheelhouse.inbox.sent.to %@" = "odesláno: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Akce";
+"actions.termq.only" = "Pouze repozitáře TermQ";
+"actions.empty" = "Žádné PR nečeká na vaši recenzi.";
+"actions.load.failed %@" = "Nepodařilo se načíst vaše žádosti o recenzi: %@";
+"actions.draft" = "Návrh";
+"actions.copy.link" = "Kopírovat odkaz";
+"actions.truncated %ld" = "Zobrazuje se prvních %ld; některé mohou chybět.";
+"actions.wait.today" = "Dnes";
+"actions.wait.this.week" = "Tento týden";
+"actions.wait.this.month" = "Tento měsíc";
+"actions.wait.older" = "Starší";

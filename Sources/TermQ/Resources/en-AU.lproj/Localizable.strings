@@ -1666,3 +1666,16 @@
 "wheelhouse.inbox.filter.all" = "All";
 "wheelhouse.inbox.filter.help %@" = "Show only %@ beads";
 "wheelhouse.inbox.sent.to %@" = "sent to %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Actions";
+"actions.termq.only" = "Only TermQ's repositories";
+"actions.empty" = "No pull requests are waiting on your review.";
+"actions.load.failed %@" = "Couldn't load your review requests: %@";
+"actions.draft" = "Draft";
+"actions.copy.link" = "Copy Link";
+"actions.truncated %ld" = "Showing the first %ld; some may be missing.";
+"actions.wait.today" = "Today";
+"actions.wait.this.week" = "This week";
+"actions.wait.this.month" = "This month";
+"actions.wait.older" = "Older";

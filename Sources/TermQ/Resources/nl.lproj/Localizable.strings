@@ -1673,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Alle";
 "wheelhouse.inbox.filter.help %@" = "Alleen %@-beads tonen";
 "wheelhouse.inbox.sent.to %@" = "verzonden naar %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Acties";
+"actions.termq.only" = "Alleen TermQ-repositories";
+"actions.empty" = "Geen PR's wachten op jouw beoordeling.";
+"actions.load.failed %@" = "Kan je beoordelingsverzoeken niet laden: %@";
+"actions.draft" = "Concept";
+"actions.copy.link" = "Link kopiëren";
+"actions.truncated %ld" = "De eerste %ld worden getoond; sommige ontbreken mogelijk.";
+"actions.wait.today" = "Vandaag";
+"actions.wait.this.week" = "Deze week";
+"actions.wait.this.month" = "Deze maand";
+"actions.wait.older" = "Ouder";

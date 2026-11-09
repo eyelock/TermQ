@@ -1675,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Tümü";
 "wheelhouse.inbox.filter.help %@" = "Yalnızca %@ bead'lerini göster";
 "wheelhouse.inbox.sent.to %@" = "%@ kişisine gönderildi";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Eylemler";
+"actions.termq.only" = "Yalnızca TermQ'nun depoları";
+"actions.empty" = "İncelemenizi bekleyen PR yok.";
+"actions.load.failed %@" = "İnceleme istekleriniz yüklenemedi: %@";
+"actions.draft" = "Taslak";
+"actions.copy.link" = "Bağlantıyı Kopyala";
+"actions.truncated %ld" = "İlk %ld gösteriliyor; bazıları eksik olabilir.";
+"actions.wait.today" = "Bugün";
+"actions.wait.this.week" = "Bu hafta";
+"actions.wait.this.month" = "Bu ay";
+"actions.wait.older" = "Daha eski";

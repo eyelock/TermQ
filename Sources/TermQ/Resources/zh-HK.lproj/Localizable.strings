@@ -1668,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "全部";
 "wheelhouse.inbox.filter.help %@" = "僅顯示 %@ bead";
 "wheelhouse.inbox.sent.to %@" = "已傳送給 %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "待辦";
+"actions.termq.only" = "只限 TermQ 嘅儲存庫";
+"actions.empty" = "冇等緊你審查嘅 PR。";
+"actions.load.failed %@" = "無法載入你嘅審查請求：%@";
+"actions.draft" = "草稿";
+"actions.copy.link" = "複製連結";
+"actions.truncated %ld" = "顯示前 %ld 項;可能有部分遺漏。";
+"actions.wait.today" = "今日";
+"actions.wait.this.week" = "本週";
+"actions.wait.this.month" = "本月";
+"actions.wait.older" = "更早";
