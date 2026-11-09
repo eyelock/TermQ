@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 import TermQShared
 
-/// The Repositories tab's Actions view: every open pull request waiting on
+/// The Repositories tab's Attention view: every open pull request waiting on
 /// the human's review, in any repository, grouped by how long it has waited
 /// since the review was asked for, longest first.
 struct ReviewActionsView: View {

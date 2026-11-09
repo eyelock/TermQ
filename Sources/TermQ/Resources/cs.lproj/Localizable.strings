@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "odesláno: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Akce";
+"actions.mode" = "Pozornost";
 "actions.termq.only" = "Pouze repozitáře TermQ";
 "actions.empty" = "Žádné PR nečeká na vaši recenzi.";
 "actions.load.failed %@" = "Nepodařilo se načíst vaše žádosti o recenzi: %@";

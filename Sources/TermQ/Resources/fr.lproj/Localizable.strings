@@ -1676,7 +1676,7 @@
 "wheelhouse.inbox.sent.to %@" = "envoyé à %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Actions";
+"actions.mode" = "Attention";
 "actions.termq.only" = "Uniquement les dépôts de TermQ";
 "actions.empty" = "Aucune PR n'attend votre revue.";
 "actions.load.failed %@" = "Impossible de charger vos demandes de revue : %@";

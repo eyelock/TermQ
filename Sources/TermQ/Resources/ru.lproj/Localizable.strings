@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "отправлено: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Действия";
+"actions.mode" = "ÐÐ½Ð¸Ð¼Ð°Ð½Ð¸Ðµ";
 "actions.termq.only" = "Только репозитории TermQ";
 "actions.empty" = "Нет PR, ожидающих вашего ревью.";
 "actions.load.failed %@" = "Не удалось загрузить запросы на ревью: %@";

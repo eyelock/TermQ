@@ -1676,7 +1676,7 @@
 "wheelhouse.inbox.sent.to %@" = "lähetetty: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Toimet";
+"actions.mode" = "Huomio";
 "actions.termq.only" = "Vain TermQ:n repositoriot";
 "actions.empty" = "Mikään PR ei odota katselmointiasi.";
 "actions.load.failed %@" = "Katselmointipyyntöjäsi ei voitu ladata: %@";

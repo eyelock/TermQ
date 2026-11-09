@@ -1677,7 +1677,7 @@
 "wheelhouse.inbox.sent.to %@" = "skickad till %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Åtgärder";
+"actions.mode" = "VÃ¤ntar";
 "actions.termq.only" = "Endast TermQ:s repositorier";
 "actions.empty" = "Inga PR väntar på din granskning.";
 "actions.load.failed %@" = "Det gick inte att läsa in dina granskningsförfrågningar: %@";

@@ -1675,7 +1675,7 @@
 "wheelhouse.inbox.sent.to %@" = "verzonden naar %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Acties";
+"actions.mode" = "Aandacht";
 "actions.termq.only" = "Alleen TermQ-repositories";
 "actions.empty" = "Geen PR's wachten op jouw beoordeling.";
 "actions.load.failed %@" = "Kan je beoordelingsverzoeken niet laden: %@";

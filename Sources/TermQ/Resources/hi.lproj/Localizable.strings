@@ -1676,7 +1676,7 @@
 "wheelhouse.inbox.sent.to %@" = "%@ को भेजा गया";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "कार्रवाइयाँ";
+"actions.mode" = "à¤§à¥à¤¯à¤¾à¤¨ à¤¦à¥à¤";
 "actions.termq.only" = "केवल TermQ की रिपॉजिटरी";
 "actions.empty" = "कोई PR आपकी समीक्षा की प्रतीक्षा में नहीं है।";
 "actions.load.failed %@" = "आपके समीक्षा अनुरोध लोड नहीं हो सके: %@";

@@ -1677,7 +1677,7 @@
 "wheelhouse.inbox.sent.to %@" = "%@ kişisine gönderildi";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Eylemler";
+"actions.mode" = "Dikkat";
 "actions.termq.only" = "Yalnızca TermQ'nun depoları";
 "actions.empty" = "İncelemenizi bekleyen PR yok.";
 "actions.load.failed %@" = "İnceleme istekleriniz yüklenemedi: %@";

@@ -1677,7 +1677,7 @@
 "wheelhouse.inbox.sent.to %@" = "%@에게 보냄";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "작업";
+"actions.mode" = "íì¸ íì";
 "actions.termq.only" = "TermQ 저장소만";
 "actions.empty" = "검토를 기다리는 PR이 없습니다.";
 "actions.load.failed %@" = "검토 요청을 불러올 수 없습니다: %@";

@@ -1677,7 +1677,7 @@
 "wheelhouse.inbox.sent.to %@" = "ส่งให้ %@ แล้ว";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "การดำเนินการ";
+"actions.mode" = "à¸à¹à¸­à¸à¸à¸£à¸§à¸à¸ªà¸­à¸";
 "actions.termq.only" = "เฉพาะที่เก็บของ TermQ";
 "actions.empty" = "ไม่มี PR ที่รอการตรวจสอบจากคุณ";
 "actions.load.failed %@" = "ไม่สามารถโหลดคำขอตรวจสอบของคุณได้: %@";

@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "enviat a %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Accions";
+"actions.mode" = "AtenciÃ³";
 "actions.termq.only" = "Només els repositoris de TermQ";
 "actions.empty" = "Cap PR està esperant la teva revisió.";
 "actions.load.failed %@" = "No s'han pogut carregar les teves sol·licituds de revisió: %@";

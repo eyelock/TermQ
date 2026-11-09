@@ -3,7 +3,7 @@ import TermQShared
 
 /// The pull requests waiting on the human's review, across every GitHub
 /// repository: one `gh search prs`, then one GraphQL query for when each
-/// review was asked for. Backs the Repositories tab's Actions view.
+/// review was asked for. Backs the Repositories tab's Attention view.
 @MainActor
 final class ReviewRequestService: ObservableObject {
     static let shared = ReviewRequestService()

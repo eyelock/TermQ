@@ -1676,7 +1676,7 @@
 "wheelhouse.inbox.sent.to %@" = "poslano: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Radnje";
+"actions.mode" = "PaÅ¾nja";
 "actions.termq.only" = "Samo TermQ repozitoriji";
 "actions.empty" = "Nijedan PR ne čeka vaš pregled.";
 "actions.load.failed %@" = "Nije moguće učitati vaše zahtjeve za pregled: %@";

@@ -1675,7 +1675,7 @@
 "wheelhouse.inbox.sent.to %@" = "sendt til %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Handlinger";
+"actions.mode" = "Venter";
 "actions.termq.only" = "Bare TermQs repositorier";
 "actions.empty" = "Ingen PR-er venter på gjennomgangen din.";
 "actions.load.failed %@" = "Kunne ikke laste inn gjennomgangsforespørslene dine: %@";

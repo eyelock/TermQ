@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "%@ に送信済み";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "アクション";
+"actions.mode" = "è¦å¯¾å¿";
 "actions.termq.only" = "TermQのリポジトリのみ";
 "actions.empty" = "レビュー待ちのPRはありません。";
 "actions.load.failed %@" = "レビュー依頼を読み込めませんでした：%@";

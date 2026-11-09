@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "أُرسل إلى %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "إجراءات";
+"actions.mode" = "Ø§ÙØªØ¨Ø§Ù";
 "actions.termq.only" = "مستودعات TermQ فقط";
 "actions.empty" = "لا توجد PR في انتظار مراجعتك.";
 "actions.load.failed %@" = "تعذّر تحميل طلبات المراجعة الخاصة بك: %@";

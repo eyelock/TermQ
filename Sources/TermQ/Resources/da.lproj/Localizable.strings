@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "sendt til %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Handlinger";
+"actions.mode" = "Afventer";
 "actions.termq.only" = "Kun TermQ's repositories";
 "actions.empty" = "Ingen PR'er venter på din gennemgang.";
 "actions.load.failed %@" = "Kunne ikke indlæse dine anmodninger om gennemgang: %@";

@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "已傳送給 %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "待辦";
+"actions.mode" = "ééæ³¨";
 "actions.termq.only" = "僅限 TermQ 的儲存庫";
 "actions.empty" = "沒有等待你審查的 PR。";
 "actions.load.failed %@" = "無法載入你的審查請求：%@";

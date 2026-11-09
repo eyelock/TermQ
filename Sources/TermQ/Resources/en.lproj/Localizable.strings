@@ -1671,7 +1671,7 @@
 "wheelhouse.inbox.sent.to %@" = "sent to %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Actions";
+"actions.mode" = "Attention";
 "actions.termq.only" = "Only TermQ's repositories";
 "actions.empty" = "No pull requests are waiting on your review.";
 "actions.load.failed %@" = "Couldn't load your review requests: %@";

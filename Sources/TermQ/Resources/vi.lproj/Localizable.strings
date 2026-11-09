@@ -1678,7 +1678,7 @@
 "wheelhouse.inbox.sent.to %@" = "đã gửi cho %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Hành động";
+"actions.mode" = "ChÃº Ã½";
 "actions.termq.only" = "Chỉ kho của TermQ";
 "actions.empty" = "Không có PR nào đang chờ bạn xem xét.";
 "actions.load.failed %@" = "Không thể tải các yêu cầu xem xét của bạn: %@";

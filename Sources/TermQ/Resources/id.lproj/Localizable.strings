@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "dikirim ke %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Tindakan";
+"actions.mode" = "Perhatian";
 "actions.termq.only" = "Hanya repositori TermQ";
 "actions.empty" = "Tidak ada PR yang menunggu ulasan Anda.";
 "actions.load.failed %@" = "Tidak dapat memuat permintaan ulasan Anda: %@";

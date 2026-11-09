@@ -1677,7 +1677,7 @@
 "wheelhouse.inbox.sent.to %@" = "надіслано: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Дії";
+"actions.mode" = "Ð£Ð²Ð°Ð³Ð°";
 "actions.termq.only" = "Лише репозиторії TermQ";
 "actions.empty" = "Немає PR, що очікують на ваш огляд.";
 "actions.load.failed %@" = "Не вдалося завантажити запити на огляд: %@";

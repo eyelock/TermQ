@@ -1676,7 +1676,7 @@
 "wheelhouse.inbox.sent.to %@" = "elküldve: %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Teendők";
+"actions.mode" = "Figyelem";
 "actions.termq.only" = "Csak a TermQ tárolói";
 "actions.empty" = "Nincs felülvizsgálatra váró PR.";
 "actions.load.failed %@" = "Nem sikerült betölteni a felülvizsgálati kéréseket: %@";

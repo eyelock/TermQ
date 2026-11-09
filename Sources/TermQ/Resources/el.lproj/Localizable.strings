@@ -1670,7 +1670,7 @@
 "wheelhouse.inbox.sent.to %@" = "εστάλη σε %@";
 
 // MARK: - Actions (reviews waiting on the human)
-"actions.mode" = "Ενέργειες";
+"actions.mode" = "Î ÏÎ¿ÏÎ¿ÏÎ®";
 "actions.termq.only" = "Μόνο τα αποθετήρια του TermQ";
 "actions.empty" = "Κανένα PR δεν περιμένει την αναθεώρησή σας.";
 "actions.load.failed %@" = "Δεν ήταν δυνατή η φόρτωση των αιτημάτων αναθεώρησης: %@";
