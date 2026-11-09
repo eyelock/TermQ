@@ -143,7 +143,10 @@ struct SettingsView: View {
                         dataDirectory: $dataDirectory
                     )
                 case .marketplaces:
-                    SettingsMarketplacesView()
+                    SettingsMarketplacesView(parts: [.plugins, .behaviour, .authoring])
+                case .harnesses:
+                    // ynh's own marketplaces belong with the harness toolchain.
+                    SettingsMarketplacesView(parts: [.ynh])
                 default:
                     EmptyView()
                 }

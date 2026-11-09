@@ -366,7 +366,7 @@ struct WorkspaceCommands: Commands {
                 }
                 Divider()
                 Button(Strings.Menu.harnessRegistries) {
-                    SettingsCoordinator.shared.openSettings(tab: .marketplaces)
+                    SettingsCoordinator.shared.openSettings(tab: .harnesses)
                     openSettings()
                 }
                 Button(Strings.Menu.harnessTools) {
