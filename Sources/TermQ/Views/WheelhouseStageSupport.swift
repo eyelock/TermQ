@@ -154,6 +154,9 @@ enum WheelhouseStageShortcut {
     static let quickTerminal = KeyboardShortcut("t", modifiers: .command)
     static let harnessDetails = KeyboardShortcut("i", modifiers: .command)
     static let keepOnStage = KeyboardShortcut("p", modifiers: .command)
+    /// The File menu's Delete Terminal, which on the stage closes the focused
+    /// pane: a running seat only leaves the stage.
+    static let closeTerminal = KeyboardShortcut(.delete, modifiers: .command)
     /// The board's Toggle Zoom.
     static let zoom = KeyboardShortcut("z", modifiers: [.command, .option])
 }

@@ -1604,6 +1604,7 @@
 "wheelhouse.take.off.stage" = "Ta bort från scenen";
 "wheelhouse.zoom.terminal" = "Zooma terminal";
 "wheelhouse.exit.zoom" = "Avsluta zoom";
+"wheelhouse.smart.close.help" = "Stäng: en plats som fortfarande körs lämnar scenen och fortsätter köra; en som har stoppat stängs";
 "wheelhouse.needs.you" = "Behöver dig";
 "wheelhouse.nobody.waiting" = "ingen väntar";
 "wheelhouse.more.waiting %ld" = "+%ld till";

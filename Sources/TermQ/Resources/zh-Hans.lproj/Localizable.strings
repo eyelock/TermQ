@@ -1599,6 +1599,7 @@
 "wheelhouse.take.off.stage" = "移出舞台";
 "wheelhouse.zoom.terminal" = "缩放终端";
 "wheelhouse.exit.zoom" = "退出缩放";
+"wheelhouse.smart.close.help" = "关闭：仍在运行的席位会离开舞台并继续运行；已停止的席位则会被关闭";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "无人等待";
 "wheelhouse.more.waiting %ld" = "还有 +%ld";

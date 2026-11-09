@@ -46,6 +46,23 @@ extension ContentView {
         }
     }
 
+    /// ⌘⌫: on the stage, close the focused pane the way its ✕ does (a seat
+    /// still running only leaves the stage, so no confirmation is needed);
+    /// elsewhere the board's Delete Terminal, which asks first.
+    func deleteTerminalOrCloseStagePane() {
+        guard showsWheelhouseStage, let id = wheelhouseStage.focused,
+            let card = viewModel.allTerminals.first(where: { $0.id == id && $0.deletedAt == nil })
+        else {
+            if viewModel.selectedCard != nil { viewModel.showDeleteConfirmation = true }
+            return
+        }
+        if let found = WheelhouseStore.shared.seat(for: card) {
+            seatAction(found.wheelhouse, found.seat, .closeTerminal)
+        } else {
+            wheelhouseStage.smartClose(card)
+        }
+    }
+
     /// A stage pane fills the window: the sidebar steps aside too.
     var stageZoomed: Bool {
         showsWheelhouseStage && wheelhouseStage.zoomed.map(wheelhouseStage.isOnStage) == true

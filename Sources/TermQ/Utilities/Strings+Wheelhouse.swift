@@ -56,6 +56,7 @@ extension Strings {
         static var focusHelp: String { localized("wheelhouse.focus.help") }
         static var bringOnStage: String { localized("wheelhouse.bring.on.stage") }
         static var takeOffStage: String { localized("wheelhouse.take.off.stage") }
+        static var smartCloseHelp: String { localized("wheelhouse.smart.close.help") }
         static var needsYou: String { localized("wheelhouse.needs.you") }
         static var nobodyWaiting: String { localized("wheelhouse.nobody.waiting") }
         static func moreWaiting(_ count: Int) -> String { localized("wheelhouse.more.waiting %ld", count) }

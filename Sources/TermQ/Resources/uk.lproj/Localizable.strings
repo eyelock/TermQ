@@ -1604,6 +1604,7 @@
 "wheelhouse.take.off.stage" = "Прибрати зі сцени";
 "wheelhouse.zoom.terminal" = "Масштабувати термінал";
 "wheelhouse.exit.zoom" = "Вийти з масштабування";
+"wheelhouse.smart.close.help" = "Закрити: місце, яке ще працює, залишає сцену й продовжує працювати; зупинене закривається";
 "wheelhouse.needs.you" = "Чекає на вас";
 "wheelhouse.nobody.waiting" = "ніхто не чекає";
 "wheelhouse.more.waiting %ld" = "ще +%ld";

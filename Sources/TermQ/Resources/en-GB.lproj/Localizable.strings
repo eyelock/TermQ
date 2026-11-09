@@ -1596,6 +1596,7 @@
 "wheelhouse.take.off.stage" = "Take off the stage";
 "wheelhouse.zoom.terminal" = "Zoom Terminal";
 "wheelhouse.exit.zoom" = "Exit Zoom";
+"wheelhouse.smart.close.help" = "Close: a seat still running leaves the stage and keeps running; one that has stopped is closed";
 "wheelhouse.needs.you" = "Needs you";
 "wheelhouse.nobody.waiting" = "nobody waiting";
 "wheelhouse.more.waiting %ld" = "+%ld more";

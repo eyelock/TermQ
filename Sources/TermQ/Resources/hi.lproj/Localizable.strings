@@ -1603,6 +1603,7 @@
 "wheelhouse.take.off.stage" = "मंच से हटाएँ";
 "wheelhouse.zoom.terminal" = "टर्मिनल ज़ूम करें";
 "wheelhouse.exit.zoom" = "ज़ूम से बाहर निकलें";
+"wheelhouse.smart.close.help" = "बंद करें: जो सीट अब भी चल रही है वह मंच से हट जाती है और चलती रहती है; जो रुक चुकी है उसे बंद कर दिया जाता है";
 "wheelhouse.needs.you" = "आपकी ज़रूरत है";
 "wheelhouse.nobody.waiting" = "कोई प्रतीक्षा में नहीं";
 "wheelhouse.more.waiting %ld" = "+%ld और";

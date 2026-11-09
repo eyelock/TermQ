@@ -1603,6 +1603,7 @@
 "wheelhouse.take.off.stage" = "Skini s pozornice";
 "wheelhouse.zoom.terminal" = "Zumiraj terminal";
 "wheelhouse.exit.zoom" = "Izađi iz zumiranja";
+"wheelhouse.smart.close.help" = "Zatvori: mjesto koje još radi napušta pozornicu i nastavlja raditi; zaustavljeno se zatvara";
 "wheelhouse.needs.you" = "Treba te";
 "wheelhouse.nobody.waiting" = "nitko ne čeka";
 "wheelhouse.more.waiting %ld" = "još +%ld";

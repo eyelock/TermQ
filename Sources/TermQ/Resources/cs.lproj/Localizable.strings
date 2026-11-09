@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "Odebrat z pódia";
 "wheelhouse.zoom.terminal" = "Přiblížit terminál";
 "wheelhouse.exit.zoom" = "Ukončit přiblížení";
+"wheelhouse.smart.close.help" = "Zavřít: místo, které stále běží, opustí pódium a běží dál; zastavené se zavře";
 "wheelhouse.needs.you" = "Potřebuje vás";
 "wheelhouse.nobody.waiting" = "nikdo nečeká";
 "wheelhouse.more.waiting %ld" = "+%ld dalších";

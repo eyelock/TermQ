@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "Treu de l’escenari";
 "wheelhouse.zoom.terminal" = "Amplia el terminal";
 "wheelhouse.exit.zoom" = "Surt del zoom";
+"wheelhouse.smart.close.help" = "Tanca: un seient encara en execució surt de l’escenari i continua funcionant; un que s’ha aturat es tanca";
 "wheelhouse.needs.you" = "Et necessita";
 "wheelhouse.nobody.waiting" = "ningú no espera";
 "wheelhouse.more.waiting %ld" = "+%ld més";

@@ -1602,6 +1602,7 @@
 "wheelhouse.take.off.stage" = "Ta av scenen";
 "wheelhouse.zoom.terminal" = "Zoom terminal";
 "wheelhouse.exit.zoom" = "Avslutt zoom";
+"wheelhouse.smart.close.help" = "Lukk: en plass som fortsatt kjører forlater scenen og kjører videre; en som har stoppet, lukkes";
 "wheelhouse.needs.you" = "Trenger deg";
 "wheelhouse.nobody.waiting" = "ingen venter";
 "wheelhouse.more.waiting %ld" = "+%ld til";

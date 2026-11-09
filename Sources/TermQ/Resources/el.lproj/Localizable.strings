@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "Αφαίρεση από τη σκηνή";
 "wheelhouse.zoom.terminal" = "Ζουμ τερματικού";
 "wheelhouse.exit.zoom" = "Έξοδος από το ζουμ";
+"wheelhouse.smart.close.help" = "Κλείσιμο: μια θέση που εκτελείται ακόμη φεύγει από τη σκηνή και συνεχίζει να εκτελείται· μια θέση που έχει σταματήσει κλείνει";
 "wheelhouse.needs.you" = "Σας χρειάζεται";
 "wheelhouse.nobody.waiting" = "κανείς δεν περιμένει";
 "wheelhouse.more.waiting %ld" = "+%ld ακόμη";

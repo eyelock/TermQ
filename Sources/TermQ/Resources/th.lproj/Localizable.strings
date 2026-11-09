@@ -1604,6 +1604,7 @@
 "wheelhouse.take.off.stage" = "นำลงจากเวที";
 "wheelhouse.zoom.terminal" = "ซูมเทอร์มินัล";
 "wheelhouse.exit.zoom" = "ออกจากโหมดซูม";
+"wheelhouse.smart.close.help" = "ปิด: ที่นั่งที่ยังทำงานอยู่จะออกจากเวทีและทำงานต่อไป ส่วนที่นั่งที่หยุดแล้วจะถูกปิด";
 "wheelhouse.needs.you" = "ต้องการคุณ";
 "wheelhouse.nobody.waiting" = "ไม่มีใครรอ";
 "wheelhouse.more.waiting %ld" = "อีก +%ld";

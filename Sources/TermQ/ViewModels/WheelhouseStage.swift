@@ -27,6 +27,9 @@ final class WheelhouseStage: ObservableObject {
     /// relaunch comes back to the whole stage.
     @Published private(set) var zoomed: UUID?
 
+    /// Cards whose close-out check is under way.
+    private var closing: Set<UUID> = []
+
     /// ⌥⌘Z: zoom the focused pane, or come back to the whole stage. The inbox
     /// isn't zoomed.
     func toggleZoom() {
@@ -190,7 +193,9 @@ enum WheelhouseSeatAction: Equatable {
     case handoff
     /// Start the seat's first session with the birth skill.
     case birth
-    /// End the seat's terminal: kill its session and remove its card.
+    /// Close the seat's terminal: a seat whose harness still runs only leaves
+    /// the stage; one whose harness has exited is closed out (its session
+    /// killed and its card removed), so the next open launches it afresh.
     case closeTerminal
     /// Show the seat's ynh harness on the harness detail page, to read or edit it.
     case harnessDetails
@@ -208,6 +213,53 @@ extension WheelhouseStage {
 
     /// Ends a seat's Quick Terminal: kills its shell and removes its card.
     func closeQuickTerminal(_ card: TerminalCard, board: BoardViewModel = .shared) {
+        closeOut(card, board: board)
+    }
+
+    /// What closing a stage terminal does.
+    enum CloseDecision: Equatable {
+        /// Something still runs in it (or it can't be told): it only leaves
+        /// the stage, so a needed session is never killed by a close.
+        case takeOffStage
+        /// Nothing but the shell is left: kill it and remove the card.
+        case closeOut
+    }
+
+    nonisolated static func closeDecision(harnessRunning: Bool?) -> CloseDecision {
+        harnessRunning == false ? .closeOut : .takeOffStage
+    }
+
+    /// The pane's ✕ and Close Terminal: the card leaves the stage at once, and
+    /// is closed out too if nothing but its shell is running.
+    func smartClose(_ card: TerminalCard, board: BoardViewModel = .shared) {
+        remove(card.id)
+        Task { @MainActor in
+            await closeOutIfIdle(card, probe: TerminalSessionManager.shared) { self.closeOut($0, board: board) }
+        }
+    }
+
+    /// Closes the card out when the probe finds only its shell, and only if
+    /// it is still the same session afterwards: a reopen or restart while the
+    /// probe ran must not be killed by an answer about the old session. One
+    /// check per card at a time. Returns whether it closed the card out.
+    @discardableResult
+    func closeOutIfIdle(
+        _ card: TerminalCard, probe: any TerminalForegroundProbing, closeOut: (TerminalCard) -> Void
+    ) async -> Bool {
+        guard !closing.contains(card.id) else { return false }
+        closing.insert(card.id)
+        defer { closing.remove(card.id) }
+        let session = probe.sessionStart(for: card.id)
+        let running = await probe.isForegroundProgramRunning(for: card)
+        guard Self.closeDecision(harnessRunning: running) == .closeOut,
+            card.deletedAt == nil, probe.sessionStart(for: card.id) == session
+        else { return false }
+        closeOut(card)
+        return true
+    }
+
+    /// Kills the card's session and removes the card and its pane.
+    func closeOut(_ card: TerminalCard, board: BoardViewModel = .shared) {
         board.killSession(for: card)
         board.deleteTabCard(card)
         remove(card.id)

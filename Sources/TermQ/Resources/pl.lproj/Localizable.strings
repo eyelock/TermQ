@@ -1602,6 +1602,7 @@
 "wheelhouse.take.off.stage" = "Zdejmij ze sceny";
 "wheelhouse.zoom.terminal" = "Powiększ terminal";
 "wheelhouse.exit.zoom" = "Wyjdź z powiększenia";
+"wheelhouse.smart.close.help" = "Zamknij: miejsce, które nadal działa, opuszcza scenę i działa dalej; zatrzymane zostaje zamknięte";
 "wheelhouse.needs.you" = "Potrzebuje cię";
 "wheelhouse.nobody.waiting" = "nikt nie czeka";
 "wheelhouse.more.waiting %ld" = "+%ld więcej";

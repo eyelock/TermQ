@@ -1602,6 +1602,7 @@
 "wheelhouse.take.off.stage" = "Van het podium halen";
 "wheelhouse.zoom.terminal" = "Terminal zoomen";
 "wheelhouse.exit.zoom" = "Zoom verlaten";
+"wheelhouse.smart.close.help" = "Sluiten: een plek die nog draait verlaat het podium en blijft draaien; een gestopte plek wordt gesloten";
 "wheelhouse.needs.you" = "Heeft je nodig";
 "wheelhouse.nobody.waiting" = "niemand wacht";
 "wheelhouse.more.waiting %ld" = "+%ld meer";

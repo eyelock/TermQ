@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "移出舞台";
 "wheelhouse.zoom.terminal" = "縮放終端機";
 "wheelhouse.exit.zoom" = "結束縮放";
+"wheelhouse.smart.close.help" = "關閉：仍在執行的席位會離開舞台並繼續執行；已停止的席位則會被關閉";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "無人等待";
 "wheelhouse.more.waiting %ld" = "還有 +%ld";

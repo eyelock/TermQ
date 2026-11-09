@@ -1602,6 +1602,7 @@
 "wheelhouse.take.off.stage" = "Turunkan dari pentas";
 "wheelhouse.zoom.terminal" = "Zum Terminal";
 "wheelhouse.exit.zoom" = "Keluar Zum";
+"wheelhouse.smart.close.help" = "Tutup: kerusi yang masih berjalan meninggalkan Pentas dan terus berjalan; kerusi yang telah berhenti ditutup";
 "wheelhouse.needs.you" = "Memerlukan anda";
 "wheelhouse.nobody.waiting" = "tiada siapa menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";

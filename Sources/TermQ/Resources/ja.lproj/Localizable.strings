@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "ステージから降ろす";
 "wheelhouse.zoom.terminal" = "ターミナルをズーム";
 "wheelhouse.exit.zoom" = "ズームを終了";
+"wheelhouse.smart.close.help" = "閉じる: 実行中の席はステージから外れて実行を続け、停止した席は閉じられます";
 "wheelhouse.needs.you" = "あなたを待っています";
 "wheelhouse.nobody.waiting" = "待っている人はいません";
 "wheelhouse.more.waiting %ld" = "他 +%ld";

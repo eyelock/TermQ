@@ -1604,6 +1604,7 @@
 "wheelhouse.take.off.stage" = "Odstrani z odra";
 "wheelhouse.zoom.terminal" = "Povečaj terminal";
 "wheelhouse.exit.zoom" = "Zapri povečavo";
+"wheelhouse.smart.close.help" = "Zapri: mesto, ki še teče, zapusti oder in teče naprej; ustavljeno se zapre";
 "wheelhouse.needs.you" = "Potrebuje vas";
 "wheelhouse.nobody.waiting" = "nihče ne čaka";
 "wheelhouse.more.waiting %ld" = "še +%ld";

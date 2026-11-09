@@ -611,11 +611,7 @@ extension ContentView {
                     viewModel.closeTab(card)
                 }
             },
-            deleteTerminal: {
-                if viewModel.selectedCard != nil {
-                    viewModel.showDeleteConfirmation = true
-                }
-            },
+            deleteTerminal: { deleteTerminalOrCloseStagePane() },
             toggleZoom: { toggleZoomOrStageZoom() },
             toggleSearch: {
                 withAnimation(.easeInOut(duration: 0.15)) {

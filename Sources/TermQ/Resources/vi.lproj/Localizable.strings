@@ -1605,6 +1605,7 @@
 "wheelhouse.take.off.stage" = "Đưa xuống khỏi sân khấu";
 "wheelhouse.zoom.terminal" = "Phóng to terminal";
 "wheelhouse.exit.zoom" = "Thoát phóng to";
+"wheelhouse.smart.close.help" = "Đóng: ghế đang chạy sẽ rời sân khấu và tiếp tục chạy; ghế đã dừng sẽ bị đóng";
 "wheelhouse.needs.you" = "Cần bạn";
 "wheelhouse.nobody.waiting" = "không ai đang chờ";
 "wheelhouse.more.waiting %ld" = "+%ld nữa";

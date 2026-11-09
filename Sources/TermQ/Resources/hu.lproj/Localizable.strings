@@ -1603,6 +1603,7 @@
 "wheelhouse.take.off.stage" = "Levétel a színpadról";
 "wheelhouse.zoom.terminal" = "Terminál nagyítása";
 "wheelhouse.exit.zoom" = "Kilépés a nagyításból";
+"wheelhouse.smart.close.help" = "Bezárás: a még futó hely lekerül a színpadról, és tovább fut; a leállt hely bezárul";
 "wheelhouse.needs.you" = "Szüksége van rád";
 "wheelhouse.nobody.waiting" = "senki sem vár";
 "wheelhouse.more.waiting %ld" = "+%ld további";

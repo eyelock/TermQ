@@ -450,8 +450,14 @@ struct WheelhouseStageView: View {
                 ) {
                     stage.togglePin(card.id)
                 }
-                paneButton("xmark", help: Strings.Wheelhouse.takeOffStage) {
-                    stage.remove(card.id)
+                paneButton("xmark", help: Strings.Wheelhouse.smartCloseHelp) {
+                    if let found {
+                        onSeatAction(found.wheelhouse, found.seat, .closeTerminal)
+                    } else if parent != nil {
+                        stage.smartClose(card)
+                    } else {
+                        stage.remove(card.id)
+                    }
                 }
             }
             .padding(.horizontal, 10)
@@ -759,6 +765,8 @@ struct WheelhouseSeatActionItems: View {
             } label: {
                 Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
             }
+            .help(Strings.Wheelhouse.smartCloseHelp)
+            .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.closeTerminal : nil)
         }
         Divider()
         Button {

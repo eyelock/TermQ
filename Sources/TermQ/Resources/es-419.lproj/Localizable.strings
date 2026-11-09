@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "Quitar del escenario";
 "wheelhouse.zoom.terminal" = "Ampliar terminal";
 "wheelhouse.exit.zoom" = "Salir del zoom";
+"wheelhouse.smart.close.help" = "Cerrar: un puesto que sigue en ejecución sale del escenario y sigue funcionando; uno que se ha detenido se cierra";
 "wheelhouse.needs.you" = "Te necesita";
 "wheelhouse.nobody.waiting" = "nadie esperando";
 "wheelhouse.more.waiting %ld" = "+%ld más";

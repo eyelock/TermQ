@@ -1603,6 +1603,7 @@
 "wheelhouse.take.off.stage" = "Poista lavalta";
 "wheelhouse.zoom.terminal" = "Zoomaa pääte";
 "wheelhouse.exit.zoom" = "Poistu zoomauksesta";
+"wheelhouse.smart.close.help" = "Sulje: paikka, joka on yhä käynnissä, poistuu lavalta ja jatkaa toimintaansa; pysähtynyt paikka suljetaan";
 "wheelhouse.needs.you" = "Tarvitsee sinua";
 "wheelhouse.nobody.waiting" = "kukaan ei odota";
 "wheelhouse.more.waiting %ld" = "+%ld lisää";

@@ -1597,6 +1597,7 @@
 "wheelhouse.take.off.stage" = "إزالة من المسرح";
 "wheelhouse.zoom.terminal" = "تكبير الطرفية";
 "wheelhouse.exit.zoom" = "إنهاء التكبير";
+"wheelhouse.smart.close.help" = "إغلاق: المقعد الذي لا يزال قيد التشغيل يغادر المسرح ويواصل العمل؛ أما الذي توقف فيُغلق";
 "wheelhouse.needs.you" = "يحتاج إليك";
 "wheelhouse.nobody.waiting" = "لا أحد ينتظر";
 "wheelhouse.more.waiting %ld" = "+%ld أخرى";

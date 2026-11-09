@@ -1603,6 +1603,7 @@
 "wheelhouse.take.off.stage" = "Retirer de la scène";
 "wheelhouse.zoom.terminal" = "Zoomer sur le terminal";
 "wheelhouse.exit.zoom" = "Quitter le zoom";
+"wheelhouse.smart.close.help" = "Fermer : un poste encore en cours d’exécution quitte la scène et continue de tourner ; un poste arrêté est fermé";
 "wheelhouse.needs.you" = "Vous attend";
 "wheelhouse.nobody.waiting" = "personne n’attend";
 "wheelhouse.more.waiting %ld" = "+%ld de plus";
