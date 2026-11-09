@@ -1605,6 +1605,8 @@
 "wheelhouse.zoom.terminal" = "Zoomaa pääte";
 "wheelhouse.exit.zoom" = "Poistu zoomauksesta";
 "wheelhouse.smart.close.help" = "Sulje: paikka, joka on yhä käynnissä, poistuu lavalta ja jatkaa toimintaansa; pysähtynyt paikka suljetaan";
+"wheelhouse.show.quick.terminals" = "Näytä pikateminaalit";
+"wheelhouse.hide.quick.terminals" = "Piilota pikateminaalit";
 "wheelhouse.needs.you" = "Tarvitsee sinua";
 "wheelhouse.nobody.waiting" = "kukaan ei odota";
 "wheelhouse.more.waiting %ld" = "+%ld lisää";
@@ -1621,6 +1623,10 @@
 "wheelhouse.action.launch.focus" = "Käynnistä keskityksellä";
 "settings.wheelhouse.enable.tab" = "Näytä Wheelhouses-välilehti sivupalkissa";
 "settings.wheelhouse.enable.tab.help" = "Lisää Wheelhouses-välilehden, jossa luetellaan repositorioidesi jokaisen Wheelhousen paikat";
+"settings.wheelhouse.quick.terminal.placement" = "Pikateminaalin sijoittelu";
+"settings.wheelhouse.quick.terminal.placement.help" = "Lavalla: jokainen pikateminaali saa oman paikkansa lavalla. Jaettu: paikan pikateminaalit avautuvat paikan alapuolella olevaan paneeliin.";
+"settings.wheelhouse.placement.staged" = "Lavalla";
+"settings.wheelhouse.placement.split" = "Jaettu";
 "settings.wheelhouse.inbox.human.name" = "Postilaatikon nimi kenelle tahansa ihmiselle";
 "settings.wheelhouse.inbox.human.name.help" = "Nimi, jolle Wheelhouse osoittaa beadeja, kun kuka tahansa ihminen voi hoitaa ne. Tälle nimelle valmiit beadit näkyvät postilaatikossasi.";
 "settings.wheelhouse.inbox.own.name" = "Oma postilaatikon nimesi";

@@ -1606,6 +1606,8 @@
 "wheelhouse.zoom.terminal" = "Масштабувати термінал";
 "wheelhouse.exit.zoom" = "Вийти з масштабування";
 "wheelhouse.smart.close.help" = "Закрити: місце, яке ще працює, залишає сцену й продовжує працювати; зупинене закривається";
+"wheelhouse.show.quick.terminals" = "Показати швидкі термінали";
+"wheelhouse.hide.quick.terminals" = "Приховати швидкі термінали";
 "wheelhouse.needs.you" = "Чекає на вас";
 "wheelhouse.nobody.waiting" = "ніхто не чекає";
 "wheelhouse.more.waiting %ld" = "ще +%ld";
@@ -1622,6 +1624,10 @@
 "wheelhouse.action.launch.focus" = "Запустити з фокусом";
 "settings.wheelhouse.enable.tab" = "Показати вкладку Wheelhouse на бічній панелі";
 "settings.wheelhouse.enable.tab.help" = "Додає вкладку Wheelhouse зі списком місць кожного Wheelhouse у ваших репозиторіях";
+"settings.wheelhouse.quick.terminal.placement" = "Розміщення швидкого термінала";
+"settings.wheelhouse.quick.terminal.placement.help" = "На сцені: кожен швидкий термінал займає власне місце на сцені. Розділення: швидкі термінали місця відкриваються в панелі під цим місцем.";
+"settings.wheelhouse.placement.staged" = "На сцені";
+"settings.wheelhouse.placement.split" = "Розділення";
 "settings.wheelhouse.inbox.human.name" = "Ім’я вхідних для будь-якої людини";
 "settings.wheelhouse.inbox.human.name.help" = "Ім’я, на яке Wheelhouse призначає bead, коли з ними може впоратися будь-яка людина. Готові bead для цього імені з’являються у ваших вхідних.";
 "settings.wheelhouse.inbox.own.name" = "Ваше власне ім’я вхідних";

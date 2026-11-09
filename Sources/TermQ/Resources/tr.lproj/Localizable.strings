@@ -1606,6 +1606,8 @@
 "wheelhouse.zoom.terminal" = "Terminali Yakınlaştır";
 "wheelhouse.exit.zoom" = "Yakınlaştırmadan Çık";
 "wheelhouse.smart.close.help" = "Kapat: hâlâ çalışan bir koltuk sahneden ayrılır ve çalışmaya devam eder; durmuş olan kapatılır";
+"wheelhouse.show.quick.terminals" = "Hızlı Terminalleri göster";
+"wheelhouse.hide.quick.terminals" = "Hızlı Terminalleri gizle";
 "wheelhouse.needs.you" = "Sizi bekliyor";
 "wheelhouse.nobody.waiting" = "kimse beklemiyor";
 "wheelhouse.more.waiting %ld" = "+%ld daha";
@@ -1622,6 +1624,10 @@
 "wheelhouse.action.launch.focus" = "Odakla başlat";
 "settings.wheelhouse.enable.tab" = "Wheelhouse’lar kenar çubuğu sekmesini göster";
 "settings.wheelhouse.enable.tab.help" = "Depolarınızdaki her Wheelhouse’un koltuklarını listeleyen bir Wheelhouse’lar sekmesi ekler";
+"settings.wheelhouse.quick.terminal.placement" = "Hızlı Terminal yerleşimi";
+"settings.wheelhouse.quick.terminal.placement.help" = "Sahnede: her Hızlı Terminal sahnede kendi yerini alır. Bölünmüş: bir koltuğun Hızlı Terminalleri koltuğun altındaki bir panelde açılır.";
+"settings.wheelhouse.placement.staged" = "Sahnede";
+"settings.wheelhouse.placement.split" = "Bölünmüş";
 "settings.wheelhouse.inbox.human.name" = "Herhangi bir insan için gelen kutusu adı";
 "settings.wheelhouse.inbox.human.name.help" = "Herhangi bir insan ilgilenebildiğinde bir Wheelhouse’un bead’leri atadığı ad. Bu ad için hazır bead’ler gelen kutunuzda görünür.";
 "settings.wheelhouse.inbox.own.name" = "Kendi gelen kutusu adınız";

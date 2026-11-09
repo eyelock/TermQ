@@ -1605,6 +1605,8 @@
 "wheelhouse.zoom.terminal" = "Terminál nagyítása";
 "wheelhouse.exit.zoom" = "Kilépés a nagyításból";
 "wheelhouse.smart.close.help" = "Bezárás: a még futó hely lekerül a színpadról, és tovább fut; a leállt hely bezárul";
+"wheelhouse.show.quick.terminals" = "Gyors terminálok megjelenítése";
+"wheelhouse.hide.quick.terminals" = "Gyors terminálok elrejtése";
 "wheelhouse.needs.you" = "Szüksége van rád";
 "wheelhouse.nobody.waiting" = "senki sem vár";
 "wheelhouse.more.waiting %ld" = "+%ld további";
@@ -1621,6 +1623,10 @@
 "wheelhouse.action.launch.focus" = "Indítás fókusszal";
 "settings.wheelhouse.enable.tab" = "Wheelhouse-ok oldalsáv-lapjának megjelenítése";
 "settings.wheelhouse.enable.tab.help" = "Hozzáad egy Wheelhouse-ok lapot, amely felsorolja a tárolóid minden Wheelhouse-ának helyeit";
+"settings.wheelhouse.quick.terminal.placement" = "Gyors terminál elhelyezése";
+"settings.wheelhouse.quick.terminal.placement.help" = "Színpadon: minden gyors terminál saját helyet kap a színpadon. Osztott: egy hely gyors termináljai a hely alatti panelen nyílnak meg.";
+"settings.wheelhouse.placement.staged" = "Színpadon";
+"settings.wheelhouse.placement.split" = "Osztott";
 "settings.wheelhouse.inbox.human.name" = "Postafiók neve bármely ember számára";
 "settings.wheelhouse.inbox.human.name.help" = "Az a név, amelyhez a Wheelhouse beadeket rendel, ha bármely ember elvégezheti őket. Az ehhez a névhez tartozó kész beadek megjelennek a postafiókodban.";
 "settings.wheelhouse.inbox.own.name" = "Saját postafiókneved";

@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "Ampliar terminal";
 "wheelhouse.exit.zoom" = "Salir del zoom";
 "wheelhouse.smart.close.help" = "Cerrar: un puesto que sigue en ejecución sale del escenario y sigue funcionando; uno que se ha detenido se cierra";
+"wheelhouse.show.quick.terminals" = "Mostrar terminales rápidos";
+"wheelhouse.hide.quick.terminals" = "Ocultar terminales rápidos";
 "wheelhouse.needs.you" = "Te necesita";
 "wheelhouse.nobody.waiting" = "nadie esperando";
 "wheelhouse.more.waiting %ld" = "+%ld más";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "Lanzar con enfoque";
 "settings.wheelhouse.enable.tab" = "Mostrar pestaña Wheelhouses en la barra lateral";
 "settings.wheelhouse.enable.tab.help" = "Añade una pestaña Wheelhouses que lista los puestos de cada Wheelhouse de tus repositorios";
+"settings.wheelhouse.quick.terminal.placement" = "Ubicación del terminal rápido";
+"settings.wheelhouse.quick.terminal.placement.help" = "En escenario: cada terminal rápido ocupa su propio lugar en el escenario. Dividido: los terminales rápidos de un puesto se abren en un panel debajo del puesto.";
+"settings.wheelhouse.placement.staged" = "En escenario";
+"settings.wheelhouse.placement.split" = "Dividido";
 "settings.wheelhouse.inbox.human.name" = "Nombre de bandeja de entrada para cualquier persona";
 "settings.wheelhouse.inbox.human.name.help" = "El nombre al que un Wheelhouse asigna beads cuando cualquier persona puede encargarse de ellos. Los beads listos para este nombre aparecen en tu bandeja de entrada.";
 "settings.wheelhouse.inbox.own.name" = "Tu propio nombre de bandeja de entrada";

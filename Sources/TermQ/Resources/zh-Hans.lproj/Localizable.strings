@@ -1601,6 +1601,8 @@
 "wheelhouse.zoom.terminal" = "缩放终端";
 "wheelhouse.exit.zoom" = "退出缩放";
 "wheelhouse.smart.close.help" = "关闭：仍在运行的席位会离开舞台并继续运行；已停止的席位则会被关闭";
+"wheelhouse.show.quick.terminals" = "显示快速终端";
+"wheelhouse.hide.quick.terminals" = "隐藏快速终端";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "无人等待";
 "wheelhouse.more.waiting %ld" = "还有 +%ld";
@@ -1617,6 +1619,10 @@
 "wheelhouse.action.launch.focus" = "带聚焦启动";
 "settings.wheelhouse.enable.tab" = "显示 Wheelhouse 侧边栏标签页";
 "settings.wheelhouse.enable.tab.help" = "添加一个 Wheelhouse 标签页，列出你仓库中每个 Wheelhouse 的席位";
+"settings.wheelhouse.quick.terminal.placement" = "快速终端位置";
+"settings.wheelhouse.quick.terminal.placement.help" = "舞台：每个快速终端在舞台上占据自己的位置。拆分：席位的快速终端在该席位下方的面板中打开。";
+"settings.wheelhouse.placement.staged" = "舞台";
+"settings.wheelhouse.placement.split" = "拆分";
 "settings.wheelhouse.inbox.human.name" = "任何人的收件箱名称";
 "settings.wheelhouse.inbox.human.name.help" = "当任何人都可以处理时，Wheelhouse 用来分配 bead 的名称。该名称下已就绪的 bead 会显示在你的收件箱中。";
 "settings.wheelhouse.inbox.own.name" = "你自己的收件箱名称";

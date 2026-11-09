@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "Amplia el terminal";
 "wheelhouse.exit.zoom" = "Surt del zoom";
 "wheelhouse.smart.close.help" = "Tanca: un seient encara en execució surt de l’escenari i continua funcionant; un que s’ha aturat es tanca";
+"wheelhouse.show.quick.terminals" = "Mostra els terminals ràpids";
+"wheelhouse.hide.quick.terminals" = "Amaga els terminals ràpids";
 "wheelhouse.needs.you" = "Et necessita";
 "wheelhouse.nobody.waiting" = "ningú no espera";
 "wheelhouse.more.waiting %ld" = "+%ld més";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "Inicia amb enfocament";
 "settings.wheelhouse.enable.tab" = "Mostra la pestanya Wheelhouses a la barra lateral";
 "settings.wheelhouse.enable.tab.help" = "Afegeix una pestanya Wheelhouses que llista els seients de cada Wheelhouse dels teus repositoris";
+"settings.wheelhouse.quick.terminal.placement" = "Ubicació del terminal ràpid";
+"settings.wheelhouse.quick.terminal.placement.help" = "A l’escenari: cada terminal ràpid ocupa el seu propi lloc a l’escenari. Dividit: els terminals ràpids d’un seient s’obren en un tauler sota el seient.";
+"settings.wheelhouse.placement.staged" = "A l’escenari";
+"settings.wheelhouse.placement.split" = "Dividit";
 "settings.wheelhouse.inbox.human.name" = "Nom de la safata d’entrada per a qualsevol persona";
 "settings.wheelhouse.inbox.human.name.help" = "El nom al qual un Wheelhouse assigna beads quan qualsevol persona se’n pot encarregar. Els beads llestos per a aquest nom apareixen a la teva safata d’entrada.";
 "settings.wheelhouse.inbox.own.name" = "El teu propi nom de safata d’entrada";

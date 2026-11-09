@@ -1606,6 +1606,8 @@
 "wheelhouse.zoom.terminal" = "Povečaj terminal";
 "wheelhouse.exit.zoom" = "Zapri povečavo";
 "wheelhouse.smart.close.help" = "Zapri: mesto, ki še teče, zapusti oder in teče naprej; ustavljeno se zapre";
+"wheelhouse.show.quick.terminals" = "Pokaži hitre terminale";
+"wheelhouse.hide.quick.terminals" = "Skrij hitre terminale";
 "wheelhouse.needs.you" = "Potrebuje vas";
 "wheelhouse.nobody.waiting" = "nihče ne čaka";
 "wheelhouse.more.waiting %ld" = "še +%ld";
@@ -1622,6 +1624,10 @@
 "wheelhouse.action.launch.focus" = "Zaženi s fokusom";
 "settings.wheelhouse.enable.tab" = "Pokaži zavihek Wheelhouses v stranski vrstici";
 "settings.wheelhouse.enable.tab.help" = "Doda zavihek Wheelhouses s seznamom mest vsakega Wheelhousa v vaših repozitorijih";
+"settings.wheelhouse.quick.terminal.placement" = "Postavitev hitrega terminala";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na odru: vsak hitri terminal dobi svoje mesto na odru. Razdeljeno: hitri terminali mesta se odprejo v podoknu pod mestom.";
+"settings.wheelhouse.placement.staged" = "Na odru";
+"settings.wheelhouse.placement.split" = "Razdeljeno";
 "settings.wheelhouse.inbox.human.name" = "Ime nabiralnika za katerega koli človeka";
 "settings.wheelhouse.inbox.human.name.help" = "Ime, kateremu Wheelhouse dodeli beade, kadar jih lahko prevzame kateri koli človek. Pripravljeni beadi za to ime se prikažejo v vašem nabiralniku.";
 "settings.wheelhouse.inbox.own.name" = "Vaše lastno ime nabiralnika";

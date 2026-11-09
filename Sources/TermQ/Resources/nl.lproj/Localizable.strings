@@ -1604,6 +1604,8 @@
 "wheelhouse.zoom.terminal" = "Terminal zoomen";
 "wheelhouse.exit.zoom" = "Zoom verlaten";
 "wheelhouse.smart.close.help" = "Sluiten: een plek die nog draait verlaat het podium en blijft draaien; een gestopte plek wordt gesloten";
+"wheelhouse.show.quick.terminals" = "Snelle terminals tonen";
+"wheelhouse.hide.quick.terminals" = "Snelle terminals verbergen";
 "wheelhouse.needs.you" = "Heeft je nodig";
 "wheelhouse.nobody.waiting" = "niemand wacht";
 "wheelhouse.more.waiting %ld" = "+%ld meer";
@@ -1620,6 +1622,10 @@
 "wheelhouse.action.launch.focus" = "Starten met focus";
 "settings.wheelhouse.enable.tab" = "Wheelhouses-tabblad in de navigatiekolom tonen";
 "settings.wheelhouse.enable.tab.help" = "Voegt een Wheelhouses-tabblad toe met de plekken van elk Wheelhouse in je repositories";
+"settings.wheelhouse.quick.terminal.placement" = "Plaatsing van snelle terminal";
+"settings.wheelhouse.quick.terminal.placement.help" = "Op het podium: elke snelle terminal krijgt een eigen plek op het podium. Gesplitst: de snelle terminals van een plek openen in een paneel onder de plek.";
+"settings.wheelhouse.placement.staged" = "Op het podium";
+"settings.wheelhouse.placement.split" = "Gesplitst";
 "settings.wheelhouse.inbox.human.name" = "Inboxnaam voor elk mens";
 "settings.wheelhouse.inbox.human.name.help" = "De naam waaraan een Wheelhouse beads toewijst wanneer elk mens ze kan oppakken. Klare beads voor deze naam verschijnen in je inbox.";
 "settings.wheelhouse.inbox.own.name" = "Je eigen inboxnaam";

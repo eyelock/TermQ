@@ -1605,6 +1605,8 @@
 "wheelhouse.zoom.terminal" = "הגדל טרמינל";
 "wheelhouse.exit.zoom" = "יציאה מזום";
 "wheelhouse.smart.close.help" = "סגור: מושב שעדיין פועל יוצא מהבמה וממשיך לפעול; מושב שהפסיק לפעול נסגר";
+"wheelhouse.show.quick.terminals" = "הצג טרמינלים מהירים";
+"wheelhouse.hide.quick.terminals" = "הסתר טרמינלים מהירים";
 "wheelhouse.needs.you" = "זקוק לך";
 "wheelhouse.nobody.waiting" = "אף אחד לא ממתין";
 "wheelhouse.more.waiting %ld" = "+%ld נוספים";
@@ -1621,6 +1623,10 @@
 "wheelhouse.action.launch.focus" = "הפעל עם מיקוד";
 "settings.wheelhouse.enable.tab" = "הצג את לשונית Wheelhouses בסרגל הצד";
 "settings.wheelhouse.enable.tab.help" = "מוסיף לשונית Wheelhouses שמפרטת את המושבים של כל Wheelhouse במאגרים שלך";
+"settings.wheelhouse.quick.terminal.placement" = "מיקום טרמינל מהיר";
+"settings.wheelhouse.quick.terminal.placement.help" = "על הבמה: כל טרמינל מהיר תופס מקום משלו על הבמה. מפוצל: הטרמינלים המהירים של מושב נפתחים בלוח מתחת למושב.";
+"settings.wheelhouse.placement.staged" = "על הבמה";
+"settings.wheelhouse.placement.split" = "מפוצל";
 "settings.wheelhouse.inbox.human.name" = "שם תיבת דואר נכנס לכל אדם";
 "settings.wheelhouse.inbox.human.name.help" = "השם שאליו Wheelhouse מקצה beads כשכל אדם יכול לטפל בהם. beads מוכנים עבור שם זה מופיעים בתיבת הדואר הנכנס שלך.";
 "settings.wheelhouse.inbox.own.name" = "שם תיבת הדואר הנכנס שלך";

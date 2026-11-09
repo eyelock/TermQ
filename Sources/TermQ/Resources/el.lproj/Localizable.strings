@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "Ζουμ τερματικού";
 "wheelhouse.exit.zoom" = "Έξοδος από το ζουμ";
 "wheelhouse.smart.close.help" = "Κλείσιμο: μια θέση που εκτελείται ακόμη φεύγει από τη σκηνή και συνεχίζει να εκτελείται· μια θέση που έχει σταματήσει κλείνει";
+"wheelhouse.show.quick.terminals" = "Εμφάνιση γρήγορων τερματικών";
+"wheelhouse.hide.quick.terminals" = "Απόκρυψη γρήγορων τερματικών";
 "wheelhouse.needs.you" = "Σας χρειάζεται";
 "wheelhouse.nobody.waiting" = "κανείς δεν περιμένει";
 "wheelhouse.more.waiting %ld" = "+%ld ακόμη";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "Εκκίνηση με εστίαση";
 "settings.wheelhouse.enable.tab" = "Εμφάνιση καρτέλας Wheelhouses στην πλαϊνή στήλη";
 "settings.wheelhouse.enable.tab.help" = "Προσθέτει μια καρτέλα Wheelhouses που εμφανίζει τις θέσεις κάθε Wheelhouse στα αποθετήριά σας";
+"settings.wheelhouse.quick.terminal.placement" = "Τοποθέτηση γρήγορου τερματικού";
+"settings.wheelhouse.quick.terminal.placement.help" = "Στη σκηνή: κάθε γρήγορο τερματικό παίρνει τη δική του θέση στη σκηνή. Διαχωρισμένο: τα γρήγορα τερματικά μιας θέσης ανοίγουν σε πάνελ κάτω από τη θέση.";
+"settings.wheelhouse.placement.staged" = "Στη σκηνή";
+"settings.wheelhouse.placement.split" = "Διαχωρισμένο";
 "settings.wheelhouse.inbox.human.name" = "Όνομα εισερχομένων για οποιονδήποτε άνθρωπο";
 "settings.wheelhouse.inbox.human.name.help" = "Το όνομα στο οποίο ένα Wheelhouse αναθέτει beads όταν οποιοσδήποτε άνθρωπος μπορεί να τα αναλάβει. Τα έτοιμα beads για αυτό το όνομα εμφανίζονται στα εισερχόμενά σας.";
 "settings.wheelhouse.inbox.own.name" = "Το δικό σας όνομα εισερχομένων";

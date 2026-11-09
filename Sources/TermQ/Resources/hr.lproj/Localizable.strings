@@ -1605,6 +1605,8 @@
 "wheelhouse.zoom.terminal" = "Zumiraj terminal";
 "wheelhouse.exit.zoom" = "Izađi iz zumiranja";
 "wheelhouse.smart.close.help" = "Zatvori: mjesto koje još radi napušta pozornicu i nastavlja raditi; zaustavljeno se zatvara";
+"wheelhouse.show.quick.terminals" = "Prikaži brze terminale";
+"wheelhouse.hide.quick.terminals" = "Sakrij brze terminale";
 "wheelhouse.needs.you" = "Treba te";
 "wheelhouse.nobody.waiting" = "nitko ne čeka";
 "wheelhouse.more.waiting %ld" = "još +%ld";
@@ -1621,6 +1623,10 @@
 "wheelhouse.action.launch.focus" = "Pokreni s fokusom";
 "settings.wheelhouse.enable.tab" = "Prikaži karticu Wheelhouses u bočnoj traci";
 "settings.wheelhouse.enable.tab.help" = "Dodaje karticu Wheelhouses koja navodi mjesta svakog Wheelhousea u tvojim repozitorijima";
+"settings.wheelhouse.quick.terminal.placement" = "Položaj brzog terminala";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na pozornici: svaki brzi terminal zauzima vlastito mjesto na pozornici. Podijeljeno: brzi terminali mjesta otvaraju se u ploči ispod mjesta.";
+"settings.wheelhouse.placement.staged" = "Na pozornici";
+"settings.wheelhouse.placement.split" = "Podijeljeno";
 "settings.wheelhouse.inbox.human.name" = "Naziv pristigle pošte za bilo kojeg čovjeka";
 "settings.wheelhouse.inbox.human.name.help" = "Naziv kojem Wheelhouse dodjeljuje beadove kad ih može preuzeti bilo koji čovjek. Spremni beadovi za taj naziv pojavljuju se u tvojoj pristiglоj pošti.";
 "settings.wheelhouse.inbox.own.name" = "Tvoj vlastiti naziv pristigle pošte";

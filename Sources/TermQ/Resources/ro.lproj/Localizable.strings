@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "Mărește terminalul";
 "wheelhouse.exit.zoom" = "Ieși din zoom";
 "wheelhouse.smart.close.help" = "Închide: un loc care încă rulează părăsește scena și continuă să ruleze; unul oprit se închide";
+"wheelhouse.show.quick.terminals" = "Afișează terminalele rapide";
+"wheelhouse.hide.quick.terminals" = "Ascunde terminalele rapide";
 "wheelhouse.needs.you" = "Are nevoie de tine";
 "wheelhouse.nobody.waiting" = "nimeni nu așteaptă";
 "wheelhouse.more.waiting %ld" = "încă +%ld";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "Lansează cu focalizare";
 "settings.wheelhouse.enable.tab" = "Afișează fila Wheelhouses în bara laterală";
 "settings.wheelhouse.enable.tab.help" = "Adaugă o filă Wheelhouses care listează locurile fiecărui Wheelhouse din depozitele tale";
+"settings.wheelhouse.quick.terminal.placement" = "Poziționarea terminalului rapid";
+"settings.wheelhouse.quick.terminal.placement.help" = "Pe scenă: fiecare terminal rapid ocupă propriul loc pe scenă. Împărțit: terminalele rapide ale unui loc se deschid într-un panou sub loc.";
+"settings.wheelhouse.placement.staged" = "Pe scenă";
+"settings.wheelhouse.placement.split" = "Împărțit";
 "settings.wheelhouse.inbox.human.name" = "Numele căsuței de intrare pentru orice om";
 "settings.wheelhouse.inbox.human.name.help" = "Numele căruia un Wheelhouse îi atribuie beads atunci când orice om se poate ocupa de ele. Beads gata pentru acest nume apar în căsuța ta de intrare.";
 "settings.wheelhouse.inbox.own.name" = "Propriul tău nume de căsuță de intrare";

@@ -39,7 +39,10 @@ struct WheelhouseStageView: View {
     }
 
     private var stageEntries: [StageEntry] {
-        let cards = store.stageCards(in: boardVM.allTerminals, root: scopeRoot)
+        // Split: a Quick Terminal sits beneath its seat, not on the stage.
+        let cards = WheelhouseStore.paneCards(
+            store.stageCards(in: boardVM.allTerminals, root: scopeRoot), placement: stage.quickTerminalPlacement,
+            all: boardVM.allTerminals, wheelhouses: store.wheelhouses)
         return stage.visible.compactMap { id in
             if id == WheelhouseStage.inboxEntry { return .inbox }
             return cards.first { $0.id == id }.map(StageEntry.card)
@@ -130,16 +133,18 @@ struct WheelhouseStageView: View {
         .background(Color(nsColor: .windowBackgroundColor))
         .background(shortcuts)
         .onChange(of: stageCards.map(\.id)) { _, ids in stage.healZoom(visible: Set(ids)) }
+        .onChange(of: stage.quickTerminalPlacement) { moveQuickTerminalsIntoPanels() }
         .onDisappear { clickMonitor.stop() }
         .onAppear {
             clickMonitor.start { cardId in
-                guard stage.paneClicked(cardId, tabs: tabManager),
-                    let card = stageCards.first(where: { $0.id == cardId })
+                guard let pane = stage.paneClicked(cardId, host: splitHostId(of: cardId), tabs: tabManager),
+                    let card = stageCards.first(where: { $0.id == pane })
                 else { return }
                 focus(card)
             } onTypeInPane: { cardId in
-                stage.paneTyped(cardId, tabs: tabManager)
+                stage.paneTyped(cardId, host: splitHostId(of: cardId), tabs: tabManager)
             }
+            moveQuickTerminalsIntoPanels()
             stage.prune(keeping: Set(boardVM.allTerminals.map(\.id)).union([WheelhouseStage.inboxEntry]))
             if let focused = stage.focused, let card = stageCards.first(where: { $0.id == focused }) {
                 boardVM.selectCard(card)
@@ -498,20 +503,30 @@ struct WheelhouseStageView: View {
                 }
             }
 
-            TerminalHostView(
-                card: card,
-                onExit: {},
-                onBell: { tabManager.markStageBell(card.id) },
-                focusPolicy: .whenBecomingFocused,
-                isFocusedPane: isFocused
-            )
-            .id(card.id)
+            if stage.quickTerminalPlacement == .split, let found {
+                WheelhouseSplitSeatBody(seatCard: card, wheelhouse: found.wheelhouse, seat: found.seat) {
+                    seatTerminal(card, isFocused: isFocused)
+                }
+            } else {
+                seatTerminal(card, isFocused: isFocused)
+            }
         }
         .overlay(
             Rectangle()
                 .stroke(
                     ringing ? Color.orange : (isFocused ? Color.accentColor.opacity(0.6) : Color.clear), lineWidth: 1.5)
         )
+    }
+
+    private func seatTerminal(_ card: TerminalCard, isFocused: Bool) -> some View {
+        TerminalHostView(
+            card: card,
+            onExit: {},
+            onBell: { tabManager.markStageBell(card.id) },
+            focusPolicy: .whenBecomingFocused,
+            isFocusedPane: isFocused
+        )
+        .id(card.id)
     }
 
     private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
@@ -559,6 +574,22 @@ struct WheelhouseStageView: View {
     private func zoom(_ card: TerminalCard) {
         stage.zoom(card.id)
         boardVM.selectCard(card)
+    }
+}
+
+// MARK: - Split placement
+
+extension WheelhouseStageView {
+    /// In Split, the seat card a Quick Terminal sits beneath.
+    func splitHostId(of cardId: UUID) -> UUID? {
+        guard stage.quickTerminalPlacement == .split,
+            let card = boardVM.allTerminals.first(where: { $0.id == cardId })
+        else { return nil }
+        return store.splitHost(of: card, in: boardVM.allTerminals)?.id
+    }
+
+    func moveQuickTerminalsIntoPanels() {
+        stage.moveQuickTerminalsIntoPanels { splitHostId(of: $0) }
     }
 }
 

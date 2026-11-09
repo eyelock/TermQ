@@ -43,7 +43,7 @@ final class TabManagerAttentionTests: XCTestCase {
 
     func testClickingTheFocusedRingingPaneClearsItsBell() throws {
         let (stage, tabs, card) = try ringingFocusedPane()
-        XCTAssertFalse(stage.paneClicked(card, tabs: tabs))
+        XCTAssertNil(stage.paneClicked(card, tabs: tabs))
         XCTAssertFalse(tabs.needsAttention.contains(card))
     }
 
@@ -56,7 +56,7 @@ final class TabManagerAttentionTests: XCTestCase {
         stage.focus(card)
         XCTAssertTrue(stage.isOnStage(other))
         tabs.markStageBell(other)
-        XCTAssertTrue(stage.paneClicked(other, tabs: tabs))
+        XCTAssertEqual(stage.paneClicked(other, tabs: tabs), other)
         XCTAssertTrue(tabs.needsAttention.contains(other))
     }
 

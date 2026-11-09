@@ -1607,6 +1607,8 @@
 "wheelhouse.zoom.terminal" = "Phóng to terminal";
 "wheelhouse.exit.zoom" = "Thoát phóng to";
 "wheelhouse.smart.close.help" = "Đóng: ghế đang chạy sẽ rời sân khấu và tiếp tục chạy; ghế đã dừng sẽ bị đóng";
+"wheelhouse.show.quick.terminals" = "Hiện Terminal nhanh";
+"wheelhouse.hide.quick.terminals" = "Ẩn Terminal nhanh";
 "wheelhouse.needs.you" = "Cần bạn";
 "wheelhouse.nobody.waiting" = "không ai đang chờ";
 "wheelhouse.more.waiting %ld" = "+%ld nữa";
@@ -1623,6 +1625,10 @@
 "wheelhouse.action.launch.focus" = "Khởi chạy với tập trung";
 "settings.wheelhouse.enable.tab" = "Hiện tab Wheelhouse trên thanh bên";
 "settings.wheelhouse.enable.tab.help" = "Thêm tab Wheelhouse liệt kê các ghế của mọi Wheelhouse trong kho lưu trữ của bạn";
+"settings.wheelhouse.quick.terminal.placement" = "Vị trí Terminal nhanh";
+"settings.wheelhouse.quick.terminal.placement.help" = "Trên sân khấu: mỗi Terminal nhanh chiếm một vị trí riêng trên sân khấu. Chia đôi: các Terminal nhanh của một ghế mở trong bảng bên dưới ghế đó.";
+"settings.wheelhouse.placement.staged" = "Trên sân khấu";
+"settings.wheelhouse.placement.split" = "Chia đôi";
 "settings.wheelhouse.inbox.human.name" = "Tên hộp thư đến cho bất kỳ người nào";
 "settings.wheelhouse.inbox.human.name.help" = "Tên mà Wheelhouse giao bead khi bất kỳ người nào cũng có thể xử lý. Các bead sẵn sàng cho tên này xuất hiện trong hộp thư đến của bạn.";
 "settings.wheelhouse.inbox.own.name" = "Tên hộp thư đến riêng của bạn";

@@ -16,6 +16,20 @@ final class WheelhouseStage: ObservableObject {
         didSet { defaults.set(focusMode, forKey: Self.focusModeKey) }
     }
 
+    static let quickTerminalPlacementKey = "wheelhouse.quickTerminalPlacement"
+
+    /// Where Quick Terminals open: a setting in Settings' Wheelhouses section.
+    @Published var quickTerminalPlacement: WheelhouseQuickTerminalPlacement {
+        didSet { defaults.set(quickTerminalPlacement.rawValue, forKey: Self.quickTerminalPlacementKey) }
+    }
+
+    /// Split placement, per seat card: the Quick Terminal its panel shows,
+    /// whether the panel is collapsed, and the panel's share of the height.
+    @Published private(set) var splitSelected: [UUID: UUID] = [:]
+    @Published private(set) var splitCollapsed: Set<UUID> = []
+    @Published private(set) var splitFraction: [UUID: CGFloat] = [:]
+    static let defaultSplitFraction: CGFloat = 0.35
+
     static let selectedRootKey = "wheelhouse.selected"
 
     /// The Wheelhouse picked in the sidebar, or "" for all of them.
@@ -88,6 +102,55 @@ final class WheelhouseStage: ObservableObject {
         self.layout = WheelhouseStageLayout(pinned: pinned, focused: pinned.first, anchor: Self.inboxEntry)
         self.focusMode = defaults.bool(forKey: Self.focusModeKey)
         self.selectedRoot = defaults.string(forKey: Self.selectedRootKey) ?? ""
+        self.quickTerminalPlacement =
+            defaults.string(forKey: Self.quickTerminalPlacementKey).flatMap(WheelhouseQuickTerminalPlacement.init)
+            ?? .staged
+    }
+
+    // MARK: - Quick Terminal placement
+
+    /// Shows a seat's Quick Terminal where the setting says: its own place on
+    /// the stage, or (split) the panel beneath its seat's pane, which comes on
+    /// stage with the panel open on it. Split falls back to staged when the
+    /// seat has no terminal to sit beneath.
+    func showQuickTerminal(_ quick: UUID, seatCard: UUID?) {
+        guard quickTerminalPlacement == .split, let seatCard else {
+            show(quick)
+            return
+        }
+        splitSelected[seatCard] = quick
+        splitCollapsed.remove(seatCard)
+        show(seatCard)
+    }
+
+    /// The Quick Terminal a seat's panel shows among `quick` (the seat's
+    /// open ones, in order): the one picked, else the first.
+    func splitQuickTerminal(for seatCard: UUID, among quick: [UUID]) -> UUID? {
+        if let picked = splitSelected[seatCard], quick.contains(picked) { return picked }
+        return quick.first
+    }
+
+    func selectSplitQuickTerminal(_ quick: UUID, for seatCard: UUID) {
+        splitSelected[seatCard] = quick
+        splitCollapsed.remove(seatCard)
+    }
+
+    func toggleSplitCollapsed(_ seatCard: UUID) {
+        if splitCollapsed.contains(seatCard) {
+            splitCollapsed.remove(seatCard)
+        } else {
+            splitCollapsed.insert(seatCard)
+        }
+    }
+
+    func splitFraction(for seatCard: UUID) -> CGFloat {
+        splitFraction[seatCard] ?? Self.defaultSplitFraction
+    }
+
+    /// The panel's share of the pane's height, kept between a fifth and four
+    /// fifths so neither terminal disappears.
+    func setSplitFraction(_ fraction: CGFloat, for seatCard: UUID) {
+        splitFraction[seatCard] = min(0.8, max(0.2, fraction))
     }
 
     /// The Wheelhouse whose seats the stage shows: the one picked, else the
@@ -149,19 +212,34 @@ final class WheelhouseStage: ObservableObject {
         if let zoomed, !next.isOnStage(zoomed) { self.zoomed = nil }
     }
 
-    /// A click landed in a stage pane's terminal. Clicking answers the pane's
-    /// bell. Returns true when the pane should now be focused (it wasn't).
-    func paneClicked(_ card: UUID, tabs: TabManager) -> Bool {
-        guard isOnStage(card) else { return false }
-        guard focused == card else { return true }
-        tabs.clearAttention(card)
-        return false
+    /// A click landed in a stage terminal: a pane's, or (Split) a Quick
+    /// Terminal's beneath its seat `host`. Clicking answers that terminal's
+    /// bell. Returns the pane to focus when it isn't focused yet.
+    func paneClicked(_ card: UUID, host: UUID? = nil, tabs: TabManager) -> UUID? {
+        let pane = isOnStage(card) ? card : host.flatMap { isOnStage($0) ? $0 : nil }
+        guard let pane else { return nil }
+        if pane != card || focused == pane { tabs.clearAttention(card) }
+        return focused == pane ? nil : pane
     }
 
-    /// Someone typed into a stage pane's terminal: that answers its bell.
-    func paneTyped(_ card: UUID, tabs: TabManager) {
-        guard isOnStage(card), tabs.needsAttention.contains(card) else { return }
+    /// Someone typed into a stage terminal (a pane's, or a split Quick
+    /// Terminal's beneath `host`): that answers its bell.
+    func paneTyped(_ card: UUID, host: UUID? = nil, tabs: TabManager) {
+        guard isOnStage(card) || host.map(isOnStage) == true, tabs.needsAttention.contains(card) else { return }
         tabs.clearAttention(card)
+    }
+
+    /// After switching to Split: each Quick Terminal on stage whose seat has
+    /// a card (`hostOf`) moves into that seat's panel, and its place goes.
+    func moveQuickTerminalsIntoPanels(hostOf: (UUID) -> UUID?) {
+        guard quickTerminalPlacement == .split else { return }
+        for card in visible {
+            guard let host = hostOf(card) else { continue }
+            let wasFocused = focused == card
+            splitSelected[host] = card
+            remove(card)
+            if wasFocused || !isOnStage(host) { show(host) }
+        }
     }
 
     func togglePin(_ card: UUID) {
@@ -181,6 +259,14 @@ final class WheelhouseStage: ObservableObject {
         layout = next
         defaults.set(next.pinned.map(\.uuidString).joined(separator: ","), forKey: Self.pinnedKey)
     }
+}
+
+/// Where a seat's Quick Terminals open on the stage.
+enum WheelhouseQuickTerminalPlacement: String, CaseIterable, Sendable {
+    /// Each takes its own place on the stage, like a seat.
+    case staged
+    /// In a panel beneath the seat's own pane.
+    case split
 }
 
 /// Something the human asks of a seat from the Wheelhouse tab.

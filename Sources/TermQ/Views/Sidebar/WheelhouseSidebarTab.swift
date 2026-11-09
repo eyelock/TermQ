@@ -489,8 +489,8 @@ struct WheelhouseSeatDot: View {
 }
 
 /// One numbered badge per Quick Terminal a seat has, in the sidebar and in
-/// the seat's pane header: click one to bring it on stage (or focus it if it
-/// is there), right-click to close it.
+/// the seat's pane header: click one to show it where Quick Terminals go (its
+/// own place on stage, or the panel beneath its seat), right-click to close it.
 struct WheelhouseQuickTerminalBadges: View {
     let wheelhouse: Wheelhouse
     let seat: WheelhouseSeat
@@ -501,18 +501,31 @@ struct WheelhouseQuickTerminalBadges: View {
     var body: some View {
         let terminals = WheelhouseCardMatcher.quickTerminals(
             in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        let seatCard = WheelhouseCardMatcher.card(
+            in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        // In Split, the one a seat's panel shows counts as on stage.
+        let shownInPanel =
+            stage.quickTerminalPlacement == .split
+            ? seatCard.flatMap { seatCard in
+                stage.isOnStage(seatCard.id)
+                    ? stage.splitQuickTerminal(for: seatCard.id, among: terminals.map(\.id)) : nil
+            } : nil
         HStack(spacing: 3) {
             ForEach(terminals, id: \.id) { card in
                 let number = WheelhouseCardMatcher.quickTerminalNumber(card) ?? 0
                 WheelhouseQuickTerminalBadge(
                     number: number, running: boardVM.activeSessionCards.contains(card.id),
-                    onStage: stage.isOnStage(card.id)
+                    onStage: stage.isOnStage(card.id) || shownInPanel == card.id
                 )
                 .help(Strings.Wheelhouse.quickTerminalHelp(number, seat.name))
                 .highPriorityGesture(
                     TapGesture().onEnded {
-                        stage.show(card.id)
-                        boardVM.selectCard(card)
+                        stage.showQuickTerminal(card.id, seatCard: seatCard?.id)
+                        if stage.quickTerminalPlacement == .split, let seatCard {
+                            boardVM.selectCard(seatCard)
+                        } else {
+                            boardVM.selectCard(card)
+                        }
                     }
                 )
                 .contextMenu {
@@ -570,9 +583,16 @@ struct WheelhouseRolePill: View {
 
 /// Settings' Wheelhouses section. More Wheelhouse settings go here.
 struct WheelhouseSettingsSection: View {
+    @ObservedObject private var stage: WheelhouseStage = .shared
+
     var body: some View {
         Section {
             WheelhouseTabSettingToggle()
+            Picker(Strings.Settings.Wheelhouse.quickTerminalPlacement, selection: $stage.quickTerminalPlacement) {
+                Text(Strings.Settings.Wheelhouse.placementStaged).tag(WheelhouseQuickTerminalPlacement.staged)
+                Text(Strings.Settings.Wheelhouse.placementSplit).tag(WheelhouseQuickTerminalPlacement.split)
+            }
+            .help(Strings.Settings.Wheelhouse.quickTerminalPlacementHelp)
         } header: {
             Text(Strings.Wheelhouse.title)
         }

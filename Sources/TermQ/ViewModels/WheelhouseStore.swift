@@ -227,6 +227,31 @@ final class WheelhouseStore: ObservableObject {
         return (wheelhouse, seat)
     }
 
+    /// In Split placement, the seat card a Quick Terminal sits beneath: its
+    /// seat's card, when the seat has one. Nil for anything else.
+    func splitHost(of card: TerminalCard, in cards: [TerminalCard]) -> TerminalCard? {
+        Self.splitHost(of: card, in: cards, wheelhouses: wheelhouses)
+    }
+
+    nonisolated static func splitHost(
+        of card: TerminalCard, in cards: [TerminalCard], wheelhouses: [Wheelhouse]
+    ) -> TerminalCard? {
+        guard let parent = seat(for: card, tagKey: WheelhouseCardMatcher.quickTerminalTagKey, in: wheelhouses)
+        else { return nil }
+        return WheelhouseCardMatcher.card(
+            in: cards, wheelhouseRoot: parent.wheelhouse.root, seatCommand: parent.seat.command)
+    }
+
+    /// The cards the stage shows as panes: in Split, a Quick Terminal whose
+    /// seat has a card sits beneath it instead.
+    nonisolated static func paneCards(
+        _ stageCards: [TerminalCard], placement: WheelhouseQuickTerminalPlacement, all: [TerminalCard],
+        wheelhouses: [Wheelhouse]
+    ) -> [TerminalCard] {
+        guard placement == .split else { return stageCards }
+        return stageCards.filter { splitHost(of: $0, in: all, wheelhouses: wheelhouses) == nil }
+    }
+
     /// Cards that can go on the stage: seat cards and their Quick Terminals,
     /// limited to `root` when given.
     func stageCards(in cards: [TerminalCard], root: String? = nil) -> [TerminalCard] {

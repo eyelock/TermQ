@@ -17,6 +17,8 @@ extension ContentView {
             guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
             switch action {
             case .closeTerminal: wheelhouseStage.remove(card)
+            case .quickTerminal:
+                wheelhouseStage.showQuickTerminal(card, seatCard: launchCoordinator.seatCard(seat, in: wheelhouse)?.id)
             // Sent to a running seat, the stage stays as it is. A seat that
             // isn't running only starts once its pane is up, so bring it up.
             case .send where TerminalSessionManager.shared.hasActiveSession(for: card): break

@@ -1606,6 +1606,8 @@
 "wheelhouse.zoom.terminal" = "터미널 확대";
 "wheelhouse.exit.zoom" = "확대 종료";
 "wheelhouse.smart.close.help" = "닫기: 아직 실행 중인 좌석은 무대에서 빠지고 계속 실행되며, 중지된 좌석은 닫힙니다";
+"wheelhouse.show.quick.terminals" = "빠른 터미널 보기";
+"wheelhouse.hide.quick.terminals" = "빠른 터미널 숨기기";
 "wheelhouse.needs.you" = "도움 필요";
 "wheelhouse.nobody.waiting" = "기다리는 좌석 없음";
 "wheelhouse.more.waiting %ld" = "+%ld개 더";
@@ -1622,6 +1624,10 @@
 "wheelhouse.action.launch.focus" = "집중하여 실행";
 "settings.wheelhouse.enable.tab" = "Wheelhouse 사이드바 탭 보기";
 "settings.wheelhouse.enable.tab.help" = "저장소에 있는 모든 Wheelhouse의 좌석을 나열하는 Wheelhouse 탭을 추가합니다";
+"settings.wheelhouse.quick.terminal.placement" = "빠른 터미널 배치";
+"settings.wheelhouse.quick.terminal.placement.help" = "무대: 각 빠른 터미널이 무대에서 자신만의 자리를 차지합니다. 분할: 좌석의 빠른 터미널이 해당 좌석 아래 패널에서 열립니다.";
+"settings.wheelhouse.placement.staged" = "무대";
+"settings.wheelhouse.placement.split" = "분할";
 "settings.wheelhouse.inbox.human.name" = "모든 사람을 위한 받은 편지함 이름";
 "settings.wheelhouse.inbox.human.name.help" = "누구든 처리할 수 있는 bead를 Wheelhouse가 할당하는 이름입니다. 이 이름에 준비된 bead가 받은 편지함에 표시됩니다.";
 "settings.wheelhouse.inbox.own.name" = "내 받은 편지함 이름";

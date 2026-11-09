@@ -1605,6 +1605,8 @@
 "wheelhouse.zoom.terminal" = "Zoomer sur le terminal";
 "wheelhouse.exit.zoom" = "Quitter le zoom";
 "wheelhouse.smart.close.help" = "Fermer : un poste encore en cours d’exécution quitte la scène et continue de tourner ; un poste arrêté est fermé";
+"wheelhouse.show.quick.terminals" = "Afficher les terminaux rapides";
+"wheelhouse.hide.quick.terminals" = "Masquer les terminaux rapides";
 "wheelhouse.needs.you" = "Vous attend";
 "wheelhouse.nobody.waiting" = "personne n’attend";
 "wheelhouse.more.waiting %ld" = "+%ld de plus";
@@ -1621,6 +1623,10 @@
 "wheelhouse.action.launch.focus" = "Lancer avec focus";
 "settings.wheelhouse.enable.tab" = "Afficher l’onglet Wheelhouses dans la barre latérale";
 "settings.wheelhouse.enable.tab.help" = "Ajoute un onglet Wheelhouses listant les postes de chaque Wheelhouse de vos dépôts";
+"settings.wheelhouse.quick.terminal.placement" = "Emplacement du terminal rapide";
+"settings.wheelhouse.quick.terminal.placement.help" = "Sur la scène : chaque terminal rapide prend sa propre place sur la scène. Partagé : les terminaux rapides d’un poste s’ouvrent dans un panneau sous le poste.";
+"settings.wheelhouse.placement.staged" = "Sur la scène";
+"settings.wheelhouse.placement.split" = "Partagé";
 "settings.wheelhouse.inbox.human.name" = "Nom de boîte de réception pour tout humain";
 "settings.wheelhouse.inbox.human.name.help" = "Le nom auquel un Wheelhouse assigne des beads lorsque n’importe quel humain peut s’en occuper. Les beads prêts pour ce nom apparaissent dans votre boîte de réception.";
 "settings.wheelhouse.inbox.own.name" = "Votre propre nom de boîte de réception";

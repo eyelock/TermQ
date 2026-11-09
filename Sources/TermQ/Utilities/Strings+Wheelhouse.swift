@@ -32,6 +32,8 @@ extension Strings {
         static var pin: String { localized("wheelhouse.pin") }
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
         static var zoomTerminal: String { localized("wheelhouse.zoom.terminal") }
+        static var showQuickTerminals: String { localized("wheelhouse.show.quick.terminals") }
+        static var hideQuickTerminals: String { localized("wheelhouse.hide.quick.terminals") }
         static var exitZoom: String { localized("wheelhouse.exit.zoom") }
         static func seatHarnessTitle(_ seat: String, _ wheelhouse: String) -> String {
             localized("wheelhouse.seat.harness.title %@ %@", seat, wheelhouse)
@@ -173,6 +175,12 @@ extension Strings.Settings {
     enum Wheelhouse {
         static var enableTab: String { localized("settings.wheelhouse.enable.tab") }
         static var enableTabHelp: String { localized("settings.wheelhouse.enable.tab.help") }
+        static var quickTerminalPlacement: String { localized("settings.wheelhouse.quick.terminal.placement") }
+        static var quickTerminalPlacementHelp: String {
+            localized("settings.wheelhouse.quick.terminal.placement.help")
+        }
+        static var placementStaged: String { localized("settings.wheelhouse.placement.staged") }
+        static var placementSplit: String { localized("settings.wheelhouse.placement.split") }
         static var inboxHumanName: String { localized("settings.wheelhouse.inbox.human.name") }
         static var inboxHumanNameHelp: String { localized("settings.wheelhouse.inbox.human.name.help") }
         static var inboxOwnName: String { localized("settings.wheelhouse.inbox.own.name") }

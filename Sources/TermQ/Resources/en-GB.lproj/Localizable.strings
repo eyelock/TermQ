@@ -1598,6 +1598,8 @@
 "wheelhouse.zoom.terminal" = "Zoom Terminal";
 "wheelhouse.exit.zoom" = "Exit Zoom";
 "wheelhouse.smart.close.help" = "Close: a seat still running leaves the stage and keeps running; one that has stopped is closed";
+"wheelhouse.show.quick.terminals" = "Show Quick Terminals";
+"wheelhouse.hide.quick.terminals" = "Hide Quick Terminals";
 "wheelhouse.needs.you" = "Needs you";
 "wheelhouse.nobody.waiting" = "nobody waiting";
 "wheelhouse.more.waiting %ld" = "+%ld more";
@@ -1614,6 +1616,10 @@
 "wheelhouse.action.launch.focus" = "Launch with focus";
 "settings.wheelhouse.enable.tab" = "Show Wheelhouses sidebar tab";
 "settings.wheelhouse.enable.tab.help" = "Adds a Wheelhouses tab listing the seats of every Wheelhouse in your repositories";
+"settings.wheelhouse.quick.terminal.placement" = "Quick Terminal placement";
+"settings.wheelhouse.quick.terminal.placement.help" = "Staged: each Quick Terminal takes its own place on the stage. Split: a seat's Quick Terminals open in a panel beneath the seat.";
+"settings.wheelhouse.placement.staged" = "Staged";
+"settings.wheelhouse.placement.split" = "Split";
 "settings.wheelhouse.inbox.human.name" = "Inbox name for any human";
 "settings.wheelhouse.inbox.human.name.help" = "The name a Wheelhouse assigns beads to when any human can act on them. Ready beads for this name appear in your inbox.";
 "settings.wheelhouse.inbox.own.name" = "Your own inbox name";

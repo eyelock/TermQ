@@ -1604,6 +1604,8 @@
 "wheelhouse.zoom.terminal" = "Zoom terminal";
 "wheelhouse.exit.zoom" = "Avslutt zoom";
 "wheelhouse.smart.close.help" = "Lukk: en plass som fortsatt kjører forlater scenen og kjører videre; en som har stoppet, lukkes";
+"wheelhouse.show.quick.terminals" = "Vis hurtigterminaler";
+"wheelhouse.hide.quick.terminals" = "Skjul hurtigterminaler";
 "wheelhouse.needs.you" = "Trenger deg";
 "wheelhouse.nobody.waiting" = "ingen venter";
 "wheelhouse.more.waiting %ld" = "+%ld til";
@@ -1620,6 +1622,10 @@
 "wheelhouse.action.launch.focus" = "Start med fokus";
 "settings.wheelhouse.enable.tab" = "Vis Wheelhouses-fanen i sidefeltet";
 "settings.wheelhouse.enable.tab.help" = "Legger til en Wheelhouses-fane som viser plassene i hvert Wheelhouse i repositoriene dine";
+"settings.wheelhouse.quick.terminal.placement" = "Plassering av hurtigterminal";
+"settings.wheelhouse.quick.terminal.placement.help" = "På scenen: hver hurtigterminal får sin egen plass på scenen. Delt: hurtigterminalene til en plass åpnes i et panel under plassen.";
+"settings.wheelhouse.placement.staged" = "På scenen";
+"settings.wheelhouse.placement.split" = "Delt";
 "settings.wheelhouse.inbox.human.name" = "Innboksnavn for ethvert menneske";
 "settings.wheelhouse.inbox.human.name.help" = "Navnet et Wheelhouse tildeler beads til når ethvert menneske kan ta dem. Klare beads for dette navnet vises i innboksen din.";
 "settings.wheelhouse.inbox.own.name" = "Ditt eget innboksnavn";

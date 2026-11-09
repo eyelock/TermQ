@@ -1604,6 +1604,8 @@
 "wheelhouse.zoom.terminal" = "Zum Terminal";
 "wheelhouse.exit.zoom" = "Keluar Zum";
 "wheelhouse.smart.close.help" = "Tutup: kerusi yang masih berjalan meninggalkan Pentas dan terus berjalan; kerusi yang telah berhenti ditutup";
+"wheelhouse.show.quick.terminals" = "Papar Terminal Pantas";
+"wheelhouse.hide.quick.terminals" = "Sembunyikan Terminal Pantas";
 "wheelhouse.needs.you" = "Memerlukan anda";
 "wheelhouse.nobody.waiting" = "tiada siapa menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";
@@ -1620,6 +1622,10 @@
 "wheelhouse.action.launch.focus" = "Lancarkan dengan fokus";
 "settings.wheelhouse.enable.tab" = "Tunjuk tab Wheelhouse dalam bar sisi";
 "settings.wheelhouse.enable.tab.help" = "Menambah tab Wheelhouse yang menyenaraikan kerusi setiap Wheelhouse dalam repositori anda";
+"settings.wheelhouse.quick.terminal.placement" = "Penempatan Terminal Pantas";
+"settings.wheelhouse.quick.terminal.placement.help" = "Di Pentas: setiap Terminal Pantas mendapat tempatnya sendiri di Pentas. Terpisah: Terminal Pantas milik sebuah kerusi dibuka dalam panel di bawah kerusi itu.";
+"settings.wheelhouse.placement.staged" = "Di Pentas";
+"settings.wheelhouse.placement.split" = "Terpisah";
 "settings.wheelhouse.inbox.human.name" = "Nama peti masuk untuk mana-mana manusia";
 "settings.wheelhouse.inbox.human.name.help" = "Nama yang diberi tugasan bead oleh Wheelhouse apabila mana-mana manusia boleh mengendalikannya. Bead yang sedia untuk nama ini muncul dalam peti masuk anda.";
 "settings.wheelhouse.inbox.own.name" = "Nama peti masuk anda sendiri";

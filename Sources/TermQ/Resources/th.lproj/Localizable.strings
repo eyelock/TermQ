@@ -1606,6 +1606,8 @@
 "wheelhouse.zoom.terminal" = "ซูมเทอร์มินัล";
 "wheelhouse.exit.zoom" = "ออกจากโหมดซูม";
 "wheelhouse.smart.close.help" = "ปิด: ที่นั่งที่ยังทำงานอยู่จะออกจากเวทีและทำงานต่อไป ส่วนที่นั่งที่หยุดแล้วจะถูกปิด";
+"wheelhouse.show.quick.terminals" = "แสดงเทอร์มินัลด่วน";
+"wheelhouse.hide.quick.terminals" = "ซ่อนเทอร์มินัลด่วน";
 "wheelhouse.needs.you" = "ต้องการคุณ";
 "wheelhouse.nobody.waiting" = "ไม่มีใครรอ";
 "wheelhouse.more.waiting %ld" = "อีก +%ld";
@@ -1622,6 +1624,10 @@
 "wheelhouse.action.launch.focus" = "เปิดใช้งานพร้อมโฟกัส";
 "settings.wheelhouse.enable.tab" = "แสดงแท็บ Wheelhouses ในแถบด้านข้าง";
 "settings.wheelhouse.enable.tab.help" = "เพิ่มแท็บ Wheelhouses ที่แสดงรายการที่นั่งของทุก Wheelhouse ในที่เก็บของคุณ";
+"settings.wheelhouse.quick.terminal.placement" = "ตำแหน่งเทอร์มินัลด่วน";
+"settings.wheelhouse.quick.terminal.placement.help" = "บนเวที: เทอร์มินัลด่วนแต่ละตัวมีตำแหน่งของตัวเองบนเวที แยกส่วน: เทอร์มินัลด่วนของที่นั่งจะเปิดในแผงใต้ที่นั่งนั้น";
+"settings.wheelhouse.placement.staged" = "บนเวที";
+"settings.wheelhouse.placement.split" = "แยกส่วน";
 "settings.wheelhouse.inbox.human.name" = "ชื่อกล่องจดหมายเข้าสำหรับมนุษย์คนใดก็ได้";
 "settings.wheelhouse.inbox.human.name.help" = "ชื่อที่ Wheelhouse มอบหมาย bead ให้เมื่อมนุษย์คนใดก็ได้สามารถดำเนินการได้ bead ที่พร้อมสำหรับชื่อนี้จะแสดงในกล่องจดหมายเข้าของคุณ";
 "settings.wheelhouse.inbox.own.name" = "ชื่อกล่องจดหมายเข้าของคุณเอง";

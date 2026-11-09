@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "Přiblížit terminál";
 "wheelhouse.exit.zoom" = "Ukončit přiblížení";
 "wheelhouse.smart.close.help" = "Zavřít: místo, které stále běží, opustí pódium a běží dál; zastavené se zavře";
+"wheelhouse.show.quick.terminals" = "Zobrazit rychlé terminály";
+"wheelhouse.hide.quick.terminals" = "Skrýt rychlé terminály";
 "wheelhouse.needs.you" = "Potřebuje vás";
 "wheelhouse.nobody.waiting" = "nikdo nečeká";
 "wheelhouse.more.waiting %ld" = "+%ld dalších";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "Spustit se zaměřením";
 "settings.wheelhouse.enable.tab" = "Zobrazit kartu Wheelhouses v postranním panelu";
 "settings.wheelhouse.enable.tab.help" = "Přidá kartu Wheelhouses se seznamem míst každého Wheelhouse ve vašich repozitářích";
+"settings.wheelhouse.quick.terminal.placement" = "Umístění rychlého terminálu";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na pódiu: každý rychlý terminál zaujme na pódiu vlastní místo. Rozdělené: rychlé terminály místa se otevřou v panelu pod místem.";
+"settings.wheelhouse.placement.staged" = "Na pódiu";
+"settings.wheelhouse.placement.split" = "Rozdělené";
 "settings.wheelhouse.inbox.human.name" = "Název schránky pro kteréhokoli člověka";
 "settings.wheelhouse.inbox.human.name.help" = "Název, kterému Wheelhouse přiřazuje beady, když se jich může ujmout kterýkoli člověk. Připravené beady pro tento název se zobrazí ve vaší schránce.";
 "settings.wheelhouse.inbox.own.name" = "Váš vlastní název schránky";

@@ -1599,6 +1599,8 @@
 "wheelhouse.zoom.terminal" = "ターミナルをズーム";
 "wheelhouse.exit.zoom" = "ズームを終了";
 "wheelhouse.smart.close.help" = "閉じる: 実行中の席はステージから外れて実行を続け、停止した席は閉じられます";
+"wheelhouse.show.quick.terminals" = "クイックターミナルを表示";
+"wheelhouse.hide.quick.terminals" = "クイックターミナルを非表示";
 "wheelhouse.needs.you" = "あなたを待っています";
 "wheelhouse.nobody.waiting" = "待っている人はいません";
 "wheelhouse.more.waiting %ld" = "他 +%ld";
@@ -1615,6 +1617,10 @@
 "wheelhouse.action.launch.focus" = "フォーカス付きで起動";
 "settings.wheelhouse.enable.tab" = "Wheelhouse サイドバータブを表示";
 "settings.wheelhouse.enable.tab.help" = "リポジトリ内のすべての Wheelhouse の席を一覧表示する Wheelhouse タブを追加します";
+"settings.wheelhouse.quick.terminal.placement" = "クイックターミナルの配置";
+"settings.wheelhouse.quick.terminal.placement.help" = "ステージ: 各クイックターミナルはステージ上に専用の場所を持ちます。分割: 席のクイックターミナルは、その席の下のパネルで開きます。";
+"settings.wheelhouse.placement.staged" = "ステージ";
+"settings.wheelhouse.placement.split" = "分割";
 "settings.wheelhouse.inbox.human.name" = "すべての人向けの受信トレイ名";
 "settings.wheelhouse.inbox.human.name.help" = "誰でも対応できる bead を Wheelhouse が割り当てる名前です。この名前宛ての準備完了の bead が受信トレイに表示されます。";
 "settings.wheelhouse.inbox.own.name" = "あなた専用の受信トレイ名";

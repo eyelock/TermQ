@@ -1604,6 +1604,8 @@
 "wheelhouse.zoom.terminal" = "Powiększ terminal";
 "wheelhouse.exit.zoom" = "Wyjdź z powiększenia";
 "wheelhouse.smart.close.help" = "Zamknij: miejsce, które nadal działa, opuszcza scenę i działa dalej; zatrzymane zostaje zamknięte";
+"wheelhouse.show.quick.terminals" = "Pokaż szybkie terminale";
+"wheelhouse.hide.quick.terminals" = "Ukryj szybkie terminale";
 "wheelhouse.needs.you" = "Potrzebuje cię";
 "wheelhouse.nobody.waiting" = "nikt nie czeka";
 "wheelhouse.more.waiting %ld" = "+%ld więcej";
@@ -1620,6 +1622,10 @@
 "wheelhouse.action.launch.focus" = "Uruchom ze skupieniem";
 "settings.wheelhouse.enable.tab" = "Pokaż kartę Wheelhouse’y na pasku bocznym";
 "settings.wheelhouse.enable.tab.help" = "Dodaje kartę Wheelhouse’y z listą miejsc każdego Wheelhouse’a w Twoich repozytoriach";
+"settings.wheelhouse.quick.terminal.placement" = "Rozmieszczenie szybkich terminali";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na scenie: każdy szybki terminal zajmuje własne miejsce na scenie. Podział: szybkie terminale miejsca otwierają się w panelu pod tym miejscem.";
+"settings.wheelhouse.placement.staged" = "Na scenie";
+"settings.wheelhouse.placement.split" = "Podział";
 "settings.wheelhouse.inbox.human.name" = "Nazwa skrzynki odbiorczej dla dowolnej osoby";
 "settings.wheelhouse.inbox.human.name.help" = "Nazwa, do której Wheelhouse przypisuje beady, gdy może się nimi zająć dowolna osoba. Gotowe beady dla tej nazwy pojawiają się w Twojej skrzynce odbiorczej.";
 "settings.wheelhouse.inbox.own.name" = "Twoja własna nazwa skrzynki odbiorczej";
