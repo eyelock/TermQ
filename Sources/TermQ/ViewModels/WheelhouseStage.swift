@@ -189,8 +189,13 @@ final class WheelhouseStage: ObservableObject {
     }
     func remove(_ card: UUID) {
         if zoomed == card { zoomed = nil }
+        lastRemoved = card
         mutate { $0.remove(card) }
     }
+
+    /// The pane taken off most recently: an emptied stage doesn't bring it
+    /// straight back.
+    private(set) var lastRemoved: UUID?
     /// Focusing another pane while one is zoomed comes back to the whole stage.
     func focus(_ card: UUID) {
         if let zoomed, zoomed != card { self.zoomed = nil }
@@ -240,6 +245,12 @@ final class WheelhouseStage: ObservableObject {
             remove(card)
             if wasFocused || !isOnStage(host) { show(host) }
         }
+    }
+
+    /// The open seat (in strip order) to bring up on an empty stage: the
+    /// first not already there, other than the one just taken off.
+    nonisolated static func nextToShow(open: [UUID], onStage: Set<UUID>, excluding removed: UUID? = nil) -> UUID? {
+        open.first { !onStage.contains($0) && $0 != removed }
     }
 
     func togglePin(_ card: UUID) {

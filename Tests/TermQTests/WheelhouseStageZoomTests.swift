@@ -120,4 +120,16 @@ final class WheelhouseStageZoomTests: XCTestCase {
         XCTAssertEqual(stage.visible, visible)
         XCTAssertEqual(stage.focused, quick)
     }
+
+    func testAnEmptyStageBringsUpTheNextOpenSeat() {
+        let first = UUID()
+        let second = UUID()
+        XCTAssertEqual(WheelhouseStage.nextToShow(open: [first, second], onStage: []), first)
+        XCTAssertEqual(WheelhouseStage.nextToShow(open: [first, second], onStage: [first]), second)
+        XCTAssertNil(WheelhouseStage.nextToShow(open: [], onStage: []))
+        XCTAssertEqual(
+            WheelhouseStage.nextToShow(open: [first, second], onStage: [], excluding: first), second,
+            "the seat just taken off doesn't come straight back")
+        XCTAssertNil(WheelhouseStage.nextToShow(open: [first], onStage: [], excluding: first))
+    }
 }

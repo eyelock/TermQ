@@ -134,7 +134,10 @@ struct WheelhouseStageView: View {
         }
         .background(Color(nsColor: .windowBackgroundColor))
         .background(shortcuts)
-        .onChange(of: stageCards.map(\.id)) { _, ids in stage.healZoom(visible: Set(ids)) }
+        .onChange(of: stageCards.map(\.id)) { _, ids in
+            stage.healZoom(visible: Set(ids))
+            fillEmptyStage()
+        }
         .onChange(of: stage.quickTerminalPlacement) { moveQuickTerminalsIntoPanels() }
         .sheet(item: $fixing) { WheelhouseSeatFixSheet(request: $0, onSeatAction: onSeatAction) }
         .onDisappear { clickMonitor.stop() }
@@ -612,6 +615,20 @@ extension WheelhouseStageView {
             .foregroundColor(.orange)
             .help(WheelhouseSeatFixSheet.tooltip(for: issues, seat: seat))
         }
+    }
+}
+
+// MARK: - Empty stage
+
+extension WheelhouseStageView {
+    /// When the last pane goes while other seats are still open, the stage
+    /// shows the next of them rather than looking as if nothing is open.
+    func fillEmptyStage() {
+        guard stageEntries.isEmpty,
+            let next = WheelhouseStage.nextToShow(
+                open: openSeatCards.map(\.id), onStage: Set(stage.visible), excluding: stage.lastRemoved)
+        else { return }
+        if let card = openSeatCards.first(where: { $0.id == next }) { show(card) }
     }
 }
 
