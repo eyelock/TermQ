@@ -104,4 +104,20 @@ final class WheelhouseStageZoomTests: XCTestCase {
         stage.healZoom(visible: [])
         XCTAssertNil(stage.zoomed)
     }
+
+    /// A seat header's Quick Terminal badge shows its terminal: brought on
+    /// stage, or only focused when it is already there.
+    func testShowingAPaneAlreadyOnStageOnlyFocusesIt() throws {
+        let stage = try makeStage()
+        let seat = UUID()
+        let quick = UUID()
+        stage.show(seat)
+        stage.pin(seat)
+        stage.show(quick)
+        let visible = stage.visible
+        stage.focus(seat)
+        stage.show(quick)
+        XCTAssertEqual(stage.visible, visible)
+        XCTAssertEqual(stage.focused, quick)
+    }
 }

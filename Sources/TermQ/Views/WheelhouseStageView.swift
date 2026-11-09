@@ -419,6 +419,9 @@ struct WheelhouseStageView: View {
                     if let seat = found?.seat {
                         WheelhouseRolePill(seat: seat)
                     }
+                    if let found {
+                        WheelhouseQuickTerminalBadges(wheelhouse: found.wheelhouse, seat: found.seat)
+                    }
                     if showsWheelhouseNames, let wheelhouse = found?.wheelhouse {
                         wheelhouseLabel(wheelhouse)
                     }
@@ -541,24 +544,6 @@ struct WheelhouseStageView: View {
         .help(Strings.Wheelhouse.seatActions)
     }
 
-    // MARK: - Empty
-
-    private var emptyStage: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "steeringwheel")
-                .font(.system(size: 34))
-                .foregroundColor(.secondary)
-            Text(Strings.Wheelhouse.emptyStageTitle)
-                .font(.headline)
-            Text(Strings.Wheelhouse.emptyStageMessage)
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 380)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
     // MARK: - Actions
 
     private func show(_ card: TerminalCard) {
@@ -574,6 +559,26 @@ struct WheelhouseStageView: View {
     private func zoom(_ card: TerminalCard) {
         stage.zoom(card.id)
         boardVM.selectCard(card)
+    }
+}
+
+// MARK: - Empty stage
+
+extension WheelhouseStageView {
+    var emptyStage: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "steeringwheel")
+                .font(.system(size: 34))
+                .foregroundColor(.secondary)
+            Text(Strings.Wheelhouse.emptyStageTitle)
+                .font(.headline)
+            Text(Strings.Wheelhouse.emptyStageMessage)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 380)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

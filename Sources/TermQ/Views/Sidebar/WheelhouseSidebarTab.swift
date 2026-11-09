@@ -323,7 +323,7 @@ struct WheelhouseSidebarTab: View {
                             .font(.system(size: 8))
                             .foregroundColor(.accentColor)
                     }
-                    quickTerminalBadges(seat, in: wheelhouse)
+                    WheelhouseQuickTerminalBadges(wheelhouse: wheelhouse, seat: seat)
                     Spacer(minLength: 4)
                     WheelhouseRolePill(seat: seat)
                 }
@@ -362,7 +362,7 @@ struct WheelhouseSidebarTab: View {
                     .font(.system(size: 12))
                     .foregroundColor(bead == nil ? .secondary : .primary)
                     .lineLimit(1)
-                quickTerminalBadges(seat, in: wheelhouse)
+                WheelhouseQuickTerminalBadges(wheelhouse: wheelhouse, seat: seat)
                 Spacer(minLength: 4)
                 WheelhouseRolePill(seat: seat)
             }
@@ -379,37 +379,6 @@ struct WheelhouseSidebarTab: View {
         }
         .help(seat.mandate ?? seat.name)
         .contextMenu { seatMenu(seat, in: wheelhouse, card: card) }
-    }
-
-    /// One numbered badge per Quick Terminal the seat has: click one to bring
-    /// it on stage, right-click to close it.
-    private func quickTerminalBadges(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) -> some View {
-        let terminals = WheelhouseCardMatcher.quickTerminals(
-            in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
-        return HStack(spacing: 3) {
-            ForEach(terminals, id: \.id) { card in
-                let number = WheelhouseCardMatcher.quickTerminalNumber(card) ?? 0
-                WheelhouseQuickTerminalBadge(
-                    number: number, running: boardVM.activeSessionCards.contains(card.id),
-                    onStage: stage.isOnStage(card.id)
-                )
-                .help(Strings.Wheelhouse.quickTerminalHelp(number, seat.name))
-                .highPriorityGesture(
-                    TapGesture().onEnded {
-                        stage.show(card.id)
-                        boardVM.selectCard(card)
-                    }
-                )
-                .contextMenu {
-                    Button(role: .destructive) {
-                        stage.closeQuickTerminal(card)
-                    } label: {
-                        Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
-                            .labelStyle(.titleAndIcon)
-                    }
-                }
-            }
-        }
     }
 
     @ViewBuilder
@@ -515,6 +484,46 @@ struct WheelhouseSeatDot: View {
             Circle()
                 .stroke(Color.secondary.opacity(0.7), lineWidth: 1.5)
                 .frame(width: 8, height: 8)
+        }
+    }
+}
+
+/// One numbered badge per Quick Terminal a seat has, in the sidebar and in
+/// the seat's pane header: click one to bring it on stage (or focus it if it
+/// is there), right-click to close it.
+struct WheelhouseQuickTerminalBadges: View {
+    let wheelhouse: Wheelhouse
+    let seat: WheelhouseSeat
+
+    @ObservedObject private var stage: WheelhouseStage = .shared
+    @ObservedObject private var boardVM: BoardViewModel = .shared
+
+    var body: some View {
+        let terminals = WheelhouseCardMatcher.quickTerminals(
+            in: boardVM.allTerminals, wheelhouseRoot: wheelhouse.root, seatCommand: seat.command)
+        HStack(spacing: 3) {
+            ForEach(terminals, id: \.id) { card in
+                let number = WheelhouseCardMatcher.quickTerminalNumber(card) ?? 0
+                WheelhouseQuickTerminalBadge(
+                    number: number, running: boardVM.activeSessionCards.contains(card.id),
+                    onStage: stage.isOnStage(card.id)
+                )
+                .help(Strings.Wheelhouse.quickTerminalHelp(number, seat.name))
+                .highPriorityGesture(
+                    TapGesture().onEnded {
+                        stage.show(card.id)
+                        boardVM.selectCard(card)
+                    }
+                )
+                .contextMenu {
+                    Button(role: .destructive) {
+                        stage.closeQuickTerminal(card)
+                    } label: {
+                        Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
+                            .labelStyle(.titleAndIcon)
+                    }
+                }
+            }
         }
     }
 }
