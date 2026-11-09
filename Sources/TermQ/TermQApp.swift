@@ -174,6 +174,9 @@ struct TermQApp: App {
             // small.
             WorkspaceCommands(openSettings: openSettings)
 
+            // View menu — ⌃⌘R/H/M/W pick a sidebar tab.
+            SidebarTabCommands()
+
             // Help menu
             CommandGroup(replacing: .help) {
                 Button(Strings.Menu.help) {
