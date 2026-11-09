@@ -13,18 +13,12 @@ struct WheelhouseStageView: View {
     @ObservedObject private var store: WheelhouseStore = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var tabManager: TabManager = BoardViewModel.shared.tabManager
-    @AppStorage("wheelhouse.selected") private var selectedRoot: String = ""
     @State private var clickMonitor = StagePaneClickMonitor()
     /// The pane header a dragged seat is over, to highlight it.
     @State private var dropTarget: UUID?
 
     /// Only the selected Wheelhouse's seats in focus mode or when one is picked.
-    private var scopeRoot: String? {
-        if !selectedRoot.isEmpty, store.wheelhouses.contains(where: { $0.root == selectedRoot }) {
-            return selectedRoot
-        }
-        return stage.focusMode ? store.wheelhouses.first?.root : nil
-    }
+    private var scopeRoot: String? { stage.scopeRoot(in: store.wheelhouses) }
 
     private var seatCards: [TerminalCard] {
         store.seatCards(in: boardVM.allTerminals, root: scopeRoot)
@@ -75,37 +69,15 @@ struct WheelhouseStageView: View {
     /// workers, each in roster order, grouped so the strip can draw dividers
     /// between.
     private var openSeatGroups: [StripGroup] {
-        // A card that survived a relaunch with nothing running isn't open.
-        let cards = seatCards.filter { card in
-            stage.isOnStage(card.id) || boardVM.activeSessionCards.contains(card.id)
-                || tabManager.needsAttention.contains(card.id)
-        }
-        struct Keyed {
-            let card: TerminalCard
-            let wheelhouse: Wheelhouse
-            let wheelhouseOrder: Int
-            let group: Int
-            let order: Int
-        }
-        let keyed = cards.compactMap { card -> Keyed? in
-            guard let found = store.seat(for: card) else { return nil }
-            let order = found.wheelhouse.seats.firstIndex { $0.command == found.seat.command } ?? 0
-            let wheelhouseOrder = store.wheelhouses.firstIndex { $0.root == found.wheelhouse.root } ?? 0
-            return Keyed(
-                card: card, wheelhouse: found.wheelhouse, wheelhouseOrder: wheelhouseOrder,
-                group: found.seat.group.sortOrder, order: order)
-        }
-        .sorted {
-            ($0.wheelhouseOrder, $0.group, $0.order) < ($1.wheelhouseOrder, $1.group, $1.order)
-        }
         var groups: [StripGroup] = []
-        for entry in keyed {
-            if let last = groups.last, last.wheelhouse.root == entry.wheelhouse.root,
-                store.seat(for: last.cards[0])?.seat.group.sortOrder == entry.group
+        for card in openSeatCards {
+            guard let found = store.seat(for: card) else { continue }
+            if let last = groups.last, last.wheelhouse.root == found.wheelhouse.root,
+                store.seat(for: last.cards[0])?.seat.group.sortOrder == found.seat.group.sortOrder
             {
-                groups[groups.count - 1] = StripGroup(wheelhouse: last.wheelhouse, cards: last.cards + [entry.card])
+                groups[groups.count - 1] = StripGroup(wheelhouse: last.wheelhouse, cards: last.cards + [card])
             } else {
-                groups.append(StripGroup(wheelhouse: entry.wheelhouse, cards: [entry.card]))
+                groups.append(StripGroup(wheelhouse: found.wheelhouse, cards: [card]))
             }
         }
         return groups
@@ -117,7 +89,13 @@ struct WheelhouseStageView: View {
         Set(openSeatGroups.map(\.wheelhouse.root)).count > 1
     }
 
-    private var openSeatCards: [TerminalCard] { openSeatGroups.flatMap(\.cards) }
+    /// Every open seat (running, waiting on you, or on stage) in strip order:
+    /// what ⌘1–9 jump to.
+    private var openSeatCards: [TerminalCard] {
+        store.openSeatCards(
+            in: boardVM.allTerminals, root: scopeRoot, stage: stage, running: boardVM.activeSessionCards,
+            ringing: tabManager.needsAttention)
+    }
 
     /// Seats that rang, oldest first, including ones already on stage: a chip
     /// for one of those focuses its pane.

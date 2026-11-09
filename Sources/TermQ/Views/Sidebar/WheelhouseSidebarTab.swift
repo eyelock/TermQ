@@ -17,22 +17,21 @@ struct WheelhouseSidebarTab: View {
     @ObservedObject private var stage: WheelhouseStage = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var tabManager: TabManager = BoardViewModel.shared.tabManager
-    @AppStorage("wheelhouse.selected") private var selectedRoot: String = ""
     @State private var collapsed: Set<String> = []
     @State private var showingAdd = false
 
     private var roots: [String] { worktreeViewModel.repositories.map(\.path) }
 
     private var visibleWheelhouses: [Wheelhouse] {
-        guard !selectedRoot.isEmpty else {
+        guard !stage.selectedRoot.isEmpty else {
             return stage.focusMode ? Array(store.wheelhouses.prefix(1)) : store.wheelhouses
         }
-        let match = store.wheelhouses.filter { $0.root == selectedRoot }
+        let match = store.wheelhouses.filter { $0.root == stage.selectedRoot }
         return match.isEmpty ? store.wheelhouses : match
     }
 
     private var selectedTitle: String {
-        if let match = store.wheelhouses.first(where: { $0.root == selectedRoot }) { return match.title }
+        if let match = store.wheelhouses.first(where: { $0.root == stage.selectedRoot }) { return match.title }
         if stage.focusMode, let first = store.wheelhouses.first { return first.title }
         return Strings.Wheelhouse.allWheelhouses
     }
@@ -74,7 +73,7 @@ struct WheelhouseSidebarTab: View {
                 Group {
                     if !stage.focusMode {
                         Button {
-                            selectedRoot = ""
+                            stage.selectedRoot = ""
                         } label: {
                             Label(Strings.Wheelhouse.allWheelhouses, systemImage: WheelhouseMenuIcon.allWheelhouses)
                         }
@@ -82,7 +81,7 @@ struct WheelhouseSidebarTab: View {
                     }
                     ForEach(store.wheelhouses) { wheelhouse in
                         Button {
-                            selectedRoot = wheelhouse.root
+                            stage.selectedRoot = wheelhouse.root
                         } label: {
                             Label(wheelhouse.title, systemImage: WheelhouseMenuIcon.wheelhouse)
                         }
@@ -137,7 +136,7 @@ struct WheelhouseSidebarTab: View {
         guard WheelhouseLoader.isWheelhouse(root: root) else {
             return Strings.Wheelhouse.notAWheelhouse(URL(fileURLWithPath: root).lastPathComponent)
         }
-        selectedRoot = root
+        stage.selectedRoot = root
         guard !roots.contains(where: { URL(fileURLWithPath: $0).standardizedFileURL.path == root }) else {
             store.refresh(roots: roots)
             return nil

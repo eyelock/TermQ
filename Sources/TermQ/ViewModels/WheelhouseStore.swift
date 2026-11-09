@@ -236,6 +236,49 @@ final class WheelhouseStore: ObservableObject {
         }
     }
 
+    /// The open seats among `cards` (on stage, running, or ringing), limited
+    /// to `root`, in the tab strip's order: what ⌘1–9 jump to on the stage.
+    func openSeatCards(
+        in cards: [TerminalCard], root: String?, stage: WheelhouseStage, running: Set<UUID>, ringing: Set<UUID>
+    ) -> [TerminalCard] {
+        // A card that survived a relaunch with nothing running isn't open.
+        let open = seatCards(in: cards, root: root).filter { card in
+            stage.isOnStage(card.id) || running.contains(card.id) || ringing.contains(card.id)
+        }
+        return Self.stripOrder(open, wheelhouses: wheelhouses)
+    }
+
+    /// The Window menu's ⌘1–9 items on the stage: the first nine open seats,
+    /// by seat name.
+    nonisolated static func stageMenuItems(_ cards: [TerminalCard], wheelhouses: [Wheelhouse]) -> [OpenTerminalItem] {
+        cards.prefix(9).map { card in
+            let name = seat(for: card, tagKey: WheelhouseCardMatcher.seatTagKey, in: wheelhouses)?.seat.name
+            return OpenTerminalItem(id: card.id, title: name ?? card.title, isFavourite: false)
+        }
+    }
+
+    /// Seat cards by Wheelhouse in sidebar order, then desk first, then crew,
+    /// standing and workers, each in roster order. Cards that aren't seats
+    /// are left out.
+    nonisolated static func stripOrder(_ cards: [TerminalCard], wheelhouses: [Wheelhouse]) -> [TerminalCard] {
+        struct Keyed {
+            let card: TerminalCard
+            let wheelhouseOrder: Int
+            let group: Int
+            let order: Int
+        }
+        return cards.compactMap { card -> Keyed? in
+            guard let found = seat(for: card, tagKey: WheelhouseCardMatcher.seatTagKey, in: wheelhouses) else {
+                return nil
+            }
+            let wheelhouseOrder = wheelhouses.firstIndex { $0.root == found.wheelhouse.root } ?? 0
+            let order = found.wheelhouse.seats.firstIndex { $0.command == found.seat.command } ?? 0
+            return Keyed(card: card, wheelhouseOrder: wheelhouseOrder, group: found.seat.group.sortOrder, order: order)
+        }
+        .sorted { ($0.wheelhouseOrder, $0.group, $0.order) < ($1.wheelhouseOrder, $1.group, $1.order) }
+        .map(\.card)
+    }
+
     /// Seat cards among `cards`, limited to `root` when given.
     func seatCards(in cards: [TerminalCard], root: String? = nil) -> [TerminalCard] {
         cards.filter { card in

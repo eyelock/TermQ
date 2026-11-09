@@ -16,6 +16,13 @@ final class WheelhouseStage: ObservableObject {
         didSet { defaults.set(focusMode, forKey: Self.focusModeKey) }
     }
 
+    static let selectedRootKey = "wheelhouse.selected"
+
+    /// The Wheelhouse picked in the sidebar, or "" for all of them.
+    @Published var selectedRoot: String {
+        didSet { defaults.set(selectedRoot, forKey: Self.selectedRootKey) }
+    }
+
     /// The general terminal selected when the stage came up, to return to
     /// when it goes away. Not published: only read on that change.
     var cardBeforeStage: UUID?
@@ -48,6 +55,18 @@ final class WheelhouseStage: ObservableObject {
             .compactMap { UUID(uuidString: String($0)) }
         self.layout = WheelhouseStageLayout(pinned: pinned, focused: pinned.first, anchor: Self.inboxEntry)
         self.focusMode = defaults.bool(forKey: Self.focusModeKey)
+        self.selectedRoot = defaults.string(forKey: Self.selectedRootKey) ?? ""
+    }
+
+    /// The Wheelhouse whose seats the stage shows: the one picked, else the
+    /// first in focus mode, else nil for all of them.
+    func scopeRoot(in wheelhouses: [Wheelhouse]) -> String? {
+        Self.scopeRoot(selected: selectedRoot, focusMode: focusMode, wheelhouses: wheelhouses)
+    }
+
+    nonisolated static func scopeRoot(selected: String, focusMode: Bool, wheelhouses: [Wheelhouse]) -> String? {
+        if !selected.isEmpty, wheelhouses.contains(where: { $0.root == selected }) { return selected }
+        return focusMode ? wheelhouses.first?.root : nil
     }
 
     var visible: [UUID] { layout.visible }
