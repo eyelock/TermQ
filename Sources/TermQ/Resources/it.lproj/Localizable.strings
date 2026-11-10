@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "bozza";
 "remote.prs.badge.review" = "revisione";
 "remote.prs.checking.out %lld" = "Estrazione della PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Estrai come worktree";
+"remote.prs.checkout.as.worktree" = "Esegui il checkout di questa PR";
 "remote.prs.checkout.toast %@" = "Estratto come %@.";
 "remote.prs.clear.default.focus" = "Cancella focus predefinito";
 "remote.prs.copy.branch.name" = "Copia nome branch";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "aperto in un terminale";
 "remote.prs.prune.reason.orphan" = "cartella rimasta";
 "remote.prs.prune.failed %@" = "Impossibile rimuovere: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Rimuovi copia di revisione";
+"remote.prs.remove.review.checkout.title" = "Rimuovere questa copia di revisione?";
+"remote.prs.remove.review.checkout.dirty" = "Contiene modifiche o commit che non sono nella pull request. Rimuovendola verranno eliminati.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Checkout eseguito, ma le modifiche della copia di revisione non sono state applicate e restano in %@. %@";
+"remote.prs.review.kept.changed %@" = "Checkout eseguito. %@ è cambiata durante la copia, quindi è stata mantenuta.";
+"remote.prs.review.kept.commits %@" = "Checkout eseguito. %@ ha commit che non sono nella pull request, quindi è stata mantenuta.";
+"remote.prs.review.kept.in.use %@" = "%@ è aperta in un terminale, quindi è stata mantenuta.";

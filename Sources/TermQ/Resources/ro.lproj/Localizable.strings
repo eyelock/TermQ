@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "ciornă";
 "remote.prs.badge.review" = "revizuire";
 "remote.prs.checking.out %lld" = "Extragere PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Extrage ca worktree";
+"remote.prs.checkout.as.worktree" = "Extrage acest PR";
 "remote.prs.checkout.toast %@" = "Extras ca %@.";
 "remote.prs.clear.default.focus" = "Șterge focusul implicit";
 "remote.prs.copy.branch.name" = "Copiază numele ramificației";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "deschis într-un terminal";
 "remote.prs.prune.reason.orphan" = "dosar rămas";
 "remote.prs.prune.failed %@" = "Nu s-a putut elimina: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Elimină copia de revizuire";
+"remote.prs.remove.review.checkout.title" = "Elimini această copie de revizuire?";
+"remote.prs.remove.review.checkout.dirty" = "Are modificări sau commituri care nu sunt în pull request. Eliminarea le va șterge.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Extras, dar modificările din copia de revizuire nu au putut fi aplicate, așa că sunt încă în %@. %@";
+"remote.prs.review.kept.changed %@" = "Extras. %@ s-a modificat în timpul copierii, așa că a fost păstrată.";
+"remote.prs.review.kept.commits %@" = "Extras. %@ are commituri care nu sunt în pull request, așa că a fost păstrată.";
+"remote.prs.review.kept.in.use %@" = "%@ este deschisă într-un terminal, așa că a fost păstrată.";

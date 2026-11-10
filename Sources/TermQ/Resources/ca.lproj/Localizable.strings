@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "esborrany";
 "remote.prs.badge.review" = "revisió";
 "remote.prs.checking.out %lld" = "S'extreu el PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Extreu com a worktree";
+"remote.prs.checkout.as.worktree" = "Obtén aquest PR";
 "remote.prs.checkout.toast %@" = "Extret com a %@.";
 "remote.prs.clear.default.focus" = "Esborra el focus per defecte";
 "remote.prs.copy.branch.name" = "Copia el nom de la branca";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "obert en un terminal";
 "remote.prs.prune.reason.orphan" = "carpeta abandonada";
 "remote.prs.prune.failed %@" = "No s'ha pogut eliminar: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Elimina la còpia de revisió";
+"remote.prs.remove.review.checkout.title" = "Vols eliminar aquesta còpia de revisió?";
+"remote.prs.remove.review.checkout.dirty" = "Té canvis o commits que no són a la pull request. Si l'elimines, s'esborraran.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "S'ha obtingut, però els canvis de la còpia de revisió no s'han pogut aplicar, així que encara són a %@. %@";
+"remote.prs.review.kept.changed %@" = "S'ha obtingut. %@ ha canviat mentre es copiava, així que s'ha conservat.";
+"remote.prs.review.kept.commits %@" = "S'ha obtingut. %@ té commits que no són a la pull request, així que s'ha conservat.";
+"remote.prs.review.kept.in.use %@" = "%@ està oberta en un terminal, així que s'ha conservat.";

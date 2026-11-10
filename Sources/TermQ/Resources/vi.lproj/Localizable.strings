@@ -1320,7 +1320,7 @@
 "remote.prs.badge.draft" = "bản nháp";
 "remote.prs.badge.review" = "xem xét";
 "remote.prs.checking.out %lld" = "Đang lấy PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Lấy về dưới dạng worktree";
+"remote.prs.checkout.as.worktree" = "Checkout PR này";
 "remote.prs.checkout.toast %@" = "Đã lấy về dưới dạng %@.";
 "remote.prs.clear.default.focus" = "Xóa tiêu điểm mặc định";
 "remote.prs.copy.branch.name" = "Sao chép tên nhánh";
@@ -1696,3 +1696,14 @@
 "remote.prs.prune.reason.in.use" = "đang mở trong terminal";
 "remote.prs.prune.reason.orphan" = "thư mục còn sót lại";
 "remote.prs.prune.failed %@" = "Không thể xóa: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Xóa bản checkout để review";
+"remote.prs.remove.review.checkout.title" = "Xóa bản checkout review này?";
+"remote.prs.remove.review.checkout.dirty" = "Có thay đổi hoặc commit không nằm trong pull request. Xóa sẽ mất chúng.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Đã checkout, nhưng không áp dụng được thay đổi từ bản checkout review nên chúng vẫn nằm trong %@. %@";
+"remote.prs.review.kept.changed %@" = "Đã checkout. %@ đã thay đổi trong lúc sao chép nên được giữ lại.";
+"remote.prs.review.kept.commits %@" = "Đã checkout. %@ có commit không nằm trong pull request nên được giữ lại.";
+"remote.prs.review.kept.in.use %@" = "%@ đang mở trong terminal nên được giữ lại.";

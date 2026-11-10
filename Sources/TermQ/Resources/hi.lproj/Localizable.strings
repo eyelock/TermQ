@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "मसौदा";
 "remote.prs.badge.review" = "समीक्षा";
 "remote.prs.checking.out %lld" = "PR #%lld प्राप्त किया जा रहा है…";
-"remote.prs.checkout.as.worktree" = "worktree के रूप में प्राप्त करें";
+"remote.prs.checkout.as.worktree" = "यह PR चेकआउट करें";
 "remote.prs.checkout.toast %@" = "%@ के रूप में प्राप्त किया गया।";
 "remote.prs.clear.default.focus" = "डिफ़ॉल्ट फ़ोकस साफ़ करें";
 "remote.prs.copy.branch.name" = "शाखा नाम कॉपी करें";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "टर्मिनल में खुला है";
 "remote.prs.prune.reason.orphan" = "बचा हुआ फ़ोल्डर";
 "remote.prs.prune.failed %@" = "हटाया नहीं जा सका: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "समीक्षा प्रति हटाएँ";
+"remote.prs.remove.review.checkout.title" = "यह समीक्षा प्रति हटाएँ?";
+"remote.prs.remove.review.checkout.dirty" = "इसमें ऐसे बदलाव या commits हैं जो pull request में नहीं हैं। इसे हटाने से वे मिट जाएँगे।";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "चेकआउट हो गया, लेकिन समीक्षा प्रति के बदलाव लागू नहीं हो सके, इसलिए वे अभी भी %@ में हैं। %@";
+"remote.prs.review.kept.changed %@" = "चेकआउट हो गया। कॉपी होते समय %@ बदल गया, इसलिए उसे रखा गया।";
+"remote.prs.review.kept.commits %@" = "चेकआउट हो गया। %@ में ऐसे commits हैं जो pull request में नहीं हैं, इसलिए उसे रखा गया।";
+"remote.prs.review.kept.in.use %@" = "%@ एक टर्मिनल में खुला है, इसलिए उसे रखा गया।";

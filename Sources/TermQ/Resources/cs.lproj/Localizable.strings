@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "návrh";
 "remote.prs.badge.review" = "recenze";
 "remote.prs.checking.out %lld" = "Odbočení PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Odbočit jako worktree";
+"remote.prs.checkout.as.worktree" = "Načíst tento PR";
 "remote.prs.checkout.toast %@" = "Odbočeno jako %@.";
 "remote.prs.clear.default.focus" = "Vymazat výchozí fokus";
 "remote.prs.copy.branch.name" = "Zkopírovat název větve";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "otevřeno v terminálu";
 "remote.prs.prune.reason.orphan" = "zbylá složka";
 "remote.prs.prune.failed %@" = "Nelze odstranit: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Odstranit kontrolní kopii";
+"remote.prs.remove.review.checkout.title" = "Odstranit tuto kontrolní kopii?";
+"remote.prs.remove.review.checkout.dirty" = "Obsahuje změny nebo commity, které nejsou v pull requestu. Odstraněním je smažete.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Načteno, ale změny z kontrolní kopie nešly použít, takže zůstávají v %@. %@";
+"remote.prs.review.kept.changed %@" = "Načteno. %@ se během kopírování změnila, proto byla zachována.";
+"remote.prs.review.kept.commits %@" = "Načteno. %@ obsahuje commity, které nejsou v pull requestu, proto byla zachována.";
+"remote.prs.review.kept.in.use %@" = "%@ je otevřená v terminálu, proto byla zachována.";

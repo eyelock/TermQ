@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "черновик";
 "remote.prs.badge.review" = "ревью";
 "remote.prs.checking.out %lld" = "Извлечение PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Извлечь как worktree";
+"remote.prs.checkout.as.worktree" = "Извлечь этот PR";
 "remote.prs.checkout.toast %@" = "Извлечено как %@.";
 "remote.prs.clear.default.focus" = "Очистить фокус по умолчанию";
 "remote.prs.copy.branch.name" = "Копировать имя ветки";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "открыт в терминале";
 "remote.prs.prune.reason.orphan" = "оставшаяся папка";
 "remote.prs.prune.failed %@" = "Не удалось удалить: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Удалить копию для ревью";
+"remote.prs.remove.review.checkout.title" = "Удалить эту копию для ревью?";
+"remote.prs.remove.review.checkout.dirty" = "В ней есть изменения или коммиты, которых нет в pull request. При удалении они будут потеряны.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "PR извлечён, но изменения из копии для ревью применить не удалось, поэтому они остались в %@. %@";
+"remote.prs.review.kept.changed %@" = "PR извлечён. %@ изменилась во время копирования, поэтому она сохранена.";
+"remote.prs.review.kept.commits %@" = "PR извлечён. В %@ есть коммиты, которых нет в pull request, поэтому она сохранена.";
+"remote.prs.review.kept.in.use %@" = "%@ открыта в терминале, поэтому она сохранена.";

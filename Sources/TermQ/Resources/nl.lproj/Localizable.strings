@@ -1317,7 +1317,7 @@
 "remote.prs.badge.draft" = "concept";
 "remote.prs.badge.review" = "beoordeling";
 "remote.prs.checking.out %lld" = "PR #%lld uitchecken…";
-"remote.prs.checkout.as.worktree" = "Uitchecken als worktree";
+"remote.prs.checkout.as.worktree" = "Deze PR uitchecken";
 "remote.prs.checkout.toast %@" = "Uitgecheckt als %@.";
 "remote.prs.clear.default.focus" = "Standaardfocus wissen";
 "remote.prs.copy.branch.name" = "Branch-naam kopiëren";
@@ -1693,3 +1693,14 @@
 "remote.prs.prune.reason.in.use" = "open in een terminal";
 "remote.prs.prune.reason.orphan" = "achtergebleven map";
 "remote.prs.prune.failed %@" = "Kon niet verwijderen: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Reviewkopie verwijderen";
+"remote.prs.remove.review.checkout.title" = "Deze reviewkopie verwijderen?";
+"remote.prs.remove.review.checkout.dirty" = "Er zijn wijzigingen of commits die niet in de pull request staan. Verwijderen wist ze.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Uitgecheckt, maar de wijzigingen uit de reviewkopie konden niet worden toegepast en staan nog in %@. %@";
+"remote.prs.review.kept.changed %@" = "Uitgecheckt. %@ is tijdens het kopiëren gewijzigd en is daarom bewaard.";
+"remote.prs.review.kept.commits %@" = "Uitgecheckt. %@ bevat commits die niet in de pull request staan en is daarom bewaard.";
+"remote.prs.review.kept.in.use %@" = "%@ is open in een terminal en is daarom bewaard.";

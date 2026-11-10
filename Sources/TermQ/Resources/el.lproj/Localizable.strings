@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "πρόχειρο";
 "remote.prs.badge.review" = "αναθεώρηση";
 "remote.prs.checking.out %lld" = "Λήψη PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Λήψη ως worktree";
+"remote.prs.checkout.as.worktree" = "Ανάκτηση αυτού του PR";
 "remote.prs.checkout.toast %@" = "Ελήφθη ως %@.";
 "remote.prs.clear.default.focus" = "Εκκαθάριση προεπιλεγμένης εστίασης";
 "remote.prs.copy.branch.name" = "Αντιγραφή ονόματος κλάδου";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "ανοιχτό σε τερματικό";
 "remote.prs.prune.reason.orphan" = "φάκελος που απέμεινε";
 "remote.prs.prune.failed %@" = "Δεν ήταν δυνατή η αφαίρεση: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Αφαίρεση αντιγράφου αναθεώρησης";
+"remote.prs.remove.review.checkout.title" = "Αφαίρεση αυτού του αντιγράφου αναθεώρησης;";
+"remote.prs.remove.review.checkout.dirty" = "Περιέχει αλλαγές ή commits που δεν υπάρχουν στο pull request. Η αφαίρεσή του τα διαγράφει.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Έγινε ανάκτηση, αλλά οι αλλαγές του αντιγράφου αναθεώρησης δεν εφαρμόστηκαν, οπότε παραμένουν στο %@. %@";
+"remote.prs.review.kept.changed %@" = "Έγινε ανάκτηση. Το %@ άλλαξε κατά την αντιγραφή, οπότε διατηρήθηκε.";
+"remote.prs.review.kept.commits %@" = "Έγινε ανάκτηση. Το %@ έχει commits που δεν υπάρχουν στο pull request, οπότε διατηρήθηκε.";
+"remote.prs.review.kept.in.use %@" = "Το %@ είναι ανοιχτό σε τερματικό, οπότε διατηρήθηκε.";

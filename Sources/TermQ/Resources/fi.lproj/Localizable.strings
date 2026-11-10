@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "luonnos";
 "remote.prs.badge.review" = "katsaus";
 "remote.prs.checking.out %lld" = "Kaivetaan PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Kaiva worktreeksi";
+"remote.prs.checkout.as.worktree" = "Hae tämä PR";
 "remote.prs.checkout.toast %@" = "Kaivettu nimellä %@.";
 "remote.prs.clear.default.focus" = "Tyhjennä oletustarkennus";
 "remote.prs.copy.branch.name" = "Kopioi haaran nimi";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "auki päätteessä";
 "remote.prs.prune.reason.orphan" = "jäljelle jäänyt kansio";
 "remote.prs.prune.failed %@" = "Ei voitu poistaa: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Poista tarkistuskopio";
+"remote.prs.remove.review.checkout.title" = "Poistetaanko tämä tarkistuskopio?";
+"remote.prs.remove.review.checkout.dirty" = "Siinä on muutoksia tai committeja, jotka eivät ole pull requestissa. Poistaminen poistaa ne.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Haettu, mutta tarkistuskopion muutoksia ei voitu ottaa käyttöön, joten ne ovat yhä kohteessa %@. %@";
+"remote.prs.review.kept.changed %@" = "Haettu. %@ muuttui kopioinnin aikana, joten se säilytettiin.";
+"remote.prs.review.kept.commits %@" = "Haettu. Kohteessa %@ on committeja, jotka eivät ole pull requestissa, joten se säilytettiin.";
+"remote.prs.review.kept.in.use %@" = "%@ on auki päätteessä, joten se säilytettiin.";

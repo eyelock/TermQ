@@ -1317,7 +1317,7 @@
 "remote.prs.badge.draft" = "draf";
 "remote.prs.badge.review" = "ulasan";
 "remote.prs.checking.out %lld" = "Mengambil PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Ambil sebagai worktree";
+"remote.prs.checkout.as.worktree" = "Daftar keluar PR ini";
 "remote.prs.checkout.toast %@" = "Diambil sebagai %@.";
 "remote.prs.clear.default.focus" = "Kosongkan fokus lalai";
 "remote.prs.copy.branch.name" = "Salin nama cawangan";
@@ -1693,3 +1693,14 @@
 "remote.prs.prune.reason.in.use" = "dibuka dalam terminal";
 "remote.prs.prune.reason.orphan" = "folder tertinggal";
 "remote.prs.prune.failed %@" = "Tidak dapat dibuang: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Buang Salinan Semakan";
+"remote.prs.remove.review.checkout.title" = "Buang salinan semakan ini?";
+"remote.prs.remove.review.checkout.dirty" = "Terdapat perubahan atau commit yang tiada dalam pull request. Membuangnya akan memadamkannya.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Berjaya didaftar keluar, tetapi perubahan salinan semakan tidak dapat digunakan, jadi ia masih dalam %@. %@";
+"remote.prs.review.kept.changed %@" = "Berjaya didaftar keluar. %@ berubah semasa disalin, jadi ia disimpan.";
+"remote.prs.review.kept.commits %@" = "Berjaya didaftar keluar. %@ mempunyai commit yang tiada dalam pull request, jadi ia disimpan.";
+"remote.prs.review.kept.in.use %@" = "%@ dibuka dalam terminal, jadi ia disimpan.";

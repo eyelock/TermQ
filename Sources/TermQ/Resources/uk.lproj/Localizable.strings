@@ -1319,7 +1319,7 @@
 "remote.prs.badge.draft" = "чернетка";
 "remote.prs.badge.review" = "огляд";
 "remote.prs.checking.out %lld" = "Отримання PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Отримати як worktree";
+"remote.prs.checkout.as.worktree" = "Отримати цей PR";
 "remote.prs.checkout.toast %@" = "Отримано як %@.";
 "remote.prs.clear.default.focus" = "Очистити стандартний фокус";
 "remote.prs.copy.branch.name" = "Скопіювати назву гілки";
@@ -1695,3 +1695,14 @@
 "remote.prs.prune.reason.in.use" = "відкрито в терміналі";
 "remote.prs.prune.reason.orphan" = "залишена тека";
 "remote.prs.prune.failed %@" = "Не вдалося видалити: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Видалити копію для рев’ю";
+"remote.prs.remove.review.checkout.title" = "Видалити цю копію для рев’ю?";
+"remote.prs.remove.review.checkout.dirty" = "Вона містить зміни або коміти, яких немає в pull request. Видалення їх знищить.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "PR отримано, але зміни з копії для рев’ю не вдалося застосувати, тож вони лишилися в %@. %@";
+"remote.prs.review.kept.changed %@" = "PR отримано. %@ змінилася під час копіювання, тому її збережено.";
+"remote.prs.review.kept.commits %@" = "PR отримано. У %@ є коміти, яких немає в pull request, тому її збережено.";
+"remote.prs.review.kept.in.use %@" = "%@ відкрита в терміналі, тому її збережено.";

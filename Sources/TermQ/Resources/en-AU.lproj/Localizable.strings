@@ -1310,7 +1310,7 @@
 "remote.prs.badge.draft" = "draft";
 "remote.prs.badge.review" = "review";
 "remote.prs.checking.out %lld" = "Checking out PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Checkout as Worktree";
+"remote.prs.checkout.as.worktree" = "Checkout this PR";
 "remote.prs.checkout.toast %@" = "Checked out as %@.";
 "remote.prs.clear.default.focus" = "Clear Default Focus";
 "remote.prs.copy.branch.name" = "Copy Branch Name";
@@ -1686,3 +1686,14 @@
 "remote.prs.prune.reason.in.use" = "open in a terminal";
 "remote.prs.prune.reason.orphan" = "folder left behind";
 "remote.prs.prune.failed %@" = "Couldn't remove: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Remove Review Checkout";
+"remote.prs.remove.review.checkout.title" = "Remove this review checkout?";
+"remote.prs.remove.review.checkout.dirty" = "It has changes or commits that aren't in the pull request. Removing it deletes them.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Checked out, but the review checkout's changes didn't apply, so they are still in %@. %@";
+"remote.prs.review.kept.changed %@" = "Checked out. %@ changed while it was being copied, so it was kept.";
+"remote.prs.review.kept.commits %@" = "Checked out. %@ has commits that aren't in the pull request, so it was kept.";
+"remote.prs.review.kept.in.use %@" = "%@ is open in a terminal, so it was kept.";
