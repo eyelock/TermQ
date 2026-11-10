@@ -988,17 +988,218 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         XCTAssertTrue(focus.isEmpty)
     }
 
-    func testCollectPRPruneCandidates_focusWorktreesAreAlwaysCandidates() async {
+    func testCollectPRPruneCandidates_focusWorktreesAreCandidatesWithTheirPRState() async {
+        let mock = MockGitService()
+        let prService = makeReadyPRService(openPRsJSON: openPRJSON(number: 7))
+        let vm = makeVM(gitService: mock, prService: prService)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let repo = makeRepo()
+        let open = base.appendingPathComponent("termq-focus--test-repo--feat--7").path
+        let closed = base.appendingPathComponent("termq-focus--test-repo--fix--9").path
+        mock.listWorktreesResult = [makeWorktree(path: open), makeWorktree(path: closed)]
+
+        let (closedPRs, focus) = await vm.collectPRPruneCandidates(
+            repo: repo, prService: prService, cardDirectories: [open + "/Sources"])
+
+        XCTAssertTrue(closedPRs.isEmpty)
+        XCTAssertEqual(focus.map(\.prNumber), [7, 9])
+        XCTAssertEqual(focus.map(\.prState), [.open, .closed])
+        XCTAssertEqual(focus.map(\.hasOpenTerminal), [true, false])
+        XCTAssertEqual(focus.map(\.canPrune), [false, true])
+    }
+
+    func testCollectPRPruneCandidates_includesFoldersGitNoLongerLists() async throws {
         let mock = MockGitService()
         let prService = makeReadyPRService(openPRsJSON: "[]")
         let vm = makeVM(gitService: mock, prService: prService)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
         let repo = makeRepo()
-        vm.focusWorktrees[repo.id] = [makeWorktree(path: "/tmp/.termq/focus-worktrees/termq-focus--x")]
+        let orphan = base.appendingPathComponent("termq-focus--test-repo--old--3")
+        let otherRepo = base.appendingPathComponent("termq-focus--other-repo--old--4")
+        try FileManager.default.createDirectory(at: orphan, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: otherRepo, withIntermediateDirectories: true)
 
-        let (closed, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
+        let (_, focus) = await vm.collectPRPruneCandidates(repo: repo, prService: prService)
 
-        XCTAssertTrue(closed.isEmpty)
-        XCTAssertEqual(focus.map(\.path), ["/tmp/.termq/focus-worktrees/termq-focus--x"])
+        XCTAssertEqual(focus.map(\.path), [orphan.standardizedFileURL.path])
+        XCTAssertEqual(focus.first?.isOrphan, true)
+    }
+
+    func testPruneFocusWorktrees_removesFoldersAndSkipsOnesInUse() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let repo = makeRepo()
+        let gone = base.appendingPathComponent("termq-focus--test-repo--a--1")
+        let inUse = base.appendingPathComponent("termq-focus--test-repo--b--2")
+        try FileManager.default.createDirectory(at: gone, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: inUse, withIntermediateDirectories: true)
+        // Git refusing a dirty worktree must not stop the folder going.
+        mock.forceDeleteWorktreeError = NSError(domain: "git", code: 1)
+        mock.listWorktreesResult = [makeWorktree(path: gone.path)]
+
+        let failures = await vm.pruneFocusWorktrees(
+            repo: repo,
+            candidates: [
+                FocusWorktreeCandidate(path: gone.path, prNumber: 1, isDirty: true),
+                FocusWorktreeCandidate(path: inUse.path, prNumber: 2, hasOpenTerminal: true, isOrphan: true),
+            ])
+
+        XCTAssertEqual(failures, [])
+        XCTAssertFalse(FileManager.default.fileExists(atPath: gone.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: inUse.path))
+        XCTAssertTrue(mock.pruneWorktreesCalled)
+        // The branch an older, branch-making checkout left behind is cleared too.
+        XCTAssertEqual(mock.deleteLocalBranchCalls, ["feat/test"])
+    }
+
+    func testPruneFocusWorktrees_refusesPathsOutsideTheReviewFolder() async throws {
+        let vm = makeVM()
+        vm.reviewCheckoutBase = makeReviewBase()
+        let repo = makeRepo()
+        let outside = FileManager.default.temporaryDirectory
+            .appendingPathComponent("termq-focus--test-repo--x--5-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: outside, withIntermediateDirectories: true)
+        addTeardownBlock { try? FileManager.default.removeItem(at: outside) }
+
+        let failures = await vm.pruneFocusWorktrees(
+            repo: repo, candidates: [FocusWorktreeCandidate(path: outside.path, isOrphan: true)])
+
+        XCTAssertEqual(failures.count, 1)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: outside.path))
+    }
+
+    func testAutoPruneReviewCheckouts_removesOnlyClosedCleanUnusedListedOnes() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let repo = makeRepo()
+        let closedClean = try makeGitFolder(base.appendingPathComponent("termq-focus--test-repo--a--1"))
+        let openClean = try makeGitFolder(base.appendingPathComponent("termq-focus--test-repo--b--2"))
+        let closedDirty = try makeGitFolder(base.appendingPathComponent("termq-focus--test-repo--c--3"))
+        try Data("x".utf8).write(to: closedDirty.appendingPathComponent("new.txt"))
+        let closedInUse = try makeGitFolder(base.appendingPathComponent("termq-focus--test-repo--d--4"))
+        let orphan = base.appendingPathComponent("termq-focus--test-repo--e--5")
+        try FileManager.default.createDirectory(at: orphan, withIntermediateDirectories: true)
+        mock.listWorktreesResult = [closedClean, openClean, closedDirty, closedInUse].map {
+            makeWorktree(path: $0.path)
+        }
+
+        await vm.autoPruneReviewCheckouts(
+            repo: repo, openPRs: [makePR(number: 2)], listIsComplete: true,
+            cardDirectories: { [closedInUse.path] })
+
+        XCTAssertFalse(FileManager.default.fileExists(atPath: closedClean.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: openClean.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: closedDirty.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: closedInUse.path))
+        // A folder git doesn't list waits for the Prune sheet.
+        XCTAssertTrue(FileManager.default.fileExists(atPath: orphan.path))
+    }
+
+    func testReviewCheckoutCandidates_unreadableCheckoutCountsAsDirty() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let broken = base.appendingPathComponent("termq-focus--test-repo--a--1")
+        try FileManager.default.createDirectory(at: broken, withIntermediateDirectories: true)
+        mock.listWorktreesResult = [makeWorktree(path: broken.path)]
+
+        let candidates = await vm.reviewCheckoutCandidates(
+            repo: makeRepo(), openPRNumbers: [], listIsComplete: true, cardDirectories: [])
+
+        XCTAssertEqual(candidates?.first?.isDirty, true)
+    }
+
+    func testReviewCheckoutCandidates_nothingWhenGitCannotList() async {
+        let mock = MockGitService()
+        mock.listWorktreesError = NSError(domain: "git", code: 1)
+        let vm = makeVM(gitService: mock)
+        vm.reviewCheckoutBase = makeReviewBase()
+
+        let candidates = await vm.reviewCheckoutCandidates(
+            repo: makeRepo(), openPRNumbers: [], listIsComplete: true, cardDirectories: [])
+
+        XCTAssertNil(candidates)
+    }
+
+    func testPruneFocusWorktrees_rechecksUseRightBeforeRemoving() async throws {
+        let vm = makeVM()
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let folder = base.appendingPathComponent("termq-focus--test-repo--a--1")
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+
+        _ = await vm.pruneFocusWorktrees(
+            repo: makeRepo(), candidates: [FocusWorktreeCandidate(path: folder.path, isOrphan: true)],
+            isInUse: { _ in true })
+
+        XCTAssertTrue(FileManager.default.fileExists(atPath: folder.path))
+    }
+
+    func testPruneFocusWorktrees_reportsLockedWorktreesInsteadOfRemoving() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let folder = base.appendingPathComponent("termq-focus--test-repo--a--1")
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        mock.listWorktreesResult = [
+            GitWorktree(path: folder.path, branch: nil, commitHash: "abc", isMainWorktree: false, isLocked: true)
+        ]
+
+        let failures = await vm.pruneFocusWorktrees(
+            repo: makeRepo(), candidates: [FocusWorktreeCandidate(path: folder.path)])
+
+        XCTAssertEqual(failures.count, 1)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: folder.path))
+    }
+
+    func testAutoPruneReviewCheckouts_keepsEverythingWhenTheListWasCutShort() async throws {
+        let mock = MockGitService()
+        let vm = makeVM(gitService: mock)
+        let base = makeReviewBase()
+        vm.reviewCheckoutBase = base
+        let repo = makeRepo()
+        let orphan = try makeGitFolder(base.appendingPathComponent("termq-focus--test-repo--a--1"))
+
+        mock.listWorktreesResult = [makeWorktree(path: orphan.path)]
+        await vm.autoPruneReviewCheckouts(repo: repo, openPRs: [], listIsComplete: false, cardDirectories: { [] })
+
+        XCTAssertTrue(FileManager.default.fileExists(atPath: orphan.path))
+    }
+
+    /// A folder that is its own empty git repository, so `git status` reads it as clean.
+    private func makeGitFolder(_ url: URL) throws -> URL {
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        let git = Process()
+        git.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        git.arguments = ["-C", url.path, "init", "-q"]
+        try git.run()
+        git.waitUntilExit()
+        return url
+    }
+
+    private func makeReviewBase() -> URL {
+        let base = FileManager.default.temporaryDirectory
+            .appendingPathComponent("review-checkouts-\(UUID().uuidString)", isDirectory: true)
+        try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
+        addTeardownBlock { try? FileManager.default.removeItem(at: base) }
+        return base
+    }
+
+    private func makePR(number: Int) -> GitHubPR {
+        let json = """
+            {"number": \(number), "title": "PR", "headRefName": "feat/\(number)", "headRefOid": "abc",
+             "author": {"login": "alice"}, "isCrossRepository": false, "isDraft": false}
+            """
+        // swiftlint:disable:next force_try
+        return try! JSONDecoder().decode(GitHubPR.self, from: Data(json.utf8))
     }
 
     func testCollectPRPruneCandidates_nothingToPrune_returnsEmpty() async {

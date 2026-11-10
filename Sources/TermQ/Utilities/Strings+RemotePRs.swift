@@ -116,6 +116,13 @@ extension Strings {
         static var pruneRemove: String { localized("remote.prs.prune.remove") }
         static var pruneReasonDirty: String { localized("remote.prs.prune.reason.dirty") }
         static var pruneReasonAhead: String { localized("remote.prs.prune.reason.ahead") }
+        static var pruneReasonPROpen: String { localized("remote.prs.prune.reason.pr.open") }
+        static var pruneReasonPRClosed: String { localized("remote.prs.prune.reason.pr.closed") }
+        static var pruneReasonInUse: String { localized("remote.prs.prune.reason.in.use") }
+        static var pruneReasonOrphan: String { localized("remote.prs.prune.reason.orphan") }
+        static func pruneFailed(_ names: String) -> String {
+            String(format: localized("remote.prs.prune.failed %@"), names)
+        }
     }
 }
 

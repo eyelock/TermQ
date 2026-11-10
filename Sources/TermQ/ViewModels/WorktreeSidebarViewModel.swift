@@ -45,6 +45,8 @@ final class WorktreeSidebarViewModel: ObservableObject {
     @Published var repositories: [ObservableRepository] = []
     @Published var worktrees: [UUID: [GitWorktree]] = [:]
     @Published var focusWorktrees: [UUID: [GitWorktree]] = [:]
+    /// Where review checkouts live. Tests point this at a temporary folder.
+    var reviewCheckoutBase: URL = ReviewCheckouts.baseDirectory()
     @Published var availableBranches: [UUID: [String]] = [:]
     /// Stack graphs keyed by repo id, mirroring `worktrees`. Populated only for repos
     /// where a `StackProvider` is available and stacking has been enabled.
@@ -733,12 +735,15 @@ extension WorktreeSidebarViewModel {
     }
 
     /// Force-refresh `repo`'s PRs, then collect everything in it that's prunable:
-    /// worktrees checked out for PRs that are no longer open, and "Run with Focus"
-    /// review worktrees (always prunable — they're ephemeral by design). Shared by
+    /// worktrees checked out for PRs that are no longer open, and review checkouts
+    /// ("Run with Focus" worktrees, including folders git no longer lists). Shared by
     /// the per-repo and all-repos prune flows so they agree on what counts as stale.
+    /// `cardDirectories` are the board terminals' working directories, so a review
+    /// checkout in use is kept.
     func collectPRPruneCandidates(
         repo: ObservableRepository,
-        prService: GitHubPRService
+        prService: GitHubPRService,
+        cardDirectories: [String] = []
     ) async -> (closed: [PRPruneCandidate], focus: [FocusWorktreeCandidate]) {
         await prService.refresh(repoPath: repo.path, force: true)
         guard let openPRs = prService.prsByRepo[repo.path] else { return ([], []) }
@@ -757,7 +762,10 @@ extension WorktreeSidebarViewModel {
             closedPRNumbers.isEmpty
             ? []
             : await pruneClosedPRsDryRun(repo: repo, closedPRNumbers: closedPRNumbers, prService: prService)
-        let focus = (focusWorktrees[repo.id] ?? []).map { FocusWorktreeCandidate(path: $0.path) }
+        let focus =
+            await reviewCheckoutCandidates(
+                repo: repo, openPRNumbers: openNumbers,
+                listIsComplete: openPRs.count < GitHubPRService.listLimit, cardDirectories: cardDirectories) ?? []
         return (closed, focus)
     }
 

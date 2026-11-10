@@ -1686,3 +1686,10 @@
 "actions.wait.this.week" = "Minggu ini";
 "actions.wait.this.month" = "Bulan ini";
 "actions.wait.older" = "Lebih lama";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR masih dibuka";
+"remote.prs.prune.reason.pr.closed" = "PR ditutup";
+"remote.prs.prune.reason.in.use" = "dibuka dalam terminal";
+"remote.prs.prune.reason.orphan" = "folder tertinggal";
+"remote.prs.prune.failed %@" = "Tidak dapat dibuang: %@";

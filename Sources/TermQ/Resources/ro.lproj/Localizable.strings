@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "Săptămâna aceasta";
 "actions.wait.this.month" = "Luna aceasta";
 "actions.wait.older" = "Mai vechi";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR încă deschis";
+"remote.prs.prune.reason.pr.closed" = "PR închis";
+"remote.prs.prune.reason.in.use" = "deschis într-un terminal";
+"remote.prs.prune.reason.orphan" = "dosar rămas";
+"remote.prs.prune.failed %@" = "Nu s-a putut elimina: %@";

@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "Questa settimana";
 "actions.wait.this.month" = "Questo mese";
 "actions.wait.older" = "Meno recenti";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR ancora aperta";
+"remote.prs.prune.reason.pr.closed" = "PR chiusa";
+"remote.prs.prune.reason.in.use" = "aperto in un terminale";
+"remote.prs.prune.reason.orphan" = "cartella rimasta";
+"remote.prs.prune.failed %@" = "Impossibile rimuovere: %@";

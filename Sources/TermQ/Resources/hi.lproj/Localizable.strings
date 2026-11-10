@@ -1687,3 +1687,10 @@
 "actions.wait.this.week" = "इस सप्ताह";
 "actions.wait.this.month" = "इस महीने";
 "actions.wait.older" = "पुराने";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR अभी भी खुला है";
+"remote.prs.prune.reason.pr.closed" = "PR बंद है";
+"remote.prs.prune.reason.in.use" = "टर्मिनल में खुला है";
+"remote.prs.prune.reason.orphan" = "बचा हुआ फ़ोल्डर";
+"remote.prs.prune.failed %@" = "हटाया नहीं जा सका: %@";

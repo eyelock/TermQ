@@ -36,6 +36,15 @@ extension WorktreeSidebarView {
                     guard stackService.availability(for: .gitHub).isReady else { return }
                     await remoteStackDiscovery.refresh(repoPath: repo.path)
                 }
+                // Each new open-PR list clears review checkouts whose PR has closed,
+                // that no terminal is using and that have no changes. The rest wait
+                // for the Prune sheet.
+                .task(id: prService.prsByRepo[repo.path]?.map(\.number)) {
+                    guard let prs = prService.prsByRepo[repo.path] else { return }
+                    await viewModel.autoPruneReviewCheckouts(
+                        repo: repo, openPRs: prs, listIsComplete: prs.count < GitHubPRService.listLimit,
+                        cardDirectories: { boardVM.board.activeCards.map(\.workingDirectory) })
+                }
         }
     }
 
@@ -499,7 +508,8 @@ extension WorktreeSidebarView {
     /// Collect closed-PR worktrees and focus worktrees, then open the combined prune sheet.
     private func analyseAndPrune(repo: ObservableRepository) async {
         let (closedCandidates, focusCandidates) = await viewModel.collectPRPruneCandidates(
-            repo: repo, prService: prService)
+            repo: repo, prService: prService,
+            cardDirectories: boardVM.board.activeCards.map(\.workingDirectory))
         guard prService.prsByRepo[repo.path] != nil else {
             viewModel.operationError =
                 prService.errorByRepo[repo.path] ?? Strings.RemotePRs.ghAuthCheckFailed

@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "今週";
 "actions.wait.this.month" = "今月";
 "actions.wait.older" = "それ以前";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PRはまだオープン";
+"remote.prs.prune.reason.pr.closed" = "PRはクローズ済み";
+"remote.prs.prune.reason.in.use" = "ターミナルで使用中";
+"remote.prs.prune.reason.orphan" = "残ったフォルダ";
+"remote.prs.prune.failed %@" = "削除できませんでした: %@";

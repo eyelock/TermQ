@@ -6,7 +6,8 @@ import TermQShared
 ///
 /// Shows two optional sections:
 /// - Closed/merged PR worktrees (may be dirty or ahead — those are kept)
-/// - Focus worktrees created by "Run with Focus" on non-checked-out PRs (always prunable)
+/// - Review checkouts made by "Run with Focus" on PRs that aren't checked out. These are
+///   removed changes and all, except one a terminal is working in.
 struct PruneClosedPRsSheet: View {
     let repo: ObservableRepository
     let candidates: [PRPruneCandidate]
@@ -48,7 +49,7 @@ struct PruneClosedPRsSheet: View {
                                 .padding(.top, 8)
                         }
                         ForEach(focusCandidates) { candidate in
-                            focusRow(candidate)
+                            ReviewCheckoutPruneRow(candidate: candidate)
                         }
                     }
                 }
@@ -69,7 +70,7 @@ struct PruneClosedPRsSheet: View {
                     Task { await prune() }
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled((toPrune.isEmpty && focusCandidates.isEmpty) || isPruning)
+                .disabled((toPrune.isEmpty && !focusCandidates.contains(where: \.canPrune)) || isPruning)
             }
         }
         .padding()
@@ -118,26 +119,6 @@ struct PruneClosedPRsSheet: View {
         .padding(.vertical, 2)
     }
 
-    @ViewBuilder
-    private func focusRow(_ candidate: FocusWorktreeCandidate) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-                .frame(width: 16)
-
-            Text(candidate.displayName)
-                .font(.caption2)
-                .foregroundColor(.secondary)
-
-            Spacer()
-
-            Text(Strings.RemotePRs.pruneRemove)
-                .font(.caption)
-                .foregroundColor(.red)
-        }
-        .padding(.vertical, 2)
-    }
-
     private var sheetTitle: String {
         if candidates.isEmpty {
             return Strings.RemotePRs.pruneFocusTitle(focusCandidates.count)
@@ -150,7 +131,15 @@ struct PruneClosedPRsSheet: View {
         defer { isPruning = false }
         await viewModel.pruneClosedPRs(repo: repo, candidates: toPrune)
         if !focusCandidates.isEmpty {
-            await viewModel.pruneFocusWorktrees(repo: repo, paths: focusCandidates.map(\.path))
+            let failures = await viewModel.pruneFocusWorktrees(
+                repo: repo, candidates: focusCandidates,
+                isInUse: { path in
+                    ReviewCheckouts.hasOpenTerminal(
+                        at: path, cardDirectories: BoardViewModel.shared.board.activeCards.map(\.workingDirectory))
+                })
+            if !failures.isEmpty {
+                viewModel.operationError = Strings.RemotePRs.pruneFailed(failures.joined(separator: ", "))
+            }
         }
         onDismiss()
     }

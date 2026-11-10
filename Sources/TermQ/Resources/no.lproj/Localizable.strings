@@ -1686,3 +1686,10 @@
 "actions.wait.this.week" = "Denne uken";
 "actions.wait.this.month" = "Denne måneden";
 "actions.wait.older" = "Eldre";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR er fortsatt åpen";
+"remote.prs.prune.reason.pr.closed" = "PR lukket";
+"remote.prs.prune.reason.in.use" = "åpen i en terminal";
+"remote.prs.prune.reason.orphan" = "gjenværende mappe";
+"remote.prs.prune.failed %@" = "Kunne ikke fjerne: %@";

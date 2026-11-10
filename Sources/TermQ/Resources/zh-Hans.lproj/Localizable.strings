@@ -1683,3 +1683,10 @@
 "actions.wait.this.week" = "本周";
 "actions.wait.this.month" = "本月";
 "actions.wait.older" = "更早";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR 仍未关闭";
+"remote.prs.prune.reason.pr.closed" = "PR 已关闭";
+"remote.prs.prune.reason.in.use" = "正在终端中使用";
+"remote.prs.prune.reason.orphan" = "残留的文件夹";
+"remote.prs.prune.failed %@" = "无法移除：%@";

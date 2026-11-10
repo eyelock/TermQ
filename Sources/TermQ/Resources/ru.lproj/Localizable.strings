@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "На этой неделе";
 "actions.wait.this.month" = "В этом месяце";
 "actions.wait.older" = "Ранее";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR ещё открыт";
+"remote.prs.prune.reason.pr.closed" = "PR закрыт";
+"remote.prs.prune.reason.in.use" = "открыт в терминале";
+"remote.prs.prune.reason.orphan" = "оставшаяся папка";
+"remote.prs.prune.failed %@" = "Не удалось удалить: %@";

@@ -149,17 +149,9 @@ struct PruneAllWorktreesSheet: View {
     }
 
     private func focusRow(_ candidate: FocusWorktreeCandidate) -> some View {
-        HStack(spacing: 8) {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-                .imageScale(.small)
-            Text(candidate.displayName)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Spacer()
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        ReviewCheckoutPruneRow(candidate: candidate)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
     }
 
     private func prune() async {
@@ -176,8 +168,17 @@ struct PruneAllWorktreesSheet: View {
                     await viewModel.pruneClosedPRs(repo: candidate.repo, candidates: toPrune)
                 }
                 if !candidate.focusCandidates.isEmpty {
-                    await viewModel.pruneFocusWorktrees(
-                        repo: candidate.repo, paths: candidate.focusCandidates.map(\.path))
+                    let failures = await viewModel.pruneFocusWorktrees(
+                        repo: candidate.repo, candidates: candidate.focusCandidates,
+                        isInUse: { path in
+                            ReviewCheckouts.hasOpenTerminal(
+                                at: path,
+                                cardDirectories: BoardViewModel.shared.board.activeCards.map(\.workingDirectory))
+                        })
+                    if !failures.isEmpty {
+                        throw GitHubPRError.commandFailed(
+                            Strings.RemotePRs.pruneFailed(failures.joined(separator: ", ")))
+                    }
                 }
             }
             dismiss()

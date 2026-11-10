@@ -1688,3 +1688,10 @@
 "actions.wait.this.week" = "이번 주";
 "actions.wait.this.month" = "이번 달";
 "actions.wait.older" = "이전";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR이 아직 열려 있음";
+"remote.prs.prune.reason.pr.closed" = "PR 닫힘";
+"remote.prs.prune.reason.in.use" = "터미널에서 열려 있음";
+"remote.prs.prune.reason.orphan" = "남겨진 폴더";
+"remote.prs.prune.failed %@" = "제거할 수 없음: %@";

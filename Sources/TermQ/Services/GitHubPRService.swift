@@ -35,6 +35,9 @@ private struct EmptyDecodable: Decodable {}
 @MainActor
 final class GitHubPRService: ObservableObject {
     static let shared = GitHubPRService()
+    /// How many open pull requests one list asks for. A list this long may be cut
+    /// short, so a missing pull request can't be taken as closed.
+    static let listLimit = 100
 
     // MARK: - Published state
 
@@ -245,7 +248,7 @@ final class GitHubPRService: ObservableObject {
             executable: ghPath,
             arguments: [
                 "pr", "list",
-                "--limit", "100",
+                "--limit", "\(Self.listLimit)",
                 "--state", "open",
                 "--json",
                 "number,title,headRefName,headRefOid,baseRefName,author,"

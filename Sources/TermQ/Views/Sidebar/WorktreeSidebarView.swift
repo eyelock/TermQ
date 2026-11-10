@@ -1010,7 +1010,8 @@ extension WorktreeSidebarView {
             }
             if case .ready = ghProbe.status {
                 let (closed, focus) = await viewModel.collectPRPruneCandidates(
-                    repo: repo, prService: prService)
+                    repo: repo, prService: prService,
+                    cardDirectories: boardVM.board.activeCards.map(\.workingDirectory))
                 candidate.closedPRCandidates = closed
                 candidate.focusCandidates = focus
             }

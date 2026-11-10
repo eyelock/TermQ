@@ -1687,3 +1687,10 @@
 "actions.wait.this.week" = "השבוע";
 "actions.wait.this.month" = "החודש";
 "actions.wait.older" = "ישנים יותר";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "ה־PR עדיין פתוח";
+"remote.prs.prune.reason.pr.closed" = "ה־PR נסגר";
+"remote.prs.prune.reason.in.use" = "פתוח במסוף";
+"remote.prs.prune.reason.orphan" = "תיקייה שנשארה";
+"remote.prs.prune.failed %@" = "לא ניתן להסיר: %@";

@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "هذا الأسبوع";
 "actions.wait.this.month" = "هذا الشهر";
 "actions.wait.older" = "أقدم";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR لا يزال مفتوحًا";
+"remote.prs.prune.reason.pr.closed" = "PR مغلق";
+"remote.prs.prune.reason.in.use" = "مفتوح في طرفية";
+"remote.prs.prune.reason.orphan" = "مجلد متبقٍ";
+"remote.prs.prune.failed %@" = "تعذّرت الإزالة: %@";

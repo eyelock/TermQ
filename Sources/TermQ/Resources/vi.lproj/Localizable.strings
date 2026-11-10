@@ -1689,3 +1689,10 @@
 "actions.wait.this.week" = "Tuần này";
 "actions.wait.this.month" = "Tháng này";
 "actions.wait.older" = "Cũ hơn";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR vẫn đang mở";
+"remote.prs.prune.reason.pr.closed" = "PR đã đóng";
+"remote.prs.prune.reason.in.use" = "đang mở trong terminal";
+"remote.prs.prune.reason.orphan" = "thư mục còn sót lại";
+"remote.prs.prune.failed %@" = "Không thể xóa: %@";

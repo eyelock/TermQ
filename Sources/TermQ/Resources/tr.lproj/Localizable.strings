@@ -1688,3 +1688,10 @@
 "actions.wait.this.week" = "Bu hafta";
 "actions.wait.this.month" = "Bu ay";
 "actions.wait.older" = "Daha eski";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR hâlâ açık";
+"remote.prs.prune.reason.pr.closed" = "PR kapalı";
+"remote.prs.prune.reason.in.use" = "bir terminalde açık";
+"remote.prs.prune.reason.orphan" = "geride kalan klasör";
+"remote.prs.prune.failed %@" = "Kaldırılamadı: %@";
