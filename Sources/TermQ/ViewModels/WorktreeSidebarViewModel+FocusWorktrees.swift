@@ -77,6 +77,95 @@ extension WorktreeSidebarViewModel {
         return wt
     }
 
+    /// The review checkout git listed for `prNumber` at the last refresh.
+    func reviewCheckout(forPR prNumber: Int, repo: ObservableRepository) -> GitWorktree? {
+        (focusWorktrees[repo.id] ?? []).first {
+            ReviewCheckouts.prNumber(fromDirectoryName: URL(fileURLWithPath: $0.path).lastPathComponent) == prNumber
+        }
+    }
+
+    /// Check `pr` out as a real worktree (`checkoutPR`), carry the review checkout's
+    /// changes across, then remove the review checkout.
+    ///
+    /// The changes travel as a stash commit made with `git stash create`, which never
+    /// touches the stash list other worktrees share. The review checkout is kept, and
+    /// the returned note says why, when anything could be lost by removing it: commits
+    /// made in it, changes made while the checkout ran, or a terminal working in it.
+    /// If the changes don't apply, the new worktree is reset to the PR and the error
+    /// says the changes are still in the review checkout.
+    ///
+    /// - Returns: the new worktree's path, and a note when the review checkout was kept.
+    func checkoutPR(
+        _ pr: GitHubPR, repo: ObservableRepository, ghPath: String, carryingChangesFrom review: GitWorktree
+    ) async throws -> (path: String, note: String?) {
+        let reviewName = URL(fileURLWithPath: review.path).lastPathComponent
+        let before = try await Self.workingTree(of: review.path)
+        let stash = try await Self.stashChanges(in: review.path)
+        let path = try await checkoutPR(pr, repo: repo, ghPath: ghPath)
+        if let stash {
+            do {
+                try await Self.applyStash(stash, in: path)
+            } catch {
+                // The worktree was made seconds ago, so resetting it loses nothing.
+                _ = try? await GitServiceShared.runGitCommand(repoPath: path, args: ["reset", "--hard", "-q"])
+                _ = try? await GitServiceShared.runGitCommand(repoPath: path, args: ["clean", "-fdq"])
+                await refreshWorktrees(for: repo)
+                throw GitHubPRError.commandFailed(
+                    Strings.RemotePRs.carryFailed(reviewName, error.localizedDescription))
+            }
+        }
+        let after = try? await Self.workingTree(of: review.path)
+        if after != before {
+            return (path, Strings.RemotePRs.reviewKeptChanged(reviewName))
+        }
+        if await Self.hasLocalCommits(worktreePath: review.path, prHeadOid: pr.headRefOid) {
+            return (path, Strings.RemotePRs.reviewKeptCommits(reviewName))
+        }
+        let directories = BoardViewModel.shared.board.activeCards.map(\.workingDirectory)
+        if ReviewCheckouts.hasOpenTerminal(at: review.path, cardDirectories: directories) {
+            return (path, Strings.RemotePRs.reviewKeptInUse(reviewName))
+        }
+        await pruneFocusWorktrees(
+            repo: repo, candidates: [FocusWorktreeCandidate(path: review.path)],
+            isInUse: { ReviewCheckouts.hasOpenTerminal(at: $0, cardDirectories: directories) })
+        return (path, nil)
+    }
+
+    /// Record every change in `worktreePath`, untracked files included, as a stash
+    /// commit without touching the shared stash list. `nil` when there are none.
+    nonisolated static func stashChanges(in worktreePath: String) async throws -> String? {
+        _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["add", "-A"])
+        let sha = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["stash", "create"])
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return sha.isEmpty ? nil : sha
+    }
+
+    /// A hash of everything in `worktreePath` (HEAD plus every change, untracked files
+    /// included). Equal hashes mean nothing changed in between.
+    nonisolated static func workingTree(of worktreePath: String) async throws -> String {
+        _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["add", "-A"])
+        let tree = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["write-tree"])
+        let head = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["rev-parse", "HEAD"])
+        return tree.trimmingCharacters(in: .whitespacesAndNewlines)
+            + head.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Whether `worktreePath` has commits that are on no remote branch and not in the
+    /// pull request. A review checkout is detached, so such commits live nowhere else.
+    /// Anything git can't answer counts as yes.
+    nonisolated static func hasLocalCommits(worktreePath: String, prHeadOid: String) async -> Bool {
+        guard
+            let count = try? await GitServiceShared.runGitCommand(
+                repoPath: worktreePath, args: ["rev-list", "--count", "HEAD", "--not", "--remotes", prHeadOid])
+        else { return true }
+        return (Int(count.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 1) > 0
+    }
+
+    /// Apply a stash commit from `stashChanges` in another worktree of the same repository.
+    nonisolated static func applyStash(_ sha: String, in worktreePath: String) async throws {
+        _ = try await GitServiceShared.runGitCommand(repoPath: worktreePath, args: ["stash", "apply", sha])
+    }
+
     /// Every review checkout of `repo`, registered or orphaned, with the facts the
     /// prune rules need. Returns `nil` when git can't list the worktrees, so nothing
     /// is judged on a guess.

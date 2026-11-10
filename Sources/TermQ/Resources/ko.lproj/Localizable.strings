@@ -1319,7 +1319,7 @@
 "remote.prs.badge.draft" = "초안";
 "remote.prs.badge.review" = "검토";
 "remote.prs.checking.out %lld" = "PR #%lld 체크아웃 중…";
-"remote.prs.checkout.as.worktree" = "워크트리로 체크아웃";
+"remote.prs.checkout.as.worktree" = "이 PR 체크아웃";
 "remote.prs.checkout.toast %@" = "%@(으)로 체크아웃되었습니다.";
 "remote.prs.clear.default.focus" = "기본 포커스 지우기";
 "remote.prs.copy.branch.name" = "브랜치 이름 복사";
@@ -1695,3 +1695,14 @@
 "remote.prs.prune.reason.in.use" = "터미널에서 열려 있음";
 "remote.prs.prune.reason.orphan" = "남겨진 폴더";
 "remote.prs.prune.failed %@" = "제거할 수 없음: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "리뷰 체크아웃 제거";
+"remote.prs.remove.review.checkout.title" = "이 리뷰 체크아웃을 제거할까요?";
+"remote.prs.remove.review.checkout.dirty" = "풀 리퀘스트에 없는 변경 사항이나 커밋이 있습니다. 제거하면 삭제됩니다.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "체크아웃했지만 리뷰 체크아웃의 변경 사항을 적용하지 못해 %@에 그대로 있습니다. %@";
+"remote.prs.review.kept.changed %@" = "체크아웃했습니다. 복사하는 동안 %@이(가) 변경되어 유지했습니다.";
+"remote.prs.review.kept.commits %@" = "체크아웃했습니다. %@에 풀 리퀘스트에 없는 커밋이 있어 유지했습니다.";
+"remote.prs.review.kept.in.use %@" = "%@이(가) 터미널에서 열려 있어 유지했습니다.";

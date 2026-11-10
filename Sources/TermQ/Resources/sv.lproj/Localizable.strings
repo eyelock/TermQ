@@ -1319,7 +1319,7 @@
 "remote.prs.badge.draft" = "utkast";
 "remote.prs.badge.review" = "granskning";
 "remote.prs.checking.out %lld" = "Checkar ut PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Checka ut som worktree";
+"remote.prs.checkout.as.worktree" = "Checka ut denna PR";
 "remote.prs.checkout.toast %@" = "Utcheckad som %@.";
 "remote.prs.clear.default.focus" = "Rensa standardfokus";
 "remote.prs.copy.branch.name" = "Kopiera grennamn";
@@ -1695,3 +1695,14 @@
 "remote.prs.prune.reason.in.use" = "öppen i en terminal";
 "remote.prs.prune.reason.orphan" = "kvarlämnad mapp";
 "remote.prs.prune.failed %@" = "Kunde inte ta bort: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Ta bort granskningskopia";
+"remote.prs.remove.review.checkout.title" = "Ta bort den här granskningskopian?";
+"remote.prs.remove.review.checkout.dirty" = "Den har ändringar eller commits som inte finns i pull requesten. Om du tar bort den raderas de.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Utcheckad, men ändringarna från granskningskopian kunde inte tillämpas, så de finns kvar i %@. %@";
+"remote.prs.review.kept.changed %@" = "Utcheckad. %@ ändrades under kopieringen, så den behölls.";
+"remote.prs.review.kept.commits %@" = "Utcheckad. %@ har commits som inte finns i pull requesten, så den behölls.";
+"remote.prs.review.kept.in.use %@" = "%@ är öppen i en terminal, så den behölls.";

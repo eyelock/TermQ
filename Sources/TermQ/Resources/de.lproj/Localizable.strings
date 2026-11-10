@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "Entwurf";
 "remote.prs.badge.review" = "Review";
 "remote.prs.checking.out %lld" = "PR #%lld wird ausgecheckt…";
-"remote.prs.checkout.as.worktree" = "Als Worktree auschecken";
+"remote.prs.checkout.as.worktree" = "Diesen PR auschecken";
 "remote.prs.checkout.toast %@" = "Ausgecheckt als %@.";
 "remote.prs.clear.default.focus" = "Standard-Focus löschen";
 "remote.prs.copy.branch.name" = "Branch-Name kopieren";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "in einem Terminal geöffnet";
 "remote.prs.prune.reason.orphan" = "zurückgebliebener Ordner";
 "remote.prs.prune.failed %@" = "Konnte nicht entfernt werden: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Review-Kopie entfernen";
+"remote.prs.remove.review.checkout.title" = "Diese Review-Kopie entfernen?";
+"remote.prs.remove.review.checkout.dirty" = "Sie enthält Änderungen oder Commits, die nicht im Pull-Request sind. Beim Entfernen werden sie gelöscht.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Ausgecheckt, aber die Änderungen der Review-Kopie ließen sich nicht anwenden. Sie sind weiterhin in %@. %@";
+"remote.prs.review.kept.changed %@" = "Ausgecheckt. %@ hat sich beim Kopieren geändert und wurde deshalb behalten.";
+"remote.prs.review.kept.commits %@" = "Ausgecheckt. %@ enthält Commits, die nicht im Pull-Request sind, und wurde deshalb behalten.";
+"remote.prs.review.kept.in.use %@" = "%@ ist in einem Terminal geöffnet und wurde deshalb behalten.";

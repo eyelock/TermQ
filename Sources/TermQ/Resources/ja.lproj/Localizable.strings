@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "下書き";
 "remote.prs.badge.review" = "レビュー";
 "remote.prs.checking.out %lld" = "PR #%lldをチェックアウト中…";
-"remote.prs.checkout.as.worktree" = "Worktreeとしてチェックアウト";
+"remote.prs.checkout.as.worktree" = "このPRをチェックアウト";
 "remote.prs.checkout.toast %@" = "%@としてチェックアウトしました。";
 "remote.prs.clear.default.focus" = "デフォルトフォーカスをクリア";
 "remote.prs.copy.branch.name" = "ブランチ名をコピー";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "ターミナルで使用中";
 "remote.prs.prune.reason.orphan" = "残ったフォルダ";
 "remote.prs.prune.failed %@" = "削除できませんでした: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "レビュー用チェックアウトを削除";
+"remote.prs.remove.review.checkout.title" = "このレビュー用チェックアウトを削除しますか？";
+"remote.prs.remove.review.checkout.dirty" = "プルリクエストにない変更やコミットがあります。削除するとそれらも消えます。";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "チェックアウトしましたが、レビュー用チェックアウトの変更を適用できなかったため、変更は %@ に残っています。%@";
+"remote.prs.review.kept.changed %@" = "チェックアウトしました。コピー中に %@ が変更されたため、残しました。";
+"remote.prs.review.kept.commits %@" = "チェックアウトしました。%@ にプルリクエストにないコミットがあるため、残しました。";
+"remote.prs.review.kept.in.use %@" = "%@ はターミナルで使用中のため、残しました。";

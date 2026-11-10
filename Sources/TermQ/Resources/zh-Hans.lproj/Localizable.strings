@@ -1314,7 +1314,7 @@
 "remote.prs.badge.draft" = "草稿";
 "remote.prs.badge.review" = "审查";
 "remote.prs.checking.out %lld" = "正在签出 PR #%lld…";
-"remote.prs.checkout.as.worktree" = "作为工作树签出";
+"remote.prs.checkout.as.worktree" = "检出此 PR";
 "remote.prs.checkout.toast %@" = "已签出为 %@。";
 "remote.prs.clear.default.focus" = "清除默认焦点";
 "remote.prs.copy.branch.name" = "复制分支名称";
@@ -1690,3 +1690,14 @@
 "remote.prs.prune.reason.in.use" = "正在终端中使用";
 "remote.prs.prune.reason.orphan" = "残留的文件夹";
 "remote.prs.prune.failed %@" = "无法移除：%@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "移除审阅检出";
+"remote.prs.remove.review.checkout.title" = "要移除此审阅检出吗？";
+"remote.prs.remove.review.checkout.dirty" = "其中有不在拉取请求中的更改或提交。移除后它们将被删除。";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "已检出，但审阅检出中的更改无法应用，因此仍保留在 %@ 中。%@";
+"remote.prs.review.kept.changed %@" = "已检出。%@ 在复制期间发生了更改，因此已保留。";
+"remote.prs.review.kept.commits %@" = "已检出。%@ 中有不在拉取请求中的提交，因此已保留。";
+"remote.prs.review.kept.in.use %@" = "%@ 正在终端中使用，因此已保留。";

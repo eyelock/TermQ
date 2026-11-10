@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "vázlat";
 "remote.prs.badge.review" = "felülvizsgálat";
 "remote.prs.checking.out %lld" = "PR #%lld kivétele…";
-"remote.prs.checkout.as.worktree" = "Kivétel worktree-ként";
+"remote.prs.checkout.as.worktree" = "PR kivétele";
 "remote.prs.checkout.toast %@" = "Kivéve %@-ként.";
 "remote.prs.clear.default.focus" = "Alapértelmezett fókusz törlése";
 "remote.prs.copy.branch.name" = "Ágnév másolása";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "terminálban nyitva";
 "remote.prs.prune.reason.orphan" = "ottmaradt mappa";
 "remote.prs.prune.failed %@" = "Nem sikerült eltávolítani: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Áttekintési másolat eltávolítása";
+"remote.prs.remove.review.checkout.title" = "Eltávolítja ezt az áttekintési másolatot?";
+"remote.prs.remove.review.checkout.dirty" = "Olyan módosításokat vagy commitokat tartalmaz, amelyek nincsenek a pull requestben. Az eltávolítás törli őket.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Kivéve, de az áttekintési másolat módosításait nem sikerült alkalmazni, így még mindig itt vannak: %@. %@";
+"remote.prs.review.kept.changed %@" = "Kivéve. %@ megváltozott másolás közben, ezért megmaradt.";
+"remote.prs.review.kept.commits %@" = "Kivéve. %@ olyan commitokat tartalmaz, amelyek nincsenek a pull requestben, ezért megmaradt.";
+"remote.prs.review.kept.in.use %@" = "%@ meg van nyitva egy terminálban, ezért megmaradt.";

@@ -28,6 +28,21 @@ extension Strings {
         // MARK: - PR row context menus
         static var copyPRURL: String { localized("remote.prs.copy.url") }
         static var checkoutAsWorktree: String { localized("remote.prs.checkout.as.worktree") }
+        static var removeReviewCheckout: String { localized("remote.prs.remove.review.checkout") }
+        static var removeReviewCheckoutTitle: String { localized("remote.prs.remove.review.checkout.title") }
+        static var removeReviewCheckoutDirty: String { localized("remote.prs.remove.review.checkout.dirty") }
+        static func carryFailed(_ folder: String, _ reason: String) -> String {
+            String(format: localized("remote.prs.carry.failed %@ %@"), folder, reason)
+        }
+        static func reviewKeptChanged(_ folder: String) -> String {
+            String(format: localized("remote.prs.review.kept.changed %@"), folder)
+        }
+        static func reviewKeptCommits(_ folder: String) -> String {
+            String(format: localized("remote.prs.review.kept.commits %@"), folder)
+        }
+        static func reviewKeptInUse(_ folder: String) -> String {
+            String(format: localized("remote.prs.review.kept.in.use %@"), folder)
+        }
         static var noGitHubRemote: String { localized("remote.prs.no.github.remote") }
 
         // MARK: - GhCli probe states

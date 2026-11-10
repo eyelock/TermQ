@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "草稿";
 "remote.prs.badge.review" = "審查";
 "remote.prs.checking.out %lld" = "正在簽出 PR #%lld…";
-"remote.prs.checkout.as.worktree" = "作為工作樹簽出";
+"remote.prs.checkout.as.worktree" = "簽出此 PR";
 "remote.prs.checkout.toast %@" = "已簽出為 %@。";
 "remote.prs.clear.default.focus" = "清除預設焦點";
 "remote.prs.copy.branch.name" = "複製分支名稱";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "正在終端機中使用";
 "remote.prs.prune.reason.orphan" = "殘留的資料夾";
 "remote.prs.prune.failed %@" = "無法移除：%@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "移除審閱簽出";
+"remote.prs.remove.review.checkout.title" = "要移除此審閱簽出嗎？";
+"remote.prs.remove.review.checkout.dirty" = "其中有不在拉取請求中的變更或提交。移除後它們將被刪除。";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "已簽出，但審閱簽出中的變更無法套用，因此仍保留在 %@ 中。%@";
+"remote.prs.review.kept.changed %@" = "已簽出。%@ 在複製期間有所變更，因此已保留。";
+"remote.prs.review.kept.commits %@" = "已簽出。%@ 中有不在拉取請求中的提交，因此已保留。";
+"remote.prs.review.kept.in.use %@" = "%@ 正在終端機中使用，因此已保留。";

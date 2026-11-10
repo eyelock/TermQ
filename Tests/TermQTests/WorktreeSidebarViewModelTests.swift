@@ -1174,6 +1174,102 @@ final class WorktreeSidebarViewModelTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: orphan.path))
     }
 
+    func testReviewCheckoutIsFoundByPRNumber() {
+        let vm = makeVM()
+        let repo = makeRepo()
+        vm.focusWorktrees[repo.id] = [
+            makeWorktree(path: "/x/termq-focus--test-repo--feat--81"),
+            makeWorktree(path: "/x/termq-focus--test-repo--fix--8"),
+        ]
+
+        XCTAssertEqual(vm.reviewCheckout(forPR: 8, repo: repo)?.path, "/x/termq-focus--test-repo--fix--8")
+        XCTAssertNil(vm.reviewCheckout(forPR: 1, repo: repo))
+    }
+
+    func testStashChangesCarriesEditsAndNewFilesToAnotherWorktree() async throws {
+        let root = makeReviewBase()
+        let repo = root.appendingPathComponent("repo")
+        try FileManager.default.createDirectory(at: repo, withIntermediateDirectories: true)
+        try git(repo, "init", "-q")
+        try git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "base")
+        let review = root.appendingPathComponent("review")
+        let target = root.appendingPathComponent("target")
+        try git(repo, "worktree", "add", "-q", "--detach", review.path)
+        try git(repo, "worktree", "add", "-q", "--detach", target.path)
+        try Data("new".utf8).write(to: review.appendingPathComponent("added.txt"))
+
+        let sha = try await WorktreeSidebarViewModel.stashChanges(in: review.path)
+        XCTAssertNotNil(sha)
+        try await WorktreeSidebarViewModel.applyStash(try XCTUnwrap(sha), in: target.path)
+
+        XCTAssertEqual(try String(contentsOf: target.appendingPathComponent("added.txt"), encoding: .utf8), "new")
+        // The shared stash list is left alone.
+        XCTAssertEqual(try gitOutput(repo, "stash", "list"), "")
+    }
+
+    func testHasLocalCommitsSeesCommitsMadeInADetachedCheckout() async throws {
+        let repo = try makeGitFolder(makeReviewBase().appendingPathComponent("repo"))
+        try git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "pr head")
+        let prHead = try gitOutput(repo, "rev-parse", "HEAD")
+        try git(repo, "checkout", "-q", "--detach")
+
+        let before = await WorktreeSidebarViewModel.hasLocalCommits(worktreePath: repo.path, prHeadOid: prHead)
+        try git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "mine")
+        let after = await WorktreeSidebarViewModel.hasLocalCommits(worktreePath: repo.path, prHeadOid: prHead)
+
+        XCTAssertFalse(before)
+        XCTAssertTrue(after)
+    }
+
+    func testHasLocalCommitsAssumesYesWhenGitCannotTell() async {
+        let notGit = makeReviewBase().path
+        let result = await WorktreeSidebarViewModel.hasLocalCommits(worktreePath: notGit, prHeadOid: "abc")
+        XCTAssertTrue(result)
+    }
+
+    func testWorkingTreeChangesWhenAFileChanges() async throws {
+        let repo = try makeGitFolder(makeReviewBase().appendingPathComponent("repo"))
+        try git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "base")
+        try Data("a".utf8).write(to: repo.appendingPathComponent("f.txt"))
+
+        let first = try await WorktreeSidebarViewModel.workingTree(of: repo.path)
+        let same = try await WorktreeSidebarViewModel.workingTree(of: repo.path)
+        try Data("b".utf8).write(to: repo.appendingPathComponent("f.txt"))
+        let changed = try await WorktreeSidebarViewModel.workingTree(of: repo.path)
+
+        XCTAssertEqual(first, same)
+        XCTAssertNotEqual(first, changed)
+    }
+
+    func testStashChangesIsNilForACleanWorktree() async throws {
+        let repo = try makeGitFolder(makeReviewBase().appendingPathComponent("clean"))
+        try git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "base")
+
+        let sha = try await WorktreeSidebarViewModel.stashChanges(in: repo.path)
+
+        XCTAssertNil(sha)
+    }
+
+    private func git(_ dir: URL, _ args: String...) throws {
+        _ = try gitOutput(dir, args)
+    }
+
+    private func gitOutput(_ dir: URL, _ args: String...) throws -> String {
+        try gitOutput(dir, args)
+    }
+
+    private func gitOutput(_ dir: URL, _ args: [String]) throws -> String {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.arguments = ["-C", dir.path] + args
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        try process.run()
+        process.waitUntilExit()
+        return String(decoding: pipe.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     /// A folder that is its own empty git repository, so `git status` reads it as clean.
     private func makeGitFolder(_ url: URL) throws -> URL {
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)

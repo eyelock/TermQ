@@ -1317,7 +1317,7 @@
 "remote.prs.badge.draft" = "szkic";
 "remote.prs.badge.review" = "przegląd";
 "remote.prs.checking.out %lld" = "Pobieranie PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Pobierz jako worktree";
+"remote.prs.checkout.as.worktree" = "Pobierz ten PR";
 "remote.prs.checkout.toast %@" = "Pobrano jako %@.";
 "remote.prs.clear.default.focus" = "Wyczyść domyślny fokus";
 "remote.prs.copy.branch.name" = "Kopiuj nazwę gałęzi";
@@ -1693,3 +1693,14 @@
 "remote.prs.prune.reason.in.use" = "otwarty w terminalu";
 "remote.prs.prune.reason.orphan" = "pozostały folder";
 "remote.prs.prune.failed %@" = "Nie można usunąć: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Usuń kopię do przeglądu";
+"remote.prs.remove.review.checkout.title" = "Usunąć tę kopię do przeglądu?";
+"remote.prs.remove.review.checkout.dirty" = "Zawiera zmiany lub commity, których nie ma w pull requeście. Usunięcie je skasuje.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Pobrano, ale nie udało się zastosować zmian z kopii do przeglądu, więc nadal są w %@. %@";
+"remote.prs.review.kept.changed %@" = "Pobrano. %@ zmieniła się podczas kopiowania, więc została zachowana.";
+"remote.prs.review.kept.commits %@" = "Pobrano. %@ zawiera commity, których nie ma w pull requeście, więc została zachowana.";
+"remote.prs.review.kept.in.use %@" = "%@ jest otwarta w terminalu, więc została zachowana.";

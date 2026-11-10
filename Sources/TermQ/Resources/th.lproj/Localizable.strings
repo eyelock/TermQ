@@ -1319,7 +1319,7 @@
 "remote.prs.badge.draft" = "ร่าง";
 "remote.prs.badge.review" = "ตรวจสอบ";
 "remote.prs.checking.out %lld" = "กำลังดึง PR #%lld…";
-"remote.prs.checkout.as.worktree" = "ดึงออกเป็น worktree";
+"remote.prs.checkout.as.worktree" = "เช็กเอาต์ PR นี้";
 "remote.prs.checkout.toast %@" = "ดึงออกเป็น %@ แล้ว";
 "remote.prs.clear.default.focus" = "ล้างโฟกัสเริ่มต้น";
 "remote.prs.copy.branch.name" = "คัดลอกชื่อสาขา";
@@ -1695,3 +1695,14 @@
 "remote.prs.prune.reason.in.use" = "เปิดอยู่ในเทอร์มินัล";
 "remote.prs.prune.reason.orphan" = "โฟลเดอร์ที่ค้างอยู่";
 "remote.prs.prune.failed %@" = "ลบไม่ได้: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "ลบสำเนาสำหรับรีวิว";
+"remote.prs.remove.review.checkout.title" = "ลบสำเนาสำหรับรีวิวนี้หรือไม่";
+"remote.prs.remove.review.checkout.dirty" = "มีการเปลี่ยนแปลงหรือ commit ที่ไม่อยู่ใน pull request การลบจะทำให้สิ่งเหล่านั้นหายไป";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "เช็กเอาต์แล้ว แต่ใช้การเปลี่ยนแปลงจากสำเนาสำหรับรีวิวไม่ได้ จึงยังอยู่ใน %@ %@";
+"remote.prs.review.kept.changed %@" = "เช็กเอาต์แล้ว %@ เปลี่ยนแปลงระหว่างการคัดลอก จึงเก็บไว้";
+"remote.prs.review.kept.commits %@" = "เช็กเอาต์แล้ว %@ มี commit ที่ไม่อยู่ใน pull request จึงเก็บไว้";
+"remote.prs.review.kept.in.use %@" = "%@ เปิดอยู่ในเทอร์มินัล จึงเก็บไว้";

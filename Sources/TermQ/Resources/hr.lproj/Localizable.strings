@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "nacrt";
 "remote.prs.badge.review" = "pregled";
 "remote.prs.checking.out %lld" = "Izvlačenje PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Izvuci kao worktree";
+"remote.prs.checkout.as.worktree" = "Dohvati ovaj PR";
 "remote.prs.checkout.toast %@" = "Izvučeno kao %@.";
 "remote.prs.clear.default.focus" = "Obriši zadani fokus";
 "remote.prs.copy.branch.name" = "Kopiraj naziv grane";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "otvoreno u terminalu";
 "remote.prs.prune.reason.orphan" = "zaostala mapa";
 "remote.prs.prune.failed %@" = "Nije moguće ukloniti: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Ukloni kopiju za pregled";
+"remote.prs.remove.review.checkout.title" = "Ukloniti ovu kopiju za pregled?";
+"remote.prs.remove.review.checkout.dirty" = "Sadrži promjene ili commitove koji nisu u pull requestu. Uklanjanjem ćete ih izbrisati.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Dohvaćeno, ali promjene iz kopije za pregled nisu primijenjene pa su i dalje u %@. %@";
+"remote.prs.review.kept.changed %@" = "Dohvaćeno. %@ se promijenila tijekom kopiranja pa je zadržana.";
+"remote.prs.review.kept.commits %@" = "Dohvaćeno. %@ ima commitove koji nisu u pull requestu pa je zadržana.";
+"remote.prs.review.kept.in.use %@" = "%@ je otvorena u terminalu pa je zadržana.";

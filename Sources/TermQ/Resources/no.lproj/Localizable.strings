@@ -1317,7 +1317,7 @@
 "remote.prs.badge.draft" = "utkast";
 "remote.prs.badge.review" = "gjennomgang";
 "remote.prs.checking.out %lld" = "Sjekker ut PR #%lld…";
-"remote.prs.checkout.as.worktree" = "Sjekk ut som worktree";
+"remote.prs.checkout.as.worktree" = "Sjekk ut denne PR-en";
 "remote.prs.checkout.toast %@" = "Sjekket ut som %@.";
 "remote.prs.clear.default.focus" = "Tøm standardfokus";
 "remote.prs.copy.branch.name" = "Kopier grensnavn";
@@ -1693,3 +1693,14 @@
 "remote.prs.prune.reason.in.use" = "åpen i en terminal";
 "remote.prs.prune.reason.orphan" = "gjenværende mappe";
 "remote.prs.prune.failed %@" = "Kunne ikke fjerne: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Fjern gjennomgangskopi";
+"remote.prs.remove.review.checkout.title" = "Fjerne denne gjennomgangskopien?";
+"remote.prs.remove.review.checkout.dirty" = "Den har endringer eller commits som ikke er i pull requesten. Hvis du fjerner den, slettes de.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Sjekket ut, men endringene fra gjennomgangskopien kunne ikke brukes, så de er fortsatt i %@. %@";
+"remote.prs.review.kept.changed %@" = "Sjekket ut. %@ ble endret under kopieringen, så den ble beholdt.";
+"remote.prs.review.kept.commits %@" = "Sjekket ut. %@ har commits som ikke er i pull requesten, så den ble beholdt.";
+"remote.prs.review.kept.in.use %@" = "%@ er åpen i en terminal, så den ble beholdt.";

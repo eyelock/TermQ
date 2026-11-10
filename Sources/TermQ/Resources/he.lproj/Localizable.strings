@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "טיוטה";
 "remote.prs.badge.review" = "סקירה";
 "remote.prs.checking.out %lld" = "שולף PR #%lld…";
-"remote.prs.checkout.as.worktree" = "שלוף כ-worktree";
+"remote.prs.checkout.as.worktree" = "הוצא את ה־PR הזה";
 "remote.prs.checkout.toast %@" = "נשלף כ-%@.";
 "remote.prs.clear.default.focus" = "נקה מיקוד ברירת מחדל";
 "remote.prs.copy.branch.name" = "העתק שם ענף";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "פתוח במסוף";
 "remote.prs.prune.reason.orphan" = "תיקייה שנשארה";
 "remote.prs.prune.failed %@" = "לא ניתן להסיר: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "הסר את עותק הסקירה";
+"remote.prs.remove.review.checkout.title" = "להסיר את עותק הסקירה הזה?";
+"remote.prs.remove.review.checkout.dirty" = "יש בו שינויים או commits שאינם ב־pull request. הסרתו תמחק אותם.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "ההוצאה הצליחה, אבל לא ניתן היה להחיל את השינויים מעותק הסקירה, ולכן הם עדיין ב־%@. %@";
+"remote.prs.review.kept.changed %@" = "ההוצאה הצליחה. %@ השתנה במהלך ההעתקה, ולכן נשמר.";
+"remote.prs.review.kept.commits %@" = "ההוצאה הצליחה. ב־%@ יש commits שאינם ב־pull request, ולכן נשמר.";
+"remote.prs.review.kept.in.use %@" = "%@ פתוח במסוף, ולכן נשמר.";

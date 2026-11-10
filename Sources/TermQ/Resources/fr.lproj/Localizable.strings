@@ -1318,7 +1318,7 @@
 "remote.prs.badge.draft" = "brouillon";
 "remote.prs.badge.review" = "revue";
 "remote.prs.checking.out %lld" = "Extraction de la PR n°%lld…";
-"remote.prs.checkout.as.worktree" = "Extraire comme worktree";
+"remote.prs.checkout.as.worktree" = "Extraire cette PR";
 "remote.prs.checkout.toast %@" = "Extrait sous %@.";
 "remote.prs.clear.default.focus" = "Effacer le focus par défaut";
 "remote.prs.copy.branch.name" = "Copier le nom de la branche";
@@ -1694,3 +1694,14 @@
 "remote.prs.prune.reason.in.use" = "ouvert dans un terminal";
 "remote.prs.prune.reason.orphan" = "dossier résiduel";
 "remote.prs.prune.failed %@" = "Impossible de supprimer : %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "Supprimer la copie de revue";
+"remote.prs.remove.review.checkout.title" = "Supprimer cette copie de revue ?";
+"remote.prs.remove.review.checkout.dirty" = "Elle contient des modifications ou des commits absents de la pull request. La supprimer les effacera.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Extraite, mais les modifications de la copie de revue n'ont pas pu être appliquées : elles sont toujours dans %@. %@";
+"remote.prs.review.kept.changed %@" = "Extraite. %@ a changé pendant la copie, elle a donc été conservée.";
+"remote.prs.review.kept.commits %@" = "Extraite. %@ contient des commits absents de la pull request, elle a donc été conservée.";
+"remote.prs.review.kept.in.use %@" = "%@ est ouverte dans un terminal, elle a donc été conservée.";

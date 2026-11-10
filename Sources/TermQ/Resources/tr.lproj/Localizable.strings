@@ -1319,7 +1319,7 @@
 "remote.prs.badge.draft" = "taslak";
 "remote.prs.badge.review" = "inceleme";
 "remote.prs.checking.out %lld" = "PR #%lld alınıyor…";
-"remote.prs.checkout.as.worktree" = "Worktree olarak al";
+"remote.prs.checkout.as.worktree" = "Bu PR'ı checkout et";
 "remote.prs.checkout.toast %@" = "%@ olarak alındı.";
 "remote.prs.clear.default.focus" = "Varsayılan odağı temizle";
 "remote.prs.copy.branch.name" = "Dal adını kopyala";
@@ -1695,3 +1695,14 @@
 "remote.prs.prune.reason.in.use" = "bir terminalde açık";
 "remote.prs.prune.reason.orphan" = "geride kalan klasör";
 "remote.prs.prune.failed %@" = "Kaldırılamadı: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "İnceleme Kopyasını Kaldır";
+"remote.prs.remove.review.checkout.title" = "Bu inceleme kopyası kaldırılsın mı?";
+"remote.prs.remove.review.checkout.dirty" = "Pull request'te olmayan değişiklikler veya commit'ler içeriyor. Kaldırmak bunları siler.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "Checkout yapıldı, ancak inceleme kopyasındaki değişiklikler uygulanamadı; hâlâ %@ içinde. %@";
+"remote.prs.review.kept.changed %@" = "Checkout yapıldı. %@ kopyalanırken değişti, bu yüzden tutuldu.";
+"remote.prs.review.kept.commits %@" = "Checkout yapıldı. %@ pull request'te olmayan commit'ler içeriyor, bu yüzden tutuldu.";
+"remote.prs.review.kept.in.use %@" = "%@ bir terminalde açık, bu yüzden tutuldu.";

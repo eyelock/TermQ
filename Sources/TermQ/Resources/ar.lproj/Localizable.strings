@@ -1312,7 +1312,7 @@
 "remote.prs.badge.draft" = "مسودة";
 "remote.prs.badge.review" = "مراجعة";
 "remote.prs.checking.out %lld" = "استخراج PR #%lld…";
-"remote.prs.checkout.as.worktree" = "استخراج كـ worktree";
+"remote.prs.checkout.as.worktree" = "سحب هذا الـ PR";
 "remote.prs.checkout.toast %@" = "تم الاستخراج كـ %@.";
 "remote.prs.clear.default.focus" = "مسح التركيز الافتراضي";
 "remote.prs.copy.branch.name" = "نسخ اسم الفرع";
@@ -1688,3 +1688,14 @@
 "remote.prs.prune.reason.in.use" = "مفتوح في طرفية";
 "remote.prs.prune.reason.orphan" = "مجلد متبقٍ";
 "remote.prs.prune.failed %@" = "تعذّرت الإزالة: %@";
+
+// MARK: - Review checkouts — menu
+"remote.prs.remove.review.checkout" = "إزالة نسخة المراجعة";
+"remote.prs.remove.review.checkout.title" = "هل تريد إزالة نسخة المراجعة هذه؟";
+"remote.prs.remove.review.checkout.dirty" = "تحتوي على تغييرات أو commits غير موجودة في الـ PR. ستؤدي إزالتها إلى حذفها.";
+
+// MARK: - Review checkouts — checkout notes
+"remote.prs.carry.failed %@ %@" = "تم السحب، لكن تعذّر تطبيق تغييرات نسخة المراجعة، لذا لا تزال في %@. %@";
+"remote.prs.review.kept.changed %@" = "تم السحب. تغيّرت %@ أثناء النسخ، لذا تم الاحتفاظ بها.";
+"remote.prs.review.kept.commits %@" = "تم السحب. تحتوي %@ على commits غير موجودة في الـ PR، لذا تم الاحتفاظ بها.";
+"remote.prs.review.kept.in.use %@" = "%@ مفتوحة في طرفية، لذا تم الاحتفاظ بها.";

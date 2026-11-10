@@ -210,7 +210,7 @@ extension WorktreeSidebarView {
         }
         .padding(.leading, 4)
         .contextMenu {
-            prRowContextMenu(pr, repo: repo, worktreePath: worktreePath)
+            prContextMenu(pr, repo: repo, worktreePath: worktreePath)
         }
         .task(id: repo.path) {
             // Pre-fetch harness detail so the focuses submenu is ready when the user right-clicks.
@@ -219,187 +219,6 @@ extension WorktreeSidebarView {
                 ?? ynhPersistence.repoDefaultHarness(for: repo.path)
             if let id = harnessId, harnessRepository.cachedDetail(for: id) == nil {
                 await harnessRepository.fetchDetail(for: id)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func prRowContextMenu(
-        _ pr: GitHubPR, repo: ObservableRepository, worktreePath: String?
-    ) -> some View {
-        let worktree = worktreePath.flatMap { path in
-            (viewModel.worktrees[repo.id] ?? []).first(where: { $0.path == path })
-        }
-        let harnessId =
-            ynhPersistence.runHarness(for: repo.path)
-            ?? ynhPersistence.repoDefaultHarness(for: repo.path)
-        let cachedFocuses: [String] =
-            harnessId.flatMap { id in
-                harnessRepository.cachedDetail(for: id)?.composition.focuses
-            }.map { $0.keys.sorted() } ?? []
-
-        // ─── Group 1: Primary harness action ───
-        if let worktree {
-            Button {
-                runWithFocusContext = RunWithFocusContext(
-                    worktree: worktree, repo: repo, prNumber: pr.number)
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
-
-            if let harnessId, !cachedFocuses.isEmpty {
-                Menu(Strings.RemotePRs.quickLaunchFocus) {
-                    ForEach(cachedFocuses, id: \.self) { focusName in
-                        Button(Strings.RemotePRs.runFocusItem(focusName)) {
-                            quickLaunchFocus(
-                                focusName, worktree: worktree, repo: repo,
-                                prNumber: pr.number, harnessId: harnessId)
-                        }
-                    }
-                }
-            }
-
-            Divider()
-
-            // ─── Group 2: Terminal ───
-            Button {
-                boardVM.newTerminal(
-                    at: worktree.path, branch: worktree.branch,
-                    repoName: orgRepoName(repoPath: repo.path))
-            } label: {
-                Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
-            }
-            Button {
-                boardVM.addTerminal(
-                    workingDirectory: worktree.path, branch: worktree.branch,
-                    repoName: orgRepoName(repoPath: repo.path))
-            } label: {
-                Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
-            }
-
-            Divider()
-
-            // ─── Group 3: Reveal / copy ───
-            Button {
-                revealInFinder(path: worktree.path)
-            } label: {
-                Label(Strings.Sidebar.revealInFinder, systemImage: "folder")
-            }
-            Button {
-                openInTerminal(path: worktree.path)
-            } label: {
-                Label(Strings.Sidebar.openInTerminal, systemImage: "apple.terminal")
-            }
-            Button {
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString(pr.headRefName, forType: .string)
-            } label: {
-                Label(Strings.RemotePRs.copyBranchName, systemImage: "doc.on.clipboard")
-            }
-
-            Divider()
-        } else if case .ready(let ghPath, _) = ghProbe.status {
-            Button {
-                Task { await checkoutAndRunFocus(pr, repo: repo, ghPath: ghPath) }
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
-            Divider()
-        }
-
-        // ─── Group 4: Remote links ───
-        Button {
-            openPROnRemote(prNumber: pr.number, repo: repo)
-        } label: {
-            Label(Strings.RemotePRs.openPROnRemote, systemImage: "network")
-        }
-        Button {
-            copyPRURL(prNumber: pr.number, repo: repo)
-        } label: {
-            Label(Strings.RemotePRs.copyPRURL, systemImage: "doc.on.clipboard")
-        }
-
-        if let worktree {
-            Button {
-                Task {
-                    do { try await viewModel.pullBranch(worktree: worktree, repo: repo) } catch {
-                        viewModel.operationError = error.localizedDescription
-                    }
-                }
-            } label: {
-                Label(Strings.Sidebar.updateFromOrigin, systemImage: "arrow.down.circle")
-            }
-        }
-
-        Divider()
-
-        // ─── Group 5: Navigation / checkout ───
-        if worktree != nil {
-            Button {
-                sidebarMode = .local
-            } label: {
-                Label(Strings.RemotePRs.showInLocal, systemImage: "arrow.turn.up.left")
-            }
-        } else {
-            if case .ready(let ghPath, _) = ghProbe.status {
-                let localBranch = pr.localBranchName()
-                let existingPath = viewModel.existingWorktreePath(for: localBranch, repoID: repo.id)
-                if existingPath != nil {
-                    Text(Strings.RemotePRs.worktreeExists).foregroundColor(.secondary)
-                    Button {
-                        sidebarMode = .local
-                    } label: {
-                        Label(Strings.RemotePRs.switchToExisting, systemImage: "arrow.turn.up.left")
-                    }
-                } else {
-                    Button {
-                        Task { await checkoutPRFromRemote(pr, repo: repo, ghPath: ghPath) }
-                    } label: {
-                        Label(Strings.RemotePRs.checkoutAsWorktree, systemImage: "square.and.arrow.down")
-                    }
-                }
-
-                // Checking out one PR of a stack gives you a branch whose parent isn't
-                // here — the stack UI stays dark and the diff reads against the wrong
-                // base. When the PR belongs to a forge stack, offer to bring the whole
-                // thing down instead.
-                if let stack = stackContaining(pr: pr, repo: repo) {
-                    Button {
-                        Task { await checkoutWholeStack(stack, repo: repo) }
-                    } label: {
-                        Label(
-                            Strings.Stacks.checkoutStack(stack.branchCount),
-                            systemImage: "square.stack.3d.down.right")
-                    }
-                }
-            }
-        }
-
-        // ─── Group 6: Focus default (only when focuses are available) ───
-        if !cachedFocuses.isEmpty {
-            Divider()
-            prFocusDefaultItems(for: repo, focuses: cachedFocuses)
-        }
-    }
-
-    @ViewBuilder
-    private func prFocusDefaultItems(for repo: ObservableRepository, focuses: [String]) -> some View {
-        let currentFocus = ynhPersistence.runFocus(for: repo.path) ?? ""
-        Menu {
-            if !currentFocus.isEmpty {
-                Button(Strings.RemotePRs.clearDefaultFocus) {
-                    ynhPersistence.setRunFocus(nil, for: repo.path)
-                }
-                Divider()
-            }
-            ForEach(focuses, id: \.self) { name in
-                Button(name) { ynhPersistence.setRunFocus(name, for: repo.path) }
-            }
-        } label: {
-            if currentFocus.isEmpty {
-                Label(Strings.RemotePRs.setDefaultFocus, systemImage: "scope")
-            } else {
-                Label(Strings.RemotePRs.defaultFocusSet(currentFocus), systemImage: "scope")
             }
         }
     }
@@ -474,7 +293,7 @@ extension WorktreeSidebarView {
         }
     }
 
-    private func copyPRURL(prNumber: Int, repo: ObservableRepository) {
+    func copyPRURL(prNumber: Int, repo: ObservableRepository) {
         Task {
             guard let raw = try? await GitService.shared.remoteURL(repoPath: repo.path),
                 let base = remoteWebURL(from: raw)
@@ -487,13 +306,24 @@ extension WorktreeSidebarView {
 
     /// Three-step PR checkout: detach → cd → `gh pr checkout <n>`.
     /// Shows a cross-link toast on success; sets `operationError` on failure.
-    private func checkoutPRFromRemote(
+    /// With a review checkout, its changes are carried into the new worktree and
+    /// the review checkout is removed.
+    func checkoutPRFromRemote(
         _ pr: GitHubPR,
         repo: ObservableRepository,
-        ghPath: String
+        ghPath: String,
+        review: GitWorktree? = nil
     ) async {
         do {
-            let path = try await viewModel.checkoutPR(pr, repo: repo, ghPath: ghPath)
+            var note: String?
+            let path: String
+            if let review {
+                (path, note) = try await viewModel.checkoutPR(
+                    pr, repo: repo, ghPath: ghPath, carryingChangesFrom: review)
+            } else {
+                path = try await viewModel.checkoutPR(pr, repo: repo, ghPath: ghPath)
+            }
+            if let note { viewModel.operationError = note }
             let branchName = URL(fileURLWithPath: path).lastPathComponent
             pendingToast = SidebarToast(
                 message: Strings.RemotePRs.checkoutToast(branchName),
@@ -525,7 +355,7 @@ extension WorktreeSidebarView {
     }
 
     /// Create (or reuse) a focus worktree for `pr` then open the Run with Focus sheet.
-    private func checkoutAndRunFocus(
+    func checkoutAndRunFocus(
         _ pr: GitHubPR, repo: ObservableRepository, ghPath: String
     ) async {
         do {
