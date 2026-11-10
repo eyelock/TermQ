@@ -42,11 +42,20 @@ public enum ReviewCheckouts {
         name.hasPrefix("\(directoryPrefix)-\(repoKey)--")
     }
 
+    /// `path` with symlinks in its parent folders resolved (git reports worktree paths
+    /// that way, such as `/private/var/…` for `/var/…`). The last component is kept
+    /// as is, so a symlinked checkout folder is never followed.
+    public static func canonical(_ path: String) -> String {
+        let url = URL(fileURLWithPath: path).standardizedFileURL
+        let parent = url.deletingLastPathComponent().resolvingSymlinksInPath()
+        return parent.appendingPathComponent(url.lastPathComponent).path
+    }
+
     /// Whether `path` is a review checkout folder directly inside `base`.
     /// Only such paths may ever be deleted from disk.
     public static func isManaged(path: String, base: URL) -> Bool {
-        let url = URL(fileURLWithPath: path).standardizedFileURL
-        return url.deletingLastPathComponent().path == base.standardizedFileURL.path
+        let url = URL(fileURLWithPath: canonical(path))
+        return url.deletingLastPathComponent().path == base.standardizedFileURL.resolvingSymlinksInPath().path
             && url.lastPathComponent.hasPrefix(directoryPrefix)
     }
 
@@ -87,9 +96,9 @@ public enum ReviewCheckouts {
 
     /// Whether a terminal open in `cardDirectories` is working inside `path`.
     public static func hasOpenTerminal(at path: String, cardDirectories: [String]) -> Bool {
-        let root = URL(fileURLWithPath: path).standardizedFileURL.path
+        let root = canonical(path)
         return cardDirectories.contains { dir in
-            let cardPath = URL(fileURLWithPath: dir).standardizedFileURL.path
+            let cardPath = canonical(dir)
             return cardPath == root || cardPath.hasPrefix(root + "/")
         }
     }
@@ -130,12 +139,12 @@ public enum ReviewCheckouts {
     )
         -> [String]
     {
-        let registered = Set(registeredPaths.map { URL(fileURLWithPath: $0).standardizedFileURL.path })
+        let registered = Set(registeredPaths.map { canonical($0) })
         return
             directoryNames
             .filter { belongs(directoryName: $0, toRepoKey: repoKey) }
             .map { base.appendingPathComponent($0).standardizedFileURL.path }
-            .filter { !registered.contains($0) }
+            .filter { !registered.contains(canonical($0)) }
             .sorted()
     }
 }
