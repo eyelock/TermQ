@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "Αυτή την εβδομάδα";
 "actions.wait.this.month" = "Αυτόν τον μήνα";
 "actions.wait.older" = "Παλαιότερα";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "Το PR είναι ακόμα ανοιχτό";
+"remote.prs.prune.reason.pr.closed" = "Το PR έκλεισε";
+"remote.prs.prune.reason.in.use" = "ανοιχτό σε τερματικό";
+"remote.prs.prune.reason.orphan" = "φάκελος που απέμεινε";
+"remote.prs.prune.failed %@" = "Δεν ήταν δυνατή η αφαίρεση: %@";

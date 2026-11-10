@@ -128,16 +128,40 @@ public struct PRPruneCandidate: Sendable, Identifiable {
     }
 }
 
-/// A focus worktree created by TermQ for reviewing a remote PR without a permanent checkout.
-///
-/// Focus worktrees live under `~/.termq/focus-worktrees/` and are always prunable — they carry
-/// no uncommitted work by design.
-public struct FocusWorktreeCandidate: Sendable, Identifiable {
+/// A review checkout (a "Run with Focus" worktree under `~/.termq/focus-worktrees/`)
+/// considered for pruning. See `ReviewCheckouts` for the rules.
+public struct FocusWorktreeCandidate: Sendable, Identifiable, Equatable {
     public let path: String
+    /// The pull request it was made for, read from the folder name.
+    public let prNumber: Int?
+    public let prState: ReviewCheckouts.PRState
+    /// A TermQ terminal is working inside it.
+    public let hasOpenTerminal: Bool
+    /// It has uncommitted or untracked changes.
+    public let isDirty: Bool
+    /// The folder is on disk but git no longer lists it as a worktree.
+    public let isOrphan: Bool
     public var id: String { path }
     public var displayName: String { URL(fileURLWithPath: path).lastPathComponent }
+    /// Removing a checkout a terminal is using would pull the folder out from
+    /// under it, so the Prune sheet keeps those.
+    public var canPrune: Bool { !hasOpenTerminal }
 
-    public init(path: String) { self.path = path }
+    public init(
+        path: String,
+        prNumber: Int? = nil,
+        prState: ReviewCheckouts.PRState = .unknown,
+        hasOpenTerminal: Bool = false,
+        isDirty: Bool = false,
+        isOrphan: Bool = false
+    ) {
+        self.path = path
+        self.prNumber = prNumber
+        self.prState = prState
+        self.hasOpenTerminal = hasOpenTerminal
+        self.isDirty = isDirty
+        self.isOrphan = isOrphan
+    }
 }
 
 /// The result of matching PRs against local worktrees for a repo.

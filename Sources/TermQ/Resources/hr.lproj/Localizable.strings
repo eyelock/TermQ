@@ -1687,3 +1687,10 @@
 "actions.wait.this.week" = "Ovaj tjedan";
 "actions.wait.this.month" = "Ovaj mjesec";
 "actions.wait.older" = "Starije";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR je još otvoren";
+"remote.prs.prune.reason.pr.closed" = "PR zatvoren";
+"remote.prs.prune.reason.in.use" = "otvoreno u terminalu";
+"remote.prs.prune.reason.orphan" = "zaostala mapa";
+"remote.prs.prune.failed %@" = "Nije moguće ukloniti: %@";

@@ -1305,6 +1305,11 @@
 "remote.prs.prune.remove" = "Remove";
 "remote.prs.prune.reason.dirty" = "uncommitted changes";
 "remote.prs.prune.reason.ahead" = "unpushed commits";
+"remote.prs.prune.reason.pr.open" = "PR still open";
+"remote.prs.prune.reason.pr.closed" = "PR closed";
+"remote.prs.prune.reason.in.use" = "open in a terminal";
+"remote.prs.prune.reason.orphan" = "folder left behind";
+"remote.prs.prune.failed %@" = "Couldn't remove: %@";
 
 // MARK: - Harness detail — empty states
 "harnesses.detail.no.includes" = "No includes";

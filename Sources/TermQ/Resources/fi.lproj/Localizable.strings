@@ -1687,3 +1687,10 @@
 "actions.wait.this.week" = "Tällä viikolla";
 "actions.wait.this.month" = "Tässä kuussa";
 "actions.wait.older" = "Vanhemmat";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR on yhä auki";
+"remote.prs.prune.reason.pr.closed" = "PR suljettu";
+"remote.prs.prune.reason.in.use" = "auki päätteessä";
+"remote.prs.prune.reason.orphan" = "jäljelle jäänyt kansio";
+"remote.prs.prune.failed %@" = "Ei voitu poistaa: %@";

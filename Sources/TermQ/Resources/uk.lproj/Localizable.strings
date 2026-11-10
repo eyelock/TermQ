@@ -1688,3 +1688,10 @@
 "actions.wait.this.week" = "Цього тижня";
 "actions.wait.this.month" = "Цього місяця";
 "actions.wait.older" = "Раніше";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR ще відкритий";
+"remote.prs.prune.reason.pr.closed" = "PR закритий";
+"remote.prs.prune.reason.in.use" = "відкрито в терміналі";
+"remote.prs.prune.reason.orphan" = "залишена тека";
+"remote.prs.prune.failed %@" = "Не вдалося видалити: %@";

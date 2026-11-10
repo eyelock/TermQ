@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "Tento týden";
 "actions.wait.this.month" = "Tento měsíc";
 "actions.wait.older" = "Starší";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR je stále otevřený";
+"remote.prs.prune.reason.pr.closed" = "PR uzavřen";
+"remote.prs.prune.reason.in.use" = "otevřeno v terminálu";
+"remote.prs.prune.reason.orphan" = "zbylá složka";
+"remote.prs.prune.failed %@" = "Nelze odstranit: %@";

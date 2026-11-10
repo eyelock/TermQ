@@ -1681,3 +1681,10 @@
 "actions.wait.this.week" = "本週";
 "actions.wait.this.month" = "本月";
 "actions.wait.older" = "更早";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR 仍未關閉";
+"remote.prs.prune.reason.pr.closed" = "PR 已關閉";
+"remote.prs.prune.reason.in.use" = "正在終端機中使用";
+"remote.prs.prune.reason.orphan" = "殘留的資料夾";
+"remote.prs.prune.failed %@" = "無法移除：%@";

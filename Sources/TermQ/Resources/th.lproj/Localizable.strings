@@ -1688,3 +1688,10 @@
 "actions.wait.this.week" = "สัปดาห์นี้";
 "actions.wait.this.month" = "เดือนนี้";
 "actions.wait.older" = "เก่ากว่า";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR ยังเปิดอยู่";
+"remote.prs.prune.reason.pr.closed" = "PR ปิดแล้ว";
+"remote.prs.prune.reason.in.use" = "เปิดอยู่ในเทอร์มินัล";
+"remote.prs.prune.reason.orphan" = "โฟลเดอร์ที่ค้างอยู่";
+"remote.prs.prune.failed %@" = "ลบไม่ได้: %@";

@@ -1686,3 +1686,10 @@
 "actions.wait.this.week" = "Deze week";
 "actions.wait.this.month" = "Deze maand";
 "actions.wait.older" = "Ouder";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR nog open";
+"remote.prs.prune.reason.pr.closed" = "PR gesloten";
+"remote.prs.prune.reason.in.use" = "open in een terminal";
+"remote.prs.prune.reason.orphan" = "achtergebleven map";
+"remote.prs.prune.failed %@" = "Kon niet verwijderen: %@";

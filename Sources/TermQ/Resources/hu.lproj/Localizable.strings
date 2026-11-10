@@ -1687,3 +1687,10 @@
 "actions.wait.this.week" = "Ezen a héten";
 "actions.wait.this.month" = "Ebben a hónapban";
 "actions.wait.older" = "Régebbi";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "A PR még nyitott";
+"remote.prs.prune.reason.pr.closed" = "A PR lezárva";
+"remote.prs.prune.reason.in.use" = "terminálban nyitva";
+"remote.prs.prune.reason.orphan" = "ottmaradt mappa";
+"remote.prs.prune.failed %@" = "Nem sikerült eltávolítani: %@";

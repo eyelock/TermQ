@@ -1680,3 +1680,10 @@
 "actions.wait.this.week" = "This week";
 "actions.wait.this.month" = "This month";
 "actions.wait.older" = "Older";
+
+// MARK: - Review checkouts — prune reasons
+"remote.prs.prune.reason.pr.open" = "PR still open";
+"remote.prs.prune.reason.pr.closed" = "PR closed";
+"remote.prs.prune.reason.in.use" = "open in a terminal";
+"remote.prs.prune.reason.orphan" = "folder left behind";
+"remote.prs.prune.failed %@" = "Couldn't remove: %@";
