@@ -132,4 +132,15 @@ final class WheelhouseStageZoomTests: XCTestCase {
             "the seat just taken off doesn't come straight back")
         XCTAssertNil(WheelhouseStage.nextToShow(open: [first], onStage: [], excluding: first))
     }
+
+    func testTheSeatTakenOffIsOnlySkippedUntilAnotherIsShown() throws {
+        let stage = try makeStage()
+        let first = UUID()
+        let second = UUID()
+        stage.show(first)
+        stage.remove(first)
+        XCTAssertEqual(stage.lastRemoved, first)
+        stage.show(second)
+        XCTAssertNil(stage.lastRemoved, "the exclusion was for the change that emptied the stage")
+    }
 }

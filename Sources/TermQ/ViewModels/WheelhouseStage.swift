@@ -173,6 +173,8 @@ final class WheelhouseStage: ObservableObject {
     /// one is zoomed comes back to the whole stage.
     func show(_ card: UUID) {
         if let zoomed, zoomed != card { self.zoomed = nil }
+        // Only the change that emptied the stage skips the seat taken off.
+        if lastRemoved != card { lastRemoved = nil }
         mutate { $0.show(card) }
     }
     /// Pinning or unpinning keeps the pane's width: its weight moves with it
