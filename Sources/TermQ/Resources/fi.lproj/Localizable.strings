@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "Haettu. %@ muuttui kopioinnin aikana, joten se säilytettiin.";
 "remote.prs.review.kept.commits %@" = "Haettu. Kohteessa %@ on committeja, jotka eivät ole pull requestissa, joten se säilytettiin.";
 "remote.prs.review.kept.in.use %@" = "%@ on auki päätteessä, joten se säilytettiin.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Ladataan pull requestia…";
+"actions.checkout.adding.repository" = "Hae tämä PR…";
+"actions.clone.here" = "Kloonaa tähän";
+"actions.choose.clone.folder %@" = "Valitse kansio, johon %@ kloonataan. Se lisätään TermQ:hun.";
+"actions.pr.not.found %lld" = "Pull request #%lld ei ole auki tässä repositoriossa.";
+"actions.folder.not.repository %@ %@" = "%@ ei ole kohteen %@ klooni, joten sitä ei lisätty. Valitse toinen kansio.";

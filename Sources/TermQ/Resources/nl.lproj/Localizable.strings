@@ -1704,3 +1704,11 @@
 "remote.prs.review.kept.changed %@" = "Uitgecheckt. %@ is tijdens het kopiëren gewijzigd en is daarom bewaard.";
 "remote.prs.review.kept.commits %@" = "Uitgecheckt. %@ bevat commits die niet in de pull request staan en is daarom bewaard.";
 "remote.prs.review.kept.in.use %@" = "%@ is open in een terminal en is daarom bewaard.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Pull request laden…";
+"actions.checkout.adding.repository" = "Deze PR uitchecken…";
+"actions.clone.here" = "Hier klonen";
+"actions.choose.clone.folder %@" = "Kies de map waarin %@ gekloond wordt. Deze wordt aan TermQ toegevoegd.";
+"actions.pr.not.found %lld" = "Pull request #%lld is niet open in die repository.";
+"actions.folder.not.repository %@ %@" = "%@ is geen kloon van %@ en is daarom niet toegevoegd. Kies een andere map.";

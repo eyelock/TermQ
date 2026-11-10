@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "เช็กเอาต์แล้ว %@ เปลี่ยนแปลงระหว่างการคัดลอก จึงเก็บไว้";
 "remote.prs.review.kept.commits %@" = "เช็กเอาต์แล้ว %@ มี commit ที่ไม่อยู่ใน pull request จึงเก็บไว้";
 "remote.prs.review.kept.in.use %@" = "%@ เปิดอยู่ในเทอร์มินัล จึงเก็บไว้";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "กำลังโหลด pull request…";
+"actions.checkout.adding.repository" = "เช็กเอาต์ PR นี้…";
+"actions.clone.here" = "โคลนที่นี่";
+"actions.choose.clone.folder %@" = "เลือกโฟลเดอร์ที่จะโคลน %@ ไปไว้ ระบบจะเพิ่มลงใน TermQ";
+"actions.pr.not.found %lld" = "pull request #%lld ไม่ได้เปิดอยู่ในรีโพสิทอรีนั้น";
+"actions.folder.not.repository %@ %@" = "%@ ไม่ใช่โคลนของ %@ จึงไม่ได้เพิ่ม โปรดเลือกโฟลเดอร์อื่น";

@@ -147,6 +147,18 @@ extension Strings {
     enum Actions {
         static var mode: String { localized("actions.mode") }
         static var termqOnly: String { localized("actions.termq.only") }
+        static var loadingPR: String { localized("actions.loading.pr") }
+        static var checkoutAddingRepository: String { localized("actions.checkout.adding.repository") }
+        static var cloneHere: String { localized("actions.clone.here") }
+        static func chooseCloneFolder(_ repository: String) -> String {
+            String(format: localized("actions.choose.clone.folder %@"), repository)
+        }
+        static func folderIsNotRepository(_ path: String, _ repository: String) -> String {
+            String(format: localized("actions.folder.not.repository %@ %@"), path, repository)
+        }
+        static func prNotFound(_ number: Int) -> String {
+            String(format: localized("actions.pr.not.found %lld"), number)
+        }
         static var empty: String { localized("actions.empty") }
         static func loadFailed(_ reason: String) -> String { localized("actions.load.failed %@", reason) }
         static var draft: String { localized("actions.draft") }

@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "ההוצאה הצליחה. %@ השתנה במהלך ההעתקה, ולכן נשמר.";
 "remote.prs.review.kept.commits %@" = "ההוצאה הצליחה. ב־%@ יש commits שאינם ב־pull request, ולכן נשמר.";
 "remote.prs.review.kept.in.use %@" = "%@ פתוח במסוף, ולכן נשמר.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "טוען pull request…";
+"actions.checkout.adding.repository" = "הוצא את ה־PR הזה…";
+"actions.clone.here" = "שכפל לכאן";
+"actions.choose.clone.folder %@" = "בחר את התיקייה שאליה ישוכפל %@. הוא יתווסף ל־TermQ.";
+"actions.pr.not.found %lld" = "ה־pull request ‏#%lld אינו פתוח במאגר הזה.";
+"actions.folder.not.repository %@ %@" = "%@ אינו שכפול של %@, ולכן לא נוסף. בחר תיקייה אחרת.";

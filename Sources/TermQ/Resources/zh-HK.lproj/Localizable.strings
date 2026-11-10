@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "已簽出。%@ 在複製期間有所變更，因此已保留。";
 "remote.prs.review.kept.commits %@" = "已簽出。%@ 中有不在拉取請求中的提交，因此已保留。";
 "remote.prs.review.kept.in.use %@" = "%@ 正在終端機中使用，因此已保留。";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "正在載入拉取請求…";
+"actions.checkout.adding.repository" = "簽出此 PR…";
+"actions.clone.here" = "複製到此處";
+"actions.choose.clone.folder %@" = "選擇要將 %@ 複製到的資料夾。它會被加入 TermQ。";
+"actions.pr.not.found %lld" = "拉取請求 #%lld 在該儲存庫中未處於開啟狀態。";
+"actions.folder.not.repository %@ %@" = "%@ 不是 %@ 的複製，因此未加入。請選擇其他資料夾。";

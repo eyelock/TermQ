@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "Extras. %@ s-a modificat în timpul copierii, așa că a fost păstrată.";
 "remote.prs.review.kept.commits %@" = "Extras. %@ are commituri care nu sunt în pull request, așa că a fost păstrată.";
 "remote.prs.review.kept.in.use %@" = "%@ este deschisă într-un terminal, așa că a fost păstrată.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Se încarcă pull request-ul…";
+"actions.checkout.adding.repository" = "Extrage acest PR…";
+"actions.clone.here" = "Clonează aici";
+"actions.choose.clone.folder %@" = "Alege dosarul în care să fie clonat %@. Va fi adăugat în TermQ.";
+"actions.pr.not.found %lld" = "Pull request-ul #%lld nu este deschis în acel depozit.";
+"actions.folder.not.repository %@ %@" = "%@ nu este o clonă a %@, așa că nu a fost adăugat. Alege alt dosar.";

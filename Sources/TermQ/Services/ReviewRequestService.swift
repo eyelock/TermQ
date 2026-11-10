@@ -19,6 +19,9 @@ final class ReviewRequestService: ObservableObject {
     /// `owner/name` of each repository added to TermQ, by path, for the
     /// "TermQ's repositories only" filter.
     @Published private(set) var termqRepositories: Set<String> = []
+    /// The path of each TermQ repository, by lowercased `owner/name` (GitHub names
+    /// are case-insensitive, and a remote URL may not use the API's casing).
+    @Published private(set) var termqRepositoryPaths: [String: String] = [:]
 
     private var loadTask: Task<Void, Never>?
     private var namesTask: Task<Void, Never>?
@@ -64,9 +67,11 @@ final class ReviewRequestService: ObservableObject {
         namesTask?.cancel()
         namesTask = Task { [weak self] in
             var names: Set<String> = []
+            var pathsByName: [String: String] = [:]
             for path in paths {
                 if let cached = self?.remoteCache[path] {
                     names.insert(cached)
+                    pathsByName[cached.lowercased()] = pathsByName[cached.lowercased()] ?? path
                     continue
                 }
                 guard
@@ -76,10 +81,17 @@ final class ReviewRequestService: ObservableObject {
                 else { continue }
                 self?.remoteCache[path] = name
                 names.insert(name)
+                pathsByName[name.lowercased()] = pathsByName[name.lowercased()] ?? path
             }
             guard !Task.isCancelled else { return }
             self?.termqRepositories = names
+            self?.termqRepositoryPaths = pathsByName
         }
+    }
+
+    /// The path of the TermQ repository named `repository` (`owner/name`, any case).
+    func termqRepositoryPath(for repository: String) -> String? {
+        termqRepositoryPaths[repository.lowercased()]
     }
 
     struct LoadError: Error {

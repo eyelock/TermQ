@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "चेकआउट हो गया। कॉपी होते समय %@ बदल गया, इसलिए उसे रखा गया।";
 "remote.prs.review.kept.commits %@" = "चेकआउट हो गया। %@ में ऐसे commits हैं जो pull request में नहीं हैं, इसलिए उसे रखा गया।";
 "remote.prs.review.kept.in.use %@" = "%@ एक टर्मिनल में खुला है, इसलिए उसे रखा गया।";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "pull request लोड हो रहा है…";
+"actions.checkout.adding.repository" = "यह PR चेकआउट करें…";
+"actions.clone.here" = "यहाँ क्लोन करें";
+"actions.choose.clone.folder %@" = "वह फ़ोल्डर चुनें जिसमें %@ क्लोन करना है। इसे TermQ में जोड़ा जाएगा।";
+"actions.pr.not.found %lld" = "pull request #%lld उस रिपॉज़िटरी में खुला नहीं है।";
+"actions.folder.not.repository %@ %@" = "%@ %@ का क्लोन नहीं है, इसलिए इसे नहीं जोड़ा गया। कोई दूसरा फ़ोल्डर चुनें।";

@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "Načítané. %@ sa počas kopírovania zmenila, preto sa ponechala.";
 "remote.prs.review.kept.commits %@" = "Načítané. %@ obsahuje commity, ktoré nie sú v pull requeste, preto sa ponechala.";
 "remote.prs.review.kept.in.use %@" = "%@ je otvorená v termináli, preto sa ponechala.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Načítava sa pull request…";
+"actions.checkout.adding.repository" = "Načítať tento PR…";
+"actions.clone.here" = "Klonovať sem";
+"actions.choose.clone.folder %@" = "Vyberte priečinok, do ktorého sa má %@ naklonovať. Pridá sa do TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld v tomto repozitári nie je otvorený.";
+"actions.folder.not.repository %@ %@" = "%@ nie je klonom %@, preto sa nepridal. Vyberte iný priečinok.";

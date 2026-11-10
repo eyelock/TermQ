@@ -1701,3 +1701,11 @@
 "remote.prs.review.kept.changed %@" = "已检出。%@ 在复制期间发生了更改，因此已保留。";
 "remote.prs.review.kept.commits %@" = "已检出。%@ 中有不在拉取请求中的提交，因此已保留。";
 "remote.prs.review.kept.in.use %@" = "%@ 正在终端中使用，因此已保留。";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "正在加载拉取请求…";
+"actions.checkout.adding.repository" = "检出此 PR…";
+"actions.clone.here" = "克隆到此处";
+"actions.choose.clone.folder %@" = "选择要将 %@ 克隆到的文件夹。它会被添加到 TermQ。";
+"actions.pr.not.found %lld" = "拉取请求 #%lld 在该仓库中未处于打开状态。";
+"actions.folder.not.repository %@ %@" = "%@ 不是 %@ 的克隆，因此未添加。请选择其他文件夹。";

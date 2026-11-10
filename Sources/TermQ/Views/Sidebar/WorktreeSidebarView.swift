@@ -10,6 +10,8 @@ struct WorktreeSidebarView: View {
     var onAutoLaunchHarness: ((String, String, String?) -> Void)?
     var onRunWithFocus: ((HarnessLaunchConfig) -> Void)?
     @ObservedObject var boardVM: BoardViewModel = .shared
+    @ObservedObject var reviewRequests: ReviewRequestService = .shared
+    @ObservedObject var reviewClones: ReviewCloneService = .shared
     @ObservedObject var harnessRepository: HarnessRepository = .shared
     @ObservedObject var ynhPersistence: YNHPersistence = .shared
     @ObservedObject var ynhDetector: YNHDetector = .shared
@@ -93,7 +95,10 @@ struct WorktreeSidebarView: View {
             header
             Divider()
             if sidebarMode == .actions {
-                ReviewActionsView(repositoryPaths: viewModel.repositories.map(\.path))
+                ReviewActionsView(
+                    repositoryPaths: viewModel.repositories.map(\.path),
+                    rowMenu: { attentionMenu($0) },
+                    onRequestsChanged: { await attentionRequestsChanged($0) })
             } else if viewModel.displayedRepositories.isEmpty {
                 emptyState
             } else {

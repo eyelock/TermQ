@@ -5,8 +5,14 @@ import TermQShared
 /// The Repositories tab's Attention view: every open pull request waiting on
 /// the human's review, in any repository, grouped by how long it has waited
 /// since the review was asked for, longest first.
-struct ReviewActionsView: View {
+struct ReviewActionsView<RowMenu: View>: View {
     let repositoryPaths: [String]
+    /// The context menu for a row, built by the sidebar so TermQ's repositories get
+    /// the Remote tab's PR menu.
+    @ViewBuilder let rowMenu: (ReviewRequest) -> RowMenu
+    /// Called with the requests shown, whenever they change, so the sidebar can load
+    /// what their menus need and tidy review checkouts.
+    var onRequestsChanged: ([ReviewRequest]) async -> Void = { _ in }
 
     @ObservedObject private var service: ReviewRequestService = .shared
     @ObservedObject private var ghProbe: GhCliProbe = .shared
@@ -36,6 +42,12 @@ struct ReviewActionsView: View {
             service.updateTermQRepositories(paths: repositoryPaths)
         }
         .onChange(of: repositoryPaths) { _, paths in service.updateTermQRepositories(paths: paths) }
+        // Waits for the first load, and re-runs (cancelling the last run) when the
+        // requests, TermQ's repositories or gh's sign-in change.
+        .task(id: service.requests.map(\.id) + service.termqRepositories.sorted() + ["\(ghProbe.status.isReady)"]) {
+            guard service.lastLoaded != nil else { return }
+            await onRequestsChanged(service.requests)
+        }
         // gh may only become ready after the view is up.
         .onChange(of: ghProbe.status) { refresh(force: false) }
         .task {
@@ -145,18 +157,7 @@ struct ReviewActionsView: View {
         }
         .buttonStyle(.plain)
         .help(request.url)
-        .contextMenu {
-            Button {
-                open(request)
-            } label: {
-                Label(Strings.RemotePRs.openPROnRemote, systemImage: "network")
-            }
-            Button {
-                PathActions.copyPathname(request.url)
-            } label: {
-                Label(Strings.Actions.copyLink, systemImage: "doc.on.clipboard")
-            }
-        }
+        .contextMenu { rowMenu(request) }
     }
 
     private func message(_ text: String, symbol: String) -> some View {

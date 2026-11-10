@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "Extraite. %@ a changé pendant la copie, elle a donc été conservée.";
 "remote.prs.review.kept.commits %@" = "Extraite. %@ contient des commits absents de la pull request, elle a donc été conservée.";
 "remote.prs.review.kept.in.use %@" = "%@ est ouverte dans un terminal, elle a donc été conservée.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Chargement de la pull request…";
+"actions.checkout.adding.repository" = "Extraire cette PR…";
+"actions.clone.here" = "Cloner ici";
+"actions.choose.clone.folder %@" = "Choisissez le dossier où cloner %@. Il sera ajouté à TermQ.";
+"actions.pr.not.found %lld" = "La pull request #%lld n'est pas ouverte dans ce dépôt.";
+"actions.folder.not.repository %@ %@" = "%@ n'est pas un clone de %@ : il n'a pas été ajouté. Choisissez un autre dossier.";

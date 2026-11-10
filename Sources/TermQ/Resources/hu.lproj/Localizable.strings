@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "Kivéve. %@ megváltozott másolás közben, ezért megmaradt.";
 "remote.prs.review.kept.commits %@" = "Kivéve. %@ olyan commitokat tartalmaz, amelyek nincsenek a pull requestben, ezért megmaradt.";
 "remote.prs.review.kept.in.use %@" = "%@ meg van nyitva egy terminálban, ezért megmaradt.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Pull request betöltése…";
+"actions.checkout.adding.repository" = "PR kivétele…";
+"actions.clone.here" = "Klónozás ide";
+"actions.choose.clone.folder %@" = "Válassza ki a mappát, ahová a(z) %@ klónozva lesz. Hozzáadjuk a TermQ-hoz.";
+"actions.pr.not.found %lld" = "A(z) #%lld pull request nincs nyitva abban a tárolóban.";
+"actions.folder.not.repository %@ %@" = "%@ nem a(z) %@ klónja, ezért nem lett hozzáadva. Válasszon másik mappát.";

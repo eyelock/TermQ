@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "Έγινε ανάκτηση. Το %@ άλλαξε κατά την αντιγραφή, οπότε διατηρήθηκε.";
 "remote.prs.review.kept.commits %@" = "Έγινε ανάκτηση. Το %@ έχει commits που δεν υπάρχουν στο pull request, οπότε διατηρήθηκε.";
 "remote.prs.review.kept.in.use %@" = "Το %@ είναι ανοιχτό σε τερματικό, οπότε διατηρήθηκε.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Φόρτωση pull request…";
+"actions.checkout.adding.repository" = "Ανάκτηση αυτού του PR…";
+"actions.clone.here" = "Κλωνοποίηση εδώ";
+"actions.choose.clone.folder %@" = "Επιλέξτε τον φάκελο όπου θα κλωνοποιηθεί το %@. Θα προστεθεί στο TermQ.";
+"actions.pr.not.found %lld" = "Το pull request #%lld δεν είναι ανοιχτό σε αυτό το αποθετήριο.";
+"actions.folder.not.repository %@ %@" = "Το %@ δεν είναι κλώνος του %@, οπότε δεν προστέθηκε. Επιλέξτε άλλο φάκελο.";

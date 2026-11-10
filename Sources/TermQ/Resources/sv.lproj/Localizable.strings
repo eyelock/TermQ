@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "Utcheckad. %@ ändrades under kopieringen, så den behölls.";
 "remote.prs.review.kept.commits %@" = "Utcheckad. %@ har commits som inte finns i pull requesten, så den behölls.";
 "remote.prs.review.kept.in.use %@" = "%@ är öppen i en terminal, så den behölls.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Läser in pull request…";
+"actions.checkout.adding.repository" = "Checka ut denna PR…";
+"actions.clone.here" = "Klona hit";
+"actions.choose.clone.folder %@" = "Välj mappen som %@ ska klonas till. Den läggs till i TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld är inte öppen i det repot.";
+"actions.folder.not.repository %@ %@" = "%@ är inte en klon av %@, så den lades inte till. Välj en annan mapp.";

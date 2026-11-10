@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "Prevzeto. %@ se je med kopiranjem spremenila, zato je bila ohranjena.";
 "remote.prs.review.kept.commits %@" = "Prevzeto. %@ vsebuje commite, ki niso v pull requestu, zato je bila ohranjena.";
 "remote.prs.review.kept.in.use %@" = "%@ je odprta v terminalu, zato je bila ohranjena.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Nalaganje pull requesta…";
+"actions.checkout.adding.repository" = "Prevzemi ta PR…";
+"actions.clone.here" = "Kloniraj sem";
+"actions.choose.clone.folder %@" = "Izberite mapo, v katero se klonira %@. Dodan bo v TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld v tem repozitoriju ni odprt.";
+"actions.folder.not.repository %@ %@" = "%@ ni klon %@, zato ni bil dodan. Izberite drugo mapo.";
