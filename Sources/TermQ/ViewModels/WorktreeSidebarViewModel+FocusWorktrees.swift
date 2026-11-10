@@ -222,7 +222,7 @@ extension WorktreeSidebarViewModel {
     }
 
     nonisolated private static func samePath(_ lhs: String, _ rhs: String) -> Bool {
-        URL(fileURLWithPath: lhs).standardizedFileURL.path == URL(fileURLWithPath: rhs).standardizedFileURL.path
+        ReviewCheckouts.canonical(lhs) == ReviewCheckouts.canonical(rhs)
     }
 
     /// Delete a review checkout folder from disk. Refuses any path that isn't a
