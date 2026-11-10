@@ -89,4 +89,23 @@ final class ReviewCheckoutsTests: XCTestCase {
         XCTAssertFalse(ReviewCheckouts.isLiveWorktree(at: dead.path))
         XCTAssertFalse(ReviewCheckouts.isLiveWorktree(at: bare.path))
     }
+
+    func testManagedPathsMatchThroughASymlinkedParent() throws {
+        // git reports /private/var/… for a folder made under /var/….
+        let real = FileManager.default.temporaryDirectory.resolvingSymlinksInPath()
+            .appendingPathComponent("canon-\(UUID().uuidString)")
+        let link = FileManager.default.temporaryDirectory.appendingPathComponent("canon-link-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: real, withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(at: link, withDestinationURL: real)
+        addTeardownBlock {
+            try? FileManager.default.removeItem(at: link)
+            try? FileManager.default.removeItem(at: real)
+        }
+
+        XCTAssertTrue(ReviewCheckouts.isManaged(path: real.path + "/termq-focus--a--1", base: link))
+        XCTAssertTrue(ReviewCheckouts.isManaged(path: link.path + "/termq-focus--a--1", base: real))
+        XCTAssertEqual(
+            ReviewCheckouts.canonical(link.path + "/termq-focus--a--1"),
+            ReviewCheckouts.canonical(real.path + "/termq-focus--a--1"))
+    }
 }
