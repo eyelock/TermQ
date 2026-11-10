@@ -100,6 +100,8 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 **File actions:**
 - **Reveal in Finder** — opens the worktree directory in Finder.
 - **Reveal in Terminal** — opens a new terminal window at the worktree path in your default terminal app.
+- **Copy Pathname** — copies the worktree path to the clipboard.
+- **Open In ▶** — opens the worktree in one of your installed editors.
 - **Copy Branch Name** — copies the PR's head branch name to the clipboard.
 
 **Remote actions:**
@@ -118,10 +120,13 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 ![Context menu — PR not checked out](../Images/remote-prs-context-menu-not-checked-out.png)
 
 **Harness actions:**
-- **Run with Focus…** — launches a harness session against this PR without a permanent checkout. TermQ automatically creates an ephemeral focus worktree the first time, then reuses it on subsequent runs (see §15.5).
+- **Run with Focus…** — launches a harness session against this PR without a permanent checkout. TermQ creates a *review checkout* the first time, then reuses it on subsequent runs (see §15.5).
+- **Quick Launch Focus ▶** — as above; makes the review checkout first if there isn't one.
+
+**Once a review checkout exists**, the menu also has **Quick Terminal**, **Create Terminal…**, **Reveal in Finder**, **Reveal in Terminal**, **Copy Pathname** and **Open In ▶** for it, and **Remove Review Checkout**. Removing one that a terminal is using is refused; one with changes or commits of its own asks first.
 
 **Remote actions:**
-- **Checkout as Worktree** — runs `gh pr checkout` to create a permanent linked worktree for the PR's branch.
+- **Checkout this PR** — runs `gh pr checkout` to create a permanent linked worktree for the PR's branch, ready to push to. From a review checkout, its changes are carried into the new worktree and the review checkout is removed. It is kept, with a note, if it has commits of its own, changed while being copied, or is open in a terminal.
 - **Check Out Whole Stack (N branches)** — only for a PR that belongs to a GitHub stack. Brings down every branch in the stack rather than this one. Checking out a single PR of a stack leaves you with a branch whose parent isn't present, so the diff reads against the wrong base and the stack UI stays inert. Requires the `gh stack` extension — git-spice has no forge-level stack to discover. See [Stacked Branches & PRs](stacked-branches.md).
 - **Open PR on Remote** / **Copy PR URL** — as above.
 
@@ -135,7 +140,7 @@ If a local worktree already exists for the branch (e.g. you checked it out manua
 
 Open it by right-clicking any PR row — checked out or not — and choosing **Run with Focus…**
 
-> **No checkout required:** For PRs that are not checked out locally, TermQ creates an ephemeral *focus worktree* under `~/.termq/focus-worktrees/` and checks out the PR's branch into it automatically. The worktree name is derived from the PR's remote coordinates, so the same worktree is reused on subsequent runs against the same PR. The harness is always told which PR it is reviewing via a `--instructions` context injection, regardless of which focus or prompt mode is used.
+> **No checkout required:** For PRs that are not checked out locally, TermQ creates a *review checkout* under `~/.termq/focus-worktrees/`: a worktree with a detached HEAD at the PR's head, so no local branch is created. Its name is derived from the PR's remote coordinates, so the same checkout is reused on subsequent runs against the same PR. The harness is always told which PR it is reviewing via a `--instructions` context injection, regardless of which focus or prompt mode is used.
 
 ![Run with Focus sheet](../Images/remote-prs-run-with-focus-sheet.png)
 
@@ -205,7 +210,9 @@ Clicking a focus name launches a `ynh run` session immediately — no sheet, no 
 
 ## 15.8 — Pruning worktrees
 
-Over time two kinds of worktrees accumulate: checked-out worktrees whose PRs have since closed, and focus worktrees created for "Run with Focus" sessions. A single **⊘ Prune…** action (visible in the repo header when either type exists) opens a confirmation sheet that handles both.
+Over time two kinds of worktrees accumulate: checked-out worktrees whose PRs have since closed, and review checkouts created for "Run with Focus" sessions. A single **⊘ Prune…** action (visible in the repo header when either type exists) opens a confirmation sheet that handles both.
+
+Review checkouts also clear themselves: when the Remote feed loads, TermQ removes those whose PR has closed, that have no changes and that no terminal is using.
 
 The sheet may show one or two sections:
 
@@ -218,7 +225,7 @@ Worktrees that are safe to remove (not dirty, not ahead) are checked by default.
 
 TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead worktrees must be unchecked — use **Force Delete** from Local mode if you genuinely want to discard them.
 
-**Focus worktrees** lists the ephemeral worktrees created for non-checked-out PR sessions. These are safe to remove at any time — they contain no user commits. All focus worktrees are checked by default.
+**Focus worktrees** lists the review checkouts, each with its PR's state, whether it has changes, whether a terminal is using it, and whether it's a folder git no longer lists. Prune removes them, changes and all, except any a terminal is using. Anything it can't remove is reported.
 
 ---
 
@@ -230,7 +237,9 @@ The Remote feed is per repository, so a review requested in a repository you rar
 
 - It's grouped by how long you've been waiting since the review was asked for — **Today**, **This week**, **This month**, **Older** — longest wait first. (Where GitHub can't say when you were asked, such as in an organisation enforcing SAML, the PR's opening date is used.)
 - Requests to a team you're in count too.
-- Each row shows the repository, number and title, author, and how long it has waited. Click it to open the pull request in your browser; right-click to copy its link.
+- Each row shows the repository, number and title, author, and how long it has waited. Click it to open the pull request in your browser.
+- Right-click a PR in one of TermQ's repositories for the same menu as the Remote feed (§15.4).
+- Right-click a PR anywhere else for **Run with Focus…** and **Quick Launch Focus ▶** on a review checkout. TermQ makes it from a hidden clone of the repository under `~/.termq/focus-repos/`, so the harness opens on the PR's code knowing which PR it is. **Checkout this PR…** clones the repository to a folder you choose, adds it to TermQ and checks the PR out.
 - **Only TermQ's repositories** limits the list to repositories you've added to the sidebar.
 - It refreshes when you open it, every five minutes while it's showing, and with the sidebar's refresh button. It shows the first 100 requests, and says so when there are more.
 
@@ -240,7 +249,7 @@ The Remote feed is per repository, so a review requested in a repository you rar
 - The feed is **priority-ordered**: checked-out → review-requested → open non-draft → rest; recency breaks ties within each tier
 - The **feed cap** (default 20) limits how many PRs are shown per repo; tier-1 (checked-out) PRs always appear regardless of the cap
 - **Login is per-repository**: TermQ calls `gh api user` per repo so github.com, GHEC, and on-prem GHE accounts all work simultaneously
-- **Run with Focus** works on any PR — checked out or not. For non-checked-out PRs, TermQ creates a reusable ephemeral focus worktree and always injects PR context so the harness knows which PR it is reviewing
+- **Run with Focus** works on any PR — checked out or not, in TermQ's repositories or not. For non-checked-out PRs, TermQ creates a reusable review checkout and always injects PR context so the harness knows which PR it is reviewing
 - **Quick Launch Focus** lets you skip the sheet and launch with a single click once the harness detail is cached
 - The **⟳ refresh button** in the Run with Focus sheet header reloads harness focuses and profiles from disk
 - **Set Default Focus** pre-selects a focus for a repo so it appears ready each time the sheet opens
