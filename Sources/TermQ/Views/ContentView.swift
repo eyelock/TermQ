@@ -642,7 +642,8 @@ extension ContentView {
     func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
         switch action {
         case .newTerminal:
-            viewModel.quickNewTerminal()
+            // As ⌘T: on the Wheelhouse stage, a Quick Terminal for the focused seat.
+            quickNewTerminalOrSeatQuickTerminal()
         case .newColumn:
             viewModel.addColumn()
         case .toggleZoom:

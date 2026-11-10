@@ -58,7 +58,7 @@ struct CommandPaletteView: View {
             switch self {
             case .newTerminal: return "⌘T"
             case .newColumn: return "⇧⌘N"
-            case .toggleZoom: return "⇧⌘Z"
+            case .toggleZoom: return "⌥⌘Z"
             case .toggleSearch: return "⌘F"
             case .exportSession: return "⇧⌘S"
             case .backToBoard: return "⌘B"
