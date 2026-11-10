@@ -29,7 +29,7 @@ The tab sits alongside **Repositories** as a segmented picker at the top of the 
 
 ## 2 — Enabling the Harnesses tab
 
-The Harnesses tab is **opt-in** for 0.8. Open Settings (**⌘,**) and find the **YNH Harness Toolchain** section.
+The Harnesses tab is **opt-in**. Open Settings (**⌘,**) › **Harnesses**, which shows the **YNH Harness Toolchain**.
 
 ![Feature flag setting](../Images/harness-feature-flag-settings.png)
 

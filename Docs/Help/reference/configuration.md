@@ -14,54 +14,68 @@ This file contains all columns, cards, tags, LLM context fields, and configurati
 
 ## Settings
 
-Open Settings with **⌘,** or via the TermQ menu.
+Open Settings with **⌘,** or via the TermQ menu. Sections are listed down the left; click one to see its settings on the right.
 
 ### General
 
 | Setting | Description |
 |---|---|
-| **Default Working Directory** | Working directory for new terminals (defaults to home) |
-| **Default Backend** | Direct or tmux for new terminals |
-| **Bin Retention** | Days before binned terminals are auto-deleted (0 = keep indefinitely) |
+| **Updates** | Check for updates automatically, and opt in to beta releases |
+| **Language** | The app's language |
+| **Uninstall** | Remove TermQ and its tools |
 
-### Git
-
-| Setting | Description |
-|---|---|
-| **Protected Branches** | Comma-separated list of branch names that are never offered for deletion when pruning merged branches. Defaults to `main, master, develop`. Can be overridden per-repository in **Edit Repository**. |
-
-### Appearance
+### Terminal
 
 | Setting | Description |
 |---|---|
 | **Theme** | Choose from 8 colour schemes |
 | **Copy on Select** | Automatically copy selected text to clipboard |
+| **Default Working Directory** | Working directory for new terminals (defaults to home) |
+| **Default Backend** | Direct or tmux for new terminals |
+| **Scrollback** | Lines of history kept per terminal |
+| **Bin Retention** | Days before binned terminals are auto-deleted (0 = keep indefinitely) |
 
 ### Environment
 
 Global environment variables injected into every terminal session. Manage variables and secrets here. See [Terminal Context](../tutorials/terminal-context.md) for details.
 
-### Tools
+### Git & Stacks
 
 | Setting | Description |
 |---|---|
-| **CLI Tool** | Install / uninstall `termqcli` |
+| **Protected Branches** | Comma-separated list of branch names that are never offered for deletion when pruning merged branches. Defaults to `main, master, develop`. Can be overridden per-repository in **Edit Repository**. |
+| **Remote PR feed cap** | Most pull requests shown per repository in [Remote PRs](../tutorials/remote-prs.md) |
+| **GitHub CLI and stacked PRs** | The `gh` CLI's status, and the backend used for [stacked branches](../tutorials/stacked-branches.md) |
+
+### Integrations
+
+| Setting | Description |
+|---|---|
 | **MCP Server** | Install / uninstall `termqmcp` |
-| **Enable tmux Backend** | Allow terminals to use tmux for session persistence |
-| **Auto-reattach Sessions** | Silently reconnect tmux sessions on launch |
-| **Enable Queued Actions** | Global permission for token injection in init commands |
+| **CLI Tool** | Install / uninstall `termqcli` |
+| **tmux** | Use tmux for session persistence, and silently reattach sessions on launch |
 
-### Updates
+### Harnesses
+
+The [YNH](https://github.com/eyelock/ynh) toolchain: whether it was found, **Show Harnesses sidebar tab**, the paths it uses, and **YNH Marketplaces** — the registries ynh installs harnesses from.
+
+### Wheelhouses
 
 | Setting | Description |
 |---|---|
-| **Automatically check for updates** | Check once per day for new versions |
-| **Include beta releases** | Opt in to pre-release builds |
+| **Show Wheelhouses sidebar tab** | Turn on the [Wheelhouses](../tutorials/wheelhouses.md) tab |
+| **Inbox name for any human** / **Your own inbox name** | The names whose beads make up your Wheelhouse inbox |
+| **Quick Terminal placement** | **Split** (the default) opens a seat's Quick Terminals in a panel beneath it; **Staged** gives each its own place on the stage |
+
+### Marketplaces
+
+Plugin marketplaces for the [Marketplace browser](../tutorials/marketplace-browser.md), whether to refresh them automatically, and the default folder for authored harnesses.
 
 ### Data & Security
 
 | Setting | Description |
 |---|---|
+| **Enable Queued Actions** | Global permission for token injection in init commands |
 | **Allow OSC 52 Clipboard Access** | Allow terminal programs to write to the clipboard via escape sequences |
 | **Confirm External LLM Modifications** | Show a confirmation dialog when external tools attempt to modify `llmPrompt` or `llmNextAction` |
 

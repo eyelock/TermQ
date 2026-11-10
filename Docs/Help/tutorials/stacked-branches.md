@@ -26,9 +26,9 @@ brew install git-spice              # git-spice
 gh extension install github/gh-stack   # GitHub's native stacked PRs
 ```
 
-Check **Settings → Tools → Stacked Pull Requests** — each backend gets its own card showing Installed/Missing status, the detected version and path, and a shared **Check Again** button after you install. Both reuse the `gh` CLI's authentication, so if Remote PRs already work, no extra sign-in is needed.
+Check **Settings → Git & Stacks → Stacked Pull Requests** — each backend gets its own card showing Installed/Missing status, the detected version and path, and a shared **Check Again** button after you install. Both reuse the `gh` CLI's authentication, so if Remote PRs already work, no extra sign-in is needed.
 
-![Stacking backend status in Settings → Tools](../Images/stacked-prs-settings-tools.png)
+![Stacking backend status in Settings → Git & Stacks](../Images/stacked-prs-settings-tools.png)
 
 ### Which backend drives a repository
 
@@ -154,7 +154,7 @@ This is where TermQ's home advantage kicks in: the conflicted worktree's termina
 ## What you learned
 
 - A stack is a chain of dependent branches with one PR each; in TermQ a stack lives in **one worktree** and entries share its terminals
-- Two backends power stacking — git-spice or GitHub's `gh stack` extension. Install either, check **Settings → Tools → Stacked Pull Requests**, then **Enable Stacking…** per repo
+- Two backends power stacking — git-spice or GitHub's `gh stack` extension. Install either, check **Settings → Git & Stacks → Stacked Pull Requests**, then **Enable Stacking…** per repo
 - **Which backend drives a repo is decided by the evidence on disk**, not by a setting; **Preferred backend** only breaks ties for repos neither tool has claimed
 - Menu items follow what the backend can actually do — **Restack from Here**, **Submit This Branch…**, and **Destroy Stack** are git-spice-only; **Untrack Stack** is `gh stack`-only; and a `gh stack` **Sync** confirms first because it force-pushes
 - The worktree row expands into the stack chain with PR, restack, and push badges; the **STACKS** section is the repo-wide inventory

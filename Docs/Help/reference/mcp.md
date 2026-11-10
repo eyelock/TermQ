@@ -4,7 +4,7 @@
 
 This server implements **MCP spec [2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25)**.
 
-Install via **Settings > Tools > Install**. Configure in `~/.claude/mcp.json`:
+Install via **Settings > Integrations > Install**. Configure in `~/.claude/mcp.json`:
 
 ```json
 {

@@ -36,7 +36,7 @@ The Marketplaces sidebar header has two buttons: **+** (add a new marketplace) a
 
 ## 3 — Adding a custom marketplace
 
-Click **+** in the Marketplaces sidebar header, or open **Settings** (**⌘,**) → **External Sources**.
+Click **+** in the Marketplaces sidebar header, or open **Settings** (**⌘,**) → **Marketplaces**.
 
 The **Add Marketplace** sheet has two tabs:
 
@@ -79,7 +79,7 @@ Right-click a disclosure group header to see:
 
 ![Marketplace group context menu](../Images/marketplace-group-context-menu.png)
 
-- **Settings…** — opens **Settings → External Sources** directly, so you can add or remove marketplaces and registries without hunting through the menus
+- **Settings…** — opens **Settings → Marketplaces** directly, so you can add or remove marketplaces (ynh registries are under **Settings → Harnesses**) without hunting through the menus
 - **Open in Browser** *(GitHub groups only)* — opens the GitHub organisation page for that group in your default browser
 
 ### Marketplace rows

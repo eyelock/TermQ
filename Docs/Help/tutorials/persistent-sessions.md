@@ -34,7 +34,7 @@ brew install tmux
 
 ## 5.3 — Enable tmux in TermQ
 
-Open **Settings** (⌘,), go to the **Tools** tab. The tmux section appears at the top when tmux is installed.
+Open **Settings** (⌘,), go to the **Integrations** section. The tmux section appears at the top when tmux is installed.
 
 ![tmux Status](../Images/tmux-status.png)
 
@@ -50,7 +50,7 @@ Open any terminal card's editor (right-click > Edit Details). In the **Terminal*
 
 The backend picker only appears when tmux is installed and enabled globally.
 
-> **Tip:** In Settings > General, you can set the default backend to tmux. New terminals will use it automatically, and you won't need to change individual cards.
+> **Tip:** In Settings > Terminal, you can set the default backend to tmux. New terminals will use it automatically, and you won't need to change individual cards.
 
 ---
 
@@ -97,7 +97,7 @@ From there you can split horizontally or vertically, navigate between panes, zoo
 ## What you learned
 
 - tmux runs sessions as background processes — they **persist when TermQ closes**
-- Enable tmux in **Settings > Tools**, then set the backend per-terminal (or globally)
+- Enable tmux in **Settings > Integrations**, then set the backend per-terminal (or globally)
 - **Auto-reattach** silently reconnects sessions on launch with no prompts
 - The **recovery dialog** appears for sessions that weren't automatically matched
 - Pane splitting is available in tmux terminals — useful but entirely optional

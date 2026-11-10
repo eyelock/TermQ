@@ -2,7 +2,7 @@
 
 `termqcli` is the TermQ command-line interface. All commands output JSON.
 
-Install via **Settings > Tools > Install Command Line Tool**.
+Install via **Settings > Integrations > Install Command Line Tool**.
 
 ## Global flags
 

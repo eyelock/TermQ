@@ -83,7 +83,7 @@
           "id": "tutorials/remote-prs",
           "title": "Remote PRs",
           "icon": "arrow.triangle.pull",
-          "keywords": ["github", "pr", "pull request", "remote", "review", "focus", "run", "feed", "worktree"]
+          "keywords": ["github", "pr", "pull request", "remote", "review", "focus", "run", "feed", "worktree", "attention", "review requested", "reviews waiting"]
         },
         {
           "id": "tutorials/stacked-branches",
@@ -95,7 +95,7 @@
           "id": "tutorials/wheelhouses",
           "title": "Wheelhouses (Beta)",
           "icon": "steeringwheel",
-          "keywords": ["wheelhouse", "seat", "seats", "desk", "crew", "standing", "worker", "dispatcher", "stage", "needs you", "attention", "bell", "focus mode", "handoff", "hand off", "birth", "roster", "beads", "yegge", "agents", "beta", "quick terminal", "inbox", "stakker", "pin", "resize"]
+          "keywords": ["wheelhouse", "seat", "seats", "desk", "crew", "standing", "worker", "dispatcher", "stage", "needs you", "attention", "bell", "focus mode", "handoff", "hand off", "birth", "roster", "beads", "yegge", "agents", "beta", "quick terminal", "inbox", "stakker", "pin", "resize", "zoom", "split", "install", "action required", "delegates"]
         }
       ]
     },
@@ -159,7 +159,7 @@
           "id": "reference/configuration",
           "title": "Configuration & Data",
           "icon": "gearshape",
-          "keywords": ["config", "settings", "data", "storage", "json", "backup", "preferences"]
+          "keywords": ["config", "settings", "data", "storage", "json", "backup", "preferences", "wheelhouses", "integrations", "git & stacks"]
         },
         {
           "id": "reference/security",

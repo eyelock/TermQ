@@ -42,7 +42,7 @@ From the bin you can:
 - **Restore** a terminal back to its original column
 - **Permanently delete** it to clear the space
 
-**Retention period:** By default, binned terminals are auto-deleted after 30 days. Configure this in **Settings > General > Bin Retention**. Set to 0 to keep indefinitely.
+**Retention period:** By default, binned terminals are auto-deleted after 30 days. Configure this in **Settings > Terminal > Bin Retention**. Set to 0 to keep indefinitely.
 
 ---
 
