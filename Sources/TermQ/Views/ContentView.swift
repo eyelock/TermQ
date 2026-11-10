@@ -14,7 +14,7 @@ struct ContentView: View {
     @StateObject var migrationCoordinator = HarnessMigrationCoordinator()
     @EnvironmentObject var urlHandler: URLHandler
     @AppStorage(SidebarState.sidebarCollapsedKey) private var isSidebarCollapsed = false
-    @State private var isZoomed = false
+    @State var isZoomed = false
     @State private var isSearching = false
     @State private var showCommandPalette = false
     @State private var showBin = false
@@ -26,7 +26,7 @@ struct ContentView: View {
     @State var launchCoordinator = HarnessLaunchCoordinator()
 
     /// Owns harness install/uninstall/update/export/fork flows via CommandRunnerSheet-backed sheets.
-    @State private var lifecycleCoordinator = HarnessLifecycleCoordinator()
+    @State var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
     /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
     @State private var runWithFocusCardContext: RunWithFocusContext?
@@ -38,17 +38,16 @@ struct ContentView: View {
     /// the sidebar's max drag width so it can reach at least half the window.
     @State private var windowWidth: CGFloat = 640
 
-    private var sidebarMaxWidth: CGFloat {
-        max(320, windowWidth / 2)
-    }
-
     @AppStorage("feature.wheelhouseTab") var wheelhouseTabEnabled = false
     @ObservedObject var sidebarState = SidebarState.shared
     @ObservedObject var wheelhouseStage = WheelhouseStage.shared
+    /// Observed so the stage's ⌘1–9 seats follow Wheelhouse loads and bells.
+    @ObservedObject var wheelhouseStore = WheelhouseStore.shared
+    @ObservedObject var tabManager = BoardViewModel.shared.tabManager
 
     var body: some View {
         HSplitView {
-            if !isSidebarCollapsed {
+            if !isSidebarCollapsed && !stageZoomed {
                 SidebarView(
                     worktreeViewModel: sidebarViewModel,
                     detector: ynhDetector,
@@ -555,6 +554,11 @@ struct ContentView: View {
 // MARK: - Private Helpers
 
 extension ContentView {
+    /// The sidebar can be dragged to at least half the window.
+    fileprivate var sidebarMaxWidth: CGFloat {
+        max(320, windowWidth / 2)
+    }
+
     /// MCP server status indicator
     var mcpStatusIndicator: some View {
         MCPStatusView(isWired: viewModel.selectedCard?.isWired ?? false)
@@ -575,7 +579,7 @@ extension ContentView {
 
     var terminalActions: TerminalActions {
         TerminalActions(
-            quickNewTerminal: { viewModel.quickNewTerminal() },
+            quickNewTerminal: { quickNewTerminalOrSeatQuickTerminal() },
             newTerminalWithDialog: {
                 if let firstColumn = viewModel.board.columns.first {
                     viewModel.addTerminal(to: firstColumn)
@@ -607,16 +611,8 @@ extension ContentView {
                     viewModel.closeTab(card)
                 }
             },
-            deleteTerminal: {
-                if viewModel.selectedCard != nil {
-                    viewModel.showDeleteConfirmation = true
-                }
-            },
-            toggleZoom: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isZoomed.toggle()
-                }
-            },
+            deleteTerminal: { deleteTerminalOrCloseStagePane() },
+            toggleZoom: { toggleZoomOrStageZoom() },
             toggleSearch: {
                 withAnimation(.easeInOut(duration: 0.15)) {
                     isSearching.toggle()
@@ -642,49 +638,16 @@ extension ContentView {
         )
     }
 
-    /// Snapshot of open terminals for the Window menu's jump list — the five
-    /// most-recently-active terminals, most recent first (an MRU switcher), so
-    /// ⌘1 is the current terminal, ⌘2 the one before, and so on. Terminals not
-    /// activated yet this session fall to the end in board order. Republished
-    /// whenever the board or activation order changes.
-    var windowMenu: WindowMenuModel {
-        let active = viewModel.board.activeCards
-        let recencyRank = Dictionary(
-            viewModel.recentlyActiveCardIds.enumerated().map { ($1, $0) },
-            uniquingKeysWith: { first, _ in first })
-        let ordered = active.sorted {
-            let lhs = recencyRank[$0.id] ?? Int.max
-            let rhs = recencyRank[$1.id] ?? Int.max
-            return lhs != rhs ? lhs < rhs : $0.orderIndex < $1.orderIndex
-        }
-        let items = ordered.prefix(5).map {
-            OpenTerminalItem(
-                id: $0.id,
-                title: $0.title.isEmpty ? Strings.Menu.terminalFallbackTitle : $0.title,
-                isFavourite: $0.isFavourite)
-        }
-        return WindowMenuModel(
-            openTerminals: Array(items),
-            totalOpen: active.count,
-            jumpToTerminal: { id in
-                guard let card = viewModel.board.activeCards.first(where: { $0.id == id })
-                else { return }
-                isZoomed = false
-                viewModel.selectCard(card)
-            })
-    }
-
     /// Handle command palette actions
     func handlePaletteAction(_ action: CommandPaletteView.PaletteAction) {
         switch action {
         case .newTerminal:
-            viewModel.quickNewTerminal()
+            // As ⌘T: on the Wheelhouse stage, a Quick Terminal for the focused seat.
+            quickNewTerminalOrSeatQuickTerminal()
         case .newColumn:
             viewModel.addColumn()
         case .toggleZoom:
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isZoomed.toggle()
-            }
+            toggleZoomOrStageZoom()
         case .toggleSearch:
             withAnimation(.easeInOut(duration: 0.15)) {
                 isSearching.toggle()

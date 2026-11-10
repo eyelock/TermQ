@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Asetukset";
 "settings.tab.general" = "Yleiset";
-"settings.tab.tools" = "Työkalut";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminaali";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Markkinapaikat";
+"settings.tab.git.and.stacks" = "Git ja pinoaminen";
+"settings.tab.integrations" = "Integraatiot";
 "settings.marketplaces.section.list" = "Määritetyt markkinapaikat";
 "settings.marketplaces.empty" = "Markkinapaikkoja ei ole vielä lisätty.";
 "settings.marketplaces.add" = "Lisää markkinapaikka…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "Wheelhouse-keskitys: piilota kaikki paitsi tämä Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Tuo lavalle";
 "wheelhouse.take.off.stage" = "Poista lavalta";
+"wheelhouse.zoom.terminal" = "Zoomaa pääte";
+"wheelhouse.exit.zoom" = "Poistu zoomauksesta";
+"wheelhouse.smart.close.help" = "Sulje: paikka, joka on yhä käynnissä, poistuu lavalta ja jatkaa toimintaansa; pysähtynyt paikka suljetaan";
+"wheelhouse.show.quick.terminals" = "Näytä pikateminaalit";
+"wheelhouse.hide.quick.terminals" = "Piilota pikateminaalit";
+"wheelhouse.install" = "Asenna";
+"wheelhouse.needs.first %@ %@" = "%1$@ (vaatii ensin: %2$@)";
+"wheelhouse.action.required" = "Toimenpide vaaditaan";
+"wheelhouse.action.required.help" = "Napsauta paikkaa nähdäksesi, miten ongelma korjataan.";
+"wheelhouse.fix.title %@" = "%@ vaatii huomiota";
+"wheelhouse.fix.all.clear" = "Mikään ei enää estä tätä paikkaa.";
+"wheelhouse.issue.not.installed" = "Ei asennettu";
+"wheelhouse.issue.not.installed.detail %@" = "ynh:lla ei ole harnessia nimeltä %@. Asenna se paikan kansiosta Wheelhousessa.";
+"wheelhouse.issue.not.committed %@" = "Delegaatteja ei ole commitoitu: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh lukee nämä delegaatit gitistä, joten tämä paikka ei voi käynnistyä, ennen kuin ne on commitoitu.";
+"wheelhouse.issue.missing %@" = "Delegaatteja puuttuu: %@";
+"wheelhouse.issue.missing.detail" = "Paikan harness viittaa delegaattikansioihin, joita ei ole Wheelhousessa.";
+"wheelhouse.issue.launch.failed" = "Viimeisin käynnistys epäonnistui";
+"wheelhouse.copy.commit.command" = "Kopioi commit-komento";
+"wheelhouse.try.again" = "Yritä uudelleen";
+"wheelhouse.open.anyway" = "Avaa silti";
 "wheelhouse.needs.you" = "Tarvitsee sinua";
 "wheelhouse.nobody.waiting" = "kukaan ei odota";
 "wheelhouse.more.waiting %ld" = "+%ld lisää";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "Käynnistä keskityksellä";
 "settings.wheelhouse.enable.tab" = "Näytä Wheelhouses-välilehti sivupalkissa";
 "settings.wheelhouse.enable.tab.help" = "Lisää Wheelhouses-välilehden, jossa luetellaan repositorioidesi jokaisen Wheelhousen paikat";
+"settings.wheelhouse.quick.terminal.placement" = "Pikateminaalin sijoittelu";
+"settings.wheelhouse.quick.terminal.placement.help" = "Lavalla: jokainen pikateminaali saa oman paikkansa lavalla. Jaettu: paikan pikateminaalit avautuvat paikan alapuolella olevaan paneeliin.";
+"settings.wheelhouse.placement.staged" = "Lavalla";
+"settings.wheelhouse.placement.split" = "Jaettu";
 "settings.wheelhouse.inbox.human.name" = "Postilaatikon nimi kenelle tahansa ihmiselle";
 "settings.wheelhouse.inbox.human.name.help" = "Nimi, jolle Wheelhouse osoittaa beadeja, kun kuka tahansa ihminen voi hoitaa ne. Tälle nimelle valmiit beadit näkyvät postilaatikossasi.";
 "settings.wheelhouse.inbox.own.name" = "Oma postilaatikon nimesi";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Kaikki";
 "wheelhouse.inbox.filter.help %@" = "Näytä vain %@-beadit";
 "wheelhouse.inbox.sent.to %@" = "lähetetty: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Huomio";
+"actions.termq.only" = "Vain TermQ:n repositoriot";
+"actions.empty" = "Mikään PR ei odota katselmointiasi.";
+"actions.load.failed %@" = "Katselmointipyyntöjäsi ei voitu ladata: %@";
+"actions.draft" = "Luonnos";
+"actions.copy.link" = "Kopioi linkki";
+"actions.truncated %ld" = "Näytetään ensimmäiset %ld; joitakin voi puuttua.";
+"actions.wait.today" = "Tänään";
+"actions.wait.this.week" = "Tällä viikolla";
+"actions.wait.this.month" = "Tässä kuussa";
+"actions.wait.older" = "Vanhemmat";

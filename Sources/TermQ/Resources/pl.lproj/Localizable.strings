@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Ustawienia";
 "settings.tab.general" = "Ogólne";
-"settings.tab.tools" = "Narzędzia";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Rynki";
+"settings.tab.git.and.stacks" = "Git i stos gałęzi";
+"settings.tab.integrations" = "Integracje";
 "settings.marketplaces.section.list" = "Skonfigurowane rynki";
 "settings.marketplaces.empty" = "Nie dodano jeszcze żadnych rynków.";
 "settings.marketplaces.add" = "Dodaj rynek…";
@@ -1600,6 +1601,27 @@
 "wheelhouse.focus.help" = "Skupienie na Wheelhouse: ukryj wszystko poza tym Wheelhouse’em (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Wprowadź na scenę";
 "wheelhouse.take.off.stage" = "Zdejmij ze sceny";
+"wheelhouse.zoom.terminal" = "Powiększ terminal";
+"wheelhouse.exit.zoom" = "Wyjdź z powiększenia";
+"wheelhouse.smart.close.help" = "Zamknij: miejsce, które nadal działa, opuszcza scenę i działa dalej; zatrzymane zostaje zamknięte";
+"wheelhouse.show.quick.terminals" = "Pokaż szybkie terminale";
+"wheelhouse.hide.quick.terminals" = "Ukryj szybkie terminale";
+"wheelhouse.install" = "Zainstaluj";
+"wheelhouse.needs.first %@ %@" = "%1$@ (najpierw wymaga: %2$@)";
+"wheelhouse.action.required" = "Wymagane działanie";
+"wheelhouse.action.required.help" = "Kliknij miejsce, aby zobaczyć, jak to naprawić.";
+"wheelhouse.fix.title %@" = "%@ wymaga uwagi";
+"wheelhouse.fix.all.clear" = "Nic już nie blokuje tego miejsca.";
+"wheelhouse.issue.not.installed" = "Nie zainstalowano";
+"wheelhouse.issue.not.installed.detail %@" = "ynh nie ma harnessa o nazwie %@. Zainstaluj go z folderu miejsca w Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegaci bez commita: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh czyta tych delegatów z gita, więc to miejsce nie uruchomi się, dopóki nie zostanie wykonany commit.";
+"wheelhouse.issue.missing %@" = "Brakujący delegaci: %@";
+"wheelhouse.issue.missing.detail" = "Harness miejsca wskazuje foldery delegatów, które nie istnieją w Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Ostatnie uruchomienie nie powiodło się";
+"wheelhouse.copy.commit.command" = "Kopiuj polecenie commit";
+"wheelhouse.try.again" = "Spróbuj ponownie";
+"wheelhouse.open.anyway" = "Otwórz mimo to";
 "wheelhouse.needs.you" = "Potrzebuje cię";
 "wheelhouse.nobody.waiting" = "nikt nie czeka";
 "wheelhouse.more.waiting %ld" = "+%ld więcej";
@@ -1616,6 +1638,10 @@
 "wheelhouse.action.launch.focus" = "Uruchom ze skupieniem";
 "settings.wheelhouse.enable.tab" = "Pokaż kartę Wheelhouse’y na pasku bocznym";
 "settings.wheelhouse.enable.tab.help" = "Dodaje kartę Wheelhouse’y z listą miejsc każdego Wheelhouse’a w Twoich repozytoriach";
+"settings.wheelhouse.quick.terminal.placement" = "Rozmieszczenie szybkich terminali";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na scenie: każdy szybki terminal zajmuje własne miejsce na scenie. Podział: szybkie terminale miejsca otwierają się w panelu pod tym miejscem.";
+"settings.wheelhouse.placement.staged" = "Na scenie";
+"settings.wheelhouse.placement.split" = "Podział";
 "settings.wheelhouse.inbox.human.name" = "Nazwa skrzynki odbiorczej dla dowolnej osoby";
 "settings.wheelhouse.inbox.human.name.help" = "Nazwa, do której Wheelhouse przypisuje beady, gdy może się nimi zająć dowolna osoba. Gotowe beady dla tej nazwy pojawiają się w Twojej skrzynce odbiorczej.";
 "settings.wheelhouse.inbox.own.name" = "Twoja własna nazwa skrzynki odbiorczej";
@@ -1647,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Wszystkie";
 "wheelhouse.inbox.filter.help %@" = "Pokaż tylko beady typu %@";
 "wheelhouse.inbox.sent.to %@" = "wysłano do %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Uwaga";
+"actions.termq.only" = "Tylko repozytoria TermQ";
+"actions.empty" = "Żadne PR nie czeka na Twój przegląd.";
+"actions.load.failed %@" = "Nie udało się wczytać próśb o przegląd: %@";
+"actions.draft" = "Szkic";
+"actions.copy.link" = "Kopiuj link";
+"actions.truncated %ld" = "Wyświetlono pierwsze %ld; niektórych może brakować.";
+"actions.wait.today" = "Dzisiaj";
+"actions.wait.this.week" = "W tym tygodniu";
+"actions.wait.this.month" = "W tym miesiącu";
+"actions.wait.older" = "Starsze";

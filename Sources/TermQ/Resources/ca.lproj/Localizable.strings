@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Configuració";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Eines";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Mercats";
+"settings.tab.git.and.stacks" = "Git i apilament";
+"settings.tab.integrations" = "Integracions";
 "settings.marketplaces.section.list" = "Mercats configurats";
 "settings.marketplaces.empty" = "Encara no s'ha afegit cap mercat.";
 "settings.marketplaces.add" = "Afegeix mercat…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Enfocament de Wheelhouse: amaga tot excepte aquest Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Porta a l’escenari";
 "wheelhouse.take.off.stage" = "Treu de l’escenari";
+"wheelhouse.zoom.terminal" = "Amplia el terminal";
+"wheelhouse.exit.zoom" = "Surt del zoom";
+"wheelhouse.smart.close.help" = "Tanca: un seient encara en execució surt de l’escenari i continua funcionant; un que s’ha aturat es tanca";
+"wheelhouse.show.quick.terminals" = "Mostra els terminals ràpids";
+"wheelhouse.hide.quick.terminals" = "Amaga els terminals ràpids";
+"wheelhouse.install" = "Instal·la";
+"wheelhouse.needs.first %@ %@" = "%1$@ (necessita %2$@ primer)";
+"wheelhouse.action.required" = "Cal una acció";
+"wheelhouse.action.required.help" = "Fes clic al seient per veure com solucionar-ho.";
+"wheelhouse.fix.title %@" = "%@ necessita atenció";
+"wheelhouse.fix.all.clear" = "Ara res no impedeix que aquest seient s’iniciï.";
+"wheelhouse.issue.not.installed" = "No instal·lat";
+"wheelhouse.issue.not.installed.detail %@" = "ynh no té cap harness anomenat %@. Instal·la’l des de la carpeta del seient al Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegats sense commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh llegeix aquests delegats de git, així que aquest seient no pot iniciar-se fins que se’ls faci commit.";
+"wheelhouse.issue.missing %@" = "Falten delegats: %@";
+"wheelhouse.issue.missing.detail" = "El harness del seient esmenta carpetes de delegats que no existeixen al Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "L’últim llançament ha fallat";
+"wheelhouse.copy.commit.command" = "Copia l’ordre de commit";
+"wheelhouse.try.again" = "Torna-ho a provar";
+"wheelhouse.open.anyway" = "Obre igualment";
 "wheelhouse.needs.you" = "Et necessita";
 "wheelhouse.nobody.waiting" = "ningú no espera";
 "wheelhouse.more.waiting %ld" = "+%ld més";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Inicia amb enfocament";
 "settings.wheelhouse.enable.tab" = "Mostra la pestanya Wheelhouses a la barra lateral";
 "settings.wheelhouse.enable.tab.help" = "Afegeix una pestanya Wheelhouses que llista els seients de cada Wheelhouse dels teus repositoris";
+"settings.wheelhouse.quick.terminal.placement" = "Ubicació del terminal ràpid";
+"settings.wheelhouse.quick.terminal.placement.help" = "A l’escenari: cada terminal ràpid ocupa el seu propi lloc a l’escenari. Dividit: els terminals ràpids d’un seient s’obren en un tauler sota el seient.";
+"settings.wheelhouse.placement.staged" = "A l’escenari";
+"settings.wheelhouse.placement.split" = "Dividit";
 "settings.wheelhouse.inbox.human.name" = "Nom de la safata d’entrada per a qualsevol persona";
 "settings.wheelhouse.inbox.human.name.help" = "El nom al qual un Wheelhouse assigna beads quan qualsevol persona se’n pot encarregar. Els beads llestos per a aquest nom apareixen a la teva safata d’entrada.";
 "settings.wheelhouse.inbox.own.name" = "El teu propi nom de safata d’entrada";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Tots";
 "wheelhouse.inbox.filter.help %@" = "Mostra només els beads de tipus %@";
 "wheelhouse.inbox.sent.to %@" = "enviat a %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "AtenciÃ³";
+"actions.termq.only" = "Només els repositoris de TermQ";
+"actions.empty" = "Cap PR està esperant la teva revisió.";
+"actions.load.failed %@" = "No s'han pogut carregar les teves sol·licituds de revisió: %@";
+"actions.draft" = "Esborrany";
+"actions.copy.link" = "Copia l'enllaç";
+"actions.truncated %ld" = "Es mostren els primers %ld; pot ser que'n falti alguns.";
+"actions.wait.today" = "Avui";
+"actions.wait.this.week" = "Aquesta setmana";
+"actions.wait.this.month" = "Aquest mes";
+"actions.wait.older" = "Més antics";

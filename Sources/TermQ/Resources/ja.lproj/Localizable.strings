@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "設定";
 "settings.tab.general" = "一般";
-"settings.tab.tools" = "ツール";
 
 // Settings - Terminal section
 "settings.section.terminal" = "ターミナル";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "マーケットプレイス";
+"settings.tab.git.and.stacks" = "Git とスタック";
+"settings.tab.integrations" = "連携";
 "settings.marketplaces.section.list" = "設定済みのマーケットプレイス";
 "settings.marketplaces.empty" = "マーケットプレイスはまだ追加されていません。";
 "settings.marketplaces.add" = "マーケットプレイスを追加…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Wheelhouse フォーカス: この Wheelhouse 以外をすべて隠す (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "ステージに上げる";
 "wheelhouse.take.off.stage" = "ステージから降ろす";
+"wheelhouse.zoom.terminal" = "ターミナルをズーム";
+"wheelhouse.exit.zoom" = "ズームを終了";
+"wheelhouse.smart.close.help" = "閉じる: 実行中の席はステージから外れて実行を続け、停止した席は閉じられます";
+"wheelhouse.show.quick.terminals" = "クイックターミナルを表示";
+"wheelhouse.hide.quick.terminals" = "クイックターミナルを非表示";
+"wheelhouse.install" = "インストール";
+"wheelhouse.needs.first %@ %@" = "%1$@(先に %2$@ が必要)";
+"wheelhouse.action.required" = "対応が必要";
+"wheelhouse.action.required.help" = "席をクリックすると、解決方法が表示されます。";
+"wheelhouse.fix.title %@" = "%@ に対応が必要です";
+"wheelhouse.fix.all.clear" = "今、この席の起動を妨げているものはありません。";
+"wheelhouse.issue.not.installed" = "未インストール";
+"wheelhouse.issue.not.installed.detail %@" = "ynh には %@ という名前のハーネスがありません。Wheelhouse 内のこの席のフォルダからインストールしてください。";
+"wheelhouse.issue.not.committed %@" = "デリゲートが未コミット: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh はこれらのデリゲートを git から読み込むため、コミットされるまでこの席は起動できません。";
+"wheelhouse.issue.missing %@" = "デリゲートが見つかりません: %@";
+"wheelhouse.issue.missing.detail" = "この席のハーネスが指定しているデリゲートのフォルダが、Wheelhouse に存在しません。";
+"wheelhouse.issue.launch.failed" = "前回の起動に失敗";
+"wheelhouse.copy.commit.command" = "コミットコマンドをコピー";
+"wheelhouse.try.again" = "再試行";
+"wheelhouse.open.anyway" = "とにかく開く";
 "wheelhouse.needs.you" = "あなたを待っています";
 "wheelhouse.nobody.waiting" = "待っている人はいません";
 "wheelhouse.more.waiting %ld" = "他 +%ld";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "フォーカス付きで起動";
 "settings.wheelhouse.enable.tab" = "Wheelhouse サイドバータブを表示";
 "settings.wheelhouse.enable.tab.help" = "リポジトリ内のすべての Wheelhouse の席を一覧表示する Wheelhouse タブを追加します";
+"settings.wheelhouse.quick.terminal.placement" = "クイックターミナルの配置";
+"settings.wheelhouse.quick.terminal.placement.help" = "ステージ: 各クイックターミナルはステージ上に専用の場所を持ちます。分割: 席のクイックターミナルは、その席の下のパネルで開きます。";
+"settings.wheelhouse.placement.staged" = "ステージ";
+"settings.wheelhouse.placement.split" = "分割";
 "settings.wheelhouse.inbox.human.name" = "すべての人向けの受信トレイ名";
 "settings.wheelhouse.inbox.human.name.help" = "誰でも対応できる bead を Wheelhouse が割り当てる名前です。この名前宛ての準備完了の bead が受信トレイに表示されます。";
 "settings.wheelhouse.inbox.own.name" = "あなた専用の受信トレイ名";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "すべて";
 "wheelhouse.inbox.filter.help %@" = "%@ の bead のみ表示";
 "wheelhouse.inbox.sent.to %@" = "%@ に送信済み";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "è¦å¯¾å¿";
+"actions.termq.only" = "TermQのリポジトリのみ";
+"actions.empty" = "レビュー待ちのPRはありません。";
+"actions.load.failed %@" = "レビュー依頼を読み込めませんでした：%@";
+"actions.draft" = "下書き";
+"actions.copy.link" = "リンクをコピー";
+"actions.truncated %ld" = "最初の %ld 件を表示しています。一部が表示されていない可能性があります。";
+"actions.wait.today" = "今日";
+"actions.wait.this.week" = "今週";
+"actions.wait.this.month" = "今月";
+"actions.wait.older" = "それ以前";

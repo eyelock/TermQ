@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Ajustes";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Herramientas";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Mercados";
+"settings.tab.git.and.stacks" = "Git y apilado";
+"settings.tab.integrations" = "Integraciones";
 "settings.marketplaces.section.list" = "Mercados configurados";
 "settings.marketplaces.empty" = "Aún no se han añadido mercados.";
 "settings.marketplaces.add" = "Añadir mercado…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Enfoque de Wheelhouse: ocultar todo salvo este Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Llevar al escenario";
 "wheelhouse.take.off.stage" = "Quitar del escenario";
+"wheelhouse.zoom.terminal" = "Ampliar terminal";
+"wheelhouse.exit.zoom" = "Salir del zoom";
+"wheelhouse.smart.close.help" = "Cerrar: un puesto que sigue en ejecución sale del escenario y sigue funcionando; uno que se ha detenido se cierra";
+"wheelhouse.show.quick.terminals" = "Mostrar terminales rápidos";
+"wheelhouse.hide.quick.terminals" = "Ocultar terminales rápidos";
+"wheelhouse.install" = "Instalar";
+"wheelhouse.needs.first %@ %@" = "%1$@ (requiere %2$@ primero)";
+"wheelhouse.action.required" = "Acción requerida";
+"wheelhouse.action.required.help" = "Haz clic en el puesto para ver cómo solucionarlo.";
+"wheelhouse.fix.title %@" = "%@ requiere atención";
+"wheelhouse.fix.all.clear" = "Ya nada impide que este puesto se inicie.";
+"wheelhouse.issue.not.installed" = "No instalado";
+"wheelhouse.issue.not.installed.detail %@" = "ynh no tiene ningún harness llamado %@. Instálalo desde la carpeta del puesto en el Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegados sin commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh lee estos delegados desde git, así que este puesto no puede iniciarse hasta que se les haga commit.";
+"wheelhouse.issue.missing %@" = "Faltan delegados: %@";
+"wheelhouse.issue.missing.detail" = "El harness del puesto nombra carpetas de delegados que no existen en el Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Falló el último lanzamiento";
+"wheelhouse.copy.commit.command" = "Copiar comando de commit";
+"wheelhouse.try.again" = "Reintentar";
+"wheelhouse.open.anyway" = "Abrir de todos modos";
 "wheelhouse.needs.you" = "Te necesita";
 "wheelhouse.nobody.waiting" = "nadie esperando";
 "wheelhouse.more.waiting %ld" = "+%ld más";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Lanzar con enfoque";
 "settings.wheelhouse.enable.tab" = "Mostrar pestaña Wheelhouses en la barra lateral";
 "settings.wheelhouse.enable.tab.help" = "Añade una pestaña Wheelhouses que lista los puestos de cada Wheelhouse de tus repositorios";
+"settings.wheelhouse.quick.terminal.placement" = "Ubicación del terminal rápido";
+"settings.wheelhouse.quick.terminal.placement.help" = "En escenario: cada terminal rápido ocupa su propio lugar en el escenario. Dividido: los terminales rápidos de un puesto se abren en un panel debajo del puesto.";
+"settings.wheelhouse.placement.staged" = "En escenario";
+"settings.wheelhouse.placement.split" = "Dividido";
 "settings.wheelhouse.inbox.human.name" = "Nombre de bandeja de entrada para cualquier persona";
 "settings.wheelhouse.inbox.human.name.help" = "El nombre al que un Wheelhouse asigna beads cuando cualquier persona puede encargarse de ellos. Los beads listos para este nombre aparecen en tu bandeja de entrada.";
 "settings.wheelhouse.inbox.own.name" = "Tu propio nombre de bandeja de entrada";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Todos";
 "wheelhouse.inbox.filter.help %@" = "Mostrar solo beads de tipo %@";
 "wheelhouse.inbox.sent.to %@" = "enviado a %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "AtenciÃ³n";
+"actions.termq.only" = "Solo repositorios de TermQ";
+"actions.empty" = "Ningún PR está esperando tu revisión.";
+"actions.load.failed %@" = "No se pudieron cargar tus solicitudes de revisión: %@";
+"actions.draft" = "Borrador";
+"actions.copy.link" = "Copiar enlace";
+"actions.truncated %ld" = "Se muestran los primeros %ld; puede que falten algunos.";
+"actions.wait.today" = "Hoy";
+"actions.wait.this.week" = "Esta semana";
+"actions.wait.this.month" = "Este mes";
+"actions.wait.older" = "Anteriores";

@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "Настройки";
 "settings.tab.general" = "Основные";
-"settings.tab.tools" = "Инструменты";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Терминал";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Маркетплейсы";
+"settings.tab.git.and.stacks" = "Git и стек";
+"settings.tab.integrations" = "Интеграции";
 "settings.marketplaces.section.list" = "Настроенные маркетплейсы";
 "settings.marketplaces.empty" = "Маркетплейсы ещё не добавлены.";
 "settings.marketplaces.add" = "Добавить маркетплейс…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Фокус Wheelhouse: скрыть всё, кроме этого Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Вывести на сцену";
 "wheelhouse.take.off.stage" = "Убрать со сцены";
+"wheelhouse.zoom.terminal" = "Масштабировать терминал";
+"wheelhouse.exit.zoom" = "Выйти из масштабирования";
+"wheelhouse.smart.close.help" = "Закрыть: место, которое ещё работает, уходит со сцены и продолжает работу; остановленное закрывается";
+"wheelhouse.show.quick.terminals" = "Показать быстрые терминалы";
+"wheelhouse.hide.quick.terminals" = "Скрыть быстрые терминалы";
+"wheelhouse.install" = "Установить";
+"wheelhouse.needs.first %@ %@" = "%1$@ (сначала нужно: %2$@)";
+"wheelhouse.action.required" = "Требуется действие";
+"wheelhouse.action.required.help" = "Нажмите на место, чтобы узнать, как это исправить.";
+"wheelhouse.fix.title %@" = "%@ требует внимания";
+"wheelhouse.fix.all.clear" = "Теперь ничто не мешает этому месту.";
+"wheelhouse.issue.not.installed" = "Не установлено";
+"wheelhouse.issue.not.installed.detail %@" = "В ynh нет harness с именем %@. Установите его из папки места в Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Делегаты не закоммичены: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh читает этих делегатов из git, поэтому это место не запустится, пока они не будут закоммичены.";
+"wheelhouse.issue.missing %@" = "Делегаты отсутствуют: %@";
+"wheelhouse.issue.missing.detail" = "Harness места указывает папки делегатов, которых нет в Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Последний запуск не удался";
+"wheelhouse.copy.commit.command" = "Скопировать команду commit";
+"wheelhouse.try.again" = "Повторить";
+"wheelhouse.open.anyway" = "Всё равно открыть";
 "wheelhouse.needs.you" = "Ждёт вас";
 "wheelhouse.nobody.waiting" = "никто не ждёт";
 "wheelhouse.more.waiting %ld" = "ещё +%ld";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Запустить с фокусом";
 "settings.wheelhouse.enable.tab" = "Показать вкладку Wheelhouse в боковой панели";
 "settings.wheelhouse.enable.tab.help" = "Добавляет вкладку Wheelhouse со списком мест каждого Wheelhouse в ваших репозиториях";
+"settings.wheelhouse.quick.terminal.placement" = "Размещение быстрого терминала";
+"settings.wheelhouse.quick.terminal.placement.help" = "На сцене: каждый быстрый терминал занимает собственное место на сцене. Разделение: быстрые терминалы места открываются в панели под этим местом.";
+"settings.wheelhouse.placement.staged" = "На сцене";
+"settings.wheelhouse.placement.split" = "Разделение";
 "settings.wheelhouse.inbox.human.name" = "Имя входящих для любого человека";
 "settings.wheelhouse.inbox.human.name.help" = "Имя, на которое Wheelhouse назначает bead, когда с ними может справиться любой человек. Готовые bead для этого имени появляются в ваших входящих.";
 "settings.wheelhouse.inbox.own.name" = "Ваше собственное имя входящих";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Все";
 "wheelhouse.inbox.filter.help %@" = "Показывать только bead типа %@";
 "wheelhouse.inbox.sent.to %@" = "отправлено: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "ÐÐ½Ð¸Ð¼Ð°Ð½Ð¸Ðµ";
+"actions.termq.only" = "Только репозитории TermQ";
+"actions.empty" = "Нет PR, ожидающих вашего ревью.";
+"actions.load.failed %@" = "Не удалось загрузить запросы на ревью: %@";
+"actions.draft" = "Черновик";
+"actions.copy.link" = "Копировать ссылку";
+"actions.truncated %ld" = "Показаны первые %ld; некоторые могут отсутствовать.";
+"actions.wait.today" = "Сегодня";
+"actions.wait.this.week" = "На этой неделе";
+"actions.wait.this.month" = "В этом месяце";
+"actions.wait.older" = "Ранее";

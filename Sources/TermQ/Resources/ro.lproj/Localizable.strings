@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "Setări";
 "settings.tab.general" = "General";
-"settings.tab.tools" = "Instrumente";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Piețe";
+"settings.tab.git.and.stacks" = "Git și stivuire";
+"settings.tab.integrations" = "Integrări";
 "settings.marketplaces.section.list" = "Piețe configurate";
 "settings.marketplaces.empty" = "Nu a fost adăugată nicio piață încă.";
 "settings.marketplaces.add" = "Adaugă piață…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Focalizare Wheelhouse: ascunde tot în afară de acest Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Adu pe scenă";
 "wheelhouse.take.off.stage" = "Scoate de pe scenă";
+"wheelhouse.zoom.terminal" = "Mărește terminalul";
+"wheelhouse.exit.zoom" = "Ieși din zoom";
+"wheelhouse.smart.close.help" = "Închide: un loc care încă rulează părăsește scena și continuă să ruleze; unul oprit se închide";
+"wheelhouse.show.quick.terminals" = "Afișează terminalele rapide";
+"wheelhouse.hide.quick.terminals" = "Ascunde terminalele rapide";
+"wheelhouse.install" = "Instalare";
+"wheelhouse.needs.first %@ %@" = "%1$@ (necesită mai întâi %2$@)";
+"wheelhouse.action.required" = "Acțiune necesară";
+"wheelhouse.action.required.help" = "Fă clic pe loc pentru a vedea cum se remediază.";
+"wheelhouse.fix.title %@" = "%@ necesită atenție";
+"wheelhouse.fix.all.clear" = "Nimic nu mai împiedică acest loc.";
+"wheelhouse.issue.not.installed" = "Neinstalat";
+"wheelhouse.issue.not.installed.detail %@" = "ynh nu are niciun harness numit %@. Instalează-l din dosarul locului din Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegați fără commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh citește acești delegați din git, așa că acest loc nu poate porni până nu se face commit.";
+"wheelhouse.issue.missing %@" = "Delegați lipsă: %@";
+"wheelhouse.issue.missing.detail" = "Harness-ul locului indică dosare de delegați care nu există în Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Ultima lansare a eșuat";
+"wheelhouse.copy.commit.command" = "Copiază comanda de commit";
+"wheelhouse.try.again" = "Încearcă din nou";
+"wheelhouse.open.anyway" = "Deschide oricum";
 "wheelhouse.needs.you" = "Are nevoie de tine";
 "wheelhouse.nobody.waiting" = "nimeni nu așteaptă";
 "wheelhouse.more.waiting %ld" = "încă +%ld";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Lansează cu focalizare";
 "settings.wheelhouse.enable.tab" = "Afișează fila Wheelhouses în bara laterală";
 "settings.wheelhouse.enable.tab.help" = "Adaugă o filă Wheelhouses care listează locurile fiecărui Wheelhouse din depozitele tale";
+"settings.wheelhouse.quick.terminal.placement" = "Poziționarea terminalului rapid";
+"settings.wheelhouse.quick.terminal.placement.help" = "Pe scenă: fiecare terminal rapid ocupă propriul loc pe scenă. Împărțit: terminalele rapide ale unui loc se deschid într-un panou sub loc.";
+"settings.wheelhouse.placement.staged" = "Pe scenă";
+"settings.wheelhouse.placement.split" = "Împărțit";
 "settings.wheelhouse.inbox.human.name" = "Numele căsuței de intrare pentru orice om";
 "settings.wheelhouse.inbox.human.name.help" = "Numele căruia un Wheelhouse îi atribuie beads atunci când orice om se poate ocupa de ele. Beads gata pentru acest nume apar în căsuța ta de intrare.";
 "settings.wheelhouse.inbox.own.name" = "Propriul tău nume de căsuță de intrare";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Toate";
 "wheelhouse.inbox.filter.help %@" = "Afișează doar bead-urile de tip %@";
 "wheelhouse.inbox.sent.to %@" = "trimis către %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "AtenÈie";
+"actions.termq.only" = "Doar depozitele TermQ";
+"actions.empty" = "Niciun PR nu așteaptă revizuirea ta.";
+"actions.load.failed %@" = "Nu s-au putut încărca cererile tale de revizuire: %@";
+"actions.draft" = "Ciornă";
+"actions.copy.link" = "Copiază linkul";
+"actions.truncated %ld" = "Se afișează primele %ld; unele pot lipsi.";
+"actions.wait.today" = "Astăzi";
+"actions.wait.this.week" = "Săptămâna aceasta";
+"actions.wait.this.month" = "Luna aceasta";
+"actions.wait.older" = "Mai vechi";

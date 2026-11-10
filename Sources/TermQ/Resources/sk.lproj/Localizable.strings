@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "Nastavenia";
 "settings.tab.general" = "Všeobecné";
-"settings.tab.tools" = "Nástroje";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminál";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Trhoviská";
+"settings.tab.git.and.stacks" = "Git a skladanie";
+"settings.tab.integrations" = "Integrácie";
 "settings.marketplaces.section.list" = "Nakonfigurované trhoviská";
 "settings.marketplaces.empty" = "Zatiaľ neboli pridané žiadne trhoviská.";
 "settings.marketplaces.add" = "Pridať trhovisko…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Zameranie Wheelhouse: skryť všetko okrem tohto Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Preniesť na pódium";
 "wheelhouse.take.off.stage" = "Odobrať z pódia";
+"wheelhouse.zoom.terminal" = "Priblížiť terminál";
+"wheelhouse.exit.zoom" = "Ukončiť priblíženie";
+"wheelhouse.smart.close.help" = "Zavrieť: miesto, ktoré stále beží, opustí pódium a beží ďalej; zastavené sa zavrie";
+"wheelhouse.show.quick.terminals" = "Zobraziť rýchle terminály";
+"wheelhouse.hide.quick.terminals" = "Skryť rýchle terminály";
+"wheelhouse.install" = "Nainštalovať";
+"wheelhouse.needs.first %@ %@" = "%1$@ (najprv vyžaduje: %2$@)";
+"wheelhouse.action.required" = "Vyžaduje sa akcia";
+"wheelhouse.action.required.help" = "Kliknutím na miesto zistíte, ako to opraviť.";
+"wheelhouse.fix.title %@" = "%@ vyžaduje pozornosť";
+"wheelhouse.fix.all.clear" = "Nič už tomuto miestu nebráni.";
+"wheelhouse.issue.not.installed" = "Nie je nainštalované";
+"wheelhouse.issue.not.installed.detail %@" = "ynh nemá žiadny harness s názvom %@. Nainštalujte ho z priečinka miesta vo Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegáti nie sú commitnutí: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh číta týchto delegátov z gitu, takže toto miesto sa nemôže spustiť, kým nie sú commitnutí.";
+"wheelhouse.issue.missing %@" = "Chýbajú delegáti: %@";
+"wheelhouse.issue.missing.detail" = "Harness miesta uvádza priečinky delegátov, ktoré vo Wheelhouse neexistujú.";
+"wheelhouse.issue.launch.failed" = "Posledné spustenie zlyhalo";
+"wheelhouse.copy.commit.command" = "Kopírovať príkaz commit";
+"wheelhouse.try.again" = "Skúsiť znova";
+"wheelhouse.open.anyway" = "Napriek tomu otvoriť";
 "wheelhouse.needs.you" = "Potrebuje vás";
 "wheelhouse.nobody.waiting" = "nikto nečaká";
 "wheelhouse.more.waiting %ld" = "+%ld ďalších";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Spustiť so zameraním";
 "settings.wheelhouse.enable.tab" = "Zobraziť kartu Wheelhouses v bočnom paneli";
 "settings.wheelhouse.enable.tab.help" = "Pridá kartu Wheelhouses so zoznamom miest každého Wheelhouse vo vašich repozitároch";
+"settings.wheelhouse.quick.terminal.placement" = "Umiestnenie rýchleho terminálu";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na pódiu: každý rýchly terminál zaujme na pódiu vlastné miesto. Rozdelené: rýchle terminály miesta sa otvoria v paneli pod miestom.";
+"settings.wheelhouse.placement.staged" = "Na pódiu";
+"settings.wheelhouse.placement.split" = "Rozdelené";
 "settings.wheelhouse.inbox.human.name" = "Názov schránky pre ktoréhokoľvek človeka";
 "settings.wheelhouse.inbox.human.name.help" = "Názov, ktorému Wheelhouse priraďuje beady, keď sa ich môže ujať ktorýkoľvek človek. Pripravené beady pre tento názov sa zobrazia vo vašej schránke.";
 "settings.wheelhouse.inbox.own.name" = "Váš vlastný názov schránky";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Všetky";
 "wheelhouse.inbox.filter.help %@" = "Zobraziť iba beady typu %@";
 "wheelhouse.inbox.sent.to %@" = "odoslané: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "PozornosÅ¥";
+"actions.termq.only" = "Iba repozitáre TermQ";
+"actions.empty" = "Žiadne PR nečaká na vašu recenziu.";
+"actions.load.failed %@" = "Nepodarilo sa načítať vaše žiadosti o recenziu: %@";
+"actions.draft" = "Návrh";
+"actions.copy.link" = "Kopírovať odkaz";
+"actions.truncated %ld" = "Zobrazuje sa prvých %ld; niektoré môžu chýbať.";
+"actions.wait.today" = "Dnes";
+"actions.wait.this.week" = "Tento týždeň";
+"actions.wait.this.month" = "Tento mesiac";
+"actions.wait.older" = "Staršie";

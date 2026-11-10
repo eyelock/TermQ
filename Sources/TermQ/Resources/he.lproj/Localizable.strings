@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "הגדרות";
 "settings.tab.general" = "כללי";
-"settings.tab.tools" = "כלים";
 
 // Settings - Terminal section
 "settings.section.terminal" = "מסוף";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "שווקים";
+"settings.tab.git.and.stacks" = "Git וערימה";
+"settings.tab.integrations" = "אינטגרציות";
 "settings.marketplaces.section.list" = "שווקים מוגדרים";
 "settings.marketplaces.empty" = "טרם נוספו שווקים.";
 "settings.marketplaces.add" = "הוסף שוק…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "מיקוד Wheelhouse: הסתר הכול מלבד ה-Wheelhouse הזה (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "הבא לבמה";
 "wheelhouse.take.off.stage" = "הורד מהבמה";
+"wheelhouse.zoom.terminal" = "הגדל טרמינל";
+"wheelhouse.exit.zoom" = "יציאה מזום";
+"wheelhouse.smart.close.help" = "סגור: מושב שעדיין פועל יוצא מהבמה וממשיך לפעול; מושב שהפסיק לפעול נסגר";
+"wheelhouse.show.quick.terminals" = "הצג טרמינלים מהירים";
+"wheelhouse.hide.quick.terminals" = "הסתר טרמינלים מהירים";
+"wheelhouse.install" = "התקנה";
+"wheelhouse.needs.first %@ %@" = "%1$@ (דורש קודם: %2$@)";
+"wheelhouse.action.required" = "נדרשת פעולה";
+"wheelhouse.action.required.help" = "לחץ על המושב כדי לראות איך לתקן.";
+"wheelhouse.fix.title %@" = "%@ דורש תשומת לב";
+"wheelhouse.fix.all.clear" = "שום דבר כבר לא מונע ממושב זה לפעול.";
+"wheelhouse.issue.not.installed" = "לא מותקן";
+"wheelhouse.issue.not.installed.detail %@" = "ל-ynh אין Harness בשם %@. התקן אותו מתיקיית המושב ב-Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "נציגים ללא commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh קורא את הנציגים האלה מ-git, ולכן מושב זה לא יכול להתחיל עד שיבוצע להם commit.";
+"wheelhouse.issue.missing %@" = "נציגים חסרים: %@";
+"wheelhouse.issue.missing.detail" = "ה-Harness של המושב מציין תיקיות נציגים שאינן קיימות ב-Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "ההפעלה האחרונה נכשלה";
+"wheelhouse.copy.commit.command" = "העתק פקודת commit";
+"wheelhouse.try.again" = "נסה שוב";
+"wheelhouse.open.anyway" = "פתח בכל זאת";
 "wheelhouse.needs.you" = "זקוק לך";
 "wheelhouse.nobody.waiting" = "אף אחד לא ממתין";
 "wheelhouse.more.waiting %ld" = "+%ld נוספים";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "הפעל עם מיקוד";
 "settings.wheelhouse.enable.tab" = "הצג את לשונית Wheelhouses בסרגל הצד";
 "settings.wheelhouse.enable.tab.help" = "מוסיף לשונית Wheelhouses שמפרטת את המושבים של כל Wheelhouse במאגרים שלך";
+"settings.wheelhouse.quick.terminal.placement" = "מיקום טרמינל מהיר";
+"settings.wheelhouse.quick.terminal.placement.help" = "על הבמה: כל טרמינל מהיר תופס מקום משלו על הבמה. מפוצל: הטרמינלים המהירים של מושב נפתחים בלוח מתחת למושב.";
+"settings.wheelhouse.placement.staged" = "על הבמה";
+"settings.wheelhouse.placement.split" = "מפוצל";
 "settings.wheelhouse.inbox.human.name" = "שם תיבת דואר נכנס לכל אדם";
 "settings.wheelhouse.inbox.human.name.help" = "השם שאליו Wheelhouse מקצה beads כשכל אדם יכול לטפל בהם. beads מוכנים עבור שם זה מופיעים בתיבת הדואר הנכנס שלך.";
 "settings.wheelhouse.inbox.own.name" = "שם תיבת הדואר הנכנס שלך";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "הכול";
 "wheelhouse.inbox.filter.help %@" = "הצג רק bead מסוג %@";
 "wheelhouse.inbox.sent.to %@" = "נשלח אל %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "×ª×©×××ª ××";
+"actions.termq.only" = "רק המאגרים של TermQ";
+"actions.empty" = "אין PR-ים שממתינים לסקירה שלך.";
+"actions.load.failed %@" = "לא ניתן לטעון את בקשות הסקירה שלך: %@";
+"actions.draft" = "טיוטה";
+"actions.copy.link" = "העתק קישור";
+"actions.truncated %ld" = "מוצגים %ld הראשונים; ייתכן שחלקם חסרים.";
+"actions.wait.today" = "היום";
+"actions.wait.this.week" = "השבוע";
+"actions.wait.this.month" = "החודש";
+"actions.wait.older" = "ישנים יותר";

@@ -13,18 +13,14 @@ struct WheelhouseStageView: View {
     @ObservedObject private var store: WheelhouseStore = .shared
     @ObservedObject private var boardVM: BoardViewModel = .shared
     @ObservedObject private var tabManager: TabManager = BoardViewModel.shared.tabManager
-    @AppStorage("wheelhouse.selected") private var selectedRoot: String = ""
     @State private var clickMonitor = StagePaneClickMonitor()
     /// The pane header a dragged seat is over, to highlight it.
     @State private var dropTarget: UUID?
+    /// The seat whose "action required" fix panel is open.
+    @State private var fixing: WheelhouseSeatFixRequest?
 
     /// Only the selected Wheelhouse's seats in focus mode or when one is picked.
-    private var scopeRoot: String? {
-        if !selectedRoot.isEmpty, store.wheelhouses.contains(where: { $0.root == selectedRoot }) {
-            return selectedRoot
-        }
-        return stage.focusMode ? store.wheelhouses.first?.root : nil
-    }
+    private var scopeRoot: String? { stage.scopeRoot(in: store.wheelhouses) }
 
     private var seatCards: [TerminalCard] {
         store.seatCards(in: boardVM.allTerminals, root: scopeRoot)
@@ -45,7 +41,10 @@ struct WheelhouseStageView: View {
     }
 
     private var stageEntries: [StageEntry] {
-        let cards = store.stageCards(in: boardVM.allTerminals, root: scopeRoot)
+        // Split: a Quick Terminal sits beneath its seat, not on the stage.
+        let cards = WheelhouseStore.paneCards(
+            store.stageCards(in: boardVM.allTerminals, root: scopeRoot), placement: stage.quickTerminalPlacement,
+            all: boardVM.allTerminals, wheelhouses: store.wheelhouses)
         return stage.visible.compactMap { id in
             if id == WheelhouseStage.inboxEntry { return .inbox }
             return cards.first { $0.id == id }.map(StageEntry.card)
@@ -75,37 +74,15 @@ struct WheelhouseStageView: View {
     /// workers, each in roster order, grouped so the strip can draw dividers
     /// between.
     private var openSeatGroups: [StripGroup] {
-        // A card that survived a relaunch with nothing running isn't open.
-        let cards = seatCards.filter { card in
-            stage.isOnStage(card.id) || boardVM.activeSessionCards.contains(card.id)
-                || tabManager.needsAttention.contains(card.id)
-        }
-        struct Keyed {
-            let card: TerminalCard
-            let wheelhouse: Wheelhouse
-            let wheelhouseOrder: Int
-            let group: Int
-            let order: Int
-        }
-        let keyed = cards.compactMap { card -> Keyed? in
-            guard let found = store.seat(for: card) else { return nil }
-            let order = found.wheelhouse.seats.firstIndex { $0.command == found.seat.command } ?? 0
-            let wheelhouseOrder = store.wheelhouses.firstIndex { $0.root == found.wheelhouse.root } ?? 0
-            return Keyed(
-                card: card, wheelhouse: found.wheelhouse, wheelhouseOrder: wheelhouseOrder,
-                group: found.seat.group.sortOrder, order: order)
-        }
-        .sorted {
-            ($0.wheelhouseOrder, $0.group, $0.order) < ($1.wheelhouseOrder, $1.group, $1.order)
-        }
         var groups: [StripGroup] = []
-        for entry in keyed {
-            if let last = groups.last, last.wheelhouse.root == entry.wheelhouse.root,
-                store.seat(for: last.cards[0])?.seat.group.sortOrder == entry.group
+        for card in openSeatCards {
+            guard let found = store.seat(for: card) else { continue }
+            if let last = groups.last, last.wheelhouse.root == found.wheelhouse.root,
+                store.seat(for: last.cards[0])?.seat.group.sortOrder == found.seat.group.sortOrder
             {
-                groups[groups.count - 1] = StripGroup(wheelhouse: last.wheelhouse, cards: last.cards + [entry.card])
+                groups[groups.count - 1] = StripGroup(wheelhouse: last.wheelhouse, cards: last.cards + [card])
             } else {
-                groups.append(StripGroup(wheelhouse: entry.wheelhouse, cards: [entry.card]))
+                groups.append(StripGroup(wheelhouse: found.wheelhouse, cards: [card]))
             }
         }
         return groups
@@ -117,7 +94,13 @@ struct WheelhouseStageView: View {
         Set(openSeatGroups.map(\.wheelhouse.root)).count > 1
     }
 
-    private var openSeatCards: [TerminalCard] { openSeatGroups.flatMap(\.cards) }
+    /// Every open seat (running, waiting on you, or on stage) in strip order:
+    /// what ⌘1–9 jump to.
+    private var openSeatCards: [TerminalCard] {
+        store.openSeatCards(
+            in: boardVM.allTerminals, root: scopeRoot, stage: stage, running: boardVM.activeSessionCards,
+            ringing: tabManager.needsAttention)
+    }
 
     /// Seats that rang, oldest first, including ones already on stage: a chip
     /// for one of those focuses its pane.
@@ -128,28 +111,46 @@ struct WheelhouseStageView: View {
         return order.compactMap { id in cards.first { $0.id == id } }
     }
 
+    /// The pane zoomed to fill the window, while it is on stage.
+    private var zoomedCard: TerminalCard? {
+        stage.zoomed.flatMap { id in stageCards.first { $0.id == id } }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            topBar
-            Divider()
-            needsYouRail
-            Divider()
-            if stageEntries.isEmpty {
-                emptyStage
+            if let zoomedCard {
+                pane(zoomedCard)
             } else {
-                panes
+                topBar
+                Divider()
+                needsYouRail
+                Divider()
+                if stageEntries.isEmpty {
+                    emptyStage
+                } else {
+                    panes
+                }
             }
         }
         .background(Color(nsColor: .windowBackgroundColor))
         .background(shortcuts)
+        .onChange(of: stageCards.map(\.id)) { _, ids in
+            stage.healZoom(visible: Set(ids))
+            fillEmptyStage()
+        }
+        .onChange(of: stage.quickTerminalPlacement) { moveQuickTerminalsIntoPanels() }
+        .sheet(item: $fixing) { WheelhouseSeatFixSheet(request: $0, onSeatAction: onSeatAction) }
         .onDisappear { clickMonitor.stop() }
         .onAppear {
             clickMonitor.start { cardId in
-                guard stage.isOnStage(cardId), stage.focused != cardId,
-                    let card = stageCards.first(where: { $0.id == cardId })
+                guard let pane = stage.paneClicked(cardId, host: splitHostId(of: cardId), tabs: tabManager),
+                    let card = stageCards.first(where: { $0.id == pane })
                 else { return }
                 focus(card)
+            } onTypeInPane: { cardId in
+                stage.paneTyped(cardId, host: splitHostId(of: cardId), tabs: tabManager)
             }
+            moveQuickTerminalsIntoPanels()
             stage.prune(keeping: Set(boardVM.allTerminals.map(\.id)).union([WheelhouseStage.inboxEntry]))
             if let focused = stage.focused, let card = stageCards.first(where: { $0.id == focused }) {
                 boardVM.selectCard(card)
@@ -235,17 +236,32 @@ struct WheelhouseStageView: View {
 
     /// The right-click menu for a seat card, the same on its tab and on its
     /// pane header.
-    @ViewBuilder
     private func seatCardMenu(_ card: TerminalCard) -> some View {
+        seatCardMenuItems(card).labelStyle(.titleAndIcon)
+    }
+
+    @ViewBuilder
+    private func seatCardMenuItems(_ card: TerminalCard) -> some View {
         if let found = store.seat(for: card) {
             WheelhouseSeatActionItems(
-                wheelhouse: found.wheelhouse, seat: found.seat, hasTerminal: true, onSeatAction: onSeatAction)
+                wheelhouse: found.wheelhouse, seat: found.seat, hasTerminal: true,
+                showsShortcuts: stage.focused == card.id, onSeatAction: onSeatAction)
             Divider()
         }
-        WheelhouseKeepOnStageToggle(cardId: card.id)
+        WheelhouseKeepOnStageToggle(cardId: card.id, showsShortcut: stage.focused == card.id)
+        zoomMenuItem(card)
+        if let found = store.owningSeat(of: card) {
+            let folder = WheelhouseSeatHealth.harnessDirectory(root: found.wheelhouse.root, seat: found.seat)
+            if FileManager.default.fileExists(atPath: folder) {
+                Divider()
+                WheelhousePathMenuItems(path: folder)
+            }
+        }
         if store.parentSeat(of: card) != nil {
-            Button(Strings.Wheelhouse.closeTerminal, role: .destructive) {
+            Button(role: .destructive) {
                 stage.closeQuickTerminal(card)
+            } label: {
+                Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
             }
         }
     }
@@ -421,6 +437,10 @@ struct WheelhouseStageView: View {
                     if let seat = found?.seat {
                         WheelhouseRolePill(seat: seat)
                     }
+                    if let found {
+                        actionRequiredButton(found.wheelhouse, found.seat)
+                        WheelhouseQuickTerminalBadges(wheelhouse: found.wheelhouse, seat: found.seat)
+                    }
                     if showsWheelhouseNames, let wheelhouse = found?.wheelhouse {
                         wheelhouseLabel(wheelhouse)
                     }
@@ -432,20 +452,34 @@ struct WheelhouseStageView: View {
                     }
                 }
                 Spacer(minLength: 4)
+                if stage.zoomed == card.id { zoomedNeedsYouBadge }
                 if let found {
-                    seatActionsMenu(found.wheelhouse, found.seat)
+                    seatActionsMenu(found.wheelhouse, found.seat, card: card)
                 } else if parent != nil {
                     paneButton("xmark.octagon", help: Strings.Wheelhouse.closeTerminal) {
                         stage.closeQuickTerminal(card)
                     }
+                }
+                let zoomed = stage.zoomed == card.id
+                paneButton(
+                    zoomed ? WheelhouseMenuIcon.exitZoom : WheelhouseMenuIcon.zoom,
+                    help: zoomed ? Strings.Wheelhouse.exitZoom : Strings.Wheelhouse.zoomTerminal
+                ) {
+                    if zoomed { stage.exitZoom() } else { zoom(card) }
                 }
                 paneButton(
                     pinned ? "pin.fill" : "pin", help: pinned ? Strings.Wheelhouse.unpin : Strings.Wheelhouse.pin
                 ) {
                     stage.togglePin(card.id)
                 }
-                paneButton("xmark", help: Strings.Wheelhouse.takeOffStage) {
-                    stage.remove(card.id)
+                paneButton("xmark", help: Strings.Wheelhouse.smartCloseHelp) {
+                    if let found {
+                        onSeatAction(found.wheelhouse, found.seat, .closeTerminal)
+                    } else if parent != nil {
+                        stage.smartClose(card)
+                    } else {
+                        stage.remove(card.id)
+                    }
                 }
             }
             .padding(.horizontal, 10)
@@ -483,14 +517,13 @@ struct WheelhouseStageView: View {
                 }
             }
 
-            TerminalHostView(
-                card: card,
-                onExit: {},
-                onBell: { boardVM.markNeedsAttention(card.id) },
-                focusPolicy: .whenBecomingFocused,
-                isFocusedPane: isFocused
-            )
-            .id(card.id)
+            if stage.quickTerminalPlacement == .split, let found {
+                WheelhouseSplitSeatBody(seatCard: card, wheelhouse: found.wheelhouse, seat: found.seat) {
+                    seatTerminal(card, isFocused: isFocused)
+                }
+            } else {
+                seatTerminal(card, isFocused: isFocused)
+            }
         }
         .overlay(
             Rectangle()
@@ -499,21 +532,15 @@ struct WheelhouseStageView: View {
         )
     }
 
-    private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: symbol)
-                .font(.system(size: 10))
-                .frame(width: 20, height: 20)
-        }
-        .buttonStyle(.plain)
-        .foregroundColor(.secondary)
-        .help(help)
-    }
-
-    private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat) -> some View {
+    private func seatActionsMenu(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat, card: TerminalCard) -> some View {
         Menu {
-            WheelhouseSeatActionItems(
-                wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction)
+            Group {
+                WheelhouseSeatActionItems(
+                    wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction)
+                Divider()
+                zoomMenuItem(card, showsShortcut: false)
+            }
+            .labelStyle(.titleAndIcon)
         } label: {
             Image(systemName: "ellipsis.circle")
                 .font(.system(size: 11))
@@ -522,24 +549,6 @@ struct WheelhouseStageView: View {
         .menuIndicator(.hidden)
         .fixedSize()
         .help(Strings.Wheelhouse.seatActions)
-    }
-
-    // MARK: - Empty
-
-    private var emptyStage: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "steeringwheel")
-                .font(.system(size: 34))
-                .foregroundColor(.secondary)
-            Text(Strings.Wheelhouse.emptyStageTitle)
-                .font(.headline)
-            Text(Strings.Wheelhouse.emptyStageMessage)
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 380)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     // MARK: - Actions
@@ -554,9 +563,162 @@ struct WheelhouseStageView: View {
         boardVM.selectCard(card)
     }
 
+    private func zoom(_ card: TerminalCard) {
+        stage.zoom(card.id)
+        boardVM.selectCard(card)
+    }
+}
+
+// MARK: - Pane pieces
+
+extension WheelhouseStageView {
+    private func seatTerminal(_ card: TerminalCard, isFocused: Bool) -> some View {
+        TerminalHostView(
+            card: card,
+            onExit: {},
+            onBell: { tabManager.markStageBell(card.id) },
+            focusPolicy: .whenBecomingFocused,
+            isFocusedPane: isFocused
+        )
+        .id(card.id)
+    }
+
+    private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: 10))
+                .frame(width: 20, height: 20)
+        }
+        .buttonStyle(.plain)
+        .foregroundColor(.secondary)
+        .help(help)
+    }
+}
+
+// MARK: - Action required
+
+extension WheelhouseStageView {
+    /// A warning in a seat's pane header while something stops it (such as
+    /// its last launch failing): hover for what, click for the fix panel.
+    @ViewBuilder
+    func actionRequiredButton(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat) -> some View {
+        let issues = store.issues(
+            for: seat, in: wheelhouse, installed: HarnessRepository.shared.isInstalled(name: seat.command))
+        if !issues.isEmpty {
+            Button {
+                fixing = WheelhouseSeatFixRequest(wheelhouse: wheelhouse, seat: seat)
+            } label: {
+                Label(Strings.Wheelhouse.actionRequired, systemImage: WheelhouseMenuIcon.actionRequired)
+                    .font(.system(size: 10.5, weight: .medium))
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(.orange)
+            .help(WheelhouseSeatFixSheet.tooltip(for: issues, seat: seat))
+        }
+    }
+}
+
+// MARK: - Empty stage
+
+extension WheelhouseStageView {
+    /// When the last pane goes while other seats are still open, the stage
+    /// shows the next of them rather than looking as if nothing is open.
+    func fillEmptyStage() {
+        guard stageEntries.isEmpty,
+            let next = WheelhouseStage.nextToShow(
+                open: openSeatCards.map(\.id), onStage: Set(stage.visible), excluding: stage.lastRemoved)
+        else { return }
+        if let card = openSeatCards.first(where: { $0.id == next }) { show(card) }
+    }
+}
+
+// MARK: - Split placement
+
+extension WheelhouseStageView {
+    /// In Split, the seat card a Quick Terminal sits beneath.
+    func splitHostId(of cardId: UUID) -> UUID? {
+        guard stage.quickTerminalPlacement == .split,
+            let card = boardVM.allTerminals.first(where: { $0.id == cardId })
+        else { return nil }
+        return store.splitHost(of: card, in: boardVM.allTerminals)?.id
+    }
+
+    func moveQuickTerminalsIntoPanels() {
+        stage.moveQuickTerminalsIntoPanels { splitHostId(of: $0) }
+    }
+}
+
+// MARK: - Empty stage
+
+extension WheelhouseStageView {
+    var emptyStage: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "steeringwheel")
+                .font(.system(size: 34))
+                .foregroundColor(.secondary)
+            Text(Strings.Wheelhouse.emptyStageTitle)
+                .font(.headline)
+            Text(Strings.Wheelhouse.emptyStageMessage)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 380)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+// MARK: - Shortcuts
+
+extension WheelhouseStageView {
+    /// Zoom Terminal, or Exit Zoom while this pane is zoomed. Its ⌥⌘Z shows in
+    /// the focused pane's right-click menu.
+    func zoomMenuItem(_ card: TerminalCard, showsShortcut: Bool? = nil) -> some View {
+        let zoomed = stage.zoomed == card.id
+        return Button {
+            if zoomed { stage.exitZoom() } else { zoom(card) }
+        } label: {
+            Label(
+                zoomed ? Strings.Wheelhouse.exitZoom : Strings.Wheelhouse.zoomTerminal,
+                systemImage: zoomed ? WheelhouseMenuIcon.exitZoom : WheelhouseMenuIcon.zoom)
+        }
+        .stageShortcut((showsShortcut ?? (stage.focused == card.id)) ? WheelhouseStageShortcut.zoom : nil)
+    }
+
+    /// While a pane is zoomed, seats that rang still reach the human: a small
+    /// badge in its header; clicking it comes back to the stage with the
+    /// longest-waiting seat up.
+    @ViewBuilder
+    var zoomedNeedsYouBadge: some View {
+        let waiting = attentionQueue.filter { $0.id != stage.zoomed }
+        if let first = waiting.first {
+            Button {
+                show(first)
+            } label: {
+                HStack(spacing: 5) {
+                    Circle().fill(Color.orange).frame(width: 7, height: 7)
+                    Text("\(Strings.Wheelhouse.needsYou) · \(waiting.count)")
+                        .font(.system(size: 10.5, weight: .semibold))
+                }
+                .padding(.horizontal, 8)
+                .frame(height: 20)
+                .background(Capsule().fill(Color.orange.opacity(0.2)))
+                .overlay(Capsule().stroke(Color.orange.opacity(0.8), lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .help(chipHelp(first))
+        }
+    }
+
+    /// The seat of the focused pane: its own, or a Quick Terminal's parent.
+    fileprivate var focusedSeat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        store.owningSeat(ofCardId: stage.focused, in: stageCards)
+    }
+
     /// ⌘J: the seat that has waited longest comes on stage.
     /// ⌃⌘F: Wheelhouse focus mode on and off.
-    private var shortcuts: some View {
+    /// ⌘I: the focused seat's harness details. ⌘P: keep it on stage, or not.
+    var shortcuts: some View {
         ZStack {
             Button("") {
                 if let next = attentionQueue.first { show(next) }
@@ -564,6 +726,12 @@ struct WheelhouseStageView: View {
             .keyboardShortcut("j", modifiers: .command)
             Button("") { stage.focusMode.toggle() }
                 .keyboardShortcut("f", modifiers: [.command, .control])
+            Button("") {
+                if let found = focusedSeat { onSeatAction(found.wheelhouse, found.seat, .harnessDetails) }
+            }
+            .keyboardShortcut(WheelhouseStageShortcut.harnessDetails)
+            Button("") { stage.togglePinFocused() }
+                .keyboardShortcut(WheelhouseStageShortcut.keepOnStage)
         }
         .opacity(0)
         .accessibilityHidden(true)
@@ -642,20 +810,42 @@ extension WheelhouseStageView {
     }
 }
 
-/// Menu items for a seat: its harness focuses, hand off, and birth.
+/// Menu items for a seat: its harness focuses, hand off, and birth. Every
+/// item has its `WheelhouseMenuIcon`.
 struct WheelhouseSeatActionItems: View {
     let wheelhouse: Wheelhouse
     let seat: WheelhouseSeat
     let hasTerminal: Bool
     var unborn: Bool = false
+    /// Whether ynh has the seat's harness; nil while unknown.
+    var installed: Bool?
+    /// Delegates the seat waits on (not committed or missing), named for the
+    /// "needs … first" warning.
+    var blockedBy: [String] = []
+    /// Show the stage's shortcuts beside the items they trigger: only in a
+    /// right-click menu on the stage, where they act on the focused seat.
+    var showsShortcuts: Bool = false
     let onSeatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void
 
+    /// "Install", or "Install (needs io first)" while its delegates aren't
+    /// ready: still clickable, it just says what else is needed.
+    private func withNeeds(_ title: String) -> String {
+        blockedBy.isEmpty ? title : Strings.Wheelhouse.needsFirst(title, blockedBy.joined(separator: ", "))
+    }
+
     var body: some View {
-        if unborn && !hasTerminal {
+        if installed == false {
+            Button {
+                onSeatAction(wheelhouse, seat, .install)
+            } label: {
+                Label(withNeeds(Strings.Wheelhouse.install), systemImage: WheelhouseMenuIcon.install)
+            }
+            Divider()
+        } else if unborn && !hasTerminal {
             Button {
                 onSeatAction(wheelhouse, seat, .birth)
             } label: {
-                Label(Strings.Wheelhouse.birth, systemImage: "sparkles")
+                Label(withNeeds(Strings.Wheelhouse.birth), systemImage: WheelhouseMenuIcon.birth)
             }
             Divider()
         }
@@ -666,7 +856,7 @@ struct WheelhouseSeatActionItems: View {
                     Button {
                         onSeatAction(wheelhouse, seat, .focus(focus))
                     } label: {
-                        Label(focus.name.capitalized, systemImage: focus.name == "wake" ? "sunrise" : "scope")
+                        Label(focus.name.capitalized, systemImage: WheelhouseMenuIcon.focus(named: focus.name))
                     }
                     .help(focus.prompt)
                 }
@@ -677,24 +867,28 @@ struct WheelhouseSeatActionItems: View {
             Button {
                 onSeatAction(wheelhouse, seat, .handoff)
             } label: {
-                Label(Strings.Wheelhouse.handoff, systemImage: "moon.zzz")
+                Label(Strings.Wheelhouse.handoff, systemImage: WheelhouseMenuIcon.handoff)
             }
             Button(role: .destructive) {
                 onSeatAction(wheelhouse, seat, .closeTerminal)
             } label: {
-                Label(Strings.Wheelhouse.closeTerminal, systemImage: "xmark.octagon")
+                Label(Strings.Wheelhouse.closeTerminal, systemImage: WheelhouseMenuIcon.closeTerminal)
             }
+            .help(Strings.Wheelhouse.smartCloseHelp)
+            .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.closeTerminal : nil)
         }
         Divider()
         Button {
             onSeatAction(wheelhouse, seat, .quickTerminal)
         } label: {
-            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: "terminal")
+            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: WheelhouseMenuIcon.quickTerminal)
         }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.quickTerminal : nil)
         Button {
             onSeatAction(wheelhouse, seat, .harnessDetails)
         } label: {
-            Label(Strings.Wheelhouse.harnessDetails, systemImage: "puzzlepiece.extension")
+            Label(Strings.Wheelhouse.harnessDetails, systemImage: WheelhouseMenuIcon.harnessDetails)
         }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.harnessDetails : nil)
     }
 }

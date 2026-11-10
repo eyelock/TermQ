@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Ρυθμίσεις";
 "settings.tab.general" = "Γενικά";
-"settings.tab.tools" = "Εργαλεία";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Τερματικό";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Αγορές";
+"settings.tab.git.and.stacks" = "Git και στοίβα";
+"settings.tab.integrations" = "Ενσωματώσεις";
 "settings.marketplaces.section.list" = "Διαμορφωμένες αγορές";
 "settings.marketplaces.empty" = "Δεν έχουν προστεθεί αγορές ακόμα.";
 "settings.marketplaces.add" = "Προσθήκη αγοράς…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Εστίαση Wheelhouse: απόκρυψη όλων εκτός από αυτό το Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Μεταφορά στη σκηνή";
 "wheelhouse.take.off.stage" = "Αφαίρεση από τη σκηνή";
+"wheelhouse.zoom.terminal" = "Ζουμ τερματικού";
+"wheelhouse.exit.zoom" = "Έξοδος από το ζουμ";
+"wheelhouse.smart.close.help" = "Κλείσιμο: μια θέση που εκτελείται ακόμη φεύγει από τη σκηνή και συνεχίζει να εκτελείται· μια θέση που έχει σταματήσει κλείνει";
+"wheelhouse.show.quick.terminals" = "Εμφάνιση γρήγορων τερματικών";
+"wheelhouse.hide.quick.terminals" = "Απόκρυψη γρήγορων τερματικών";
+"wheelhouse.install" = "Εγκατάσταση";
+"wheelhouse.needs.first %@ %@" = "%1$@ (απαιτεί πρώτα %2$@)";
+"wheelhouse.action.required" = "Απαιτείται ενέργεια";
+"wheelhouse.action.required.help" = "Κάντε κλικ στη θέση για να δείτε πώς θα το διορθώσετε.";
+"wheelhouse.fix.title %@" = "Το %@ χρειάζεται προσοχή";
+"wheelhouse.fix.all.clear" = "Τίποτα δεν εμποδίζει πλέον αυτή τη θέση.";
+"wheelhouse.issue.not.installed" = "Δεν είναι εγκατεστημένο";
+"wheelhouse.issue.not.installed.detail %@" = "Το ynh δεν έχει harness με όνομα %@. Εγκαταστήστε το από τον φάκελο της θέσης στο Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Αντιπρόσωποι χωρίς commit: %@";
+"wheelhouse.issue.not.committed.detail" = "Το ynh διαβάζει αυτούς τους αντιπροσώπους από το git, επομένως αυτή η θέση δεν μπορεί να ξεκινήσει μέχρι να γίνει commit.";
+"wheelhouse.issue.missing %@" = "Λείπουν αντιπρόσωποι: %@";
+"wheelhouse.issue.missing.detail" = "Το harness της θέσης αναφέρει φακέλους αντιπροσώπων που δεν υπάρχουν στο Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Η τελευταία εκκίνηση απέτυχε";
+"wheelhouse.copy.commit.command" = "Αντιγραφή εντολής commit";
+"wheelhouse.try.again" = "Δοκιμή ξανά";
+"wheelhouse.open.anyway" = "Άνοιγμα παρ’ όλα αυτά";
 "wheelhouse.needs.you" = "Σας χρειάζεται";
 "wheelhouse.nobody.waiting" = "κανείς δεν περιμένει";
 "wheelhouse.more.waiting %ld" = "+%ld ακόμη";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Εκκίνηση με εστίαση";
 "settings.wheelhouse.enable.tab" = "Εμφάνιση καρτέλας Wheelhouses στην πλαϊνή στήλη";
 "settings.wheelhouse.enable.tab.help" = "Προσθέτει μια καρτέλα Wheelhouses που εμφανίζει τις θέσεις κάθε Wheelhouse στα αποθετήριά σας";
+"settings.wheelhouse.quick.terminal.placement" = "Τοποθέτηση γρήγορου τερματικού";
+"settings.wheelhouse.quick.terminal.placement.help" = "Στη σκηνή: κάθε γρήγορο τερματικό παίρνει τη δική του θέση στη σκηνή. Διαχωρισμένο: τα γρήγορα τερματικά μιας θέσης ανοίγουν σε πάνελ κάτω από τη θέση.";
+"settings.wheelhouse.placement.staged" = "Στη σκηνή";
+"settings.wheelhouse.placement.split" = "Διαχωρισμένο";
 "settings.wheelhouse.inbox.human.name" = "Όνομα εισερχομένων για οποιονδήποτε άνθρωπο";
 "settings.wheelhouse.inbox.human.name.help" = "Το όνομα στο οποίο ένα Wheelhouse αναθέτει beads όταν οποιοσδήποτε άνθρωπος μπορεί να τα αναλάβει. Τα έτοιμα beads για αυτό το όνομα εμφανίζονται στα εισερχόμενά σας.";
 "settings.wheelhouse.inbox.own.name" = "Το δικό σας όνομα εισερχομένων";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Όλα";
 "wheelhouse.inbox.filter.help %@" = "Εμφάνιση μόνο των bead τύπου %@";
 "wheelhouse.inbox.sent.to %@" = "εστάλη σε %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Î ÏÎ¿ÏÎ¿ÏÎ®";
+"actions.termq.only" = "Μόνο τα αποθετήρια του TermQ";
+"actions.empty" = "Κανένα PR δεν περιμένει την αναθεώρησή σας.";
+"actions.load.failed %@" = "Δεν ήταν δυνατή η φόρτωση των αιτημάτων αναθεώρησης: %@";
+"actions.draft" = "Πρόχειρο";
+"actions.copy.link" = "Αντιγραφή συνδέσμου";
+"actions.truncated %ld" = "Εμφάνιση των πρώτων %ld· ορισμένα ενδέχεται να λείπουν.";
+"actions.wait.today" = "Σήμερα";
+"actions.wait.this.week" = "Αυτή την εβδομάδα";
+"actions.wait.this.month" = "Αυτόν τον μήνα";
+"actions.wait.older" = "Παλαιότερα";

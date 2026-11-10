@@ -53,7 +53,7 @@ The theme applies to all terminal views. Pick one that works well with your othe
 
 ## 4.5 — Set defaults for new terminals
 
-In **Settings > General**, you can set two defaults that apply whenever you create a new terminal:
+In **Settings > Terminal**, you can set two defaults that apply whenever you create a new terminal:
 
 **Default Working Directory** — If most of your work lives in one directory (e.g. `~/code`), set it here. New terminals open there unless you specify otherwise.
 

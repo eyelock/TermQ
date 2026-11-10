@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 import TermQShared
@@ -13,13 +14,83 @@ extension ContentView {
 
     var seatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void {
         { wheelhouse, seat, action in
+            if action == .install {
+                installSeat(seat, in: wheelhouse)
+                return
+            }
             guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
             switch action {
             case .closeTerminal: wheelhouseStage.remove(card)
+            case .quickTerminal:
+                wheelhouseStage.showQuickTerminal(card, seatCard: launchCoordinator.seatCard(seat, in: wheelhouse)?.id)
             // Sent to a running seat, the stage stays as it is. A seat that
             // isn't running only starts once its pane is up, so bring it up.
             case .send where TerminalSessionManager.shared.hasActiveSession(for: card): break
             default: wheelhouseStage.show(card)
+            }
+        }
+    }
+
+    /// Installs a seat's harness from its directory in the Wheelhouse, through
+    /// the same progress sheet as any harness install.
+    func installSeat(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+        lifecycleCoordinator.installHarness(
+            HarnessInstallConfig(
+                displayName: seat.name,
+                installArgs: [WheelhouseSeatHealth.harnessDirectory(root: wheelhouse.root, seat: seat)]))
+    }
+
+    /// The seat of the stage's focused pane: its own, or a Quick Terminal's
+    /// parent. What the stage's shortcuts act on.
+    var focusedStageSeat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)? {
+        WheelhouseStore.shared.owningSeat(ofCardId: wheelhouseStage.focused, in: viewModel.allTerminals)
+    }
+
+    /// ⌘T: on the stage, a Quick Terminal for the focused seat (nothing when
+    /// no seat is focused, such as the inbox: a general terminal would be
+    /// hidden by the stage); elsewhere a new terminal.
+    func quickNewTerminalOrSeatQuickTerminal() {
+        guard showsWheelhouseStage else {
+            viewModel.quickNewTerminal()
+            return
+        }
+        if let found = focusedStageSeat {
+            seatAction(found.wheelhouse, found.seat, .quickTerminal)
+        } else {
+            NSSound.beep()
+        }
+    }
+
+    /// ⌘⌫: on the stage, close the focused pane the way its ✕ does (a seat
+    /// still running only leaves the stage, so no confirmation is needed);
+    /// elsewhere the board's Delete Terminal, which asks first.
+    func deleteTerminalOrCloseStagePane() {
+        guard showsWheelhouseStage, let id = wheelhouseStage.focused,
+            let card = viewModel.allTerminals.first(where: { $0.id == id && $0.deletedAt == nil })
+        else {
+            if viewModel.selectedCard != nil { viewModel.showDeleteConfirmation = true }
+            return
+        }
+        if let found = WheelhouseStore.shared.seat(for: card) {
+            seatAction(found.wheelhouse, found.seat, .closeTerminal)
+        } else {
+            wheelhouseStage.smartClose(card)
+        }
+    }
+
+    /// A stage pane fills the window: the sidebar steps aside too.
+    var stageZoomed: Bool {
+        showsWheelhouseStage && wheelhouseStage.zoomed.map(wheelhouseStage.isOnStage) == true
+    }
+
+    /// ⌥⌘Z: on the stage, zoom the focused pane or come back; elsewhere the
+    /// board's zoom.
+    func toggleZoomOrStageZoom() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            if showsWheelhouseStage {
+                wheelhouseStage.toggleZoom()
+            } else {
+                isZoomed.toggle()
             }
         }
     }
@@ -44,6 +115,8 @@ extension ContentView {
             wheelhouseStage.cardBeforeStage = selectedNonSeatCard?.id
             return
         }
+        // Zoom belongs to the stage: coming back shows the whole stage.
+        wheelhouseStage.exitZoom()
         defer { wheelhouseStage.cardBeforeStage = nil }
         guard selectedNonSeatCard == nil else { return }
         if let id = wheelhouseStage.cardBeforeStage,

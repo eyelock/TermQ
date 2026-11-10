@@ -14,70 +14,24 @@ struct SettingsMarketplacesView: View {
     @State private var ynhMarketplaceToRemove: YNHMarketplace?
     @State private var showRemoveYNHMarketplaceConfirmation = false
 
+    /// The groups this view shows: Settings puts ynh's marketplaces with the
+    /// Harnesses section and the rest under Marketplaces.
+    enum Part: CaseIterable {
+        case plugins, ynh, behaviour, authoring
+    }
+
+    var parts: Set<Part> = Set(Part.allCases)
+
     var body: some View {
         Group {
-            Section(Strings.Settings.Marketplaces.sectionMarketplaces) {
-                if store.marketplaces.isEmpty {
-                    Text(Strings.Settings.Marketplaces.noMarketplaces)
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(store.marketplaces) { marketplace in
-                        marketplaceRow(marketplace)
-                    }
-                }
-                Button(Strings.Settings.Marketplaces.addMarketplace) {
-                    showAddSheet = true
-                }
-            }
-
-            if case .ready(let ynhPath, _, _) = ynhDetector.status {
-                Section(Strings.Settings.Marketplaces.sectionYNHMarketplaces) {
-                    if marketplaceService.isLoading {
-                        ProgressView().controlSize(.small)
-                    } else if marketplaceService.marketplaces.isEmpty {
-                        Text(Strings.Settings.Marketplaces.noYNHMarketplaces)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ForEach(marketplaceService.marketplaces) { ynhMarketplace in
-                            ynhMarketplaceRow(ynhMarketplace, ynhPath: ynhPath)
-                        }
-                    }
-                    Button(Strings.Settings.Marketplaces.addYNHMarketplace) {
-                        showAddYNHMarketplaceSheet = true
-                    }
-                }
-            }
-
-            Section {
-                Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $store.autoRefresh)
-            } header: {
-                Text(Strings.Settings.Marketplaces.sectionBehaviour)
-            } footer: {
-                Text(Strings.Settings.Marketplaces.autoRefreshHelp)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section(Strings.Settings.Marketplaces.sectionAuthoring) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(Strings.Settings.Marketplaces.defaultAuthorDirectory)
-                        Text(effectiveAuthorDirectory)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                    }
-                    Spacer()
-                    Button(Strings.Common.browse) { browseForAuthorDirectory() }
-                    if !authorPreferences.defaultDirectory.isEmpty {
-                        Button(Strings.Settings.Marketplaces.reset) { authorPreferences.defaultDirectory = "" }
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
+            if parts.contains(.plugins) { pluginMarketplaces }
+            if parts.contains(.ynh) { ynhMarketplaces }
+            if parts.contains(.behaviour) { behaviour }
+            if parts.contains(.authoring) { authoring }
         }
         .onAppear {
-            if case .ready(let ynhPath, _, _) = ynhDetector.status {
+            // Only the instance showing ynh's marketplaces asks ynh for them.
+            if parts.contains(.ynh), case .ready(let ynhPath, _, _) = ynhDetector.status {
                 Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
             }
         }
@@ -264,6 +218,82 @@ private struct ExternalSourceRowLabel: View {
                         .font(.caption)
                 }
                 .foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+// MARK: - Sections
+
+extension SettingsMarketplacesView {
+    @ViewBuilder
+    fileprivate var pluginMarketplaces: some View {
+        Section(Strings.Settings.Marketplaces.sectionMarketplaces) {
+            if store.marketplaces.isEmpty {
+                Text(Strings.Settings.Marketplaces.noMarketplaces)
+                    .foregroundStyle(.secondary)
+            } else {
+                ForEach(store.marketplaces) { marketplace in
+                    marketplaceRow(marketplace)
+                }
+            }
+            Button(Strings.Settings.Marketplaces.addMarketplace) {
+                showAddSheet = true
+            }
+        }
+    }
+
+    @ViewBuilder
+    fileprivate var ynhMarketplaces: some View {
+        if case .ready(let ynhPath, _, _) = ynhDetector.status {
+            Section(Strings.Settings.Marketplaces.sectionYNHMarketplaces) {
+                if marketplaceService.isLoading {
+                    ProgressView().controlSize(.small)
+                } else if marketplaceService.marketplaces.isEmpty {
+                    Text(Strings.Settings.Marketplaces.noYNHMarketplaces)
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(marketplaceService.marketplaces) { ynhMarketplace in
+                        ynhMarketplaceRow(ynhMarketplace, ynhPath: ynhPath)
+                    }
+                }
+                Button(Strings.Settings.Marketplaces.addYNHMarketplace) {
+                    showAddYNHMarketplaceSheet = true
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    fileprivate var behaviour: some View {
+        Section {
+            Toggle(Strings.Settings.Marketplaces.autoRefresh, isOn: $store.autoRefresh)
+        } header: {
+            Text(Strings.Settings.Marketplaces.sectionBehaviour)
+        } footer: {
+            Text(Strings.Settings.Marketplaces.autoRefreshHelp)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    @ViewBuilder
+    fileprivate var authoring: some View {
+        Section(Strings.Settings.Marketplaces.sectionAuthoring) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(Strings.Settings.Marketplaces.defaultAuthorDirectory)
+                    Text(effectiveAuthorDirectory)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
+                Spacer()
+                Button(Strings.Common.browse) { browseForAuthorDirectory() }
+                if !authorPreferences.defaultDirectory.isEmpty {
+                    Button(Strings.Settings.Marketplaces.reset) { authorPreferences.defaultDirectory = "" }
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }

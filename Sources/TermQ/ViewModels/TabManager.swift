@@ -188,6 +188,14 @@ public final class TabManager: ObservableObject {
         }
     }
 
+    /// A bell from a Wheelhouse stage pane. It counts even when the pane is the
+    /// selected one: on the stage the focused pane is only the one last
+    /// clicked, not necessarily the one being watched. Typing or clicking in
+    /// the pane clears it.
+    func markStageBell(_ cardId: UUID) {
+        markNeedsAttention(cardId, currentSelection: nil)
+    }
+
     /// Clear attention indicator for a card
     func clearAttention(_ cardId: UUID) {
         needsAttention.remove(cardId)

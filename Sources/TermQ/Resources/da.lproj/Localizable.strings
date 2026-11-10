@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Indstillinger";
 "settings.tab.general" = "Generelt";
-"settings.tab.tools" = "Værktøjer";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Markedspladser";
+"settings.tab.git.and.stacks" = "Git og stabling";
+"settings.tab.integrations" = "Integrationer";
 "settings.marketplaces.section.list" = "Konfigurerede markedspladser";
 "settings.marketplaces.empty" = "Ingen markedspladser tilføjet endnu.";
 "settings.marketplaces.add" = "Tilføj markedsplads…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Wheelhouse-fokus: skjul alt undtagen dette Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Før op på scenen";
 "wheelhouse.take.off.stage" = "Tag af scenen";
+"wheelhouse.zoom.terminal" = "Zoom terminal";
+"wheelhouse.exit.zoom" = "Afslut zoom";
+"wheelhouse.smart.close.help" = "Luk: en plads, der stadig kører, forlader scenen og kører videre; en, der er stoppet, lukkes";
+"wheelhouse.show.quick.terminals" = "Vis hurtige terminaler";
+"wheelhouse.hide.quick.terminals" = "Skjul hurtige terminaler";
+"wheelhouse.install" = "Installer";
+"wheelhouse.needs.first %@ %@" = "%1$@ (kræver %2$@ først)";
+"wheelhouse.action.required" = "Handling påkrævet";
+"wheelhouse.action.required.help" = "Klik på pladsen for at se, hvordan du løser det.";
+"wheelhouse.fix.title %@" = "%@ kræver opmærksomhed";
+"wheelhouse.fix.all.clear" = "Intet forhindrer længere denne plads i at starte.";
+"wheelhouse.issue.not.installed" = "Ikke installeret";
+"wheelhouse.issue.not.installed.detail %@" = "ynh har intet harness med navnet %@. Installer det fra pladsens mappe i Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegater er ikke committet: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh læser disse delegater fra git, så denne plads kan ikke starte, før de er committet.";
+"wheelhouse.issue.missing %@" = "Delegater mangler: %@";
+"wheelhouse.issue.missing.detail" = "Pladsens harness nævner delegatmapper, der ikke findes i Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Seneste start mislykkedes";
+"wheelhouse.copy.commit.command" = "Kopiér commit-kommando";
+"wheelhouse.try.again" = "Prøv igen";
+"wheelhouse.open.anyway" = "Åbn alligevel";
 "wheelhouse.needs.you" = "Har brug for dig";
 "wheelhouse.nobody.waiting" = "ingen venter";
 "wheelhouse.more.waiting %ld" = "+%ld flere";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "Start med fokus";
 "settings.wheelhouse.enable.tab" = "Vis fanen Wheelhouses i sidepanelet";
 "settings.wheelhouse.enable.tab.help" = "Tilføjer en Wheelhouses-fane med pladserne i hvert Wheelhouse i dine repositories";
+"settings.wheelhouse.quick.terminal.placement" = "Placering af hurtig terminal";
+"settings.wheelhouse.quick.terminal.placement.help" = "På scenen: hver hurtig terminal får sin egen plads på scenen. Delt: en plads’ hurtige terminaler åbnes i et panel under pladsen.";
+"settings.wheelhouse.placement.staged" = "På scenen";
+"settings.wheelhouse.placement.split" = "Delt";
 "settings.wheelhouse.inbox.human.name" = "Indbakkenavn for ethvert menneske";
 "settings.wheelhouse.inbox.human.name.help" = "Navnet, som et Wheelhouse tildeler beads til, når ethvert menneske kan tage sig af dem. Klare beads for dette navn vises i din indbakke.";
 "settings.wheelhouse.inbox.own.name" = "Dit eget indbakkenavn";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "Alle";
 "wheelhouse.inbox.filter.help %@" = "Vis kun %@-beads";
 "wheelhouse.inbox.sent.to %@" = "sendt til %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Afventer";
+"actions.termq.only" = "Kun TermQ's repositories";
+"actions.empty" = "Ingen PR'er venter på din gennemgang.";
+"actions.load.failed %@" = "Kunne ikke indlæse dine anmodninger om gennemgang: %@";
+"actions.draft" = "Udkast";
+"actions.copy.link" = "Kopiér link";
+"actions.truncated %ld" = "Viser de første %ld; nogle kan mangle.";
+"actions.wait.today" = "I dag";
+"actions.wait.this.week" = "Denne uge";
+"actions.wait.this.month" = "Denne måned";
+"actions.wait.older" = "Ældre";

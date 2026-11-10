@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "设置";
 "settings.tab.general" = "常规";
-"settings.tab.tools" = "工具";
 
 // Settings - Terminal section
 "settings.section.terminal" = "终端";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "市场";
+"settings.tab.git.and.stacks" = "Git 与堆叠";
+"settings.tab.integrations" = "集成";
 "settings.marketplaces.section.list" = "已配置的市场";
 "settings.marketplaces.empty" = "尚未添加任何市场。";
 "settings.marketplaces.add" = "添加市场…";
@@ -1597,6 +1598,27 @@
 "wheelhouse.focus.help" = "Wheelhouse 聚焦：隐藏除此 Wheelhouse 以外的所有内容 (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "带到舞台";
 "wheelhouse.take.off.stage" = "移出舞台";
+"wheelhouse.zoom.terminal" = "缩放终端";
+"wheelhouse.exit.zoom" = "退出缩放";
+"wheelhouse.smart.close.help" = "关闭：仍在运行的席位会离开舞台并继续运行；已停止的席位则会被关闭";
+"wheelhouse.show.quick.terminals" = "显示快速终端";
+"wheelhouse.hide.quick.terminals" = "隐藏快速终端";
+"wheelhouse.install" = "安装";
+"wheelhouse.needs.first %@ %@" = "%1$@(需要先 %2$@)";
+"wheelhouse.action.required" = "需要处理";
+"wheelhouse.action.required.help" = "点击席位查看修复方法。";
+"wheelhouse.fix.title %@" = "%@ 需要处理";
+"wheelhouse.fix.all.clear" = "现在没有任何问题阻止此席位运行。";
+"wheelhouse.issue.not.installed" = "未安装";
+"wheelhouse.issue.not.installed.detail %@" = "ynh 中没有名为 %@ 的 Harness。请从 Wheelhouse 中该席位的文件夹安装。";
+"wheelhouse.issue.not.committed %@" = "委托未提交：%@";
+"wheelhouse.issue.not.committed.detail" = "ynh 从 git 读取这些委托，因此在提交之前，此席位无法启动。";
+"wheelhouse.issue.missing %@" = "缺少委托：%@";
+"wheelhouse.issue.missing.detail" = "该席位的 Harness 指定了 Wheelhouse 中不存在的委托文件夹。";
+"wheelhouse.issue.launch.failed" = "上次启动失败";
+"wheelhouse.copy.commit.command" = "复制提交命令";
+"wheelhouse.try.again" = "重试";
+"wheelhouse.open.anyway" = "仍然打开";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "无人等待";
 "wheelhouse.more.waiting %ld" = "还有 +%ld";
@@ -1613,6 +1635,10 @@
 "wheelhouse.action.launch.focus" = "带聚焦启动";
 "settings.wheelhouse.enable.tab" = "显示 Wheelhouse 侧边栏标签页";
 "settings.wheelhouse.enable.tab.help" = "添加一个 Wheelhouse 标签页，列出你仓库中每个 Wheelhouse 的席位";
+"settings.wheelhouse.quick.terminal.placement" = "快速终端位置";
+"settings.wheelhouse.quick.terminal.placement.help" = "舞台：每个快速终端在舞台上占据自己的位置。拆分：席位的快速终端在该席位下方的面板中打开。";
+"settings.wheelhouse.placement.staged" = "舞台";
+"settings.wheelhouse.placement.split" = "拆分";
 "settings.wheelhouse.inbox.human.name" = "任何人的收件箱名称";
 "settings.wheelhouse.inbox.human.name.help" = "当任何人都可以处理时，Wheelhouse 用来分配 bead 的名称。该名称下已就绪的 bead 会显示在你的收件箱中。";
 "settings.wheelhouse.inbox.own.name" = "你自己的收件箱名称";
@@ -1644,3 +1670,16 @@
 "wheelhouse.inbox.filter.all" = "全部";
 "wheelhouse.inbox.filter.help %@" = "仅显示 %@ bead";
 "wheelhouse.inbox.sent.to %@" = "已发送给 %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "éå³æ³¨";
+"actions.termq.only" = "仅限 TermQ 的仓库";
+"actions.empty" = "没有等待你审查的 PR。";
+"actions.load.failed %@" = "无法加载你的审查请求：%@";
+"actions.draft" = "草稿";
+"actions.copy.link" = "复制链接";
+"actions.truncated %ld" = "显示前 %ld 项;可能有部分缺失。";
+"actions.wait.today" = "今天";
+"actions.wait.this.week" = "本周";
+"actions.wait.this.month" = "本月";
+"actions.wait.older" = "更早";

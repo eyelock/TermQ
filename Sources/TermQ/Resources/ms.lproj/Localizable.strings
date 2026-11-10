@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Tetapan";
 "settings.tab.general" = "Umum";
-"settings.tab.tools" = "Alat";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Pasaran";
+"settings.tab.git.and.stacks" = "Git & Penindanan";
+"settings.tab.integrations" = "Integrasi";
 "settings.marketplaces.section.list" = "Pasaran yang dikonfigurasi";
 "settings.marketplaces.empty" = "Belum ada pasaran yang ditambah.";
 "settings.marketplaces.add" = "Tambah Pasaran…";
@@ -1600,6 +1601,27 @@
 "wheelhouse.focus.help" = "Fokus Wheelhouse: sembunyikan semua kecuali Wheelhouse ini (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Bawa ke pentas";
 "wheelhouse.take.off.stage" = "Turunkan dari pentas";
+"wheelhouse.zoom.terminal" = "Zum Terminal";
+"wheelhouse.exit.zoom" = "Keluar Zum";
+"wheelhouse.smart.close.help" = "Tutup: kerusi yang masih berjalan meninggalkan Pentas dan terus berjalan; kerusi yang telah berhenti ditutup";
+"wheelhouse.show.quick.terminals" = "Papar Terminal Pantas";
+"wheelhouse.hide.quick.terminals" = "Sembunyikan Terminal Pantas";
+"wheelhouse.install" = "Pasang";
+"wheelhouse.needs.first %@ %@" = "%1$@ (perlukan %2$@ dahulu)";
+"wheelhouse.action.required" = "Tindakan diperlukan";
+"wheelhouse.action.required.help" = "Klik kerusi untuk melihat cara membetulkannya.";
+"wheelhouse.fix.title %@" = "%@ memerlukan perhatian";
+"wheelhouse.fix.all.clear" = "Tiada apa-apa lagi yang menghalang kerusi ini.";
+"wheelhouse.issue.not.installed" = "Belum dipasang";
+"wheelhouse.issue.not.installed.detail %@" = "ynh tiada harness bernama %@. Pasang daripada folder kerusi dalam Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegat belum di-commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh membaca delegat ini daripada git, jadi kerusi ini tidak boleh bermula sehingga ia di-commit.";
+"wheelhouse.issue.missing %@" = "Delegat tiada: %@";
+"wheelhouse.issue.missing.detail" = "Harness kerusi menamakan folder delegat yang tidak wujud dalam Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Pelancaran terakhir gagal";
+"wheelhouse.copy.commit.command" = "Salin Arahan Commit";
+"wheelhouse.try.again" = "Cuba Lagi";
+"wheelhouse.open.anyway" = "Buka Juga";
 "wheelhouse.needs.you" = "Memerlukan anda";
 "wheelhouse.nobody.waiting" = "tiada siapa menunggu";
 "wheelhouse.more.waiting %ld" = "+%ld lagi";
@@ -1616,6 +1638,10 @@
 "wheelhouse.action.launch.focus" = "Lancarkan dengan fokus";
 "settings.wheelhouse.enable.tab" = "Tunjuk tab Wheelhouse dalam bar sisi";
 "settings.wheelhouse.enable.tab.help" = "Menambah tab Wheelhouse yang menyenaraikan kerusi setiap Wheelhouse dalam repositori anda";
+"settings.wheelhouse.quick.terminal.placement" = "Penempatan Terminal Pantas";
+"settings.wheelhouse.quick.terminal.placement.help" = "Di Pentas: setiap Terminal Pantas mendapat tempatnya sendiri di Pentas. Terpisah: Terminal Pantas milik sebuah kerusi dibuka dalam panel di bawah kerusi itu.";
+"settings.wheelhouse.placement.staged" = "Di Pentas";
+"settings.wheelhouse.placement.split" = "Terpisah";
 "settings.wheelhouse.inbox.human.name" = "Nama peti masuk untuk mana-mana manusia";
 "settings.wheelhouse.inbox.human.name.help" = "Nama yang diberi tugasan bead oleh Wheelhouse apabila mana-mana manusia boleh mengendalikannya. Bead yang sedia untuk nama ini muncul dalam peti masuk anda.";
 "settings.wheelhouse.inbox.own.name" = "Nama peti masuk anda sendiri";
@@ -1647,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Semua";
 "wheelhouse.inbox.filter.help %@" = "Tunjukkan bead %@ sahaja";
 "wheelhouse.inbox.sent.to %@" = "dihantar kepada %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Perhatian";
+"actions.termq.only" = "Hanya repositori TermQ";
+"actions.empty" = "Tiada PR yang menunggu ulasan anda.";
+"actions.load.failed %@" = "Tidak dapat memuatkan permintaan ulasan anda: %@";
+"actions.draft" = "Draf";
+"actions.copy.link" = "Salin Pautan";
+"actions.truncated %ld" = "Memaparkan %ld yang pertama; sesetengahnya mungkin tiada.";
+"actions.wait.today" = "Hari ini";
+"actions.wait.this.week" = "Minggu ini";
+"actions.wait.this.month" = "Bulan ini";
+"actions.wait.older" = "Lebih lama";

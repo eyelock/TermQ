@@ -9,7 +9,7 @@ In this tutorial you'll use TermQ's Remote PR feed to monitor open pull requests
 
 ## 15.1 — Switching to Remote mode
 
-The Repositories sidebar has a **Local / Remote** toggle at the top of the repo list.
+The Repositories sidebar has a **Local / Remote / Attention** toggle at the top of the repo list (**Attention** is covered in [15.9](#159--attention-reviews-waiting-on-you)).
 
 ![Local / Remote toggle](../Images/remote-prs-local-remote-toggle.png)
 
@@ -49,7 +49,7 @@ The feed is not simply newest-first. PRs are ranked in four tiers, with recency 
 
 By default TermQ shows at most 20 PRs per repository. Tier-1 (checked-out) PRs always appear regardless of this limit. When the full list exceeds the cap, a **+ N more** footer shows the count of hidden PRs.
 
-To change the cap globally, go to **Settings → GitHub** and adjust the stepper.
+To change the cap globally, go to **Settings → Git & Stacks** and adjust the stepper.
 
 ![GitHub Settings tab](../Images/remote-prs-settings-github.png)
 
@@ -221,6 +221,18 @@ TermQ removes each selected worktree using `git worktree remove`. Dirty or ahead
 **Focus worktrees** lists the ephemeral worktrees created for non-checked-out PR sessions. These are safe to remove at any time — they contain no user commits. All focus worktrees are checked by default.
 
 ---
+
+## 15.9 — Attention: reviews waiting on you
+
+The Remote feed is per repository, so a review requested in a repository you rarely open is easy to miss. **Attention**, the third segment of the toggle, lists every open pull request where you're a requested reviewer, across all of GitHub, in one list.
+
+![Attention](../Images/remote-prs-attention.png)
+
+- It's grouped by how long you've been waiting since the review was asked for — **Today**, **This week**, **This month**, **Older** — longest wait first. (Where GitHub can't say when you were asked, such as in an organisation enforcing SAML, the PR's opening date is used.)
+- Requests to a team you're in count too.
+- Each row shows the repository, number and title, author, and how long it has waited. Click it to open the pull request in your browser; right-click to copy its link.
+- **Only TermQ's repositories** limits the list to repositories you've added to the sidebar.
+- It refreshes when you open it, every five minutes while it's showing, and with the sidebar's refresh button. It shows the first 100 requests, and says so when there are more.
 
 ## What you learned
 

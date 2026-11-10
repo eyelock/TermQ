@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Paramètres";
 "settings.tab.general" = "Général";
-"settings.tab.tools" = "Outils";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Marchés";
+"settings.tab.git.and.stacks" = "Git et empilement";
+"settings.tab.integrations" = "Intégrations";
 "settings.marketplaces.section.list" = "Marchés configurés";
 "settings.marketplaces.empty" = "Aucun marché ajouté pour l'instant.";
 "settings.marketplaces.add" = "Ajouter un marché…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "Focus Wheelhouse : masquer tout sauf ce Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Amener sur la scène";
 "wheelhouse.take.off.stage" = "Retirer de la scène";
+"wheelhouse.zoom.terminal" = "Zoomer sur le terminal";
+"wheelhouse.exit.zoom" = "Quitter le zoom";
+"wheelhouse.smart.close.help" = "Fermer : un poste encore en cours d’exécution quitte la scène et continue de tourner ; un poste arrêté est fermé";
+"wheelhouse.show.quick.terminals" = "Afficher les terminaux rapides";
+"wheelhouse.hide.quick.terminals" = "Masquer les terminaux rapides";
+"wheelhouse.install" = "Installer";
+"wheelhouse.needs.first %@ %@" = "%1$@ (nécessite d'abord %2$@)";
+"wheelhouse.action.required" = "Action requise";
+"wheelhouse.action.required.help" = "Cliquez sur le poste pour voir comment résoudre le problème.";
+"wheelhouse.fix.title %@" = "%@ requiert votre attention";
+"wheelhouse.fix.all.clear" = "Plus rien n’empêche ce poste de démarrer.";
+"wheelhouse.issue.not.installed" = "Non installé";
+"wheelhouse.issue.not.installed.detail %@" = "ynh ne connaît aucun harness nommé %@. Installez-le depuis le dossier du poste dans le Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Délégués non commités : %@";
+"wheelhouse.issue.not.committed.detail" = "ynh lit ces délégués depuis git ; ce poste ne peut donc pas démarrer tant qu’ils ne sont pas commités.";
+"wheelhouse.issue.missing %@" = "Délégués manquants : %@";
+"wheelhouse.issue.missing.detail" = "Le harness du poste nomme des dossiers de délégués qui n’existent pas dans le Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Dernier lancement échoué";
+"wheelhouse.copy.commit.command" = "Copier la commande de commit";
+"wheelhouse.try.again" = "Réessayer";
+"wheelhouse.open.anyway" = "Ouvrir quand même";
 "wheelhouse.needs.you" = "Vous attend";
 "wheelhouse.nobody.waiting" = "personne n’attend";
 "wheelhouse.more.waiting %ld" = "+%ld de plus";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "Lancer avec focus";
 "settings.wheelhouse.enable.tab" = "Afficher l’onglet Wheelhouses dans la barre latérale";
 "settings.wheelhouse.enable.tab.help" = "Ajoute un onglet Wheelhouses listant les postes de chaque Wheelhouse de vos dépôts";
+"settings.wheelhouse.quick.terminal.placement" = "Emplacement du terminal rapide";
+"settings.wheelhouse.quick.terminal.placement.help" = "Sur la scène : chaque terminal rapide prend sa propre place sur la scène. Partagé : les terminaux rapides d’un poste s’ouvrent dans un panneau sous le poste.";
+"settings.wheelhouse.placement.staged" = "Sur la scène";
+"settings.wheelhouse.placement.split" = "Partagé";
 "settings.wheelhouse.inbox.human.name" = "Nom de boîte de réception pour tout humain";
 "settings.wheelhouse.inbox.human.name.help" = "Le nom auquel un Wheelhouse assigne des beads lorsque n’importe quel humain peut s’en occuper. Les beads prêts pour ce nom apparaissent dans votre boîte de réception.";
 "settings.wheelhouse.inbox.own.name" = "Votre propre nom de boîte de réception";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Tous";
 "wheelhouse.inbox.filter.help %@" = "Afficher uniquement les beads de type %@";
 "wheelhouse.inbox.sent.to %@" = "envoyé à %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Attention";
+"actions.termq.only" = "Uniquement les dépôts de TermQ";
+"actions.empty" = "Aucune PR n'attend votre revue.";
+"actions.load.failed %@" = "Impossible de charger vos demandes de revue : %@";
+"actions.draft" = "Brouillon";
+"actions.copy.link" = "Copier le lien";
+"actions.truncated %ld" = "Affichage des %ld premiers ; certains peuvent manquer.";
+"actions.wait.today" = "Aujourd'hui";
+"actions.wait.this.week" = "Cette semaine";
+"actions.wait.this.month" = "Ce mois-ci";
+"actions.wait.older" = "Plus anciennes";

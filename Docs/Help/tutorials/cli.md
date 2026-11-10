@@ -6,7 +6,7 @@ Everything you can do in the TermQ UI, you can also do from the shell with `term
 
 ## 8.1 — Install the CLI
 
-Open **Settings** (⌘,) and go to the **Tools** tab. Click **Install Command Line Tool**.
+Open **Settings** (⌘,) and go to the **Integrations** section. Click **Install Command Line Tool**.
 
 ![Settings Tools Tab](../Images/settings-tools-tab.png)
 

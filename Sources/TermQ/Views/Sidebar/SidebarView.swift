@@ -51,8 +51,9 @@ struct SidebarView: View {
     }
 
     private var showHarnessesTab: Bool {
-        guard harnessTabEnabled else { return false }
-        return detector.status != .missing
+        SidebarTab.harnesses.isAvailable(
+            harnessTabEnabled: harnessTabEnabled, ynhMissing: detector.status == .missing,
+            wheelhouseTabEnabled: wheelhouseTabEnabled)
     }
 
     @ObservedObject private var wheelhouseStage: WheelhouseStage = .shared
@@ -64,12 +65,10 @@ struct SidebarView: View {
 
     /// Tabs shown in the picker, in order, for the enabled features.
     private var visibleTabs: [SidebarTab] {
-        SidebarTab.allCases.filter { tab in
-            switch tab {
-            case .repositories: return true
-            case .harnesses, .marketplaces: return showHarnessesTab
-            case .wheelhouses: return wheelhouseTabEnabled
-            }
+        SidebarTab.allCases.filter {
+            $0.isAvailable(
+                harnessTabEnabled: harnessTabEnabled, ynhMissing: detector.status == .missing,
+                wheelhouseTabEnabled: wheelhouseTabEnabled)
         }
     }
 
@@ -182,7 +181,7 @@ struct SidebarView: View {
                 }
                 .buttonStyle(.plain)
                 .foregroundColor(sidebarState.selectedTab == tab ? .accentColor : .secondary)
-                .help(tab.label)
+                .help("\(tab.menuTitle) (⌃⌘\(tab.shortcutKey.uppercased()))")
                 .background(
                     sidebarState.selectedTab == tab
                         ? Color.accentColor.opacity(0.12)

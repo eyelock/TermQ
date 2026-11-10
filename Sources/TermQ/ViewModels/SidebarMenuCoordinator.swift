@@ -35,8 +35,7 @@ final class SidebarMenuCoordinator: ObservableObject {
     func request(_ request: Request, on tab: SidebarTab) {
         // Ensure the sidebar is visible so the owning tab view is mounted to
         // consume the request (mirrors ContentView's @AppStorage key).
-        UserDefaults.standard.set(false, forKey: SidebarState.sidebarCollapsedKey)
-        SidebarState.shared.selectedTab = tab
+        SidebarState.shared.reveal(tab)
         pending = request
     }
 

@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Postavke";
 "settings.tab.general" = "Općenito";
-"settings.tab.tools" = "Alati";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Tržišta";
+"settings.tab.git.and.stacks" = "Git i slaganje";
+"settings.tab.integrations" = "Integracije";
 "settings.marketplaces.section.list" = "Konfigurirana tržišta";
 "settings.marketplaces.empty" = "Još nisu dodana tržišta.";
 "settings.marketplaces.add" = "Dodaj tržište…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "Wheelhouse fokus: sakrij sve osim ovog Wheelhousea (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Dovedi na pozornicu";
 "wheelhouse.take.off.stage" = "Skini s pozornice";
+"wheelhouse.zoom.terminal" = "Zumiraj terminal";
+"wheelhouse.exit.zoom" = "Izađi iz zumiranja";
+"wheelhouse.smart.close.help" = "Zatvori: mjesto koje još radi napušta pozornicu i nastavlja raditi; zaustavljeno se zatvara";
+"wheelhouse.show.quick.terminals" = "Prikaži brze terminale";
+"wheelhouse.hide.quick.terminals" = "Sakrij brze terminale";
+"wheelhouse.install" = "Instaliraj";
+"wheelhouse.needs.first %@ %@" = "%1$@ (prvo treba: %2$@)";
+"wheelhouse.action.required" = "Potrebna radnja";
+"wheelhouse.action.required.help" = "Klikni na mjesto da vidiš kako to popraviti.";
+"wheelhouse.fix.title %@" = "%@ treba pažnju";
+"wheelhouse.fix.all.clear" = "Ništa više ne sprječava ovo mjesto.";
+"wheelhouse.issue.not.installed" = "Nije instalirano";
+"wheelhouse.issue.not.installed.detail %@" = "ynh nema harness pod imenom %@. Instaliraj ga iz mape mjesta u Wheelhouseu.";
+"wheelhouse.issue.not.committed %@" = "Delegati bez commita: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh čita ove delegate iz gita, pa ovo mjesto ne može započeti dok se ne commitaju.";
+"wheelhouse.issue.missing %@" = "Nedostaju delegati: %@";
+"wheelhouse.issue.missing.detail" = "Harness mjesta navodi mape delegata koje ne postoje u Wheelhouseu.";
+"wheelhouse.issue.launch.failed" = "Zadnje pokretanje nije uspjelo";
+"wheelhouse.copy.commit.command" = "Kopiraj naredbu commit";
+"wheelhouse.try.again" = "Pokušaj ponovno";
+"wheelhouse.open.anyway" = "Ipak otvori";
 "wheelhouse.needs.you" = "Treba te";
 "wheelhouse.nobody.waiting" = "nitko ne čeka";
 "wheelhouse.more.waiting %ld" = "još +%ld";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "Pokreni s fokusom";
 "settings.wheelhouse.enable.tab" = "Prikaži karticu Wheelhouses u bočnoj traci";
 "settings.wheelhouse.enable.tab.help" = "Dodaje karticu Wheelhouses koja navodi mjesta svakog Wheelhousea u tvojim repozitorijima";
+"settings.wheelhouse.quick.terminal.placement" = "Položaj brzog terminala";
+"settings.wheelhouse.quick.terminal.placement.help" = "Na pozornici: svaki brzi terminal zauzima vlastito mjesto na pozornici. Podijeljeno: brzi terminali mjesta otvaraju se u ploči ispod mjesta.";
+"settings.wheelhouse.placement.staged" = "Na pozornici";
+"settings.wheelhouse.placement.split" = "Podijeljeno";
 "settings.wheelhouse.inbox.human.name" = "Naziv pristigle pošte za bilo kojeg čovjeka";
 "settings.wheelhouse.inbox.human.name.help" = "Naziv kojem Wheelhouse dodjeljuje beadove kad ih može preuzeti bilo koji čovjek. Spremni beadovi za taj naziv pojavljuju se u tvojoj pristiglоj pošti.";
 "settings.wheelhouse.inbox.own.name" = "Tvoj vlastiti naziv pristigle pošte";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Sve";
 "wheelhouse.inbox.filter.help %@" = "Prikaži samo beadove vrste %@";
 "wheelhouse.inbox.sent.to %@" = "poslano: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "PaÅ¾nja";
+"actions.termq.only" = "Samo TermQ repozitoriji";
+"actions.empty" = "Nijedan PR ne čeka vaš pregled.";
+"actions.load.failed %@" = "Nije moguće učitati vaše zahtjeve za pregled: %@";
+"actions.draft" = "Nacrt";
+"actions.copy.link" = "Kopiraj poveznicu";
+"actions.truncated %ld" = "Prikazano je prvih %ld; neki možda nedostaju.";
+"actions.wait.today" = "Danas";
+"actions.wait.this.week" = "Ovaj tjedan";
+"actions.wait.this.month" = "Ovaj mjesec";
+"actions.wait.older" = "Starije";

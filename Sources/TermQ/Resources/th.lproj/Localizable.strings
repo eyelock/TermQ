@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "การตั้งค่า";
 "settings.tab.general" = "ทั่วไป";
-"settings.tab.tools" = "เครื่องมือ";
 
 // Settings - Terminal section
 "settings.section.terminal" = "เทอร์มินัล";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "มาร์เก็ตเพลส";
+"settings.tab.git.and.stacks" = "Git และการทำสแต็ก";
+"settings.tab.integrations" = "การเชื่อมต่อ";
 "settings.marketplaces.section.list" = "มาร์เก็ตเพลสที่กำหนดค่าไว้";
 "settings.marketplaces.empty" = "ยังไม่มีมาร์เก็ตเพลสที่เพิ่มไว้";
 "settings.marketplaces.add" = "เพิ่มมาร์เก็ตเพลส…";
@@ -1602,6 +1603,27 @@
 "wheelhouse.focus.help" = "โฟกัส Wheelhouse: ซ่อนทุกอย่างยกเว้น Wheelhouse นี้ (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "นำขึ้นเวที";
 "wheelhouse.take.off.stage" = "นำลงจากเวที";
+"wheelhouse.zoom.terminal" = "ซูมเทอร์มินัล";
+"wheelhouse.exit.zoom" = "ออกจากโหมดซูม";
+"wheelhouse.smart.close.help" = "ปิด: ที่นั่งที่ยังทำงานอยู่จะออกจากเวทีและทำงานต่อไป ส่วนที่นั่งที่หยุดแล้วจะถูกปิด";
+"wheelhouse.show.quick.terminals" = "แสดงเทอร์มินัลด่วน";
+"wheelhouse.hide.quick.terminals" = "ซ่อนเทอร์มินัลด่วน";
+"wheelhouse.install" = "ติดตั้ง";
+"wheelhouse.needs.first %@ %@" = "%1$@ (ต้องมี %2$@ ก่อน)";
+"wheelhouse.action.required" = "ต้องดำเนินการ";
+"wheelhouse.action.required.help" = "คลิกที่ที่นั่งเพื่อดูวิธีแก้ไข";
+"wheelhouse.fix.title %@" = "%@ ต้องการความสนใจ";
+"wheelhouse.fix.all.clear" = "ตอนนี้ไม่มีอะไรขัดขวางที่นั่งนี้แล้ว";
+"wheelhouse.issue.not.installed" = "ยังไม่ได้ติดตั้ง";
+"wheelhouse.issue.not.installed.detail %@" = "ynh ไม่มี Harness ชื่อ %@ ติดตั้งจากโฟลเดอร์ของที่นั่งใน Wheelhouse";
+"wheelhouse.issue.not.committed %@" = "ผู้แทนที่ยังไม่ได้คอมมิต: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh อ่านผู้แทนเหล่านี้จาก git ที่นั่งนี้จึงเริ่มไม่ได้จนกว่าจะคอมมิต";
+"wheelhouse.issue.missing %@" = "ผู้แทนที่หายไป: %@";
+"wheelhouse.issue.missing.detail" = "Harness ของที่นั่งระบุโฟลเดอร์ผู้แทนที่ไม่มีอยู่ใน Wheelhouse";
+"wheelhouse.issue.launch.failed" = "การเปิดใช้งานครั้งล่าสุดล้มเหลว";
+"wheelhouse.copy.commit.command" = "คัดลอกคำสั่งคอมมิต";
+"wheelhouse.try.again" = "ลองอีกครั้ง";
+"wheelhouse.open.anyway" = "เปิดต่อไป";
 "wheelhouse.needs.you" = "ต้องการคุณ";
 "wheelhouse.nobody.waiting" = "ไม่มีใครรอ";
 "wheelhouse.more.waiting %ld" = "อีก +%ld";
@@ -1618,6 +1640,10 @@
 "wheelhouse.action.launch.focus" = "เปิดใช้งานพร้อมโฟกัส";
 "settings.wheelhouse.enable.tab" = "แสดงแท็บ Wheelhouses ในแถบด้านข้าง";
 "settings.wheelhouse.enable.tab.help" = "เพิ่มแท็บ Wheelhouses ที่แสดงรายการที่นั่งของทุก Wheelhouse ในที่เก็บของคุณ";
+"settings.wheelhouse.quick.terminal.placement" = "ตำแหน่งเทอร์มินัลด่วน";
+"settings.wheelhouse.quick.terminal.placement.help" = "บนเวที: เทอร์มินัลด่วนแต่ละตัวมีตำแหน่งของตัวเองบนเวที แยกส่วน: เทอร์มินัลด่วนของที่นั่งจะเปิดในแผงใต้ที่นั่งนั้น";
+"settings.wheelhouse.placement.staged" = "บนเวที";
+"settings.wheelhouse.placement.split" = "แยกส่วน";
 "settings.wheelhouse.inbox.human.name" = "ชื่อกล่องจดหมายเข้าสำหรับมนุษย์คนใดก็ได้";
 "settings.wheelhouse.inbox.human.name.help" = "ชื่อที่ Wheelhouse มอบหมาย bead ให้เมื่อมนุษย์คนใดก็ได้สามารถดำเนินการได้ bead ที่พร้อมสำหรับชื่อนี้จะแสดงในกล่องจดหมายเข้าของคุณ";
 "settings.wheelhouse.inbox.own.name" = "ชื่อกล่องจดหมายเข้าของคุณเอง";
@@ -1649,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "ทั้งหมด";
 "wheelhouse.inbox.filter.help %@" = "แสดงเฉพาะ bead ประเภท %@";
 "wheelhouse.inbox.sent.to %@" = "ส่งให้ %@ แล้ว";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "à¸à¹à¸­à¸à¸à¸£à¸§à¸à¸ªà¸­à¸";
+"actions.termq.only" = "เฉพาะที่เก็บของ TermQ";
+"actions.empty" = "ไม่มี PR ที่รอการตรวจสอบจากคุณ";
+"actions.load.failed %@" = "ไม่สามารถโหลดคำขอตรวจสอบของคุณได้: %@";
+"actions.draft" = "ร่าง";
+"actions.copy.link" = "คัดลอกลิงก์";
+"actions.truncated %ld" = "แสดง %ld รายการแรก; บางรายการอาจขาดหายไป";
+"actions.wait.today" = "วันนี้";
+"actions.wait.this.week" = "สัปดาห์นี้";
+"actions.wait.this.month" = "เดือนนี้";
+"actions.wait.older" = "เก่ากว่า";

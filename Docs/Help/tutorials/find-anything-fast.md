@@ -64,6 +64,7 @@ The new terminal inherits the working directory, so you land in the right place 
 - **⌘F** searches the terminal's scrollback buffer — useful for finding output you've already seen
 - **⌘K** opens the command palette — the fastest way to jump to a terminal or trigger an action
 - **⌘T** creates a new terminal in the same column and working directory as the current one
+- On the Wheelhouse stage, **⌘T**, **⌘⌥Z** and **⌘1**–**⌘9** act on seats instead — see [Wheelhouses](wheelhouses.md)
 
 ## Next
 

@@ -1,4 +1,5 @@
 import Foundation
+import TermQShared
 
 extension Strings {
     enum RemotePRs {
@@ -115,5 +116,28 @@ extension Strings {
         static var pruneRemove: String { localized("remote.prs.prune.remove") }
         static var pruneReasonDirty: String { localized("remote.prs.prune.reason.dirty") }
         static var pruneReasonAhead: String { localized("remote.prs.prune.reason.ahead") }
+    }
+}
+
+// MARK: - Actions (reviews waiting on the human)
+
+extension Strings {
+    enum Actions {
+        static var mode: String { localized("actions.mode") }
+        static var termqOnly: String { localized("actions.termq.only") }
+        static var empty: String { localized("actions.empty") }
+        static func loadFailed(_ reason: String) -> String { localized("actions.load.failed %@", reason) }
+        static var draft: String { localized("actions.draft") }
+        static var copyLink: String { localized("actions.copy.link") }
+        static func truncated(_ limit: Int) -> String { localized("actions.truncated %ld", limit) }
+
+        static func waitTitle(_ wait: ReviewWait) -> String {
+            switch wait {
+            case .today: return localized("actions.wait.today")
+            case .thisWeek: return localized("actions.wait.this.week")
+            case .thisMonth: return localized("actions.wait.this.month")
+            case .older: return localized("actions.wait.older")
+            }
+        }
     }
 }

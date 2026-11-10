@@ -173,12 +173,35 @@ final class HarnessLaunchCoordinator {
                 // Not running: start it with the focus this once, then put the
                 // card's own command back so later opens don't repeat it.
                 startOnce(existing, with: config)
+            } else if running {
+                // The shell may have outlived the harness: open the seat, not
+                // a bare prompt.
+                relaunchIfHarnessExited(existing, seat: seat, in: wheelhouse)
             }
             boardViewModel.selectCard(existing)
             return existing.id
         }
         launchHarness(config)
         return seatCard(seat, in: wheelhouse)?.id
+    }
+
+    /// A seat card whose shell is up but whose harness has exited is closed
+    /// out and the seat launched again, so opening it gives the seat. Nothing
+    /// happens if the human has moved to another pane meanwhile.
+    private func relaunchIfHarnessExited(_ card: TerminalCard, seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+        Task { @MainActor in
+            let stage = WheelhouseStage.shared
+            let closed = await stage.closeOutIfIdle(card, probe: TerminalSessionManager.shared) { stale in
+                guard stage.focused == stale.id else { return }
+                stage.closeOut(stale, board: boardViewModel)
+            }
+            guard closed, card.deletedAt != nil else { return }
+            launchHarness(seatLaunchConfig(seat, in: wheelhouse, focus: nil, prompt: nil), reuseExisting: false)
+            if let fresh = seatCard(seat, in: wheelhouse) {
+                stage.show(fresh.id)
+                boardViewModel.selectCard(fresh)
+            }
+        }
     }
 
     private func seatLaunchConfig(
@@ -276,10 +299,12 @@ final class HarnessLaunchCoordinator {
         case .harnessDetails:
             showHarnessDetails(for: seat, in: wheelhouse)
             return nil
+        case .install:
+            // Run by ContentView, which owns the install progress sheet.
+            return nil
         case .closeTerminal:
             guard let card = seatCard(seat, in: wheelhouse) else { return nil }
-            boardViewModel.killSession(for: card)
-            boardViewModel.deleteTabCard(card)
+            WheelhouseStage.shared.smartClose(card, board: boardViewModel)
             return card.id
         case .quickTerminal:
             return openQuickTerminal(for: seat, in: wheelhouse)

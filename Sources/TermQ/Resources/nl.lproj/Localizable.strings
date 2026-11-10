@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Instellingen";
 "settings.tab.general" = "Algemeen";
-"settings.tab.tools" = "Hulpmiddelen";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Marktplaatsen";
+"settings.tab.git.and.stacks" = "Git & stapelen";
+"settings.tab.integrations" = "Integraties";
 "settings.marketplaces.section.list" = "Geconfigureerde marktplaatsen";
 "settings.marketplaces.empty" = "Nog geen marktplaatsen toegevoegd.";
 "settings.marketplaces.add" = "Marktplaats toevoegen…";
@@ -1600,6 +1601,27 @@
 "wheelhouse.focus.help" = "Wheelhouse-focus: verberg alles behalve dit Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Op het podium brengen";
 "wheelhouse.take.off.stage" = "Van het podium halen";
+"wheelhouse.zoom.terminal" = "Terminal zoomen";
+"wheelhouse.exit.zoom" = "Zoom verlaten";
+"wheelhouse.smart.close.help" = "Sluiten: een plek die nog draait verlaat het podium en blijft draaien; een gestopte plek wordt gesloten";
+"wheelhouse.show.quick.terminals" = "Snelle terminals tonen";
+"wheelhouse.hide.quick.terminals" = "Snelle terminals verbergen";
+"wheelhouse.install" = "Installeren";
+"wheelhouse.needs.first %@ %@" = "%1$@ (heeft eerst %2$@ nodig)";
+"wheelhouse.action.required" = "Actie vereist";
+"wheelhouse.action.required.help" = "Klik op de plek om te zien hoe je dit oplost.";
+"wheelhouse.fix.title %@" = "%@ heeft aandacht nodig";
+"wheelhouse.fix.all.clear" = "Niets houdt deze plek nu nog tegen.";
+"wheelhouse.issue.not.installed" = "Niet geïnstalleerd";
+"wheelhouse.issue.not.installed.detail %@" = "ynh heeft geen harness met de naam %@. Installeer het vanuit de map van de plek in de Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Gedelegeerden niet gecommit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh leest deze gedelegeerden uit git, dus deze plek kan pas starten als ze gecommit zijn.";
+"wheelhouse.issue.missing %@" = "Gedelegeerden ontbreken: %@";
+"wheelhouse.issue.missing.detail" = "Het harness van de plek noemt gedelegeerdenmappen die niet in de Wheelhouse bestaan.";
+"wheelhouse.issue.launch.failed" = "Laatste start mislukt";
+"wheelhouse.copy.commit.command" = "Commit-opdracht kopiëren";
+"wheelhouse.try.again" = "Opnieuw proberen";
+"wheelhouse.open.anyway" = "Toch openen";
 "wheelhouse.needs.you" = "Heeft je nodig";
 "wheelhouse.nobody.waiting" = "niemand wacht";
 "wheelhouse.more.waiting %ld" = "+%ld meer";
@@ -1616,6 +1638,10 @@
 "wheelhouse.action.launch.focus" = "Starten met focus";
 "settings.wheelhouse.enable.tab" = "Wheelhouses-tabblad in de navigatiekolom tonen";
 "settings.wheelhouse.enable.tab.help" = "Voegt een Wheelhouses-tabblad toe met de plekken van elk Wheelhouse in je repositories";
+"settings.wheelhouse.quick.terminal.placement" = "Plaatsing van snelle terminal";
+"settings.wheelhouse.quick.terminal.placement.help" = "Op het podium: elke snelle terminal krijgt een eigen plek op het podium. Gesplitst: de snelle terminals van een plek openen in een paneel onder de plek.";
+"settings.wheelhouse.placement.staged" = "Op het podium";
+"settings.wheelhouse.placement.split" = "Gesplitst";
 "settings.wheelhouse.inbox.human.name" = "Inboxnaam voor elk mens";
 "settings.wheelhouse.inbox.human.name.help" = "De naam waaraan een Wheelhouse beads toewijst wanneer elk mens ze kan oppakken. Klare beads voor deze naam verschijnen in je inbox.";
 "settings.wheelhouse.inbox.own.name" = "Je eigen inboxnaam";
@@ -1647,3 +1673,16 @@
 "wheelhouse.inbox.filter.all" = "Alle";
 "wheelhouse.inbox.filter.help %@" = "Alleen %@-beads tonen";
 "wheelhouse.inbox.sent.to %@" = "verzonden naar %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Aandacht";
+"actions.termq.only" = "Alleen TermQ-repositories";
+"actions.empty" = "Geen PR's wachten op jouw beoordeling.";
+"actions.load.failed %@" = "Kan je beoordelingsverzoeken niet laden: %@";
+"actions.draft" = "Concept";
+"actions.copy.link" = "Link kopiëren";
+"actions.truncated %ld" = "De eerste %ld worden getoond; sommige ontbreken mogelijk.";
+"actions.wait.today" = "Vandaag";
+"actions.wait.this.week" = "Deze week";
+"actions.wait.this.month" = "Deze maand";
+"actions.wait.older" = "Ouder";

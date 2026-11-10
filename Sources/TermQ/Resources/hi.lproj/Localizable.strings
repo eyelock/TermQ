@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "सेटिंग्स";
 "settings.tab.general" = "सामान्य";
-"settings.tab.tools" = "उपकरण";
 
 // Settings - Terminal section
 "settings.section.terminal" = "टर्मिनल";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "मार्केटप्लेस";
+"settings.tab.git.and.stacks" = "Git और स्टैकिंग";
+"settings.tab.integrations" = "इंटीग्रेशन";
 "settings.marketplaces.section.list" = "कॉन्फ़िगर किए गए मार्केटप्लेस";
 "settings.marketplaces.empty" = "अभी तक कोई मार्केटप्लेस नहीं जोड़ा गया।";
 "settings.marketplaces.add" = "मार्केटप्लेस जोड़ें…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "Wheelhouse फ़ोकस: इस Wheelhouse के अलावा सब कुछ छिपाएँ (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "मंच पर लाएँ";
 "wheelhouse.take.off.stage" = "मंच से हटाएँ";
+"wheelhouse.zoom.terminal" = "टर्मिनल ज़ूम करें";
+"wheelhouse.exit.zoom" = "ज़ूम से बाहर निकलें";
+"wheelhouse.smart.close.help" = "बंद करें: जो सीट अब भी चल रही है वह मंच से हट जाती है और चलती रहती है; जो रुक चुकी है उसे बंद कर दिया जाता है";
+"wheelhouse.show.quick.terminals" = "त्वरित टर्मिनल दिखाएँ";
+"wheelhouse.hide.quick.terminals" = "त्वरित टर्मिनल छिपाएँ";
+"wheelhouse.install" = "इंस्टॉल करें";
+"wheelhouse.needs.first %@ %@" = "%1$@ (पहले %2$@ आवश्यक)";
+"wheelhouse.action.required" = "कार्रवाई आवश्यक";
+"wheelhouse.action.required.help" = "इसे ठीक करने का तरीका देखने के लिए सीट पर क्लिक करें।";
+"wheelhouse.fix.title %@" = "%@ पर ध्यान देने की ज़रूरत है";
+"wheelhouse.fix.all.clear" = "अब इस सीट को कुछ भी नहीं रोक रहा है।";
+"wheelhouse.issue.not.installed" = "इंस्टॉल नहीं है";
+"wheelhouse.issue.not.installed.detail %@" = "ynh में %@ नाम का कोई Harness नहीं है। इसे Wheelhouse में सीट के फ़ोल्डर से इंस्टॉल करें।";
+"wheelhouse.issue.not.committed %@" = "प्रतिनिधि कमिट नहीं हुए: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh इन प्रतिनिधियों को git से पढ़ता है, इसलिए जब तक वे कमिट नहीं हो जाते, यह सीट शुरू नहीं हो सकती।";
+"wheelhouse.issue.missing %@" = "प्रतिनिधि गायब हैं: %@";
+"wheelhouse.issue.missing.detail" = "सीट का Harness ऐसे प्रतिनिधि फ़ोल्डरों का नाम देता है जो Wheelhouse में मौजूद नहीं हैं।";
+"wheelhouse.issue.launch.failed" = "पिछला लॉन्च विफल रहा";
+"wheelhouse.copy.commit.command" = "कमिट कमांड कॉपी करें";
+"wheelhouse.try.again" = "फिर कोशिश करें";
+"wheelhouse.open.anyway" = "फिर भी खोलें";
 "wheelhouse.needs.you" = "आपकी ज़रूरत है";
 "wheelhouse.nobody.waiting" = "कोई प्रतीक्षा में नहीं";
 "wheelhouse.more.waiting %ld" = "+%ld और";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "फ़ोकस के साथ लॉन्च करें";
 "settings.wheelhouse.enable.tab" = "Wheelhouses साइडबार टैब दिखाएँ";
 "settings.wheelhouse.enable.tab.help" = "एक Wheelhouses टैब जोड़ता है जो आपकी रिपॉज़िटरी के हर Wheelhouse की सीटें सूचीबद्ध करता है";
+"settings.wheelhouse.quick.terminal.placement" = "त्वरित टर्मिनल की स्थिति";
+"settings.wheelhouse.quick.terminal.placement.help" = "मंच पर: हर त्वरित टर्मिनल मंच पर अपनी जगह लेता है। विभाजित: किसी सीट के त्वरित टर्मिनल उस सीट के नीचे एक पैनल में खुलते हैं।";
+"settings.wheelhouse.placement.staged" = "मंच पर";
+"settings.wheelhouse.placement.split" = "विभाजित";
 "settings.wheelhouse.inbox.human.name" = "किसी भी व्यक्ति के लिए इनबॉक्स नाम";
 "settings.wheelhouse.inbox.human.name.help" = "वह नाम जिसे Wheelhouse bead सौंपता है जब कोई भी व्यक्ति उन्हें संभाल सकता है। इस नाम के लिए तैयार bead आपके इनबॉक्स में दिखाई देते हैं।";
 "settings.wheelhouse.inbox.own.name" = "आपका अपना इनबॉक्स नाम";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "सभी";
 "wheelhouse.inbox.filter.help %@" = "केवल %@ bead दिखाएँ";
 "wheelhouse.inbox.sent.to %@" = "%@ को भेजा गया";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "à¤§à¥à¤¯à¤¾à¤¨ à¤¦à¥à¤";
+"actions.termq.only" = "केवल TermQ की रिपॉजिटरी";
+"actions.empty" = "कोई PR आपकी समीक्षा की प्रतीक्षा में नहीं है।";
+"actions.load.failed %@" = "आपके समीक्षा अनुरोध लोड नहीं हो सके: %@";
+"actions.draft" = "मसौदा";
+"actions.copy.link" = "लिंक कॉपी करें";
+"actions.truncated %ld" = "पहले %ld दिखाए जा रहे हैं; कुछ छूट सकते हैं।";
+"actions.wait.today" = "आज";
+"actions.wait.this.week" = "इस सप्ताह";
+"actions.wait.this.month" = "इस महीने";
+"actions.wait.older" = "पुराने";

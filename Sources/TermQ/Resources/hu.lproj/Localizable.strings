@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "Beállítások";
 "settings.tab.general" = "Általános";
-"settings.tab.tools" = "Eszközök";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminál";
@@ -864,6 +863,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Piacterek";
+"settings.tab.git.and.stacks" = "Git és verem";
+"settings.tab.integrations" = "Integrációk";
 "settings.marketplaces.section.list" = "Beállított piacterek";
 "settings.marketplaces.empty" = "Még nem lett piactér hozzáadva.";
 "settings.marketplaces.add" = "Piactér hozzáadása…";
@@ -1601,6 +1602,27 @@
 "wheelhouse.focus.help" = "Wheelhouse-fókusz: minden elrejtése, kivéve ezt a Wheelhouse-t (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Színpadra hozás";
 "wheelhouse.take.off.stage" = "Levétel a színpadról";
+"wheelhouse.zoom.terminal" = "Terminál nagyítása";
+"wheelhouse.exit.zoom" = "Kilépés a nagyításból";
+"wheelhouse.smart.close.help" = "Bezárás: a még futó hely lekerül a színpadról, és tovább fut; a leállt hely bezárul";
+"wheelhouse.show.quick.terminals" = "Gyors terminálok megjelenítése";
+"wheelhouse.hide.quick.terminals" = "Gyors terminálok elrejtése";
+"wheelhouse.install" = "Telepítés";
+"wheelhouse.needs.first %@ %@" = "%1$@ (előbb ez kell: %2$@)";
+"wheelhouse.action.required" = "Művelet szükséges";
+"wheelhouse.action.required.help" = "Kattints a helyre, hogy lásd, hogyan javíthatod.";
+"wheelhouse.fix.title %@" = "A(z) %@ figyelmet igényel";
+"wheelhouse.fix.all.clear" = "Mostantól semmi sem akadályozza ezt a helyet.";
+"wheelhouse.issue.not.installed" = "Nincs telepítve";
+"wheelhouse.issue.not.installed.detail %@" = "Az ynh-nak nincs %@ nevű harnesse. Telepítsd a hely mappájából a Wheelhouse-ban.";
+"wheelhouse.issue.not.committed %@" = "Nem commitolt delegáltak: %@";
+"wheelhouse.issue.not.committed.detail" = "Az ynh ezeket a delegáltakat gitből olvassa, ezért ez a hely nem indulhat el, amíg nincsenek commitolva.";
+"wheelhouse.issue.missing %@" = "Hiányzó delegáltak: %@";
+"wheelhouse.issue.missing.detail" = "A hely harnesse olyan delegáltmappákat nevez meg, amelyek nem léteznek a Wheelhouse-ban.";
+"wheelhouse.issue.launch.failed" = "Az utolsó indítás sikertelen";
+"wheelhouse.copy.commit.command" = "Commit parancs másolása";
+"wheelhouse.try.again" = "Újrapróbálás";
+"wheelhouse.open.anyway" = "Megnyitás mégis";
 "wheelhouse.needs.you" = "Szüksége van rád";
 "wheelhouse.nobody.waiting" = "senki sem vár";
 "wheelhouse.more.waiting %ld" = "+%ld további";
@@ -1617,6 +1639,10 @@
 "wheelhouse.action.launch.focus" = "Indítás fókusszal";
 "settings.wheelhouse.enable.tab" = "Wheelhouse-ok oldalsáv-lapjának megjelenítése";
 "settings.wheelhouse.enable.tab.help" = "Hozzáad egy Wheelhouse-ok lapot, amely felsorolja a tárolóid minden Wheelhouse-ának helyeit";
+"settings.wheelhouse.quick.terminal.placement" = "Gyors terminál elhelyezése";
+"settings.wheelhouse.quick.terminal.placement.help" = "Színpadon: minden gyors terminál saját helyet kap a színpadon. Osztott: egy hely gyors termináljai a hely alatti panelen nyílnak meg.";
+"settings.wheelhouse.placement.staged" = "Színpadon";
+"settings.wheelhouse.placement.split" = "Osztott";
 "settings.wheelhouse.inbox.human.name" = "Postafiók neve bármely ember számára";
 "settings.wheelhouse.inbox.human.name.help" = "Az a név, amelyhez a Wheelhouse beadeket rendel, ha bármely ember elvégezheti őket. Az ehhez a névhez tartozó kész beadek megjelennek a postafiókodban.";
 "settings.wheelhouse.inbox.own.name" = "Saját postafiókneved";
@@ -1648,3 +1674,16 @@
 "wheelhouse.inbox.filter.all" = "Mind";
 "wheelhouse.inbox.filter.help %@" = "Csak a(z) %@ beadek megjelenítése";
 "wheelhouse.inbox.sent.to %@" = "elküldve: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Figyelem";
+"actions.termq.only" = "Csak a TermQ tárolói";
+"actions.empty" = "Nincs felülvizsgálatra váró PR.";
+"actions.load.failed %@" = "Nem sikerült betölteni a felülvizsgálati kéréseket: %@";
+"actions.draft" = "Vázlat";
+"actions.copy.link" = "Hivatkozás másolása";
+"actions.truncated %ld" = "Az első %ld látható; néhány hiányozhat.";
+"actions.wait.today" = "Ma";
+"actions.wait.this.week" = "Ezen a héten";
+"actions.wait.this.month" = "Ebben a hónapban";
+"actions.wait.older" = "Régebbi";

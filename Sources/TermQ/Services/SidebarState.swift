@@ -18,6 +18,27 @@ enum SidebarTab: String, CaseIterable, Sendable {
         }
     }
 
+    /// The letter that, with ⌃⌘, selects this tab: its name's first letter.
+    var shortcutKey: Character {
+        switch self {
+        case .repositories: return "r"
+        case .harnesses: return "h"
+        case .marketplaces: return "m"
+        case .wheelhouses: return "w"
+        }
+    }
+
+    /// Whether the tab is shown for the enabled features: Harnesses and
+    /// Marketplaces need the Harnesses tab on and ynh present, Wheelhouses its
+    /// own tab on.
+    func isAvailable(harnessTabEnabled: Bool, ynhMissing: Bool, wheelhouseTabEnabled: Bool) -> Bool {
+        switch self {
+        case .repositories: return true
+        case .harnesses, .marketplaces: return harnessTabEnabled && !ynhMissing
+        case .wheelhouses: return wheelhouseTabEnabled
+        }
+    }
+
     var label: String {
         switch self {
         case .repositories: return "Repositories"
@@ -37,9 +58,8 @@ enum SidebarTab: String, CaseIterable, Sendable {
 final class SidebarState: ObservableObject {
     static let shared = SidebarState()
 
-    /// UserDefaults key backing ContentView's sidebar-collapsed `@AppStorage`.
-    /// Exposed so `SidebarMenuCoordinator` can reveal the sidebar without
-    /// duplicating the raw string literal.
+    /// UserDefaults key backing ContentView's sidebar-collapsed `@AppStorage`,
+    /// written by `reveal(_:)` to show the sidebar.
     static let sidebarCollapsedKey = "sidebarCollapsed"
 
     private let defaults: UserDefaults
@@ -53,5 +73,12 @@ final class SidebarState: ObservableObject {
         self.defaults = defaults
         let raw = defaults.string(forKey: Self.selectedTabKey) ?? SidebarTab.repositories.rawValue
         self.selectedTab = SidebarTab(rawValue: raw) ?? .repositories
+    }
+
+    /// Selects `tab` and shows the sidebar if it was collapsed: what the
+    /// ⌃⌘R/H/M/W shortcuts do.
+    func reveal(_ tab: SidebarTab) {
+        defaults.set(false, forKey: Self.sidebarCollapsedKey)
+        selectedTab = tab
     }
 }

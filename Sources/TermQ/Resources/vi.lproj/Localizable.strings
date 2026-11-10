@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Cài đặt";
 "settings.tab.general" = "Chung";
-"settings.tab.tools" = "Công cụ";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Chợ ứng dụng";
+"settings.tab.git.and.stacks" = "Git & xếp chồng";
+"settings.tab.integrations" = "Tích hợp";
 "settings.marketplaces.section.list" = "Chợ ứng dụng đã cấu hình";
 "settings.marketplaces.empty" = "Chưa có chợ ứng dụng nào được thêm.";
 "settings.marketplaces.add" = "Thêm chợ ứng dụng…";
@@ -1603,6 +1604,27 @@
 "wheelhouse.focus.help" = "Tập trung Wheelhouse: ẩn mọi thứ trừ Wheelhouse này (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Đưa lên sân khấu";
 "wheelhouse.take.off.stage" = "Đưa xuống khỏi sân khấu";
+"wheelhouse.zoom.terminal" = "Phóng to terminal";
+"wheelhouse.exit.zoom" = "Thoát phóng to";
+"wheelhouse.smart.close.help" = "Đóng: ghế đang chạy sẽ rời sân khấu và tiếp tục chạy; ghế đã dừng sẽ bị đóng";
+"wheelhouse.show.quick.terminals" = "Hiện Terminal nhanh";
+"wheelhouse.hide.quick.terminals" = "Ẩn Terminal nhanh";
+"wheelhouse.install" = "Cài đặt";
+"wheelhouse.needs.first %@ %@" = "%1$@ (cần %2$@ trước)";
+"wheelhouse.action.required" = "Cần thao tác";
+"wheelhouse.action.required.help" = "Nhấp vào ghế để xem cách khắc phục.";
+"wheelhouse.fix.title %@" = "%@ cần được chú ý";
+"wheelhouse.fix.all.clear" = "Hiện không còn gì ngăn ghế này chạy.";
+"wheelhouse.issue.not.installed" = "Chưa cài đặt";
+"wheelhouse.issue.not.installed.detail %@" = "ynh không có harness nào tên %@. Hãy cài đặt từ thư mục của ghế trong Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Đại diện chưa được commit: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh đọc các đại diện này từ git, nên ghế này không thể khởi động cho đến khi chúng được commit.";
+"wheelhouse.issue.missing %@" = "Thiếu đại diện: %@";
+"wheelhouse.issue.missing.detail" = "Harness của ghế nêu tên các thư mục đại diện không tồn tại trong Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Lần khởi chạy gần nhất thất bại";
+"wheelhouse.copy.commit.command" = "Sao chép lệnh commit";
+"wheelhouse.try.again" = "Thử lại";
+"wheelhouse.open.anyway" = "Vẫn mở";
 "wheelhouse.needs.you" = "Cần bạn";
 "wheelhouse.nobody.waiting" = "không ai đang chờ";
 "wheelhouse.more.waiting %ld" = "+%ld nữa";
@@ -1619,6 +1641,10 @@
 "wheelhouse.action.launch.focus" = "Khởi chạy với tập trung";
 "settings.wheelhouse.enable.tab" = "Hiện tab Wheelhouse trên thanh bên";
 "settings.wheelhouse.enable.tab.help" = "Thêm tab Wheelhouse liệt kê các ghế của mọi Wheelhouse trong kho lưu trữ của bạn";
+"settings.wheelhouse.quick.terminal.placement" = "Vị trí Terminal nhanh";
+"settings.wheelhouse.quick.terminal.placement.help" = "Trên sân khấu: mỗi Terminal nhanh chiếm một vị trí riêng trên sân khấu. Chia đôi: các Terminal nhanh của một ghế mở trong bảng bên dưới ghế đó.";
+"settings.wheelhouse.placement.staged" = "Trên sân khấu";
+"settings.wheelhouse.placement.split" = "Chia đôi";
 "settings.wheelhouse.inbox.human.name" = "Tên hộp thư đến cho bất kỳ người nào";
 "settings.wheelhouse.inbox.human.name.help" = "Tên mà Wheelhouse giao bead khi bất kỳ người nào cũng có thể xử lý. Các bead sẵn sàng cho tên này xuất hiện trong hộp thư đến của bạn.";
 "settings.wheelhouse.inbox.own.name" = "Tên hộp thư đến riêng của bạn";
@@ -1650,3 +1676,16 @@
 "wheelhouse.inbox.filter.all" = "Tất cả";
 "wheelhouse.inbox.filter.help %@" = "Chỉ hiện bead loại %@";
 "wheelhouse.inbox.sent.to %@" = "đã gửi cho %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "ChÃº Ã½";
+"actions.termq.only" = "Chỉ kho của TermQ";
+"actions.empty" = "Không có PR nào đang chờ bạn xem xét.";
+"actions.load.failed %@" = "Không thể tải các yêu cầu xem xét của bạn: %@";
+"actions.draft" = "Bản nháp";
+"actions.copy.link" = "Sao chép liên kết";
+"actions.truncated %ld" = "Đang hiển thị %ld mục đầu tiên; một số mục có thể bị thiếu.";
+"actions.wait.today" = "Hôm nay";
+"actions.wait.this.week" = "Tuần này";
+"actions.wait.this.month" = "Tháng này";
+"actions.wait.older" = "Cũ hơn";

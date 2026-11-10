@@ -149,7 +149,7 @@ final class LocalizationTests: XCTestCase {
             "common.ok",
             "common.cancel",
             "settings.tab.general",
-            "settings.tab.tools",
+            "settings.tab.integrations",
             "settings.tab.data.and.security",
             "board.column.add.terminal",
         ]
@@ -187,7 +187,8 @@ final class LocalizationTests: XCTestCase {
 
         // These are the keys that were showing as untranslated in the bug
         XCTAssertEqual(dict["settings.tab.general"], "Generelt", "Danish translation for settings.tab.general")
-        XCTAssertEqual(dict["settings.tab.tools"], "Værktøjer", "Danish translation for settings.tab.tools")
+        XCTAssertEqual(
+            dict["settings.tab.integrations"], "Integrationer", "Danish translation for settings.tab.integrations")
         XCTAssertEqual(
             dict["settings.tab.data.and.security"], "Data og sikkerhed",
             "Danish translation for settings.tab.data.and.security")

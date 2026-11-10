@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Inställningar";
 "settings.tab.general" = "Allmänt";
-"settings.tab.tools" = "Verktyg";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Marknadsplatser";
+"settings.tab.git.and.stacks" = "Git och stapling";
+"settings.tab.integrations" = "Integrationer";
 "settings.marketplaces.section.list" = "Konfigurerade marknadsplatser";
 "settings.marketplaces.empty" = "Inga marknadsplatser har lagts till ännu.";
 "settings.marketplaces.add" = "Lägg till marknadsplats…";
@@ -1602,6 +1603,27 @@
 "wheelhouse.focus.help" = "Wheelhouse-fokus: dölj allt utom detta Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Ta upp på scenen";
 "wheelhouse.take.off.stage" = "Ta bort från scenen";
+"wheelhouse.zoom.terminal" = "Zooma terminal";
+"wheelhouse.exit.zoom" = "Avsluta zoom";
+"wheelhouse.smart.close.help" = "Stäng: en plats som fortfarande körs lämnar scenen och fortsätter köra; en som har stoppat stängs";
+"wheelhouse.show.quick.terminals" = "Visa snabbterminaler";
+"wheelhouse.hide.quick.terminals" = "Dölj snabbterminaler";
+"wheelhouse.install" = "Installera";
+"wheelhouse.needs.first %@ %@" = "%1$@ (kräver %2$@ först)";
+"wheelhouse.action.required" = "Åtgärd krävs";
+"wheelhouse.action.required.help" = "Klicka på platsen för att se hur du åtgärdar det.";
+"wheelhouse.fix.title %@" = "%@ behöver uppmärksamhet";
+"wheelhouse.fix.all.clear" = "Inget hindrar den här platsen längre.";
+"wheelhouse.issue.not.installed" = "Inte installerat";
+"wheelhouse.issue.not.installed.detail %@" = "ynh har inget harness med namnet %@. Installera det från platsens mapp i Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Delegater som inte är committade: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh läser de här delegaterna från git, så den här platsen kan inte starta förrän de har committats.";
+"wheelhouse.issue.missing %@" = "Delegater saknas: %@";
+"wheelhouse.issue.missing.detail" = "Platsens harness anger delegatmappar som inte finns i Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Senaste start misslyckades";
+"wheelhouse.copy.commit.command" = "Kopiera commit-kommando";
+"wheelhouse.try.again" = "Försök igen";
+"wheelhouse.open.anyway" = "Öppna ändå";
 "wheelhouse.needs.you" = "Behöver dig";
 "wheelhouse.nobody.waiting" = "ingen väntar";
 "wheelhouse.more.waiting %ld" = "+%ld till";
@@ -1618,6 +1640,10 @@
 "wheelhouse.action.launch.focus" = "Starta med fokus";
 "settings.wheelhouse.enable.tab" = "Visa fliken Wheelhouses i sidofältet";
 "settings.wheelhouse.enable.tab.help" = "Lägger till en Wheelhouses-flik som listar platserna i varje Wheelhouse i dina repositories";
+"settings.wheelhouse.quick.terminal.placement" = "Placering av snabbterminal";
+"settings.wheelhouse.quick.terminal.placement.help" = "På scenen: varje snabbterminal får en egen plats på scenen. Delad: snabbterminalerna för en plats öppnas i en panel under platsen.";
+"settings.wheelhouse.placement.staged" = "På scenen";
+"settings.wheelhouse.placement.split" = "Delad";
 "settings.wheelhouse.inbox.human.name" = "Inkorgsnamn för vilken människa som helst";
 "settings.wheelhouse.inbox.human.name.help" = "Namnet som en Wheelhouse tilldelar beads till när vilken människa som helst kan ta sig an dem. Klara beads för detta namn visas i din inkorg.";
 "settings.wheelhouse.inbox.own.name" = "Ditt eget inkorgsnamn";
@@ -1649,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Alla";
 "wheelhouse.inbox.filter.help %@" = "Visa bara %@-beads";
 "wheelhouse.inbox.sent.to %@" = "skickad till %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "VÃ¤ntar";
+"actions.termq.only" = "Endast TermQ:s repositorier";
+"actions.empty" = "Inga PR väntar på din granskning.";
+"actions.load.failed %@" = "Det gick inte att läsa in dina granskningsförfrågningar: %@";
+"actions.draft" = "Utkast";
+"actions.copy.link" = "Kopiera länk";
+"actions.truncated %ld" = "Visar de första %ld; vissa kan saknas.";
+"actions.wait.today" = "Idag";
+"actions.wait.this.week" = "Den här veckan";
+"actions.wait.this.month" = "Den här månaden";
+"actions.wait.older" = "Äldre";

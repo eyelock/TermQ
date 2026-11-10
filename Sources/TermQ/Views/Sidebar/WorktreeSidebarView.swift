@@ -92,7 +92,13 @@ struct WorktreeSidebarView: View {
         VStack(spacing: 0) {
             header
             Divider()
-            if viewModel.displayedRepositories.isEmpty { emptyState } else { repoList }
+            if sidebarMode == .actions {
+                ReviewActionsView(repositoryPaths: viewModel.repositories.map(\.path))
+            } else if viewModel.displayedRepositories.isEmpty {
+                emptyState
+            } else {
+                repoList
+            }
         }
         .overlay(alignment: .bottom) {
             if let toast = pendingToast {
@@ -319,9 +325,13 @@ struct WorktreeSidebarView: View {
                 .help(Strings.Sidebar.addButtonHelp)
 
                 Button {
-                    viewModel.refresh()
+                    // Actions has no worktrees to rescan.
+                    if sidebarMode != .actions { viewModel.refresh() }
                     if sidebarMode == .remote {
                         Task { await prService.refreshAll(force: true) }
+                    }
+                    if sidebarMode == .actions, case .ready(let ghPath, let login) = ghProbe.status {
+                        ReviewRequestService.shared.refresh(ghPath: ghPath, login: login, force: true)
                     }
                 } label: {
                     Image(systemName: "arrow.clockwise")
@@ -337,10 +347,15 @@ struct WorktreeSidebarView: View {
                 Picker("", selection: $sidebarMode) {
                     Text(Strings.RemotePRs.modeLocal).tag(SidebarMode.local)
                     Text(Strings.RemotePRs.modeRemote).tag(SidebarMode.remote)
+                    Text(Strings.Actions.mode).tag(SidebarMode.actions)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal, 12)
                 .padding(.bottom, 8)
+                .onChange(of: ghProbe.status) { _, status in
+                    // Without gh the picker goes, so don't strand a gh-only mode.
+                    if status == .missing { sidebarMode = .local }
+                }
                 .onChange(of: sidebarMode) { _, newMode in
                     if newMode == .remote {
                         for repo in viewModel.repositories {
@@ -447,6 +462,9 @@ struct WorktreeSidebarView: View {
             localWorktreeContent(for: repo)
         case .remote:
             remoteWorktreeContent(for: repo)
+        case .actions:
+            // Actions replaces the repository list; no repo rows are built.
+            EmptyView()
         }
     }
 

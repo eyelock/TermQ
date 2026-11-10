@@ -517,7 +517,6 @@ enum Strings {
     enum Settings {
         static var title: String { localized("settings.title") }
         static var tabGeneral: String { localized("settings.tab.general") }
-        static var tabTools: String { localized("settings.tab.tools") }
         static var tabDataAndSecurity: String { localized("settings.tab.data.and.security") }
         static var tabMarketplaces: String { localized("settings.tab.marketplaces") }
 
@@ -780,4 +779,12 @@ enum Strings {
         static var restartNotice: String { localized("backup.restart.notice") }
     }
 
+}
+
+// MARK: - Settings sections
+
+// Kept outside the enum so Strings.Settings stays within SwiftLint's body length.
+extension Strings.Settings {
+    static var tabGitAndStacks: String { localized("settings.tab.git.and.stacks") }
+    static var tabIntegrations: String { localized("settings.tab.integrations") }
 }

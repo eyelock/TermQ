@@ -8,7 +8,7 @@ This tutorial sets up the integration and shows the core workflow.
 
 ## 10.1 — Install the MCP server
 
-Open **Settings** (⌘,) and go to the **Tools** tab. Click **Install** to install both `termqcli` and `termqmcp`.
+Open **Settings** (⌘,) and go to the **Integrations** section. Click **Install** to install both `termqcli` and `termqmcp`.
 
 ![Settings Tools Tab](../Images/settings-tools-tab.png)
 

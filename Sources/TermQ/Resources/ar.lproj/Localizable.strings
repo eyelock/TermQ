@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "الإعدادات";
 "settings.tab.general" = "عام";
-"settings.tab.tools" = "الأدوات";
 
 // Settings - Terminal section
 "settings.section.terminal" = "الطرفية";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "الأسواق";
+"settings.tab.git.and.stacks" = "Git والتكديس";
+"settings.tab.integrations" = "التكاملات";
 "settings.marketplaces.section.list" = "الأسواق المُهيَّأة";
 "settings.marketplaces.empty" = "لم تُضَف أسواق بعد.";
 "settings.marketplaces.add" = "إضافة سوق…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "تركيز Wheelhouse: إخفاء كل شيء ما عدا هذا Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "إحضار إلى المسرح";
 "wheelhouse.take.off.stage" = "إزالة من المسرح";
+"wheelhouse.zoom.terminal" = "تكبير الطرفية";
+"wheelhouse.exit.zoom" = "إنهاء التكبير";
+"wheelhouse.smart.close.help" = "إغلاق: المقعد الذي لا يزال قيد التشغيل يغادر المسرح ويواصل العمل؛ أما الذي توقف فيُغلق";
+"wheelhouse.show.quick.terminals" = "إظهار الطرفيات السريعة";
+"wheelhouse.hide.quick.terminals" = "إخفاء الطرفيات السريعة";
+"wheelhouse.install" = "تثبيت";
+"wheelhouse.needs.first %@ %@" = "%1$@ (يتطلب %2$@ أولاً)";
+"wheelhouse.action.required" = "يلزم اتخاذ إجراء";
+"wheelhouse.action.required.help" = "انقر على المقعد لمعرفة كيفية إصلاح ذلك.";
+"wheelhouse.fix.title %@" = "%@ يحتاج إلى انتباه";
+"wheelhouse.fix.all.clear" = "لا شيء يمنع هذا المقعد الآن.";
+"wheelhouse.issue.not.installed" = "غير مثبّت";
+"wheelhouse.issue.not.installed.detail %@" = "لا يوجد في ynh أي Harness باسم %@. ثبّته من مجلد المقعد في Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "مفوَّضون بلا commit: %@";
+"wheelhouse.issue.not.committed.detail" = "يقرأ ynh هؤلاء المفوَّضين من git، لذا لا يمكن لهذا المقعد أن يبدأ حتى يتم تنفيذ commit لهم.";
+"wheelhouse.issue.missing %@" = "مفوَّضون مفقودون: %@";
+"wheelhouse.issue.missing.detail" = "يذكر Harness المقعد مجلدات مفوَّضين غير موجودة في Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "فشل آخر تشغيل";
+"wheelhouse.copy.commit.command" = "نسخ أمر commit";
+"wheelhouse.try.again" = "حاول مرة أخرى";
+"wheelhouse.open.anyway" = "افتح على أي حال";
 "wheelhouse.needs.you" = "يحتاج إليك";
 "wheelhouse.nobody.waiting" = "لا أحد ينتظر";
 "wheelhouse.more.waiting %ld" = "+%ld أخرى";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "تشغيل مع التركيز";
 "settings.wheelhouse.enable.tab" = "إظهار تبويب Wheelhouses في الشريط الجانبي";
 "settings.wheelhouse.enable.tab.help" = "يضيف تبويب Wheelhouses يسرد مقاعد كل Wheelhouse في مستودعاتك";
+"settings.wheelhouse.quick.terminal.placement" = "موضع الطرفية السريعة";
+"settings.wheelhouse.quick.terminal.placement.help" = "على المسرح: تحصل كل طرفية سريعة على مكانها الخاص على المسرح. منقسم: تُفتح الطرفيات السريعة الخاصة بمقعد في لوحة أسفل المقعد.";
+"settings.wheelhouse.placement.staged" = "على المسرح";
+"settings.wheelhouse.placement.split" = "منقسم";
 "settings.wheelhouse.inbox.human.name" = "اسم البريد الوارد لأي شخص";
 "settings.wheelhouse.inbox.human.name.help" = "الاسم الذي يسند إليه Wheelhouse عناصر bead عندما يستطيع أي شخص التعامل معها. تظهر عناصر bead الجاهزة لهذا الاسم في بريدك الوارد.";
 "settings.wheelhouse.inbox.own.name" = "اسم بريدك الوارد الخاص";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "الكل";
 "wheelhouse.inbox.filter.help %@" = "عرض bead من نوع %@ فقط";
 "wheelhouse.inbox.sent.to %@" = "أُرسل إلى %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Ø§ÙØªØ¨Ø§Ù";
+"actions.termq.only" = "مستودعات TermQ فقط";
+"actions.empty" = "لا توجد PR في انتظار مراجعتك.";
+"actions.load.failed %@" = "تعذّر تحميل طلبات المراجعة الخاصة بك: %@";
+"actions.draft" = "مسودة";
+"actions.copy.link" = "نسخ الرابط";
+"actions.truncated %ld" = "يتم عرض أول %ld؛ وقد تكون بعض العناصر مفقودة.";
+"actions.wait.today" = "اليوم";
+"actions.wait.this.week" = "هذا الأسبوع";
+"actions.wait.this.month" = "هذا الشهر";
+"actions.wait.older" = "أقدم";

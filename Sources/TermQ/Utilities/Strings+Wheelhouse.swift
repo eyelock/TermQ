@@ -31,6 +31,33 @@ extension Strings {
         static var workingHelp: String { localized("wheelhouse.working.help") }
         static var pin: String { localized("wheelhouse.pin") }
         static var keepOnStage: String { localized("wheelhouse.keep.on.stage") }
+        static var zoomTerminal: String { localized("wheelhouse.zoom.terminal") }
+        static var install: String { localized("wheelhouse.install") }
+        static var actionRequired: String { localized("wheelhouse.action.required") }
+        static var actionRequiredHelp: String { localized("wheelhouse.action.required.help") }
+        static func fixTitle(_ seat: String) -> String { localized("wheelhouse.fix.title %@", seat) }
+        static var fixAllClear: String { localized("wheelhouse.fix.all.clear") }
+        static var issueNotInstalled: String { localized("wheelhouse.issue.not.installed") }
+        static func issueNotInstalledDetail(_ command: String) -> String {
+            localized("wheelhouse.issue.not.installed.detail %@", command)
+        }
+        static func issueNotCommitted(_ names: String) -> String {
+            localized("wheelhouse.issue.not.committed %@", names)
+        }
+        static var issueNotCommittedDetail: String { localized("wheelhouse.issue.not.committed.detail") }
+        static func issueMissing(_ names: String) -> String { localized("wheelhouse.issue.missing %@", names) }
+        static var issueMissingDetail: String { localized("wheelhouse.issue.missing.detail") }
+        static var issueLaunchFailed: String { localized("wheelhouse.issue.launch.failed") }
+        static var copyCommitCommand: String { localized("wheelhouse.copy.commit.command") }
+        static var tryAgain: String { localized("wheelhouse.try.again") }
+        static var openAnyway: String { localized("wheelhouse.open.anyway") }
+        /// "Install (needs io, titan first)".
+        static func needsFirst(_ action: String, _ names: String) -> String {
+            localized("wheelhouse.needs.first %@ %@", action, names)
+        }
+        static var showQuickTerminals: String { localized("wheelhouse.show.quick.terminals") }
+        static var hideQuickTerminals: String { localized("wheelhouse.hide.quick.terminals") }
+        static var exitZoom: String { localized("wheelhouse.exit.zoom") }
         static func seatHarnessTitle(_ seat: String, _ wheelhouse: String) -> String {
             localized("wheelhouse.seat.harness.title %@ %@", seat, wheelhouse)
         }
@@ -54,6 +81,7 @@ extension Strings {
         static var focusHelp: String { localized("wheelhouse.focus.help") }
         static var bringOnStage: String { localized("wheelhouse.bring.on.stage") }
         static var takeOffStage: String { localized("wheelhouse.take.off.stage") }
+        static var smartCloseHelp: String { localized("wheelhouse.smart.close.help") }
         static var needsYou: String { localized("wheelhouse.needs.you") }
         static var nobodyWaiting: String { localized("wheelhouse.nobody.waiting") }
         static func moreWaiting(_ count: Int) -> String { localized("wheelhouse.more.waiting %ld", count) }
@@ -170,6 +198,12 @@ extension Strings.Settings {
     enum Wheelhouse {
         static var enableTab: String { localized("settings.wheelhouse.enable.tab") }
         static var enableTabHelp: String { localized("settings.wheelhouse.enable.tab.help") }
+        static var quickTerminalPlacement: String { localized("settings.wheelhouse.quick.terminal.placement") }
+        static var quickTerminalPlacementHelp: String {
+            localized("settings.wheelhouse.quick.terminal.placement.help")
+        }
+        static var placementStaged: String { localized("settings.wheelhouse.placement.staged") }
+        static var placementSplit: String { localized("settings.wheelhouse.placement.split") }
         static var inboxHumanName: String { localized("settings.wheelhouse.inbox.human.name") }
         static var inboxHumanNameHelp: String { localized("settings.wheelhouse.inbox.human.name.help") }
         static var inboxOwnName: String { localized("settings.wheelhouse.inbox.own.name") }

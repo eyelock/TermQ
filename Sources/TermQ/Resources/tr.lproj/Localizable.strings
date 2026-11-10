@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Ayarlar";
 "settings.tab.general" = "Genel";
-"settings.tab.tools" = "Araçlar";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Terminal";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Pazar Yerleri";
+"settings.tab.git.and.stacks" = "Git ve Yığınlama";
+"settings.tab.integrations" = "Entegrasyonlar";
 "settings.marketplaces.section.list" = "Yapılandırılmış pazar yerleri";
 "settings.marketplaces.empty" = "Henüz pazar yeri eklenmedi.";
 "settings.marketplaces.add" = "Pazar yeri ekle…";
@@ -1602,6 +1603,27 @@
 "wheelhouse.focus.help" = "Wheelhouse odağı: bu Wheelhouse dışındaki her şeyi gizle (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Sahneye getir";
 "wheelhouse.take.off.stage" = "Sahneden al";
+"wheelhouse.zoom.terminal" = "Terminali Yakınlaştır";
+"wheelhouse.exit.zoom" = "Yakınlaştırmadan Çık";
+"wheelhouse.smart.close.help" = "Kapat: hâlâ çalışan bir koltuk sahneden ayrılır ve çalışmaya devam eder; durmuş olan kapatılır";
+"wheelhouse.show.quick.terminals" = "Hızlı Terminalleri göster";
+"wheelhouse.hide.quick.terminals" = "Hızlı Terminalleri gizle";
+"wheelhouse.install" = "Kur";
+"wheelhouse.needs.first %@ %@" = "%1$@ (önce %2$@ gerekli)";
+"wheelhouse.action.required" = "Eylem gerekli";
+"wheelhouse.action.required.help" = "Nasıl düzelteceğinizi görmek için koltuğa tıklayın.";
+"wheelhouse.fix.title %@" = "%@ dikkat gerektiriyor";
+"wheelhouse.fix.all.clear" = "Artık bu koltuğun çalışmasını engelleyen bir şey yok.";
+"wheelhouse.issue.not.installed" = "Yüklü değil";
+"wheelhouse.issue.not.installed.detail %@" = "ynh’de %@ adlı bir harness yok. Wheelhouse’taki koltuğun klasöründen yükleyin.";
+"wheelhouse.issue.not.committed %@" = "Temsilciler commit edilmedi: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh bu temsilcileri git’ten okur; bu yüzden commit edilene kadar bu koltuk başlayamaz.";
+"wheelhouse.issue.missing %@" = "Temsilciler eksik: %@";
+"wheelhouse.issue.missing.detail" = "Koltuğun harness’i, Wheelhouse’ta bulunmayan temsilci klasörlerini belirtiyor.";
+"wheelhouse.issue.launch.failed" = "Son başlatma başarısız oldu";
+"wheelhouse.copy.commit.command" = "Commit komutunu kopyala";
+"wheelhouse.try.again" = "Tekrar dene";
+"wheelhouse.open.anyway" = "Yine de aç";
 "wheelhouse.needs.you" = "Sizi bekliyor";
 "wheelhouse.nobody.waiting" = "kimse beklemiyor";
 "wheelhouse.more.waiting %ld" = "+%ld daha";
@@ -1618,6 +1640,10 @@
 "wheelhouse.action.launch.focus" = "Odakla başlat";
 "settings.wheelhouse.enable.tab" = "Wheelhouse’lar kenar çubuğu sekmesini göster";
 "settings.wheelhouse.enable.tab.help" = "Depolarınızdaki her Wheelhouse’un koltuklarını listeleyen bir Wheelhouse’lar sekmesi ekler";
+"settings.wheelhouse.quick.terminal.placement" = "Hızlı Terminal yerleşimi";
+"settings.wheelhouse.quick.terminal.placement.help" = "Sahnede: her Hızlı Terminal sahnede kendi yerini alır. Bölünmüş: bir koltuğun Hızlı Terminalleri koltuğun altındaki bir panelde açılır.";
+"settings.wheelhouse.placement.staged" = "Sahnede";
+"settings.wheelhouse.placement.split" = "Bölünmüş";
 "settings.wheelhouse.inbox.human.name" = "Herhangi bir insan için gelen kutusu adı";
 "settings.wheelhouse.inbox.human.name.help" = "Herhangi bir insan ilgilenebildiğinde bir Wheelhouse’un bead’leri atadığı ad. Bu ad için hazır bead’ler gelen kutunuzda görünür.";
 "settings.wheelhouse.inbox.own.name" = "Kendi gelen kutusu adınız";
@@ -1649,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Tümü";
 "wheelhouse.inbox.filter.help %@" = "Yalnızca %@ bead'lerini göster";
 "wheelhouse.inbox.sent.to %@" = "%@ kişisine gönderildi";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Dikkat";
+"actions.termq.only" = "Yalnızca TermQ'nun depoları";
+"actions.empty" = "İncelemenizi bekleyen PR yok.";
+"actions.load.failed %@" = "İnceleme istekleriniz yüklenemedi: %@";
+"actions.draft" = "Taslak";
+"actions.copy.link" = "Bağlantıyı Kopyala";
+"actions.truncated %ld" = "İlk %ld gösteriliyor; bazıları eksik olabilir.";
+"actions.wait.today" = "Bugün";
+"actions.wait.this.week" = "Bu hafta";
+"actions.wait.this.month" = "Bu ay";
+"actions.wait.older" = "Daha eski";

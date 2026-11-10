@@ -285,7 +285,6 @@
 // MARK: - Settings
 "settings.title" = "설정";
 "settings.tab.general" = "일반";
-"settings.tab.tools" = "도구";
 
 // Settings - Terminal section
 "settings.section.terminal" = "터미널";
@@ -863,6 +862,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "마켓플레이스";
+"settings.tab.git.and.stacks" = "Git 및 스택";
+"settings.tab.integrations" = "통합";
 "settings.marketplaces.section.list" = "설정된 마켓플레이스";
 "settings.marketplaces.empty" = "아직 추가된 마켓플레이스가 없습니다.";
 "settings.marketplaces.add" = "마켓플레이스 추가…";
@@ -1602,6 +1603,27 @@
 "wheelhouse.focus.help" = "Wheelhouse 집중: 이 Wheelhouse 외의 모든 것을 숨깁니다 (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "무대로 가져오기";
 "wheelhouse.take.off.stage" = "무대에서 내리기";
+"wheelhouse.zoom.terminal" = "터미널 확대";
+"wheelhouse.exit.zoom" = "확대 종료";
+"wheelhouse.smart.close.help" = "닫기: 아직 실행 중인 좌석은 무대에서 빠지고 계속 실행되며, 중지된 좌석은 닫힙니다";
+"wheelhouse.show.quick.terminals" = "빠른 터미널 보기";
+"wheelhouse.hide.quick.terminals" = "빠른 터미널 숨기기";
+"wheelhouse.install" = "설치";
+"wheelhouse.needs.first %@ %@" = "%1$@ (먼저 %2$@ 필요)";
+"wheelhouse.action.required" = "조치 필요";
+"wheelhouse.action.required.help" = "좌석을 클릭하면 해결 방법을 볼 수 있습니다.";
+"wheelhouse.fix.title %@" = "%@에 확인이 필요합니다";
+"wheelhouse.fix.all.clear" = "이제 이 좌석을 막는 것이 없습니다.";
+"wheelhouse.issue.not.installed" = "설치되지 않음";
+"wheelhouse.issue.not.installed.detail %@" = "ynh에는 %@라는 이름의 하니스가 없습니다. Wheelhouse의 좌석 폴더에서 설치하세요.";
+"wheelhouse.issue.not.committed %@" = "커밋되지 않은 대리자: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh는 이 대리자를 git에서 읽으므로 커밋되기 전에는 이 좌석을 시작할 수 없습니다.";
+"wheelhouse.issue.missing %@" = "누락된 대리자: %@";
+"wheelhouse.issue.missing.detail" = "좌석의 하니스가 Wheelhouse에 없는 대리자 폴더를 지정하고 있습니다.";
+"wheelhouse.issue.launch.failed" = "마지막 실행 실패";
+"wheelhouse.copy.commit.command" = "커밋 명령 복사";
+"wheelhouse.try.again" = "다시 시도";
+"wheelhouse.open.anyway" = "그래도 열기";
 "wheelhouse.needs.you" = "도움 필요";
 "wheelhouse.nobody.waiting" = "기다리는 좌석 없음";
 "wheelhouse.more.waiting %ld" = "+%ld개 더";
@@ -1618,6 +1640,10 @@
 "wheelhouse.action.launch.focus" = "집중하여 실행";
 "settings.wheelhouse.enable.tab" = "Wheelhouse 사이드바 탭 보기";
 "settings.wheelhouse.enable.tab.help" = "저장소에 있는 모든 Wheelhouse의 좌석을 나열하는 Wheelhouse 탭을 추가합니다";
+"settings.wheelhouse.quick.terminal.placement" = "빠른 터미널 배치";
+"settings.wheelhouse.quick.terminal.placement.help" = "무대: 각 빠른 터미널이 무대에서 자신만의 자리를 차지합니다. 분할: 좌석의 빠른 터미널이 해당 좌석 아래 패널에서 열립니다.";
+"settings.wheelhouse.placement.staged" = "무대";
+"settings.wheelhouse.placement.split" = "분할";
 "settings.wheelhouse.inbox.human.name" = "모든 사람을 위한 받은 편지함 이름";
 "settings.wheelhouse.inbox.human.name.help" = "누구든 처리할 수 있는 bead를 Wheelhouse가 할당하는 이름입니다. 이 이름에 준비된 bead가 받은 편지함에 표시됩니다.";
 "settings.wheelhouse.inbox.own.name" = "내 받은 편지함 이름";
@@ -1649,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "전체";
 "wheelhouse.inbox.filter.help %@" = "%@ bead만 표시";
 "wheelhouse.inbox.sent.to %@" = "%@에게 보냄";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "íì¸ íì";
+"actions.termq.only" = "TermQ 저장소만";
+"actions.empty" = "검토를 기다리는 PR이 없습니다.";
+"actions.load.failed %@" = "검토 요청을 불러올 수 없습니다: %@";
+"actions.draft" = "초안";
+"actions.copy.link" = "링크 복사";
+"actions.truncated %ld" = "처음 %ld개를 표시합니다. 일부가 누락되었을 수 있습니다.";
+"actions.wait.today" = "오늘";
+"actions.wait.this.week" = "이번 주";
+"actions.wait.this.month" = "이번 달";
+"actions.wait.older" = "이전";

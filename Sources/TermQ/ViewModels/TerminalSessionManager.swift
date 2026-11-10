@@ -63,6 +63,8 @@ class TerminalSessionManager: ObservableObject {
         var isRunning: Bool = true
         var currentDirectory: String?
         var lastActivityTime: Date = Date()
+        /// When the session started: a just-started one is still launching.
+        let startedAt: Date = Date()
         var pendingRestart: Bool = false
         var controlModeSession: TmuxControlModeSession?  // Control mode for tmux panes
         var activePaneId: String?  // Currently active pane ID for input routing

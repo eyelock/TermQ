@@ -82,6 +82,21 @@ final class AppStorageOwnerTests: XCTestCase {
         XCTAssertEqual(state.selectedTab, .repositories)
     }
 
+    func test_sidebarState_reveal_selectsTabAndShowsSidebar() {
+        defaults.set(true, forKey: SidebarState.sidebarCollapsedKey)
+        let state = SidebarState(defaults: defaults)
+        state.reveal(.wheelhouses)
+        XCTAssertEqual(state.selectedTab, .wheelhouses)
+        XCTAssertFalse(defaults.bool(forKey: SidebarState.sidebarCollapsedKey))
+    }
+
+    func test_sidebarState_reveal_whenAlreadyShown_keepsSidebarShown() {
+        let state = SidebarState(defaults: defaults)
+        state.reveal(.harnesses)
+        XCTAssertEqual(state.selectedTab, .harnesses)
+        XCTAssertFalse(defaults.bool(forKey: SidebarState.sidebarCollapsedKey))
+    }
+
     // MARK: - GitConfigStore
 
     func test_gitConfig_protectedBranches_emptyByDefault() {

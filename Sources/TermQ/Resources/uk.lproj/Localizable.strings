@@ -286,7 +286,6 @@
 // MARK: - Settings
 "settings.title" = "Налаштування";
 "settings.tab.general" = "Загальні";
-"settings.tab.tools" = "Інструменти";
 
 // Settings - Terminal section
 "settings.section.terminal" = "Термінал";
@@ -865,6 +864,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "Маркетплейси";
+"settings.tab.git.and.stacks" = "Git і стек";
+"settings.tab.integrations" = "Інтеграції";
 "settings.marketplaces.section.list" = "Налаштовані маркетплейси";
 "settings.marketplaces.empty" = "Маркетплейси ще не додано.";
 "settings.marketplaces.add" = "Додати маркетплейс…";
@@ -1602,6 +1603,27 @@
 "wheelhouse.focus.help" = "Фокус Wheelhouse: приховати все, крім цього Wheelhouse (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "Вивести на сцену";
 "wheelhouse.take.off.stage" = "Прибрати зі сцени";
+"wheelhouse.zoom.terminal" = "Масштабувати термінал";
+"wheelhouse.exit.zoom" = "Вийти з масштабування";
+"wheelhouse.smart.close.help" = "Закрити: місце, яке ще працює, залишає сцену й продовжує працювати; зупинене закривається";
+"wheelhouse.show.quick.terminals" = "Показати швидкі термінали";
+"wheelhouse.hide.quick.terminals" = "Приховати швидкі термінали";
+"wheelhouse.install" = "Встановити";
+"wheelhouse.needs.first %@ %@" = "%1$@ (спочатку потрібно: %2$@)";
+"wheelhouse.action.required" = "Потрібна дія";
+"wheelhouse.action.required.help" = "Натисніть на місце, щоб дізнатися, як це виправити.";
+"wheelhouse.fix.title %@" = "%@ потребує уваги";
+"wheelhouse.fix.all.clear" = "Тепер ніщо не заважає цьому місцю.";
+"wheelhouse.issue.not.installed" = "Не встановлено";
+"wheelhouse.issue.not.installed.detail %@" = "У ynh немає harness з назвою %@. Установіть його з папки місця у Wheelhouse.";
+"wheelhouse.issue.not.committed %@" = "Делегати не закомічені: %@";
+"wheelhouse.issue.not.committed.detail" = "ynh читає цих делегатів із git, тому це місце не запуститься, доки їх не закомічено.";
+"wheelhouse.issue.missing %@" = "Делегати відсутні: %@";
+"wheelhouse.issue.missing.detail" = "Harness місця вказує папки делегатів, яких немає у Wheelhouse.";
+"wheelhouse.issue.launch.failed" = "Останній запуск не вдався";
+"wheelhouse.copy.commit.command" = "Скопіювати команду commit";
+"wheelhouse.try.again" = "Спробувати знову";
+"wheelhouse.open.anyway" = "Усе одно відкрити";
 "wheelhouse.needs.you" = "Чекає на вас";
 "wheelhouse.nobody.waiting" = "ніхто не чекає";
 "wheelhouse.more.waiting %ld" = "ще +%ld";
@@ -1618,6 +1640,10 @@
 "wheelhouse.action.launch.focus" = "Запустити з фокусом";
 "settings.wheelhouse.enable.tab" = "Показати вкладку Wheelhouse на бічній панелі";
 "settings.wheelhouse.enable.tab.help" = "Додає вкладку Wheelhouse зі списком місць кожного Wheelhouse у ваших репозиторіях";
+"settings.wheelhouse.quick.terminal.placement" = "Розміщення швидкого термінала";
+"settings.wheelhouse.quick.terminal.placement.help" = "На сцені: кожен швидкий термінал займає власне місце на сцені. Розділення: швидкі термінали місця відкриваються в панелі під цим місцем.";
+"settings.wheelhouse.placement.staged" = "На сцені";
+"settings.wheelhouse.placement.split" = "Розділення";
 "settings.wheelhouse.inbox.human.name" = "Ім’я вхідних для будь-якої людини";
 "settings.wheelhouse.inbox.human.name.help" = "Ім’я, на яке Wheelhouse призначає bead, коли з ними може впоратися будь-яка людина. Готові bead для цього імені з’являються у ваших вхідних.";
 "settings.wheelhouse.inbox.own.name" = "Ваше власне ім’я вхідних";
@@ -1649,3 +1675,16 @@
 "wheelhouse.inbox.filter.all" = "Усі";
 "wheelhouse.inbox.filter.help %@" = "Показувати лише bead типу %@";
 "wheelhouse.inbox.sent.to %@" = "надіслано: %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "Ð£Ð²Ð°Ð³Ð°";
+"actions.termq.only" = "Лише репозиторії TermQ";
+"actions.empty" = "Немає PR, що очікують на ваш огляд.";
+"actions.load.failed %@" = "Не вдалося завантажити запити на огляд: %@";
+"actions.draft" = "Чернетка";
+"actions.copy.link" = "Скопіювати посилання";
+"actions.truncated %ld" = "Показано перші %ld; деякі можуть бути відсутні.";
+"actions.wait.today" = "Сьогодні";
+"actions.wait.this.week" = "Цього тижня";
+"actions.wait.this.month" = "Цього місяця";
+"actions.wait.older" = "Раніше";

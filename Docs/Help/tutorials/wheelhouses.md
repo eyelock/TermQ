@@ -12,11 +12,11 @@ The Wheelhouses tab lets you run one from TermQ: every seat at a glance, two or 
 
 ## 1 — Turning it on
 
-Open Settings (**⌘,**) › **Tools**, find **YNH Harness Toolchain**, and switch on **Show Wheelhouses sidebar tab**.
+Open Settings (**⌘,**) › **Wheelhouses** and switch on **Show Wheelhouses sidebar tab**.
 
 ![Wheelhouses setting](../Images/wheelhouse-feature-flag-settings.png)
 
-A steering-wheel icon joins the tabs at the top of the sidebar.
+A steering-wheel icon joins the tabs at the top of the sidebar. **⌃⌘W** jumps to it from anywhere (⌃⌘R, ⌃⌘H and ⌃⌘M do the same for Repositories, Harnesses and Marketplaces).
 
 ---
 
@@ -37,8 +37,9 @@ The sidebar lists every seat, grouped the way the plugin groups them — **Desk*
 - **The dot** — filled blue when the seat's session is running, green when it has no terminal here but is working on a bead (its heartbeat is less than 20 minutes old — a worker woken by the dispatcher, say), hollow when it is idle, orange when it needs you.
 - **Numbered badges** — the seat's Quick Terminals (see below). Click one to bring it up; right-click to close it.
 - **The line underneath** — the bead the seat is working on, read from the Wheelhouse's work graph, *waiting on #…* when it waits on a pull request, or *idle*.
+- **⚠ Action required** — something stops the seat from running (see [Seats that can't run](#10--seats-that-cant-run)).
 
-Click any seat to open it.
+Click any seat to open it. Right-click the Wheelhouse's own row for **Reveal in Finder**, **Open in Terminal**, **Copy Pathname** and **Open In** your editor, for the Wheelhouse folder.
 
 ---
 
@@ -49,7 +50,10 @@ While the Wheelhouses tab is open, the main panel is the **stage**: only Wheelho
 - With nothing pinned, the stage is **one seat, full width**: bringing up another seat replaces it.
 - **Pin** a seat (the pin on its pane, or **Keep on Stage** when you right-click it) and it stays, with one more column beside it for whichever seat you bring up next. Bringing up a pinned seat shows just the pinned ones. Up to three columns fit.
 - **Drag the divider** between panes to resize them; double-click it to make them equal again.
-- Drag a pane's header onto another to reorder them. The **✕** on a pane takes it off.
+- Drag a pane's header onto another to reorder them.
+- The **✕** on a pane (or **⌘⌫**) closes it. A seat whose harness is still running only leaves the stage and keeps running, so you never close a session you still need; one whose harness has exited is closed properly, and opening it again starts the seat afresh. When the last pane goes, the next open seat comes up.
+- **⌘1**–**⌘9** bring up the open seats in the tab bar, left to right.
+- **Zoom** — **⌘⌥Z**, or the zoom button on a pane, makes the focused pane fill the whole window: no sidebar, no other panes. Press it again to come back. A seat that rings while you're zoomed shows as a **Needs you** badge in the pane's header; click it to come back to that seat. (**Esc** is left to the seat — harnesses use it to interrupt.)
 - The **tab bar** across the top lists every open seat, grouped Desk │ Crew │ Standing │ Workers. With seats from more than one Wheelhouse open, it groups them under each Wheelhouse's name, and each pane says which Wheelhouse it's from.
 - Click into a pane to type in it; the pane you're in is outlined.
 - Going back to the Repositories tab puts you back in the terminal you left.
@@ -71,7 +75,7 @@ A seat appears there when its terminal **rings the bell** or **sends a desktop n
 | Claude Code | In the seat, `/config` › **Notifications** › **Terminal Bell** — or for every seat at once, add `"preferredNotifChannel": "terminal_bell"` to `~/.claude/settings.json`. |
 | Others (Codex, Copilot CLI, Cursor, …) | Look in the CLI's settings for a *terminal bell* or *terminal notification* option. Anything that rings the bell or sends an OSC 9 / OSC 777 notification works. |
 
-**The seat you're in doesn't count.** A bell from the pane you're typing in is ignored — you're already looking at it. To try it, give a seat something to do, then click into another seat before it finishes.
+A bell counts even from the pane you're in — on a busy stage you may not be looking at it. It clears when you click into that pane or type in it.
 
 ---
 
@@ -79,19 +83,31 @@ A seat appears there when its terminal **rings the bell** or **sends a desktop n
 
 Right-click a seat (in the sidebar or the tab bar) for its actions:
 
-- **Its focuses** — the prompts its harness defines, such as *wake*, *design* or *verify*. On a running seat the prompt is typed into its session; otherwise the seat starts with that focus.
+- **Its focuses** — the prompts its harness defines, such as *wake*, *design* or *verify*, each with its own icon. On a running seat the prompt is typed into its session; otherwise the seat starts with that focus.
 - **Hand Off** — asks the seat to take a beat and hand off: it writes its own notes for its next session.
-- **Close Terminal** — ends the seat's session.
-- **Harness Details…** — the seat's harness, to read or edit. Changes apply on the seat's next session. While it runs, the page walks you through it: **① Ask it to Hand Off**, and once it has written its notes, **② Restart** — it wakes fresh on the edited harness and picks up from its own notes.
-- **Birth** — for a seat that has never had a first session.
+- **Close Terminal** (**⌘⌫**) — as the pane's **✕**: a running seat leaves the stage, a stopped one is closed.
+- **Harness Details…** (**⌘I**) — the seat's harness, to read or edit. Changes apply on the seat's next session. While it runs, the page walks you through it: **① Ask it to Hand Off**, and once it has written its notes, **② Restart** — it wakes fresh on the edited harness and picks up from its own notes.
+- **Install** — for a seat ynh doesn't have yet: runs `ynh install` on the seat's folder in the Wheelhouse.
+- **Birth** — for an installed seat that has never had a first session. Install and Birth say *(needs io first)* while a delegate the seat depends on isn't ready, and disappear once the seat is born.
+- **Keep on Stage** (**⌘P**) and **Zoom Terminal** (**⌘⌥Z**) — on the stage.
+- **Reveal in Finder**, **Open in Terminal**, **Copy Pathname** and **Open In** your editor — for the seat's harness folder, to read or edit its configs.
+
+The shortcuts act on the focused seat, and show beside the items in its right-click menu.
 
 ---
 
 ## 7 — Quick Terminals
 
-Sometimes you want a plain shell where a seat is working, without starting the seat. Right-click a seat and choose **New Quick Terminal**: a shell opens on the stage in the seat's current folder (or the Wheelhouse's, when the seat hasn't said where it is).
+Sometimes you want a plain shell where a seat is working, without starting the seat. Right-click a seat and choose **New Quick Terminal** (or press **⌘T** on the stage): a shell opens in the seat's current folder (or the Wheelhouse's, when the seat hasn't said where it is).
 
-Quick Terminals belong to their seat. They show as numbered badges beside it in the sidebar, not in the tab bar or your other tabs. Open as many as you like; close one with the button on its pane, or by right-clicking its badge.
+Where it opens is a setting, Settings › **Wheelhouses** › **Quick Terminal placement**:
+
+- **Split** (the default) — beneath the seat's own pane, in a panel with a card for each of its Quick Terminals. Click a card to switch, drag the divider to resize, or collapse the panel to its strip. It goes away with the seat's last Quick Terminal.
+- **Staged** — each Quick Terminal takes its own place on the stage, like a seat.
+
+![A seat with its Quick Terminals split beneath it](../Images/wheelhouse-quick-terminal-split.png)
+
+Quick Terminals belong to their seat. They show as numbered badges beside it in the sidebar and in its pane's header — click one to bring it up — not in the tab bar or your other tabs. Open as many as you like; close one by right-clicking its badge or card.
 
 ---
 
@@ -106,13 +122,30 @@ Click it to open the inbox, pinned at the right of the stage. Each bead shows it
 - Right-click a bead (or use **⋯**) to **Send to** a seat — the request is typed into its session, starting it if needed — or to **Comment…**, **Close…**, copy its id or open its link. Comments and closes are made as the name the bead is assigned to.
 - The inbox refreshes every minute; the refresh button reads it now.
 
-Set the names in Settings › **Tools** › **YNH Harness Toolchain**, under **Show Wheelhouses sidebar tab**: **Inbox name for any human** and **Your own inbox name**.
+Set the names in Settings › **Wheelhouses**: **Inbox name for any human** and **Your own inbox name**.
 
 ---
 
 ## 9 — Focus mode
 
 **⌃⌘F** (or **Focus** at the top right) hides everything but the Wheelhouse: no toolbar, no other tabs. Press it again, or **Exit Focus**, to come back.
+
+---
+
+## 10 — Seats that can't run
+
+A seat that can't start shows **⚠ Action required** instead of *idle*, in the sidebar and in its pane's header. Hover the warning for what's wrong; click the seat and, instead of a launch that would fail, a panel shows each problem with the step that fixes it:
+
+| Problem | What it means | Fix |
+|---|---|---|
+| **Not installed** | ynh has no harness by the seat's name | **Install** |
+| **Delegates not committed** | The seat hands work to harnesses in the Wheelhouse that are on disk but not committed. ynh reads them from git, so the seat fails with *assembling delegates: … not found* | **Copy Commit Command** (commits just those folders), or a **Quick Terminal** to do it yourself |
+| **Delegates missing** | Delegate folders the seat names don't exist | **Reveal in Finder** |
+| **Last launch failed** | The seat's terminal shows ynh's error, read just after it started | **Try Again** |
+
+**Open Anyway** launches regardless. The warning clears as soon as the problem does.
+
+![Fixing a seat that can't run](../Images/wheelhouse-action-required.png)
 
 ---
 

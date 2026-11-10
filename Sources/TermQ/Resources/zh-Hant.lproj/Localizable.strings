@@ -284,7 +284,6 @@
 // MARK: - Settings
 "settings.title" = "設定";
 "settings.tab.general" = "一般";
-"settings.tab.tools" = "工具";
 
 // Settings - Terminal section
 "settings.section.terminal" = "終端機";
@@ -858,6 +857,8 @@
 
 // MARK: - Settings — Marketplaces tab
 "settings.tab.marketplaces" = "市場";
+"settings.tab.git.and.stacks" = "Git 與堆疊";
+"settings.tab.integrations" = "整合";
 "settings.marketplaces.section.list" = "已設定的市場";
 "settings.marketplaces.empty" = "尚未新增任何市場。";
 "settings.marketplaces.add" = "新增市場…";
@@ -1595,6 +1596,27 @@
 "wheelhouse.focus.help" = "Wheelhouse 聚焦：隱藏除此 Wheelhouse 以外的所有內容 (⌃⌘F)";
 "wheelhouse.bring.on.stage" = "帶到舞台";
 "wheelhouse.take.off.stage" = "移出舞台";
+"wheelhouse.zoom.terminal" = "縮放終端機";
+"wheelhouse.exit.zoom" = "結束縮放";
+"wheelhouse.smart.close.help" = "關閉：仍在執行的席位會離開舞台並繼續執行；已停止的席位則會被關閉";
+"wheelhouse.show.quick.terminals" = "顯示快速終端機";
+"wheelhouse.hide.quick.terminals" = "隱藏快速終端機";
+"wheelhouse.install" = "安裝";
+"wheelhouse.needs.first %@ %@" = "%1$@(需先 %2$@)";
+"wheelhouse.action.required" = "需要處理";
+"wheelhouse.action.required.help" = "點一下席位即可查看修復方式。";
+"wheelhouse.fix.title %@" = "%@ 需要處理";
+"wheelhouse.fix.all.clear" = "目前沒有任何問題阻止此席位執行。";
+"wheelhouse.issue.not.installed" = "未安裝";
+"wheelhouse.issue.not.installed.detail %@" = "ynh 中沒有名為 %@ 的 Harness。請從 Wheelhouse 中該席位的資料夾安裝。";
+"wheelhouse.issue.not.committed %@" = "委託未提交：%@";
+"wheelhouse.issue.not.committed.detail" = "ynh 會從 git 讀取這些委託，因此在提交之前，此席位無法啟動。";
+"wheelhouse.issue.missing %@" = "缺少委託：%@";
+"wheelhouse.issue.missing.detail" = "該席位的 Harness 指定了 Wheelhouse 中不存在的委託資料夾。";
+"wheelhouse.issue.launch.failed" = "上次啟動失敗";
+"wheelhouse.copy.commit.command" = "複製提交指令";
+"wheelhouse.try.again" = "重試";
+"wheelhouse.open.anyway" = "仍要開啟";
 "wheelhouse.needs.you" = "需要你";
 "wheelhouse.nobody.waiting" = "無人等待";
 "wheelhouse.more.waiting %ld" = "還有 +%ld";
@@ -1611,6 +1633,10 @@
 "wheelhouse.action.launch.focus" = "以聚焦啟動";
 "settings.wheelhouse.enable.tab" = "顯示 Wheelhouse 側邊欄分頁";
 "settings.wheelhouse.enable.tab.help" = "加入一個 Wheelhouse 分頁，列出你儲存庫中每個 Wheelhouse 的席位";
+"settings.wheelhouse.quick.terminal.placement" = "快速終端機位置";
+"settings.wheelhouse.quick.terminal.placement.help" = "舞台：每個快速終端機在舞台上佔據自己的位置。分割：席位的快速終端機會在該席位下方的面板中開啟。";
+"settings.wheelhouse.placement.staged" = "舞台";
+"settings.wheelhouse.placement.split" = "分割";
 "settings.wheelhouse.inbox.human.name" = "任何人的收件匣名稱";
 "settings.wheelhouse.inbox.human.name.help" = "當任何人都可以處理時，Wheelhouse 用來指派 bead 的名稱。該名稱下已就緒的 bead 會顯示在你的收件匣中。";
 "settings.wheelhouse.inbox.own.name" = "你自己的收件匣名稱";
@@ -1642,3 +1668,16 @@
 "wheelhouse.inbox.filter.all" = "全部";
 "wheelhouse.inbox.filter.help %@" = "僅顯示 %@ bead";
 "wheelhouse.inbox.sent.to %@" = "已傳送給 %@";
+
+// MARK: - Actions (reviews waiting on the human)
+"actions.mode" = "ééæ³¨";
+"actions.termq.only" = "僅限 TermQ 的儲存庫";
+"actions.empty" = "沒有等待你審查的 PR。";
+"actions.load.failed %@" = "無法載入你的審查請求：%@";
+"actions.draft" = "草稿";
+"actions.copy.link" = "複製連結";
+"actions.truncated %ld" = "顯示前 %ld 項;可能有部分遺漏。";
+"actions.wait.today" = "今天";
+"actions.wait.this.week" = "本週";
+"actions.wait.this.month" = "本月";
+"actions.wait.older" = "更早";
