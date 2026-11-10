@@ -30,7 +30,8 @@ struct SettingsMarketplacesView: View {
             if parts.contains(.authoring) { authoring }
         }
         .onAppear {
-            if case .ready(let ynhPath, _, _) = ynhDetector.status {
+            // Only the instance showing ynh's marketplaces asks ynh for them.
+            if parts.contains(.ynh), case .ready(let ynhPath, _, _) = ynhDetector.status {
                 Task { await marketplaceService.refresh(ynhPath: ynhPath, environment: ynhEnvironment) }
             }
         }
