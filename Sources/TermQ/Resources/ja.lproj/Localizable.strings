@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "チェックアウトしました。コピー中に %@ が変更されたため、残しました。";
 "remote.prs.review.kept.commits %@" = "チェックアウトしました。%@ にプルリクエストにないコミットがあるため、残しました。";
 "remote.prs.review.kept.in.use %@" = "%@ はターミナルで使用中のため、残しました。";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "プルリクエストを読み込み中…";
+"actions.checkout.adding.repository" = "このPRをチェックアウト…";
+"actions.clone.here" = "ここにクローン";
+"actions.choose.clone.folder %@" = "%@ をクローンするフォルダを選択してください。TermQ に追加されます。";
+"actions.pr.not.found %lld" = "プルリクエスト #%lld はそのリポジトリでオープンになっていません。";
+"actions.folder.not.repository %@ %@" = "%@ は %@ のクローンではないため、追加しませんでした。別のフォルダを選択してください。";

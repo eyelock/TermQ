@@ -1704,3 +1704,11 @@
 "remote.prs.review.kept.changed %@" = "Checkout feito. %@ mudou durante a cópia, então foi mantida.";
 "remote.prs.review.kept.commits %@" = "Checkout feito. %@ tem commits que não estão no pull request, então foi mantida.";
 "remote.prs.review.kept.in.use %@" = "%@ está aberta em um terminal, então foi mantida.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Carregando pull request…";
+"actions.checkout.adding.repository" = "Fazer checkout deste PR…";
+"actions.clone.here" = "Clonar aqui";
+"actions.choose.clone.folder %@" = "Escolha a pasta onde clonar %@. Ele será adicionado ao TermQ.";
+"actions.pr.not.found %lld" = "O pull request #%lld não está aberto nesse repositório.";
+"actions.folder.not.repository %@ %@" = "%@ não é um clone de %@, então não foi adicionado. Escolha outra pasta.";

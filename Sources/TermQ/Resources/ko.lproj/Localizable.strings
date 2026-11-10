@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "체크아웃했습니다. 복사하는 동안 %@이(가) 변경되어 유지했습니다.";
 "remote.prs.review.kept.commits %@" = "체크아웃했습니다. %@에 풀 리퀘스트에 없는 커밋이 있어 유지했습니다.";
 "remote.prs.review.kept.in.use %@" = "%@이(가) 터미널에서 열려 있어 유지했습니다.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "풀 리퀘스트 불러오는 중…";
+"actions.checkout.adding.repository" = "이 PR 체크아웃…";
+"actions.clone.here" = "여기에 복제";
+"actions.choose.clone.folder %@" = "%@을(를) 복제할 폴더를 선택하세요. TermQ에 추가됩니다.";
+"actions.pr.not.found %lld" = "풀 리퀘스트 #%lld이(가) 해당 저장소에서 열려 있지 않습니다.";
+"actions.folder.not.repository %@ %@" = "%@은(는) %@의 복제본이 아니어서 추가하지 않았습니다. 다른 폴더를 선택하세요.";

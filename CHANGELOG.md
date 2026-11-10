@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Pull requests
+
+- **Attention rows have a real menu.** Right-click a PR in one of your repositories for the same menu as the Remote feed. For a PR anywhere else, **Run with Focus…** opens your harness on the PR's code, told which PR it is, using a review checkout from a hidden clone; **Checkout this PR…** clones the repository where you choose, adds it to TermQ and checks the PR out.
+- **Open In, Copy Pathname and terminals for any PR on disk.** A checked-out PR or a review checkout gets the same items as a Local worktree.
+- **Quick Launch Focus** also works on a PR that isn't checked out.
+- **Remove Review Checkout**, and **Checkout this PR** (formerly Checkout as Worktree) carries a review checkout's changes into the new worktree.
+
+### Fixed — Pull requests
+
+- **Review checkouts are pruned reliably.** Prune used to fail silently on any review checkout a session had touched, left a local branch behind in your clone, and could remove one a terminal was using. Review checkouts are now detached (no branch), pruned with force, never removed while a terminal uses them, and cleared automatically once their PR closes if they have no changes. The Prune sheet says why each is kept or removed.
+
 ### Added — Wheelhouses
 
 - **Quick Terminals.** A seat's menu gains **New Quick Terminal**: a plain shell in the seat's current folder that doesn't start the seat. They show as numbered badges beside the seat in the sidebar, stay out of the tab bar and the general tabs, and can sit on the stage beside the seat.

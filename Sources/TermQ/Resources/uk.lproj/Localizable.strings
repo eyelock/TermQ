@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "PR отримано. %@ змінилася під час копіювання, тому її збережено.";
 "remote.prs.review.kept.commits %@" = "PR отримано. У %@ є коміти, яких немає в pull request, тому її збережено.";
 "remote.prs.review.kept.in.use %@" = "%@ відкрита в терміналі, тому її збережено.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Завантаження pull request…";
+"actions.checkout.adding.repository" = "Отримати цей PR…";
+"actions.clone.here" = "Клонувати сюди";
+"actions.choose.clone.folder %@" = "Виберіть теку для клонування %@. Репозиторій буде додано до TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld не відкритий у цьому репозиторії.";
+"actions.folder.not.repository %@ %@" = "%@ не є клоном %@, тому його не додано. Виберіть іншу теку.";

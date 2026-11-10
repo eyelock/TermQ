@@ -1704,3 +1704,11 @@
 "remote.prs.review.kept.changed %@" = "Berjaya didaftar keluar. %@ berubah semasa disalin, jadi ia disimpan.";
 "remote.prs.review.kept.commits %@" = "Berjaya didaftar keluar. %@ mempunyai commit yang tiada dalam pull request, jadi ia disimpan.";
 "remote.prs.review.kept.in.use %@" = "%@ dibuka dalam terminal, jadi ia disimpan.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Memuatkan pull request…";
+"actions.checkout.adding.repository" = "Daftar keluar PR ini…";
+"actions.clone.here" = "Klon di Sini";
+"actions.choose.clone.folder %@" = "Pilih folder untuk mengklon %@. Ia akan ditambah ke TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld tidak dibuka dalam repositori itu.";
+"actions.folder.not.repository %@ %@" = "%@ bukan klon %@, jadi ia tidak ditambah. Pilih folder lain.";

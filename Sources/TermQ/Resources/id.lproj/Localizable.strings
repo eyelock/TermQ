@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "Berhasil di-checkout. %@ berubah saat disalin, jadi disimpan.";
 "remote.prs.review.kept.commits %@" = "Berhasil di-checkout. %@ punya commit yang tidak ada di pull request, jadi disimpan.";
 "remote.prs.review.kept.in.use %@" = "%@ terbuka di terminal, jadi disimpan.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Memuat pull request…";
+"actions.checkout.adding.repository" = "Checkout PR ini…";
+"actions.clone.here" = "Kloning di Sini";
+"actions.choose.clone.folder %@" = "Pilih folder tempat %@ akan dikloning. Repositori ini akan ditambahkan ke TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld tidak terbuka di repositori itu.";
+"actions.folder.not.repository %@ %@" = "%@ bukan klon dari %@, jadi tidak ditambahkan. Pilih folder lain.";

@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "S'ha obtingut. %@ ha canviat mentre es copiava, així que s'ha conservat.";
 "remote.prs.review.kept.commits %@" = "S'ha obtingut. %@ té commits que no són a la pull request, així que s'ha conservat.";
 "remote.prs.review.kept.in.use %@" = "%@ està oberta en un terminal, així que s'ha conservat.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "S'està carregant la pull request…";
+"actions.checkout.adding.repository" = "Obtén aquest PR…";
+"actions.clone.here" = "Clona aquí";
+"actions.choose.clone.folder %@" = "Tria la carpeta on clonar %@. S'afegirà a TermQ.";
+"actions.pr.not.found %lld" = "La pull request #%lld no està oberta en aquest repositori.";
+"actions.folder.not.repository %@ %@" = "%@ no és un clon de %@, així que no s'ha afegit. Tria una altra carpeta.";

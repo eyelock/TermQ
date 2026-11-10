@@ -1698,3 +1698,11 @@
 "remote.prs.review.kept.changed %@" = "Checked out. %@ changed while it was being copied, so it was kept.";
 "remote.prs.review.kept.commits %@" = "Checked out. %@ has commits that aren't in the pull request, so it was kept.";
 "remote.prs.review.kept.in.use %@" = "%@ is open in a terminal, so it was kept.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Loading pull request…";
+"actions.checkout.adding.repository" = "Checkout this PR…";
+"actions.clone.here" = "Clone Here";
+"actions.choose.clone.folder %@" = "Choose the folder to clone %@ into. It will be added to TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld isn't open in that repository.";
+"actions.folder.not.repository %@ %@" = "%@ isn't a clone of %@, so it wasn't added. Choose another folder.";

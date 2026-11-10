@@ -1705,3 +1705,11 @@
 "remote.prs.review.kept.changed %@" = "Dohvaćeno. %@ se promijenila tijekom kopiranja pa je zadržana.";
 "remote.prs.review.kept.commits %@" = "Dohvaćeno. %@ ima commitove koji nisu u pull requestu pa je zadržana.";
 "remote.prs.review.kept.in.use %@" = "%@ je otvorena u terminalu pa je zadržana.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Učitavanje pull requesta…";
+"actions.checkout.adding.repository" = "Dohvati ovaj PR…";
+"actions.clone.here" = "Kloniraj ovdje";
+"actions.choose.clone.folder %@" = "Odaberite mapu u koju će se klonirati %@. Bit će dodan u TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld nije otvoren u tom repozitoriju.";
+"actions.folder.not.repository %@ %@" = "%@ nije klon od %@ pa nije dodan. Odaberite drugu mapu.";

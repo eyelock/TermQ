@@ -1706,3 +1706,11 @@
 "remote.prs.review.kept.changed %@" = "Checkout yapıldı. %@ kopyalanırken değişti, bu yüzden tutuldu.";
 "remote.prs.review.kept.commits %@" = "Checkout yapıldı. %@ pull request'te olmayan commit'ler içeriyor, bu yüzden tutuldu.";
 "remote.prs.review.kept.in.use %@" = "%@ bir terminalde açık, bu yüzden tutuldu.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Pull request yükleniyor…";
+"actions.checkout.adding.repository" = "Bu PR'ı checkout et…";
+"actions.clone.here" = "Buraya Klonla";
+"actions.choose.clone.folder %@" = "%@ deposunun klonlanacağı klasörü seçin. TermQ'ya eklenecek.";
+"actions.pr.not.found %lld" = "#%lld numaralı pull request o depoda açık değil.";
+"actions.folder.not.repository %@ %@" = "%@, %@ deposunun bir klonu değil; bu yüzden eklenmedi. Başka bir klasör seçin.";

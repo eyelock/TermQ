@@ -90,6 +90,18 @@ struct RunWithFocusContext: Identifiable {
         self.card = nil
     }
 
+    /// A review checkout of a repository TermQ doesn't have. `clonePath` is its
+    /// hidden clone, which keeps the run harness and gives the `owner/name` slug.
+    init(reviewCheckout: GitWorktree, clonePath: String, prNumber: Int) {
+        self.workingDirectory = reviewCheckout.path
+        self.branch = nil
+        self.commitHash = reviewCheckout.commitHash
+        self.repoPath = clonePath
+        self.prNumber = prNumber
+        self.preferredHarnessId = nil
+        self.card = nil
+    }
+
     /// Card-origin (card menu) — launches reuse `card` in place.
     init(card: TerminalCard, options: CardLaunchOptions) {
         self.workingDirectory = options.workingDirectory

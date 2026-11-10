@@ -1707,3 +1707,11 @@
 "remote.prs.review.kept.changed %@" = "Đã checkout. %@ đã thay đổi trong lúc sao chép nên được giữ lại.";
 "remote.prs.review.kept.commits %@" = "Đã checkout. %@ có commit không nằm trong pull request nên được giữ lại.";
 "remote.prs.review.kept.in.use %@" = "%@ đang mở trong terminal nên được giữ lại.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Đang tải pull request…";
+"actions.checkout.adding.repository" = "Checkout PR này…";
+"actions.clone.here" = "Clone vào đây";
+"actions.choose.clone.folder %@" = "Chọn thư mục để clone %@. Kho này sẽ được thêm vào TermQ.";
+"actions.pr.not.found %lld" = "Pull request #%lld không mở trong kho đó.";
+"actions.folder.not.repository %@ %@" = "%@ không phải bản clone của %@ nên chưa được thêm. Hãy chọn thư mục khác.";

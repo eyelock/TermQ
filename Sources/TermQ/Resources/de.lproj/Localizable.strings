@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "Ausgecheckt. %@ hat sich beim Kopieren geändert und wurde deshalb behalten.";
 "remote.prs.review.kept.commits %@" = "Ausgecheckt. %@ enthält Commits, die nicht im Pull-Request sind, und wurde deshalb behalten.";
 "remote.prs.review.kept.in.use %@" = "%@ ist in einem Terminal geöffnet und wurde deshalb behalten.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "Pull-Request wird geladen…";
+"actions.checkout.adding.repository" = "Diesen PR auschecken…";
+"actions.clone.here" = "Hier klonen";
+"actions.choose.clone.folder %@" = "Wähle den Ordner, in den %@ geklont werden soll. Es wird zu TermQ hinzugefügt.";
+"actions.pr.not.found %lld" = "Pull-Request #%lld ist in diesem Repository nicht offen.";
+"actions.folder.not.repository %@ %@" = "%@ ist kein Klon von %@ und wurde daher nicht hinzugefügt. Wähle einen anderen Ordner.";

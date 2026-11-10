@@ -1699,3 +1699,11 @@
 "remote.prs.review.kept.changed %@" = "تم السحب. تغيّرت %@ أثناء النسخ، لذا تم الاحتفاظ بها.";
 "remote.prs.review.kept.commits %@" = "تم السحب. تحتوي %@ على commits غير موجودة في الـ PR، لذا تم الاحتفاظ بها.";
 "remote.prs.review.kept.in.use %@" = "%@ مفتوحة في طرفية، لذا تم الاحتفاظ بها.";
+
+// MARK: - Attention — menus
+"actions.loading.pr" = "جارٍ تحميل الـ PR…";
+"actions.checkout.adding.repository" = "سحب هذا الـ PR…";
+"actions.clone.here" = "استنساخ هنا";
+"actions.choose.clone.folder %@" = "اختر المجلد الذي سيُستنسخ فيه %@. ستتم إضافته إلى TermQ.";
+"actions.pr.not.found %lld" = "الـ PR رقم %lld ليس مفتوحًا في هذا المستودع.";
+"actions.folder.not.repository %@ %@" = "%@ ليس نسخة من %@، لذا لم تتم إضافته. اختر مجلدًا آخر.";
