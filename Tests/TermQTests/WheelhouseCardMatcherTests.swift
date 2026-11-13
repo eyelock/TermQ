@@ -64,8 +64,8 @@ final class WheelhouseCardMatcherTests: XCTestCase {
                 .map { ($0.key, $0.value) })
         let plain = card([("source", "worktree")])
         XCTAssertEqual(
-            WheelhouseCardMatcher.generalTabCards([quick, plain], wheelhouseEnabled: true).map(\.id), [plain.id])
-        XCTAssertEqual(WheelhouseCardMatcher.generalTabCards([quick, plain], wheelhouseEnabled: false).count, 2)
+            WheelhouseCardMatcher.generalCards([quick, plain], wheelhouseEnabled: true).map(\.id), [plain.id])
+        XCTAssertEqual(WheelhouseCardMatcher.generalCards([quick, plain], wheelhouseEnabled: false).count, 2)
     }
 
     func testSameSeatNameInAnotherWheelhouseDoesNotMatch() {
@@ -103,14 +103,14 @@ final class WheelhouseGeneralTabCardsTests: XCTestCase {
         let seat = card([("wheelhouse", "/w/ynw"), ("seat", "may")])
         let plain = card([("harness", "local/x")])
         XCTAssertEqual(
-            WheelhouseCardMatcher.generalTabCards([seat, plain], wheelhouseEnabled: true).map(\.id), [plain.id])
+            WheelhouseCardMatcher.generalCards([seat, plain], wheelhouseEnabled: true).map(\.id), [plain.id])
     }
 
     func testSeatCardsStayWhenTheFeatureIsOff() {
         let seat = card([("wheelhouse", "/w/ynw"), ("seat", "may")])
         let plain = card([])
         XCTAssertEqual(
-            WheelhouseCardMatcher.generalTabCards([seat, plain], wheelhouseEnabled: false).map(\.id),
+            WheelhouseCardMatcher.generalCards([seat, plain], wheelhouseEnabled: false).map(\.id),
             [seat.id, plain.id])
     }
 }
