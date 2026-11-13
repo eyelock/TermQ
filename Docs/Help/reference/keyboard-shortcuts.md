@@ -19,7 +19,7 @@ A few shortcuts act on the focused seat while the [Wheelhouses](../tutorials/whe
 | Shortcut | Action |
 |---|---|
 | **⌘N** | New terminal (with dialog) |
-| **⌘T** | Quick new terminal in same column and working directory. *On the Wheelhouse stage:* a Quick Terminal for the focused seat |
+| **⌘T** | Quick Terminal in same column and working directory. *On the Wheelhouse stage:* a Quick Terminal for the focused seat |
 | **⌘⇧N** | New column |
 | **⌘⌫** | Delete current terminal (moves to bin). *On the Wheelhouse stage:* close the focused pane |
 | **⌘⇧⌫** | Open bin |
@@ -57,7 +57,7 @@ While the [Wheelhouses](../tutorials/wheelhouses.md) tab is open, these act on t
 | Shortcut | Action |
 |---|---|
 | **⌘J** | Bring up the seat that has waited longest |
-| **⌘T** | New Quick Terminal for the focused seat |
+| **⌘T** | Quick Terminal for the focused seat |
 | **⌘I** | The focused seat's harness details |
 | **⌘P** | Keep the focused seat on stage (or stop) |
 | **⌘⌫** | Close the focused pane (a seat whose harness still runs only leaves the stage) |

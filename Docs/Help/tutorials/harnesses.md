@@ -465,7 +465,7 @@ A complete session — from blank slate to a harness you can launch with one cli
 
 5. **Write focuses** — a focus is the unit you actually launch with. Each one binds a profile to a prompt. Write one focus per repeating task: *code review*, *architecture walkthrough*, *debugging session*. Keep prompts concise — they're sent to the AI client at launch, not pasted into a chat. Add focuses from the `+` button in the **Focuses** section (§12).
 
-6. **Test end-to-end** — right-click a linked worktree in the Repositories sidebar and choose **Run with Focus…** (or **Quick Launch Focus ▶** for a one-click launch). Verify the prompt loads, the right profile is active, and the MCP servers connect.
+6. **Test end-to-end** — right-click a linked worktree in the Repositories sidebar and choose **Launch ‹harness›…** (or **Launch with Focus ▶** for a one-click launch). Verify the prompt loads, the right profile is active, and the MCP servers connect.
 
 7. **Iterate** — tweak focus prompts, adjust hooks, add or remove MCP servers. Changes are visible in the Composition view the moment `ynh` writes them. No restart needed.
 
