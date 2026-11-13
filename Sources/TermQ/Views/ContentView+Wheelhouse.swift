@@ -98,7 +98,7 @@ extension ContentView {
     /// Outside the Wheelhouse view, seat terminals stay out of the general
     /// tab strip and the main panel: they live on the stage.
     var nonSeatTabCards: [TerminalCard] {
-        WheelhouseCardMatcher.generalTabCards(viewModel.tabCards, wheelhouseEnabled: wheelhouseTabEnabled)
+        WheelhouseCardMatcher.generalCards(viewModel.tabCards, wheelhouseEnabled: wheelhouseTabEnabled)
     }
 
     var selectedNonSeatCard: TerminalCard? {

@@ -792,7 +792,7 @@ extension BoardViewModel {
 
     /// Re-render the board when the active workspace changes. There is a single
     /// `board.json`; switching a workspace is a pure DISPLAY filter change (see
-    /// `displayedCards(for:)`), never a file swap or session teardown — every
+    /// `displayedCards(for:wheelhouseEnabled:)`), never a file swap or session teardown — every
     /// terminal in `TerminalSessionManager` keeps running across switches.
     fileprivate func observeWorkspaceSwitch() {
         WorkspaceStore.shared.$activeWorkspaceId
@@ -810,12 +810,28 @@ extension BoardViewModel {
     /// with it. Unassigned cards (`workspaceId == nil`) appear **only** in "All" —
     /// the same rule the repository list uses for zero-membership repos. Mutations
     /// still operate on the full `board.cards`; this is display only.
-    func displayedCards(for column: Column) -> [TerminalCard] {
-        BoardViewModel.cardsInWorkspace(board.cards(for: column), active: activeWorkspaceProvider())
+    ///
+    /// While the Wheelhouses feature is on, seat cards and their Quick
+    /// Terminals are left out too: they live on the Wheelhouse stage.
+    func displayedCards(for column: Column, wheelhouseEnabled: Bool) -> [TerminalCard] {
+        let inWorkspace = BoardViewModel.cardsInWorkspace(
+            board.cards(for: column), active: activeWorkspaceProvider())
+        return WheelhouseCardMatcher.generalCards(inWorkspace, wheelhouseEnabled: wheelhouseEnabled)
     }
 
     /// Pure board-display filter. `active == nil` ("All") → every card; otherwise only
     /// cards tagged with `active` (unassigned cards show only in "All").
+    /// Turns a drop position in a column's displayed cards into one in the
+    /// column's full list. The board can hide cards (another workspace's, or
+    /// Wheelhouse terminals), so "before the card at displayed index N" must
+    /// land before that same card in the full list, not at full index N.
+    static func fullIndex(forDisplayedIndex index: Int, displayed: [TerminalCard], all: [TerminalCard]) -> Int {
+        guard displayed.indices.contains(index),
+            let full = all.firstIndex(where: { $0.id == displayed[index].id })
+        else { return all.count }
+        return full
+    }
+
     static func cardsInWorkspace(_ cards: [TerminalCard], active: UUID?) -> [TerminalCard] {
         guard let active else { return cards }
         return cards.filter { $0.workspaceId == active }

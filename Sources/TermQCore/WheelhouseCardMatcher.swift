@@ -76,11 +76,11 @@ public enum WheelhouseCardMatcher {
         return number
     }
 
-    /// Cards for the general tab strip: seat cards and their Quick Terminals
-    /// are left out while the Wheelhouses feature is on (they live on the
-    /// stage), and kept when it is off, so turning the feature off never
-    /// strands a seat's terminal.
-    public static func generalTabCards(_ cards: [TerminalCard], wheelhouseEnabled: Bool) -> [TerminalCard] {
+    /// Cards for the general tab strip and the board columns: seat cards and
+    /// their Quick Terminals are left out while the Wheelhouses feature is on
+    /// (they live on the stage), and kept when it is off, so turning the
+    /// feature off never strands a seat's terminal.
+    public static func generalCards(_ cards: [TerminalCard], wheelhouseEnabled: Bool) -> [TerminalCard] {
         guard wheelhouseEnabled else { return cards }
         return cards.filter { !isWheelhouseCard($0) }
     }

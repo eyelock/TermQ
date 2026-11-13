@@ -11,6 +11,7 @@ struct KanbanBoardView: View {
     private let horizontalPadding: CGFloat = 16
 
     @State private var draggedColumnId: UUID?
+    @AppStorage("feature.wheelhouseTab") private var wheelhouseTabEnabled = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -26,7 +27,7 @@ struct KanbanBoardView: View {
                     ForEach(viewModel.board.columns.sorted { $0.orderIndex < $1.orderIndex }) { column in
                         ColumnView(
                             column: column,
-                            cards: viewModel.displayedCards(for: column),
+                            cards: viewModel.displayedCards(for: column, wheelhouseEnabled: wheelhouseTabEnabled),
                             needsAttention: viewModel.needsAttention,
                             processingCards: viewModel.processingCards,
                             activeSessionCards: viewModel.activeSessionCards,
@@ -79,7 +80,12 @@ struct KanbanBoardView: View {
                                 else {
                                     return
                                 }
-                                viewModel.moveCard(card, to: column, at: targetIndex)
+                                let index = BoardViewModel.fullIndex(
+                                    forDisplayedIndex: targetIndex,
+                                    displayed: viewModel.displayedCards(
+                                        for: column, wheelhouseEnabled: wheelhouseTabEnabled),
+                                    all: viewModel.board.cards(for: column))
+                                viewModel.moveCard(card, to: column, at: index)
                             },
                             onDropColumnId: { columnIdString in
                                 guard let droppedId = UUID(uuidString: columnIdString),
