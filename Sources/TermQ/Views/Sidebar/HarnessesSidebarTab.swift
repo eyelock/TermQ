@@ -32,6 +32,9 @@ struct HarnessesSidebarTab: View {
     var onRestoreQuarantine: ((String) -> Void)?
     var onDropQuarantine: ((String) -> Void)?
     var activeHarnessId: String?
+    /// Repository roots to look for Wheelhouses in, so seat harnesses can be
+    /// grouped even before the Wheelhouses tab has been opened.
+    var wheelhouseRoots: [String] = []
     @ObservedObject private var ynhPersistence: YNHPersistence = .shared
     @ObservedObject private var editorRegistry: EditorRegistry = .shared
     /// Observed so the header spinner reflects in-flight `--check-updates`
@@ -43,6 +46,11 @@ struct HarnessesSidebarTab: View {
     @State private var showWizard = false
     @State private var showAddMarketplace = false
     @State private var collapsedGroups: Set<String> = []
+    @ObservedObject private var wheelhouseStore: WheelhouseStore = .shared
+    @AppStorage("feature.wheelhouseTab") private var wheelhouseTabEnabled = false
+    /// Roots of the Wheelhouse groups the user has opened, one per line.
+    /// Wheelhouse groups start collapsed, unlike the others.
+    @AppStorage("harnesses.expandedWheelhouseGroups") private var expandedWheelhouseGroups = ""
     @StateObject private var sampleRunner = MarketplaceAddRunner()
     @StateObject private var marketplaceService = YNHMarketplaceService()
     @ObservedObject private var menuCoordinator: SidebarMenuCoordinator = .shared
@@ -86,6 +94,11 @@ struct HarnessesSidebarTab: View {
         .onAppear {
             if repository.harnesses.isEmpty { Task { await repository.refresh() } }
             refreshRegistryService()
+            if wheelhouseTabEnabled, wheelhouseStore.wheelhouses.isEmpty, !wheelhouseStore.isLoading,
+                !wheelhouseRoots.isEmpty
+            {
+                wheelhouseStore.refresh(roots: wheelhouseRoots)
+            }
             // Consume a menu-triggered request that switched to this tab.
             if menuCoordinator.consume(.createHarness) { showWizard = true }
             if menuCoordinator.consume(.installHarness) { onInstall?() }
@@ -97,6 +110,9 @@ struct HarnessesSidebarTab: View {
         .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
             refreshRegistryService()
         }
+        .onChange(of: repository.selectedHarnessId) { _, _ in revealSelectedSeatHarness() }
+        // A seat's harness picked before the Wheelhouses loaded.
+        .onChange(of: wheelhouseStore.wheelhouses) { _, _ in revealSelectedSeatHarness() }
         .onChange(of: menuCoordinator.pending) { _, _ in
             if menuCoordinator.consume(.createHarness) { showWizard = true }
             if menuCoordinator.consume(.installHarness) { onInstall?() }
@@ -182,13 +198,13 @@ struct HarnessesSidebarTab: View {
             List(selection: $repository.selectedHarnessId) {
                 ForEach(groupedHarnesses, id: \.title) { group in
                     DisclosureGroup(
-                        isExpanded: expandedBinding(for: group.title)
+                        isExpanded: expandedBinding(for: group)
                     ) {
                         ForEach(group.harnesses) { harness in
                             harnessRow(harness)
                         }
                     } label: {
-                        Label(group.title, systemImage: "puzzlepiece.extension")
+                        Label(group.title, systemImage: group.symbol)
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -268,12 +284,25 @@ struct HarnessesSidebarTab: View {
 
     private enum GroupKind {
         case `default`, github, registry, local
+        /// A Wheelhouse's seat harnesses; the associated value is its root.
+        case wheelhouse(String)
     }
 
     private struct HarnessGroup {
         let title: String
         let harnesses: [Harness]
         let kind: GroupKind
+
+        var symbol: String {
+            if case .wheelhouse = kind { return "steeringwheel" }
+            return "puzzlepiece.extension"
+        }
+    }
+
+    /// The Wheelhouses whose seat harnesses get their own groups: none while
+    /// the feature is off, so every harness stays where it always was.
+    private var groupedWheelhouses: [Wheelhouse] {
+        wheelhouseTabEnabled ? wheelhouseStore.wheelhouses : []
     }
 
     private var groupedHarnesses: [HarnessGroup] {
@@ -289,8 +318,11 @@ struct HarnessesSidebarTab: View {
             guard KnownHarnesses.defaultNames.contains(harness.name) else { return false }
             return (harness.installedFrom?.sourceType ?? "") != "local"
         }
-        let defaults = repository.harnesses.filter(isDefault)
-        let remaining = repository.harnesses.filter { !isDefault($0) }
+        // Seat harnesses go to their Wheelhouse's group, at the end.
+        let (seatGroups, others) = WheelhouseHarnessGrouping.split(
+            repository.harnesses, wheelhouses: groupedWheelhouses)
+        let defaults = others.filter(isDefault)
+        let remaining = others.filter { !isDefault($0) }
 
         var groups: [HarnessGroup] = []
 
@@ -333,8 +365,43 @@ struct HarnessesSidebarTab: View {
             groups.append(
                 HarnessGroup(title: Strings.Harnesses.groupLocal, harnesses: alphaSorted(local), kind: .local))
         }
+        for seatGroup in seatGroups {
+            groups.append(
+                HarnessGroup(
+                    title: Strings.Harnesses.groupWheelhouse(seatGroup.wheelhouse.title),
+                    harnesses: alphaSorted(seatGroup.harnesses),
+                    kind: .wheelhouse(seatGroup.wheelhouse.root)))
+        }
 
         return groups
+    }
+
+    private var expandedWheelhouseRoots: Set<String> {
+        Set(expandedWheelhouseGroups.split(separator: "\n").map(String.init))
+    }
+
+    private func setWheelhouseGroup(_ root: String, expanded: Bool) {
+        var roots = expandedWheelhouseRoots
+        if expanded { roots.insert(root) } else { roots.remove(root) }
+        expandedWheelhouseGroups = roots.sorted().joined(separator: "\n")
+    }
+
+    private func expandedBinding(for group: HarnessGroup) -> Binding<Bool> {
+        guard case .wheelhouse(let root) = group.kind else { return expandedBinding(for: group.title) }
+        return Binding(
+            get: { expandedWheelhouseRoots.contains(root) },
+            set: { setWheelhouseGroup(root, expanded: $0) }
+        )
+    }
+
+    /// Opens the Wheelhouse group holding the selected harness, so a seat's
+    /// "Harness Details…" shows its row rather than a collapsed group.
+    private func revealSelectedSeatHarness() {
+        guard let id = repository.selectedHarnessId,
+            let harness = repository.harnesses.first(where: { $0.id == id }),
+            let wheelhouse = WheelhouseHarnessGrouping.wheelhouse(of: harness, in: groupedWheelhouses)
+        else { return }
+        setWheelhouseGroup(wheelhouse.root, expanded: true)
     }
 
     private func expandedBinding(for title: String) -> Binding<Bool> {
@@ -631,6 +698,9 @@ extension HarnessesSidebarTab {
             } label: {
                 Label(Strings.Harnesses.groupMenuSettings, systemImage: "gearshape")
             }
+
+        case .wheelhouse(let root):
+            WheelhousePathMenuItems(path: root)
 
         case .local:
             Button {

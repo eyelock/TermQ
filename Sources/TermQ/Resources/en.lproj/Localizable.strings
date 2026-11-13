@@ -776,6 +776,7 @@
 "harnesses.quarantine.drop" = "Drop…";
 "harnesses.group.github %@" = "GitHub: %@";
 "harnesses.group.registry %@" = "Marketplace: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 
 // Marketplace — sidebar groups
 "marketplace.group.default" = "Default";

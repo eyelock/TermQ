@@ -1014,6 +1014,7 @@
 "harnesses.quarantine.drop" = "ลบ…";
 "harnesses.group.menu.settings" = "การตั้งค่า…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "กำลังโหลด Harness ที่มีอยู่…";
 "harnesses.install.git.ref" = "อ้างอิง";
 "harnesses.install.git.ref.placeholder" = "สาขา แท็ก หรือ commit SHA (ไม่บังคับ)";

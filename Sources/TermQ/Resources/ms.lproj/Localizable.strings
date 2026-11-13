@@ -1012,6 +1012,7 @@
 "harnesses.quarantine.drop" = "Buang…";
 "harnesses.group.menu.settings" = "Tetapan…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Memuatkan harness yang tersedia…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Cawangan, tag atau commit SHA (pilihan)";

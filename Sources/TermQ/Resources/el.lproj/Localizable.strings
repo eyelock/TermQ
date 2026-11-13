@@ -1007,6 +1007,7 @@
 "harnesses.quarantine.drop" = "Κατάργηση…";
 "harnesses.group.menu.settings" = "Ρυθμίσεις…";
 "harnesses.group.registry %@" = "Μητρώο: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Φόρτωση διαθέσιμων harness…";
 "harnesses.install.git.ref" = "Αναφορά";
 "harnesses.install.git.ref.placeholder" = "Κλάδος, ετικέτα ή SHA commit (προαιρετικό)";

@@ -1007,6 +1007,7 @@
 "harnesses.quarantine.drop" = "Fjern…";
 "harnesses.group.menu.settings" = "Indstillinger…";
 "harnesses.group.registry %@" = "Register: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Indlæser tilgængelige harnesses…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Branch, tag eller commit-SHA (valgfrit)";

@@ -1007,6 +1007,7 @@
 "harnesses.quarantine.drop" = "حذف…";
 "harnesses.group.menu.settings" = "الإعدادات…";
 "harnesses.group.registry %@" = "السجل: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "جارٍ تحميل الـ harness المتاحة…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "فرع أو وسم أو SHA الإيداع (اختياري)";
