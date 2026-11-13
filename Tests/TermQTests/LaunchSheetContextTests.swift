@@ -7,7 +7,7 @@ import XCTest
 /// only the choices that make sense there.
 @MainActor
 final class LaunchSheetContextTests: XCTestCase {
-    func testAHarnessLaunchChoosesItsFolderBackendAndResume() {
+    func testAHarnessLaunchChoosesItsFolderAndBackend() {
         let context = RunWithFocusContext(
             harnessId: "local/babelfish-dev", workingDirectory: nil, branch: nil, vendorOverride: "claude")
 
@@ -15,13 +15,12 @@ final class LaunchSheetContextTests: XCTestCase {
         XCTAssertEqual(context.workingDirectory, NSHomeDirectory(), "no folder given: start at home")
         XCTAssertTrue(context.choosesDirectory)
         XCTAssertTrue(context.choosesBackend)
-        XCTAssertTrue(context.offersResume)
         XCTAssertEqual(context.vendorOverride, "claude")
         XCTAssertFalse(context.fixesHarness)
         XCTAssertNil(context.card)
     }
 
-    func testASeatLaunchFixesItsHarnessAndFolderAndOffersResume() {
+    func testASeatLaunchFixesItsHarnessAndFolder() {
         let seat = WheelhouseSeat(name: "Eno", group: .crew, command: "eno")
         let wheelhouse = Wheelhouse(root: "/w/ynw", roster: WheelhouseRoster(seats: [seat]))
 
@@ -31,7 +30,6 @@ final class LaunchSheetContextTests: XCTestCase {
         XCTAssertEqual(context.preferredHarnessId, "local/eno")
         XCTAssertTrue(context.fixesHarness)
         XCTAssertFalse(context.choosesDirectory)
-        XCTAssertTrue(context.offersResume)
         XCTAssertEqual(context.seat?.seat.command, "eno")
     }
 

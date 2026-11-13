@@ -10,7 +10,7 @@ private let defaultVendorTag = "__default__"
 /// worktree, a PR, a terminal card, a harness or a Wheelhouse seat.
 ///
 /// Presents harness/vendor/focus/profile pickers, then (where the context
-/// allows) the folder, backend and resume choices, a "Stay interactive"
+/// allows) the folder and backend choices, Resume (when the vendor can), a "Stay interactive"
 /// toggle (on by default, above the prompt so it isn't missed), a prompt
 /// textarea (read-only when a focus is selected unless Customize is pressed)
 /// and a Launch action.
@@ -99,9 +99,9 @@ struct RunWithFocusSheet: View {
     /// Whether the effective vendor supports --interactive.
     private var selectedVendorSupportsInteractive: Bool { effectiveVendorSupports(\.supportsInitialPrompt) }
 
-    /// Whether the launch can continue a previous session: the context
-    /// allows it and the effective vendor's CLI can.
-    private var showsResume: Bool { context.offersResume && effectiveVendorSupports(\.supportsResume) }
+    /// Whether the launch can continue a previous session: wherever it is
+    /// opened from, when the effective vendor's CLI can. Off by default.
+    private var showsResume: Bool { effectiveVendorSupports(\.supportsResume) }
 
     /// The toggle shows whenever the vendor supports `--interactive`, so it is
     /// seen before a focus or prompt is chosen; it is only passed once there

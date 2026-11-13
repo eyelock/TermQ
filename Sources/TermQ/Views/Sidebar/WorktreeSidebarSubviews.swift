@@ -86,8 +86,6 @@ struct RunWithFocusContext: Identifiable {
     var choosesDirectory = false
     /// Whether the terminal backend can be picked for the new card.
     var choosesBackend = false
-    /// Whether "Resume previous session" is offered (when the vendor can).
-    var offersResume = false
     /// The vendor to preselect, such as a per-harness override.
     var vendorOverride: String?
 
@@ -140,7 +138,6 @@ struct RunWithFocusContext: Identifiable {
         self.card = nil
         self.choosesDirectory = true
         self.choosesBackend = true
-        self.offersResume = true
         self.vendorOverride = vendorOverride
     }
 
@@ -154,7 +151,6 @@ struct RunWithFocusContext: Identifiable {
         self.preferredHarnessId = harnessId
         self.card = nil
         self.seat = (wheelhouse, seat)
-        self.offersResume = true
     }
 }
 
