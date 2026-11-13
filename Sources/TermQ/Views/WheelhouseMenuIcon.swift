@@ -6,8 +6,8 @@ import SwiftUI
 /// Where the Repositories tab has the same kind of action, it uses the same
 /// symbol.
 enum WheelhouseMenuIcon {
-    /// Start the seat (Repositories: Launch harness).
-    static let openTerminal = "play.fill"
+    /// Show a running seat's terminal. Launching uses `LaunchMenuIcon`, the
+    /// same as every other launch menu.
     static let showTerminal = "macwindow"
     static let birth = "sparkles"
     /// Install a seat's harness (the same arrow Repositories uses to bring
@@ -18,8 +18,6 @@ enum WheelhouseMenuIcon {
     static let focus = "scope"
     static let handoff = "moon.zzz"
     static let closeTerminal = "xmark.octagon"
-    /// Repositories: New Terminal.
-    static let quickTerminal = "terminal"
     /// Repositories: harness items.
     static let harnessDetails = "puzzlepiece.extension"
     static let pin = "pin"

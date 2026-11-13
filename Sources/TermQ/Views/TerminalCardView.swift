@@ -235,37 +235,34 @@ struct TerminalCardView: View {
             onSelect()
         }
         .contextMenu {
-            Button(Strings.Card.open) {
+            Button {
                 onSelect()
+            } label: {
+                Label(Strings.Card.open, systemImage: "macwindow")
             }
 
             // Launch family for a non-live card — mirrors the sidebar worktree
             // menu, keyed off whatever the card resolves back to.
             if !hasActiveSession, let actions = launchActions {
                 let opts = CardLaunchResolver().resolve(card)
-                if opts.showsLaunchItem, let name = opts.effectiveHarnessName {
-                    Button(Strings.Sidebar.launchHarness(name)) {
-                        actions.launchHarness(card)
-                    }
-                }
-                if opts.canLaunchHarness {
-                    Button(Strings.RemotePRs.runWithFocus) {
-                        actions.runWithFocus(card)
-                    }
-                    if !opts.focuses.isEmpty {
-                        Menu(Strings.RemotePRs.quickLaunchFocus) {
-                            ForEach(opts.focuses, id: \.self) { focusName in
-                                Button(Strings.RemotePRs.runFocusItem(focusName)) {
-                                    actions.quickLaunchFocus(card, focusName)
-                                }
-                            }
-                        }
-                    }
+                Divider()
+                if (opts.showsLaunchItem && opts.effectiveHarnessName != nil) || opts.canLaunchHarness {
+                    LaunchMenuItems(
+                        name: opts.effectiveHarnessName,
+                        quickLaunch: opts.showsLaunchItem ? { actions.launchHarness(card) } : nil,
+                        openSheet: opts.canLaunchHarness ? { actions.runWithFocus(card) } : nil,
+                        focuses: opts.canLaunchHarness
+                            ? opts.focuses.map { focusName in
+                                LaunchMenuItems.Focus(name: focusName) { actions.quickLaunchFocus(card, focusName) }
+                            } : [])
+                    Divider()
                 }
                 // Fresh plain terminal at the card's directory — a new card, so
                 // it never re-attaches to the card's (possibly stale) session.
-                Button(Strings.Sidebar.newTerminal) {
+                Button {
                     actions.quickTerminal(card)
+                } label: {
+                    Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
                 }
                 Divider()
             }

@@ -10,7 +10,9 @@ import TermQShared
 /// (`StackGroupRow`), so `StackBranchEntryRow`'s initializers take one struct instead
 /// of a dozen individual closures. `nil` fields hide their menu item.
 struct StackEntryActions {
+    /// Quick Launch: the harness, launched directly with its defaults.
     var launchHarness: (name: String, action: () -> Void)?
+    /// Launch…: the launch sheet.
     var runWithFocus: (() -> Void)?
     /// Row-icon/menu parity with `worktreeFocusMenuItems`'s cached-focus submenu
     /// (Revision 12a): one entry per cached focus name for the resolved harness. Empty
@@ -385,23 +387,19 @@ extension WorktreeSidebarView {
 
     // MARK: Launch closures
 
-    func stackLaunchHarnessClosure(_ harnessName: String, repo: ObservableRepository) -> (GitWorktree) -> Void {
-        { worktree in self.onLaunchHarness?(harnessName, worktree.path, worktree.branch) }
-    }
-
     /// Silent direct launch with resolved defaults — mirrors `primaryAction(worktree:repo:)`'s
-    /// use of `onAutoLaunchHarness`, as opposed to `stackLaunchHarnessClosure`'s
-    /// `onLaunchHarness`, which opens the manual Launch Harness sheet. Used by
-    /// `stackPrimaryAction` so clicking a stack row behaves exactly like clicking a
-    /// worktree row; the context-menu "Launch <Harness>" item keeps the sheet.
+    /// use of `onAutoLaunchHarness`. Used by `stackPrimaryAction`, so clicking a stack
+    /// row behaves exactly like clicking a worktree row, and by Quick Launch.
     func stackLaunchAutoHarnessClosure(_ harnessName: String, repo: ObservableRepository) -> (GitWorktree) -> Void {
         { worktree in self.onAutoLaunchHarness?(harnessName, worktree.path, worktree.branch) }
     }
 
-    func stackLaunchRunWithFocusClosure(repo: ObservableRepository) -> (GitWorktree) -> Void {
+    func stackLaunchRunWithFocusClosure(repo: ObservableRepository, harnessId: String?) -> (GitWorktree) -> Void {
         { worktree in
             let prNumber = self.linkedPRNumber(for: worktree, repo: repo)
-            self.runWithFocusContext = RunWithFocusContext(worktree: worktree, repo: repo, prNumber: prNumber)
+            var context = RunWithFocusContext(worktree: worktree, repo: repo, prNumber: prNumber)
+            if let harnessId { context.preferredHarnessId = harnessId }
+            self.runWithFocusContext = context
         }
     }
 
@@ -490,14 +488,14 @@ extension WorktreeSidebarView {
                 {
                     self.stackLaunch(
                         branch: branch.name, repo: repo, anchor: anchor,
-                        launch: self.stackLaunchHarnessClosure(harnessName, repo: repo))
+                        launch: self.stackLaunchAutoHarnessClosure(harnessName, repo: repo))
                 }
             )
         }
         actions.runWithFocus = {
             self.stackLaunch(
                 branch: branch.name, repo: repo, anchor: anchor,
-                launch: self.stackLaunchRunWithFocusClosure(repo: repo))
+                launch: self.stackLaunchRunWithFocusClosure(repo: repo, harnessId: effectiveHarness))
         }
         let runHarnessId =
             ynhPersistence.runHarness(for: repo.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
@@ -771,8 +769,8 @@ extension WorktreeSidebarView {
         }
     }
 
-    /// The group header's launch items — Launch <Harness> / Run with Focus…, then
-    /// Quick Terminal / Create Terminal…, all targeting `tip` via `stackLaunch`. The
+    /// The group header's launch items — Quick Launch / Launch… / Launch with
+    /// Focus, then Quick Terminal / New Terminal…, all targeting `tip` via `stackLaunch`. The
     /// harness resolves per Revision 11c: stack override → anchoring worktree override
     /// → repo default.
     @ViewBuilder
@@ -782,43 +780,37 @@ extension WorktreeSidebarView {
         let effectiveHarness = ynhPersistence.effectiveStackHarness(
             repoPath: repo.path, rootName: rootName, worktreePath: anchoring?.path)
 
-        if let harnessName = effectiveHarness {
-            Button {
-                stackLaunch(
-                    branch: tip.name, repo: repo, anchor: anchoring,
-                    launch: stackLaunchHarnessClosure(harnessName, repo: repo))
-            } label: {
-                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
-            }
-        }
-        Button {
-            stackLaunch(
-                branch: tip.name, repo: repo, anchor: anchoring,
-                launch: stackLaunchRunWithFocusClosure(repo: repo))
-        } label: {
-            Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-        }
-
-        // Quick Launch Focus submenu — row-icon/menu parity with
-        // `worktreeFocusMenuItems` (Revision 12a): one entry per cached focus name for
-        // the resolved run harness, launched directly at the stack's TIP.
+        // Focuses come from the resolved run harness, launched directly at the
+        // stack's TIP.
         let runHarnessId =
             ynhPersistence.runHarness(for: repo.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
         let cachedFocuses: [String] =
             runHarnessId.flatMap { id in
                 harnessRepository.cachedDetail(for: id)?.composition.focuses
             }.map { $0.keys.sorted() } ?? []
-        if let runHarnessId, !cachedFocuses.isEmpty {
-            Menu(Strings.RemotePRs.quickLaunchFocus) {
-                ForEach(cachedFocuses, id: \.self) { focusName in
-                    Button(Strings.RemotePRs.runFocusItem(focusName)) {
+        LaunchMenuItems(
+            name: effectiveHarness,
+            quickLaunch: effectiveHarness.map { harnessName in
+                {
+                    stackLaunch(
+                        branch: tip.name, repo: repo, anchor: anchoring,
+                        launch: stackLaunchAutoHarnessClosure(harnessName, repo: repo))
+                }
+            },
+            openSheet: {
+                stackLaunch(
+                    branch: tip.name, repo: repo, anchor: anchoring,
+                    launch: stackLaunchRunWithFocusClosure(repo: repo, harnessId: effectiveHarness))
+            },
+            focuses: runHarnessId.map { harnessId in
+                cachedFocuses.map { focusName in
+                    LaunchMenuItems.Focus(name: focusName) {
                         stackLaunch(
                             branch: tip.name, repo: repo, anchor: anchoring,
-                            launch: stackLaunchFocusClosure(focusName, harnessId: runHarnessId, repo: repo))
+                            launch: stackLaunchFocusClosure(focusName, harnessId: harnessId, repo: repo))
                     }
                 }
-            }
-        }
+            } ?? [])
 
         Divider()
         Button {
@@ -826,14 +818,14 @@ extension WorktreeSidebarView {
                 branch: tip.name, repo: repo, anchor: anchoring,
                 launch: stackLaunchQuickTerminalClosure(repo: repo))
         } label: {
-            Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+            Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
         }
         Button {
             stackLaunch(
                 branch: tip.name, repo: repo, anchor: anchoring,
                 launch: stackLaunchCreateTerminalClosure(repo: repo))
         } label: {
-            Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+            Label(Strings.Sidebar.createTerminal, systemImage: LaunchMenuIcon.newTerminal)
         }
     }
 }

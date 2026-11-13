@@ -29,7 +29,8 @@ struct ContentView: View {
     @State var lifecycleCoordinator = HarnessLifecycleCoordinator()
 
     /// Run-with-Focus sheet context for a card-menu launch (reuse-in-place).
-    @State private var runWithFocusCardContext: RunWithFocusContext?
+    /// The launch sheet for a card, a Wheelhouse seat or a harness.
+    @State var runWithFocusCardContext: RunWithFocusContext?
 
     /// Live window width, tracked via a background `GeometryReader` on the
     /// `HSplitView` (below) rather than wrapping `body` in one directly — that would
@@ -291,16 +292,16 @@ struct ContentView: View {
                 item: $launchCoordinator.launchSheetTarget,
                 onDismiss: { launchCoordinator.dismissLaunchSheet() },
                 content: { target in
-                    HarnessLaunchSheet(
-                        harness: target.harness,
-                        detail: harnessRepo.selectedDetail,
-                        vendors: vendorService.vendors,
-                        initialWorkingDirectory: target.workingDirectory,
-                        initialBranch: target.branch,
-                        initialVendorOverride: target.vendorOverride
-                    ) { config in
-                        launchCoordinator.launchHarness(config, reuseExisting: false)
-                    }
+                    RunWithFocusSheet(
+                        context: RunWithFocusContext(
+                            harnessId: target.harness.id, workingDirectory: target.workingDirectory,
+                            branch: target.branch, vendorOverride: target.vendorOverride),
+                        onLaunch: { config in
+                            launchCoordinator.launchHarness(config, reuseExisting: false)
+                            launchCoordinator.launchSheetTarget = nil
+                        },
+                        onCancel: { launchCoordinator.launchSheetTarget = nil }
+                    )
                 }
             )
             .sheet(item: $runWithFocusCardContext) { ctx in
@@ -309,6 +310,12 @@ struct ContentView: View {
                     onLaunch: { config in
                         if let card = ctx.card {
                             launchCoordinator.applyLaunchToCard(card, config: config)
+                        } else if let target = ctx.seat,
+                            let card = launchCoordinator.launchSeat(target.seat, in: target.wheelhouse, config: config)
+                        {
+                            wheelhouseStage.show(card)
+                        } else if ctx.seat == nil {
+                            launchCoordinator.launchHarness(config, reuseExisting: false)
                         }
                         runWithFocusCardContext = nil
                     },
@@ -461,7 +468,7 @@ struct ContentView: View {
                         Button {
                             viewModel.quickNewTerminal()
                         } label: {
-                            Image(systemName: "plus.rectangle")
+                            Image(systemName: LaunchMenuIcon.quickTerminal)
                         }
                         .help(Strings.Toolbar.newQuickHelp)
 
@@ -512,11 +519,11 @@ struct ContentView: View {
                         } label: {
                             Image(systemName: "apple.terminal")
                         }
-                        .help(Strings.Toolbar.openTerminalApp)
+                        .help(Strings.Menu.openInTerminalApp)
 
                         Menu {
                             if let firstColumn = viewModel.board.columns.first {
-                                Button(Strings.Toolbar.newTerminal) {
+                                Button(Strings.Sidebar.createTerminal) {
                                     viewModel.addTerminal(to: firstColumn)
                                 }
                             }
@@ -905,7 +912,7 @@ extension ContentView {
                         // the Wheelhouse root, onto the stage.
                         if let seatContext {
                             launchCoordinator.dismissHarnessDetail()
-                            seatAction(seatContext.wheelhouse, seatContext.seat, .open)
+                            seatAction(seatContext.wheelhouse, seatContext.seat, .launchDialog)
                             return
                         }
                         launchCoordinator.requestLaunch(

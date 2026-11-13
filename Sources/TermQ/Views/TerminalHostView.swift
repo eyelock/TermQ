@@ -341,37 +341,37 @@ class TermQTerminalView: LocalProcessTerminalView {
     private func appendPathActionItems(to menu: NSMenu, resolved: ResolvedSelectionPath) {
         menu.addItem(.separator())
 
+        // The same labels and symbols as the sidebar menus (`LaunchMenuItems`).
         if let harnessName = YNHPersistence.shared.harness(for: resolved.directory) {
             menu.addItem(
-                NSMenuItem(
-                    title: Strings.Sidebar.launchHarness(harnessName),
-                    action: #selector(launchHarnessAtSelection(_:)),
-                    keyEquivalent: ""))
+                Self.menuItem(
+                    Strings.Launch.quick(harnessName), symbol: LaunchMenuIcon.quickLaunch,
+                    action: #selector(launchHarnessAtSelection(_:))))
+            menu.addItem(.separator())
         }
 
         menu.addItem(
-            NSMenuItem(
-                title: Strings.Sidebar.newTerminal, action: #selector(quickTerminalAtSelection(_:)),
-                keyEquivalent: ""))
+            Self.menuItem(
+                Strings.Sidebar.newTerminal, symbol: LaunchMenuIcon.quickTerminal,
+                action: #selector(quickTerminalAtSelection(_:))))
         menu.addItem(
-            NSMenuItem(
-                title: Strings.Sidebar.createTerminal, action: #selector(createTerminalAtSelection(_:)),
-                keyEquivalent: ""))
+            Self.menuItem(
+                Strings.Sidebar.createTerminal, symbol: LaunchMenuIcon.newTerminal,
+                action: #selector(createTerminalAtSelection(_:))))
 
         menu.addItem(.separator())
 
         menu.addItem(
-            NSMenuItem(
-                title: Strings.Sidebar.revealInFinder, action: #selector(revealSelectionInFinder(_:)),
-                keyEquivalent: ""))
+            Self.menuItem(
+                Strings.Sidebar.revealInFinder, symbol: "folder", action: #selector(revealSelectionInFinder(_:))))
         menu.addItem(
-            NSMenuItem(
-                title: Strings.Sidebar.openInTerminal, action: #selector(openSelectionInTerminal(_:)),
-                keyEquivalent: ""))
+            Self.menuItem(
+                Strings.Sidebar.openInTerminal, symbol: "apple.terminal",
+                action: #selector(openSelectionInTerminal(_:))))
         menu.addItem(
-            NSMenuItem(
-                title: Strings.Sidebar.copyPathname, action: #selector(copySelectionPathname(_:)),
-                keyEquivalent: ""))
+            Self.menuItem(
+                Strings.Sidebar.copyPathname, symbol: "doc.on.clipboard",
+                action: #selector(copySelectionPathname(_:))))
 
         let editors = EditorRegistry.shared.available
         if !editors.isEmpty {
@@ -386,6 +386,12 @@ class TermQTerminalView: LocalProcessTerminalView {
             openInItem.submenu = submenu
             menu.addItem(openInItem)
         }
+    }
+
+    private static func menuItem(_ title: String, symbol: String, action: Selector) -> NSMenuItem {
+        let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
+        item.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
+        return item
     }
 
     @objc private func launchHarnessAtSelection(_ sender: Any) {

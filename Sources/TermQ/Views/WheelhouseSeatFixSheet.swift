@@ -83,7 +83,7 @@ struct WheelhouseSeatFixSheet: View {
                         dismiss()
                         onSeatAction(wheelhouse, seat, .quickTerminal)
                     } label: {
-                        Label(Strings.Wheelhouse.newQuickTerminal, systemImage: WheelhouseMenuIcon.quickTerminal)
+                        Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
                     }
                 }
             case .delegatesMissing(let paths):
@@ -101,7 +101,7 @@ struct WheelhouseSeatFixSheet: View {
                     dismiss()
                     onSeatAction(wheelhouse, seat, .open)
                 } label: {
-                    Label(Strings.Wheelhouse.tryAgain, systemImage: WheelhouseMenuIcon.openTerminal)
+                    Label(Strings.Wheelhouse.tryAgain, systemImage: LaunchMenuIcon.quickLaunch)
                 }
             }
         }

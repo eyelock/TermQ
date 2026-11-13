@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Tilbage til tavlen (Escape)";
 "toolbar.move.to" = "Flyt til kolonne";
 "toolbar.new.quick" = "Hurtig terminal";
-"toolbar.new.quick.help" = "Ny hurtig terminal (⌘T)";
+"toolbar.new.quick.help" = "Hurtig terminal (⌘T)";
 "toolbar.edit" = "Rediger";
 "toolbar.edit.help" = "Rediger terminaldetaljer (⌘E)";
 "toolbar.pin" = "Fastgør";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Slet terminal";
 "toolbar.add" = "Tilføj";
 "toolbar.add.help" = "Tilføj ny terminal eller kolonne";
-"toolbar.open.terminal.app" = "Åbn i Terminal";
 "toolbar.open.terminal.app.help" = "Åbn i Terminal.app";
-"toolbar.new.terminal" = "Ny terminal";
 "toolbar.new.column" = "Ny kolonne";
 "toolbar.bin.count %lld" = "Papirkurv (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Ny hurtig terminal";
-"menu.new.terminal" = "Ny terminal...";
 "menu.new.terminal.dialog" = "Ny terminal";
 "menu.new.column" = "Ny kolonne";
 "menu.back" = "Tilbage til tavlen";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktrees.refresh" = "Opdater worktrees";
 "sidebar.worktree.new" = "Ny worktree";
 "sidebar.worktree.new.terminal" = "Hurtigt Terminal";
-"sidebar.worktree.create.terminal" = "Opret Terminal…";
+"sidebar.worktree.create.terminal" = "Ny terminal…";
 "sidebar.worktree.terminals.badge.help" = "Klik for hurtige links til at åbne terminaler";
 "sidebar.worktree.open.in.terminal" = "Vis i Terminal";
 "sidebar.worktree.reveal.in.finder" = "Vis i Finder";
@@ -640,7 +635,6 @@
 "sidebar.worktree.set.harness" = "Angiv harness…";
 "sidebar.worktree.clear.harness" = "Ryd harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Slet worktree";
 "sidebar.remove.worktree.title" = "Slet worktree?";
 "sidebar.remove.worktree.confirm" = "Slet";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Start harness";
-"harnesses.launch.vendor" = "Leverandør";
+"launch.quick %@" = "Hurtigstart %@";
+"launch.sheet %@" = "Start %@…";
+"launch.sheet.any" = "Start harness…";
+"launch.sheet.short" = "Start…";
+"launch.with.focus" = "Start med fokus";
 "harnesses.launch.vendor.unavailable" = "(ikke installeret)";
 "harnesses.launch.vendor.default" = "Standard (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Ingen";
 "harnesses.launch.working.directory" = "Arbejdsmappe";
 "harnesses.launch.browse" = "Gennemse…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
 "harnesses.launch.resume" = "Genoptag forrige session";
 "harnesses.launch.resume.help" = "Fortsætter en tidligere session i stedet for at starte forfra. Claude fortsætter kun den session, som dette kort startede, så et nyt kort starter forfra; andre leverandører fortsætter den seneste session i arbejdsmappen.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
-"harnesses.launch.cancel" = "Annuller";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Tilknyttede worktrees";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Dette afinstallerer harness fra YNH og sletter filerne permanent. Handlingen kan ikke fortrydes.";
 "harnesses.delete.local.confirm" = "Slet harness";
 "harnesses.more.actions.help" = "Flere handlinger";
-"harnesses.copy.run.command" = "Kopiér kørselskommando";
 "harnesses.ynh.documentation" = "YNH-dokumentation";
 
 "harnesses.add.registry.title" = "Tilføj YNH-register";
@@ -1348,10 +1340,8 @@
 "remote.prs.prune.reason.ahead" = "upushede commits";
 "remote.prs.prune.reason.dirty" = "uncommittede ændringer";
 "remote.prs.prune.remove" = "Fjern";
-"remote.prs.quick.launch.focus" = "Hurtigstart af fokus";
 "remote.prs.run.cancel" = "Annuller";
 "remote.prs.run.customize" = "Tilpas";
-"remote.prs.run.focus.item %@" = "Kør %@";
 "remote.prs.run.focus.label" = "Fokus";
 "remote.prs.run.focus.none" = "(ingen — ad hoc-prompt)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1362,11 +1352,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Fokusprompt";
 "remote.prs.run.refresh.detail" = "Genindlæs harness-fokus og -profiler fra disk";
-"remote.prs.run.run" = "Kør";
-"remote.prs.run.sheet.title" = "Kør med fokus";
 "remote.prs.run.vendor.default" = "Harness-standard";
 "remote.prs.run.vendor.label" = "Leverandør";
-"remote.prs.run.with.focus" = "Kør med fokus…";
 "remote.prs.set.default.focus" = "Angiv standardfokus…";
 "remote.prs.show.in.local" = "Vis lokalt";
 "remote.prs.show.in.remote" = "Vis på remote";
@@ -1575,7 +1562,6 @@
 "wheelhouse.work.unavailable" = "Arbejdsgrafen er ikke tilgængelig (bd blev ikke fundet eller fejlede)";
 "wheelhouse.unborn.help" = "Aldrig besat: denne plads har ikke haft sin første session";
 "wheelhouse.waiting.on %@" = "venter på %@";
-"wheelhouse.open.terminal" = "Åbn terminal";
 "wheelhouse.show.terminal" = "Vis terminal";
 "wheelhouse.status.idle" = "inaktiv";
 "wheelhouse.working.help" = "Arbejder: har tjekket ind på en bead inden for de seneste 20 minutter, selvom den ikke har en egen terminal kørende";
@@ -1630,7 +1616,6 @@
 "wheelhouse.action.close.terminal" = "Luk terminal";
 "wheelhouse.action.harness.details" = "Harness-detaljer…";
 "wheelhouse.action.ask.focus" = "Bed den fokusere på";
-"wheelhouse.action.launch.focus" = "Start med fokus";
 "settings.wheelhouse.enable.tab" = "Vis fanen Wheelhouses i sidepanelet";
 "settings.wheelhouse.enable.tab.help" = "Tilføjer en Wheelhouses-fane med pladserne i hvert Wheelhouse i dine repositories";
 "settings.wheelhouse.quick.terminal.placement" = "Placering af hurtig terminal";
@@ -1641,7 +1626,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Navnet, som et Wheelhouse tildeler beads til, når ethvert menneske kan tage sig af dem. Klare beads for dette navn vises i din indbakke.";
 "settings.wheelhouse.inbox.own.name" = "Dit eget indbakkenavn";
 "settings.wheelhouse.inbox.own.name.help" = "Navnet, som et Wheelhouse tildeler beads til, når de er til dig specifikt. Lad feltet stå tomt, hvis du ikke har et.";
-"wheelhouse.quick.terminal.new" = "Ny hurtig terminal";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Hurtig terminal %ld til %@: klik for at hente den frem på scenen";
 "wheelhouse.inbox.title" = "Indbakke";

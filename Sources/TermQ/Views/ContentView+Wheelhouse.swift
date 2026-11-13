@@ -18,6 +18,19 @@ extension ContentView {
                 installSeat(seat, in: wheelhouse)
                 return
             }
+            if action == .launchDialog {
+                // The sheet starts a seat; a running one is just shown.
+                let running =
+                    launchCoordinator.seatCard(seat, in: wheelhouse)
+                    .map { TerminalSessionManager.shared.hasActiveSession(for: $0.id) } ?? false
+                if running {
+                    seatAction(wheelhouse, seat, .open)
+                } else {
+                    runWithFocusCardContext = RunWithFocusContext(
+                        seat: seat, in: wheelhouse, harnessId: launchCoordinator.seatHarnessId(seat))
+                }
+                return
+            }
             guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
             switch action {
             case .closeTerminal: wheelhouseStage.remove(card)

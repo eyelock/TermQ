@@ -78,7 +78,7 @@ extension WorktreeSidebarView {
 
     // MARK: Groups
 
-    /// Run with Focus… and Quick Launch Focus ▸. With nothing on disk, both make a
+    /// Launch… and Launch with Focus ▸. With nothing on disk, both make a
     /// review checkout first.
     @ViewBuilder
     private func prHarnessItems(_ pr: GitHubPR, repo: ObservableRepository, folder: GitWorktree?) -> some View {
@@ -86,52 +86,47 @@ extension WorktreeSidebarView {
         let focuses = cachedFocuses(for: repo)
         let ghPath = readyGhPath
 
-        if let folder {
-            Button {
-                runWithFocusContext = RunWithFocusContext(worktree: folder, repo: repo, prNumber: pr.number)
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
-        } else if let ghPath {
-            Button {
-                Task { await checkoutAndRunFocus(pr, repo: repo, ghPath: ghPath) }
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
-        }
-
-        if let harnessId, !focuses.isEmpty, folder != nil || ghPath != nil {
-            Menu(Strings.RemotePRs.quickLaunchFocus) {
-                ForEach(focuses, id: \.self) { focusName in
-                    Button(Strings.RemotePRs.runFocusItem(focusName)) {
-                        if let folder {
-                            quickLaunchFocus(
-                                focusName, worktree: folder, repo: repo, prNumber: pr.number, harnessId: harnessId)
-                        } else if let ghPath {
-                            Task {
-                                await checkoutAndQuickLaunch(
-                                    focusName, pr: pr, repo: repo, ghPath: ghPath, harnessId: harnessId)
+        if folder != nil || ghPath != nil {
+            LaunchMenuItems(
+                name: harnessId.map(harnessDisplayName),
+                openSheet: {
+                    if let folder {
+                        runWithFocusContext = RunWithFocusContext(worktree: folder, repo: repo, prNumber: pr.number)
+                    } else if let ghPath {
+                        Task { await checkoutAndRunFocus(pr, repo: repo, ghPath: ghPath) }
+                    }
+                },
+                focuses: harnessId.map { harnessId in
+                    focuses.map { focusName in
+                        LaunchMenuItems.Focus(name: focusName) {
+                            if let folder {
+                                quickLaunchFocus(
+                                    focusName, worktree: folder, repo: repo, prNumber: pr.number, harnessId: harnessId)
+                            } else if let ghPath {
+                                Task {
+                                    await checkoutAndQuickLaunch(
+                                        focusName, pr: pr, repo: repo, ghPath: ghPath, harnessId: harnessId)
+                                }
                             }
                         }
                     }
-                }
-            }
+                } ?? [])
         }
     }
 
-    /// Quick Terminal, Create Terminal…, then the Local tab's reveal/open-in block.
+    /// Quick Terminal, New Terminal…, then the Local tab's reveal/open-in block.
     @ViewBuilder
     private func prFolderItems(_ folder: GitWorktree, repo: ObservableRepository) -> some View {
         Button {
             boardVM.newTerminal(at: folder.path, branch: folder.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
-            Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+            Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
         }
         Button {
             boardVM.addTerminal(
                 workingDirectory: folder.path, branch: folder.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
-            Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+            Label(Strings.Sidebar.createTerminal, systemImage: LaunchMenuIcon.newTerminal)
         }
         Divider()
         worktreeRevealMenuItems(folder)

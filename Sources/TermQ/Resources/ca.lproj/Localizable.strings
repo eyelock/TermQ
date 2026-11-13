@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Tornar al tauler (Escape)";
 "toolbar.move.to" = "Moure a columna";
 "toolbar.new.quick" = "Terminal ràpid";
-"toolbar.new.quick.help" = "Nou terminal ràpid (⌘T)";
+"toolbar.new.quick.help" = "Terminal ràpid (⌘T)";
 "toolbar.edit" = "Editar";
 "toolbar.edit.help" = "Editar detalls del terminal (⌘E)";
 "toolbar.pin" = "Fixar";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Eliminar terminal";
 "toolbar.add" = "Afegir";
 "toolbar.add.help" = "Afegir nou terminal o columna";
-"toolbar.open.terminal.app" = "Obrir a Terminal";
 "toolbar.open.terminal.app.help" = "Obrir a Terminal.app";
-"toolbar.new.terminal" = "Nou terminal";
 "toolbar.new.column" = "Nova columna";
 "toolbar.bin.count %lld" = "Paperera (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Nou terminal ràpid";
-"menu.new.terminal" = "Nou terminal...";
 "menu.new.terminal.dialog" = "Nou terminal";
 "menu.new.column" = "Nova columna";
 "menu.back" = "Tornar al tauler";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktrees.refresh" = "Actualitzar worktrees";
 "sidebar.worktree.new" = "Nou worktree";
 "sidebar.worktree.new.terminal" = "Terminal Ràpid";
-"sidebar.worktree.create.terminal" = "Crea Terminal…";
+"sidebar.worktree.create.terminal" = "Nou terminal…";
 "sidebar.worktree.terminals.badge.help" = "Feu clic per als enllaços ràpids per obrir terminals";
 "sidebar.worktree.open.in.terminal" = "Mostra al Terminal";
 "sidebar.worktree.reveal.in.finder" = "Mostrar al Finder";
@@ -640,7 +635,6 @@
 "sidebar.worktree.set.harness" = "Defineix el harness…";
 "sidebar.worktree.clear.harness" = "Esborra el harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Inicia %@";
 "sidebar.remove.worktree" = "Eliminar worktree";
 "sidebar.remove.worktree.title" = "Eliminar worktree?";
 "sidebar.remove.worktree.confirm" = "Eliminar";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Inicia l'arnes";
-"harnesses.launch.vendor" = "Proveïdor";
+"launch.quick %@" = "Inici ràpid de %@";
+"launch.sheet %@" = "Inicia %@…";
+"launch.sheet.any" = "Inicia l'arnes…";
+"launch.sheet.short" = "Inicia…";
+"launch.with.focus" = "Inicia amb Focus";
 "harnesses.launch.vendor.unavailable" = "(no instal·lat)";
 "harnesses.launch.vendor.default" = "Per defecte (%@)";
-"harnesses.launch.focus" = "Enfocament";
-"harnesses.launch.focus.none" = "Cap";
 "harnesses.launch.working.directory" = "Directori de treball";
 "harnesses.launch.browse" = "Navega…";
-"harnesses.launch.prompt" = "Indicació";
-"harnesses.launch.prompt.placeholder" = "Indicació opcional per a l'agent…";
 "harnesses.launch.resume" = "Represa la sessió anterior";
 "harnesses.launch.resume.help" = "Continua una sessió anterior en lloc de començar de zero. Claude només continua la sessió que ha iniciat aquesta targeta, de manera que una targeta nova comença de zero; els altres proveïdors continuen la sessió més recent al directori de treball.";
 "harnesses.launch.button" = "Inicia";
 "harnesses.launch.help" = "Inicia aquest arnes en un terminal nou";
-"harnesses.launch.cancel" = "Cancel·la";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktrees vinculats";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Això desinstal·larà el harness de YNH i eliminarà permanentment els seus fitxers. Aquesta acció no es pot desfer.";
 "harnesses.delete.local.confirm" = "Elimina el harness";
 "harnesses.more.actions.help" = "Més accions";
-"harnesses.copy.run.command" = "Copia l'ordre d'execució";
 "harnesses.ynh.documentation" = "Documentació de YNH";
 
 "harnesses.add.registry.title" = "Afegeix un registre YNH";
@@ -1348,10 +1340,8 @@
 "remote.prs.prune.reason.ahead" = "commits no enviats";
 "remote.prs.prune.reason.dirty" = "canvis no confirmats";
 "remote.prs.prune.remove" = "Elimina";
-"remote.prs.quick.launch.focus" = "Inici ràpid del focus";
 "remote.prs.run.cancel" = "Cancel·la";
 "remote.prs.run.customize" = "Personalitza";
-"remote.prs.run.focus.item %@" = "Executa %@";
 "remote.prs.run.focus.label" = "Focus";
 "remote.prs.run.focus.none" = "(cap — indicació ad hoc)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1362,11 +1352,8 @@
 "remote.prs.run.profile.label" = "Perfil";
 "remote.prs.run.prompt.label" = "Indicació de focus";
 "remote.prs.run.refresh.detail" = "Torna a carregar els focuses i perfils del Harness des del disc";
-"remote.prs.run.run" = "Executa";
-"remote.prs.run.sheet.title" = "Executa amb focus";
 "remote.prs.run.vendor.default" = "Per defecte del Harness";
 "remote.prs.run.vendor.label" = "Proveïdor";
-"remote.prs.run.with.focus" = "Executa amb focus…";
 "remote.prs.set.default.focus" = "Estableix el focus per defecte…";
 "remote.prs.show.in.local" = "Mostra localment";
 "remote.prs.show.in.remote" = "Mostra al Remot";
@@ -1575,7 +1562,6 @@
 "wheelhouse.work.unavailable" = "Graf de treball no disponible (no s’ha trobat bd o ha fallat)";
 "wheelhouse.unborn.help" = "Mai ocupat: aquest seient encara no ha tingut la primera sessió";
 "wheelhouse.waiting.on %@" = "esperant %@";
-"wheelhouse.open.terminal" = "Obre el terminal";
 "wheelhouse.show.terminal" = "Mostra el terminal";
 "wheelhouse.status.idle" = "inactiu";
 "wheelhouse.working.help" = "Treballant: ha registrat activitat en un bead en els últims 20 minuts, tot i que no té cap terminal propi en execució";
@@ -1630,7 +1616,6 @@
 "wheelhouse.action.close.terminal" = "Tanca el terminal";
 "wheelhouse.action.harness.details" = "Detalls del harness…";
 "wheelhouse.action.ask.focus" = "Demana que s’enfoqui en";
-"wheelhouse.action.launch.focus" = "Inicia amb enfocament";
 "settings.wheelhouse.enable.tab" = "Mostra la pestanya Wheelhouses a la barra lateral";
 "settings.wheelhouse.enable.tab.help" = "Afegeix una pestanya Wheelhouses que llista els seients de cada Wheelhouse dels teus repositoris";
 "settings.wheelhouse.quick.terminal.placement" = "Ubicació del terminal ràpid";
@@ -1641,7 +1626,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "El nom al qual un Wheelhouse assigna beads quan qualsevol persona se’n pot encarregar. Els beads llestos per a aquest nom apareixen a la teva safata d’entrada.";
 "settings.wheelhouse.inbox.own.name" = "El teu propi nom de safata d’entrada";
 "settings.wheelhouse.inbox.own.name.help" = "El nom al qual un Wheelhouse assigna beads quan són per a tu en particular. Deixa-ho buit si no en tens cap.";
-"wheelhouse.quick.terminal.new" = "Nou terminal ràpid";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Terminal ràpid %ld per a %@: fes clic per portar-lo a l’escenari";
 "wheelhouse.inbox.title" = "Safata d’entrada";

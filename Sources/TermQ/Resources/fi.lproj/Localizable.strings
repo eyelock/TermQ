@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Takaisin tauluun (Escape)";
 "toolbar.move.to" = "Siirrä sarakkeeseen";
 "toolbar.new.quick" = "Pikateminaali";
-"toolbar.new.quick.help" = "Uusi pikaterminaali (⌘T)";
+"toolbar.new.quick.help" = "Pikaterminaali (⌘T)";
 "toolbar.edit" = "Muokkaa";
 "toolbar.edit.help" = "Muokkaa terminaalin tietoja (⌘E)";
 "toolbar.pin" = "Kiinnitä";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Poista terminaali";
 "toolbar.add" = "Lisää";
 "toolbar.add.help" = "Lisää uusi terminaali tai sarake";
-"toolbar.open.terminal.app" = "Avaa Terminaalissa";
 "toolbar.open.terminal.app.help" = "Avaa Terminal.appissa";
-"toolbar.new.terminal" = "Uusi terminaali";
 "toolbar.new.column" = "Uusi sarake";
 "toolbar.bin.count %lld" = "Roskakori (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Uusi pikaterminaali";
-"menu.new.terminal" = "Uusi terminaali...";
 "menu.new.terminal.dialog" = "Uusi terminaali";
 "menu.new.column" = "Uusi sarake";
 "menu.back" = "Takaisin tauluun";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -626,7 +621,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Päivitä työskentelypuut";
 "sidebar.worktree.new" = "Uusi työskentelypuu";
-"sidebar.worktree.new.terminal" = "Uusi Terminal";
+"sidebar.worktree.new.terminal" = "Pikaterminaali";
 "sidebar.worktree.terminals.badge.help" = "Napsauta pikalinkkejä terminaalien avaamiseksi";
 "sidebar.worktree.open.in.terminal" = "Avaa Terminaalissa";
 "sidebar.worktree.reveal.in.finder" = "Näytä Finderissä";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Määritä harness…";
 "sidebar.worktree.clear.harness" = "Poista harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Käynnistä %@";
 "sidebar.remove.worktree" = "Poista työskentelypuu";
 "sidebar.remove.worktree.title" = "Poistetaanko työskentelypuu?";
 "sidebar.remove.worktree.confirm" = "Poista";
@@ -736,20 +730,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Käynnistä harness";
-"harnesses.launch.vendor" = "Toimittaja";
+"launch.quick %@" = "Pikakäynnistä %@";
+"launch.sheet %@" = "Käynnistä %@…";
+"launch.sheet.any" = "Käynnistä harness…";
+"launch.sheet.short" = "Käynnistä…";
+"launch.with.focus" = "Käynnistä tarkennuksella";
 "harnesses.launch.vendor.unavailable" = "(ei asennettu)";
 "harnesses.launch.vendor.default" = "Oletus (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Ei mitään";
 "harnesses.launch.working.directory" = "Työkansio";
 "harnesses.launch.browse" = "Selaa…";
-"harnesses.launch.prompt" = "Kehote";
-"harnesses.launch.prompt.placeholder" = "Valinnainen kehote agentille…";
 "harnesses.launch.resume" = "Jatka edellistä istuntoa";
 "harnesses.launch.resume.help" = "Jatkaa aiempaa istuntoa sen sijaan, että aloittaisi alusta. Claude jatkaa vain istuntoa, jonka tämä kortti aloitti, joten uusi kortti aloittaa alusta; muut toimittajat jatkavat työhakemiston viimeisintä istuntoa.";
 "harnesses.launch.button" = "Käynnistä";
 "harnesses.launch.help" = "Käynnistä tämä harness uudessa päätteessä";
-"harnesses.launch.cancel" = "Peruuta";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Linkitetyt worktreest";
@@ -780,7 +773,7 @@
 
 "common.clear" = "Tyhjennä";
 
-"sidebar.worktree.create.terminal" = "Luo Terminal…";
+"sidebar.worktree.create.terminal" = "Uusi terminaali…";
 
 "sidebar.worktree.copy.pathname" = "Kopioi polkuna";
 
@@ -851,7 +844,6 @@
 "harnesses.delete.local.message" = "Tämä poistaa harnessin asennuksen YNH:sta ja poistaa sen tiedostot pysyvästi. Tätä ei voi perua.";
 "harnesses.delete.local.confirm" = "Poista harness";
 "harnesses.more.actions.help" = "Lisää toimintoja";
-"harnesses.copy.run.command" = "Kopioi suorituskomento";
 "harnesses.ynh.documentation" = "YNH-dokumentaatio";
 
 "harnesses.add.registry.title" = "Lisää YNH-rekisteri";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "lähettämättömiä committeja";
 "remote.prs.prune.reason.dirty" = "committoimattomia muutoksia";
 "remote.prs.prune.remove" = "Poista";
-"remote.prs.quick.launch.focus" = "Pikastartta tarkennus";
 "remote.prs.run.cancel" = "Peruuta";
 "remote.prs.run.customize" = "Mukauta";
-"remote.prs.run.focus.item %@" = "Suorita %@";
 "remote.prs.run.focus.label" = "Tarkennus";
 "remote.prs.run.focus.none" = "(ei mitään — ad hoc -kehote)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "Profiili";
 "remote.prs.run.prompt.label" = "Tarkennus-kehote";
 "remote.prs.run.refresh.detail" = "Lataa harness-tarkennokset ja -profiilit uudelleen levyltä";
-"remote.prs.run.run" = "Suorita";
-"remote.prs.run.sheet.title" = "Suorita tarkennuksella";
 "remote.prs.run.vendor.default" = "Harness-oletus";
 "remote.prs.run.vendor.label" = "Toimittaja";
-"remote.prs.run.with.focus" = "Suorita tarkennuksella…";
 "remote.prs.set.default.focus" = "Aseta oletustarkennus…";
 "remote.prs.show.in.local" = "Näytä paikallisesti";
 "remote.prs.show.in.remote" = "Näytä etänä";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "Työgraafi ei ole käytettävissä (bd ei löytynyt tai epäonnistui)";
 "wheelhouse.unborn.help" = "Ei koskaan miehitetty: tällä paikalla ei ole ollut ensimmäistä istuntoa";
 "wheelhouse.waiting.on %@" = "odottaa: %@";
-"wheelhouse.open.terminal" = "Avaa pääte";
 "wheelhouse.show.terminal" = "Näytä pääte";
 "wheelhouse.status.idle" = "joutilas";
 "wheelhouse.working.help" = "Työskentelee: on kirjautunut beadiin viimeisen 20 minuutin aikana, vaikka sillä ei ole omaa päätettä käynnissä";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "Sulje pääte";
 "wheelhouse.action.harness.details" = "Harnessin tiedot…";
 "wheelhouse.action.ask.focus" = "Pyydä keskittymään kohteeseen";
-"wheelhouse.action.launch.focus" = "Käynnistä keskityksellä";
 "settings.wheelhouse.enable.tab" = "Näytä Wheelhouses-välilehti sivupalkissa";
 "settings.wheelhouse.enable.tab.help" = "Lisää Wheelhouses-välilehden, jossa luetellaan repositorioidesi jokaisen Wheelhousen paikat";
 "settings.wheelhouse.quick.terminal.placement" = "Pikateminaalin sijoittelu";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Nimi, jolle Wheelhouse osoittaa beadeja, kun kuka tahansa ihminen voi hoitaa ne. Tälle nimelle valmiit beadit näkyvät postilaatikossasi.";
 "settings.wheelhouse.inbox.own.name" = "Oma postilaatikon nimesi";
 "settings.wheelhouse.inbox.own.name.help" = "Nimi, jolle Wheelhouse osoittaa beadeja, kun ne on tarkoitettu juuri sinulle. Jätä tyhjäksi, jos sinulla ei ole sellaista.";
-"wheelhouse.quick.terminal.new" = "Uusi pikateminaali";
 "wheelhouse.quick.terminal.title %ld" = "Pääte %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Pikateminaali %ld: %@. Napsauta tuodaksesi lavalle";
 "wheelhouse.inbox.title" = "Postilaatikko";

@@ -279,9 +279,7 @@ enum Strings {
         static var deleteHelp: String { localized("toolbar.delete.help") }
         static var add: String { localized("toolbar.add") }
         static var addHelp: String { localized("toolbar.add.help") }
-        static var openTerminalApp: String { localized("toolbar.open.terminal.app") }
         static var openTerminalAppHelp: String { localized("toolbar.open.terminal.app.help") }
-        static var newTerminal: String { localized("toolbar.new.terminal") }
         static var newColumn: String { localized("toolbar.new.column") }
         static func binCount(_ count: Int) -> String {
             localized("toolbar.bin.count %lld", count)
@@ -292,8 +290,6 @@ enum Strings {
     // MARK: - Menu Commands
     enum Menu {
         static var help: String { localized("menu.help") }
-        static var newTerminalQuick: String { localized("menu.new.terminal.quick") }
-        static var newTerminal: String { localized("menu.new.terminal") }
         static var newTerminalDialog: String { localized("menu.new.terminal.dialog") }
         static var newColumn: String { localized("menu.new.column") }
         static var back: String { localized("menu.back") }
@@ -308,7 +304,6 @@ enum Strings {
 
     // MARK: - Command Palette
     enum CommandPalette {
-        static var newTerminal: String { localized("command.palette.new.terminal") }
         static var newColumn: String { localized("command.palette.new.column") }
         static var toggleZoom: String { localized("command.palette.toggle.zoom") }
         static var findInTerminal: String { localized("command.palette.find") }

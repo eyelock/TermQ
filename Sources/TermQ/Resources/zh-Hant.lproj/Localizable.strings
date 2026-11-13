@@ -80,7 +80,7 @@
 "toolbar.back.help" = "返回看板 (Escape)";
 "toolbar.move.to" = "移至欄位";
 "toolbar.new.quick" = "快速終端機";
-"toolbar.new.quick.help" = "新增快速終端機 (⌘T)";
+"toolbar.new.quick.help" = "快速終端機 (⌘T)";
 "toolbar.edit" = "編輯";
 "toolbar.edit.help" = "編輯終端機詳細資訊 (⌘E)";
 "toolbar.pin" = "釘選";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "刪除終端機";
 "toolbar.add" = "新增";
 "toolbar.add.help" = "新增終端機或欄位";
-"toolbar.open.terminal.app" = "在終端機中開啟";
 "toolbar.open.terminal.app.help" = "在 Terminal.app 中開啟";
-"toolbar.new.terminal" = "新增終端機";
 "toolbar.new.column" = "新增欄位";
 "toolbar.bin.count %lld" = "垃圾桶 (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "快速新增終端機";
-"menu.new.terminal" = "新增終端機...";
 "menu.new.terminal.dialog" = "新增終端機";
 "menu.new.column" = "新增欄位";
 "menu.back" = "返回看板";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "重新整理工作樹";
 "sidebar.worktree.new" = "新建工作樹";
 "sidebar.worktree.new.terminal" = "快速終端機";
-"sidebar.worktree.create.terminal" = "建立終端機…";
+"sidebar.worktree.create.terminal" = "新增終端機…";
 "sidebar.worktree.terminals.badge.help" = "按一下以取得開啟終端機的快速連結";
 "sidebar.worktree.open.in.terminal" = "在 Terminal 中顯示";
 "sidebar.worktree.reveal.in.finder" = "在 Finder 中顯示";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "設定 Harness…";
 "sidebar.worktree.clear.harness" = "清除 Harness";
 "sidebar.worktree.linked.harness %@" = "Harness：%@";
-"sidebar.worktree.launch.harness %@" = "啟動 %@";
 "sidebar.remove.worktree" = "刪除工作樹";
 "sidebar.remove.worktree.title" = "刪除工作樹？";
 "sidebar.remove.worktree.confirm" = "刪除";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "啟動 Harness";
-"harnesses.launch.vendor" = "供應商";
+"launch.quick %@" = "快速啟動 %@";
+"launch.sheet %@" = "啟動 %@…";
+"launch.sheet.any" = "啟動 Harness…";
+"launch.sheet.short" = "啟動…";
+"launch.with.focus" = "以焦點啟動";
 "harnesses.launch.vendor.unavailable" = "（未安裝）";
 "harnesses.launch.vendor.default" = "預設 (%@)";
-"harnesses.launch.focus" = "焦點";
-"harnesses.launch.focus.none" = "無";
 "harnesses.launch.working.directory" = "工作目錄";
 "harnesses.launch.browse" = "瀏覽…";
-"harnesses.launch.prompt" = "提示詞";
-"harnesses.launch.prompt.placeholder" = "傳遞給代理程式的選用提示詞…";
 "harnesses.launch.resume" = "恢復上一個工作階段";
 "harnesses.launch.resume.help" = "繼續先前的工作階段，而不是重新開始。Claude 只會繼續此卡片啟動的工作階段，因此新卡片會重新開始；其他供應商則繼續工作目錄中最近的工作階段。";
 "harnesses.launch.button" = "啟動";
 "harnesses.launch.help" = "在新終端機中啟動此 harness";
-"harnesses.launch.cancel" = "取消";
 "harnesses.launch.backend" = "後端";
 
 "harnesses.linked.worktrees" = "連結的 Worktree";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "這將從 YNH 解除安裝 Harness 並永久刪除其檔案。此操作無法復原。";
 "harnesses.delete.local.confirm" = "刪除 Harness";
 "harnesses.more.actions.help" = "更多動作";
-"harnesses.copy.run.command" = "複製執行指令";
 "harnesses.ynh.documentation" = "YNH 文件";
 
 "harnesses.add.registry.title" = "新增 YNH 登錄檔";
@@ -1348,10 +1340,8 @@
 "remote.prs.prune.reason.ahead" = "未推送的提交";
 "remote.prs.prune.reason.dirty" = "未提交的更改";
 "remote.prs.prune.remove" = "移除";
-"remote.prs.quick.launch.focus" = "快速啟動焦點";
 "remote.prs.run.cancel" = "取消";
 "remote.prs.run.customize" = "自訂";
-"remote.prs.run.focus.item %@" = "執行 %@";
 "remote.prs.run.focus.label" = "焦點";
 "remote.prs.run.focus.none" = "（無 — 即席提示）";
 "remote.prs.run.harness.label" = "Harness";
@@ -1362,11 +1352,8 @@
 "remote.prs.run.profile.label" = "設定檔";
 "remote.prs.run.prompt.label" = "焦點提示";
 "remote.prs.run.refresh.detail" = "從磁碟重新載入 Harness 焦點和設定檔";
-"remote.prs.run.run" = "執行";
-"remote.prs.run.sheet.title" = "使用焦點執行";
 "remote.prs.run.vendor.default" = "Harness 預設";
 "remote.prs.run.vendor.label" = "供應商";
-"remote.prs.run.with.focus" = "使用焦點執行…";
 "remote.prs.set.default.focus" = "設定預設焦點…";
 "remote.prs.show.in.local" = "在本機顯示";
 "remote.prs.show.in.remote" = "在遠端顯示";
@@ -1575,7 +1562,6 @@
 "wheelhouse.work.unavailable" = "工作圖無法使用（找不到 bd 或執行失敗）";
 "wheelhouse.unborn.help" = "從未入席：此席位尚未進行首次工作階段";
 "wheelhouse.waiting.on %@" = "正在等待 %@";
-"wheelhouse.open.terminal" = "開啟終端機";
 "wheelhouse.show.terminal" = "顯示終端機";
 "wheelhouse.status.idle" = "閒置";
 "wheelhouse.working.help" = "工作中：過去 20 分鐘內曾在某個 bead 上簽到，但沒有執行自己的終端機";
@@ -1630,7 +1616,6 @@
 "wheelhouse.action.close.terminal" = "關閉終端機";
 "wheelhouse.action.harness.details" = "Harness 詳細資訊…";
 "wheelhouse.action.ask.focus" = "要求專注於";
-"wheelhouse.action.launch.focus" = "以聚焦啟動";
 "settings.wheelhouse.enable.tab" = "顯示 Wheelhouse 側邊欄分頁";
 "settings.wheelhouse.enable.tab.help" = "加入一個 Wheelhouse 分頁，列出你儲存庫中每個 Wheelhouse 的席位";
 "settings.wheelhouse.quick.terminal.placement" = "快速終端機位置";
@@ -1641,7 +1626,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "當任何人都可以處理時，Wheelhouse 用來指派 bead 的名稱。該名稱下已就緒的 bead 會顯示在你的收件匣中。";
 "settings.wheelhouse.inbox.own.name" = "你自己的收件匣名稱";
 "settings.wheelhouse.inbox.own.name.help" = "當 bead 專屬於你時，Wheelhouse 用來指派它們的名稱。如果沒有，請留空。";
-"wheelhouse.quick.terminal.new" = "新增快速終端機";
 "wheelhouse.quick.terminal.title %ld" = "終端機 %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "快速終端機 %ld（%@）：點按以將其帶到舞台";
 "wheelhouse.inbox.title" = "收件匣";

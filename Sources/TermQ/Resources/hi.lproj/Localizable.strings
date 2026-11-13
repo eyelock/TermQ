@@ -81,7 +81,7 @@
 "toolbar.back.help" = "बोर्ड पर वापस जाएं (Escape)";
 "toolbar.move.to" = "कॉलम में ले जाएं";
 "toolbar.new.quick" = "त्वरित टर्मिनल";
-"toolbar.new.quick.help" = "नया त्वरित टर्मिनल (⌘T)";
+"toolbar.new.quick.help" = "त्वरित टर्मिनल (⌘T)";
 "toolbar.edit" = "संपादित करें";
 "toolbar.edit.help" = "टर्मिनल विवरण संपादित करें (⌘E)";
 "toolbar.pin" = "पिन करें";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "टर्मिनल हटाएं";
 "toolbar.add" = "जोड़ें";
 "toolbar.add.help" = "नया टर्मिनल या कॉलम जोड़ें";
-"toolbar.open.terminal.app" = "Terminal में खोलें";
 "toolbar.open.terminal.app.help" = "Terminal.app में खोलें";
-"toolbar.new.terminal" = "नया टर्मिनल";
 "toolbar.new.column" = "नया कॉलम";
 "toolbar.bin.count %lld" = "ट्रैश (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "त्वरित नया टर्मिनल";
-"menu.new.terminal" = "नया टर्मिनल...";
 "menu.new.terminal.dialog" = "नया टर्मिनल";
 "menu.new.column" = "नया कॉलम";
 "menu.back" = "बोर्ड पर वापस जाएं";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -626,7 +621,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Worktrees ताज़ा करें";
 "sidebar.worktree.new" = "नया Worktree";
-"sidebar.worktree.new.terminal" = "नया Terminal";
+"sidebar.worktree.new.terminal" = "त्वरित टर्मिनल";
 "sidebar.worktree.terminals.badge.help" = "Terminal खोलने के लिए त्वरित लिंक हेतु क्लिक करें";
 "sidebar.worktree.open.in.terminal" = "Terminal में खोलें";
 "sidebar.worktree.reveal.in.finder" = "Finder में दिखाएँ";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Harness सेट करें…";
 "sidebar.worktree.clear.harness" = "Harness हटाएं";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "लॉन्च करें %@";
 "sidebar.remove.worktree" = "Worktree हटाएं";
 "sidebar.remove.worktree.title" = "Worktree हटाएं?";
 "sidebar.remove.worktree.confirm" = "हटाएं";
@@ -736,20 +730,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Harness लॉन्च करें";
-"harnesses.launch.vendor" = "विक्रेता";
+"launch.quick %@" = "%@ त्वरित लॉन्च करें";
+"launch.sheet %@" = "%@ लॉन्च करें…";
+"launch.sheet.any" = "Harness लॉन्च करें…";
+"launch.sheet.short" = "लॉन्च करें…";
+"launch.with.focus" = "फ़ोकस के साथ लॉन्च करें";
 "harnesses.launch.vendor.unavailable" = "(स्थापित नहीं)";
 "harnesses.launch.vendor.default" = "डिफ़ॉल्ट (%@)";
-"harnesses.launch.focus" = "फ़ोकस";
-"harnesses.launch.focus.none" = "कोई नहीं";
 "harnesses.launch.working.directory" = "कार्य निर्देशिका";
 "harnesses.launch.browse" = "ब्राउज़ करें…";
-"harnesses.launch.prompt" = "प्रॉम्प्ट";
-"harnesses.launch.prompt.placeholder" = "एजेंट को भेजने के लिए वैकल्पिक प्रॉम्प्ट…";
 "harnesses.launch.resume" = "पिछला सत्र फिर शुरू करें";
 "harnesses.launch.resume.help" = "नए सिरे से शुरू करने के बजाय पिछला सत्र जारी रखता है। Claude केवल उसी सत्र को जारी रखता है जिसे यह कार्ड शुरू करता है, इसलिए नया कार्ड नए सिरे से शुरू होता है; अन्य विक्रेता कार्य निर्देशिका के सबसे हाल के सत्र को जारी रखते हैं।";
 "harnesses.launch.button" = "लॉन्च करें";
 "harnesses.launch.help" = "नए टर्मिनल में यह harness लॉन्च करें";
-"harnesses.launch.cancel" = "रद्द करें";
 "harnesses.launch.backend" = "बैकएंड";
 
 "harnesses.linked.worktrees" = "लिंक किए गए Worktree";
@@ -780,7 +773,7 @@
 
 "common.clear" = "साफ़ करें";
 
-"sidebar.worktree.create.terminal" = "Terminal बनाएं…";
+"sidebar.worktree.create.terminal" = "नया टर्मिनल…";
 
 "sidebar.worktree.copy.pathname" = "पथनाम के रूप में कॉपी करें";
 
@@ -851,7 +844,6 @@
 "harnesses.delete.local.message" = "यह YNH से harness को अनइंस्टॉल करेगा और इसकी फ़ाइलों को स्थायी रूप से मिटा देगा। यह क्रिया पूर्ववत नहीं की जा सकती।";
 "harnesses.delete.local.confirm" = "Harness हटाएं";
 "harnesses.more.actions.help" = "अधिक क्रियाएं";
-"harnesses.copy.run.command" = "रन कमांड कॉपी करें";
 "harnesses.ynh.documentation" = "YNH दस्तावेज़ीकरण";
 
 "harnesses.add.registry.title" = "YNH रजिस्ट्री जोड़ें";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "न पुश किए गए commit";
 "remote.prs.prune.reason.dirty" = "बिना commit की गई परिवर्तन";
 "remote.prs.prune.remove" = "हटाएं";
-"remote.prs.quick.launch.focus" = "फ़ोकस त्वरित लॉन्च";
 "remote.prs.run.cancel" = "रद्द करें";
 "remote.prs.run.customize" = "अनुकूलित करें";
-"remote.prs.run.focus.item %@" = "%@ चलाएं";
 "remote.prs.run.focus.label" = "फ़ोकस";
 "remote.prs.run.focus.none" = "(कोई नहीं — तदर्थ प्रॉम्प्ट)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "प्रोफ़ाइल";
 "remote.prs.run.prompt.label" = "फ़ोकस प्रॉम्प्ट";
 "remote.prs.run.refresh.detail" = "डिस्क से Harness फ़ोकस और प्रोफ़ाइल पुनः लोड करें";
-"remote.prs.run.run" = "चलाएं";
-"remote.prs.run.sheet.title" = "फ़ोकस के साथ चलाएं";
 "remote.prs.run.vendor.default" = "Harness डिफ़ॉल्ट";
 "remote.prs.run.vendor.label" = "विक्रेता";
-"remote.prs.run.with.focus" = "फ़ोकस के साथ चलाएं…";
 "remote.prs.set.default.focus" = "डिफ़ॉल्ट फ़ोकस सेट करें…";
 "remote.prs.show.in.local" = "स्थानीय रूप से दिखाएं";
 "remote.prs.show.in.remote" = "Remote पर दिखाएं";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "कार्य ग्राफ़ उपलब्ध नहीं है (bd नहीं मिला या विफल रहा)";
 "wheelhouse.unborn.help" = "कभी नहीं बैठा: इस सीट का पहला सत्र अभी नहीं हुआ है";
 "wheelhouse.waiting.on %@" = "%@ की प्रतीक्षा में";
-"wheelhouse.open.terminal" = "टर्मिनल खोलें";
 "wheelhouse.show.terminal" = "टर्मिनल दिखाएँ";
 "wheelhouse.status.idle" = "निष्क्रिय";
 "wheelhouse.working.help" = "काम कर रहा है: पिछले 20 मिनट में किसी bead पर चेक-इन किया, हालाँकि उसका अपना कोई टर्मिनल नहीं चल रहा";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "टर्मिनल बंद करें";
 "wheelhouse.action.harness.details" = "Harness विवरण…";
 "wheelhouse.action.ask.focus" = "इस पर ध्यान देने को कहें";
-"wheelhouse.action.launch.focus" = "फ़ोकस के साथ लॉन्च करें";
 "settings.wheelhouse.enable.tab" = "Wheelhouses साइडबार टैब दिखाएँ";
 "settings.wheelhouse.enable.tab.help" = "एक Wheelhouses टैब जोड़ता है जो आपकी रिपॉज़िटरी के हर Wheelhouse की सीटें सूचीबद्ध करता है";
 "settings.wheelhouse.quick.terminal.placement" = "त्वरित टर्मिनल की स्थिति";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "वह नाम जिसे Wheelhouse bead सौंपता है जब कोई भी व्यक्ति उन्हें संभाल सकता है। इस नाम के लिए तैयार bead आपके इनबॉक्स में दिखाई देते हैं।";
 "settings.wheelhouse.inbox.own.name" = "आपका अपना इनबॉक्स नाम";
 "settings.wheelhouse.inbox.own.name.help" = "वह नाम जिसे Wheelhouse bead सौंपता है जब वे विशेष रूप से आपके लिए हों। यदि कोई नहीं है तो खाली छोड़ें।";
-"wheelhouse.quick.terminal.new" = "नया त्वरित टर्मिनल";
 "wheelhouse.quick.terminal.title %ld" = "टर्मिनल %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "त्वरित टर्मिनल %ld (%@): मंच पर लाने के लिए क्लिक करें";
 "wheelhouse.inbox.title" = "इनबॉक्स";

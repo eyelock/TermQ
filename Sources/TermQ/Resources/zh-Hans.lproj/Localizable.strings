@@ -80,7 +80,7 @@
 "toolbar.back.help" = "返回看板 (Escape)";
 "toolbar.move.to" = "移动到列";
 "toolbar.new.quick" = "快速终端";
-"toolbar.new.quick.help" = "新建快速终端 (⌘T)";
+"toolbar.new.quick.help" = "快速终端 (⌘T)";
 "toolbar.edit" = "编辑";
 "toolbar.edit.help" = "编辑终端详情 (⌘E)";
 "toolbar.pin" = "固定";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "删除终端";
 "toolbar.add" = "添加";
 "toolbar.add.help" = "添加新终端或列";
-"toolbar.open.terminal.app" = "在终端中打开";
 "toolbar.open.terminal.app.help" = "在 Terminal.app 中打开";
-"toolbar.new.terminal" = "新建终端";
 "toolbar.new.column" = "新建列";
 "toolbar.bin.count %lld" = "回收站 (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "快速新建终端";
-"menu.new.terminal" = "新建终端...";
 "menu.new.terminal.dialog" = "新建终端";
 "menu.new.column" = "新建列";
 "menu.back" = "返回看板";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "刷新工作树";
 "sidebar.worktree.new" = "新建工作树";
 "sidebar.worktree.new.terminal" = "快速终端";
-"sidebar.worktree.create.terminal" = "创建终端…";
+"sidebar.worktree.create.terminal" = "新建终端…";
 "sidebar.worktree.terminals.badge.help" = "点击获取打开终端的快速链接";
 "sidebar.worktree.open.in.terminal" = "在 Terminal 中显示";
 "sidebar.worktree.reveal.in.finder" = "在 Finder 中显示";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "设置 Harness…";
 "sidebar.worktree.clear.harness" = "清除 Harness";
 "sidebar.worktree.linked.harness %@" = "Harness：%@";
-"sidebar.worktree.launch.harness %@" = "启动 %@";
 "sidebar.remove.worktree" = "删除工作树";
 "sidebar.remove.worktree.title" = "删除工作树？";
 "sidebar.remove.worktree.confirm" = "删除";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "启动 Harness";
-"harnesses.launch.vendor" = "供应商";
+"launch.quick %@" = "快速启动 %@";
+"launch.sheet %@" = "启动 %@…";
+"launch.sheet.any" = "启动 Harness…";
+"launch.sheet.short" = "启动…";
+"launch.with.focus" = "带焦点启动";
 "harnesses.launch.vendor.unavailable" = "（未安装）";
 "harnesses.launch.vendor.default" = "默认 (%@)";
-"harnesses.launch.focus" = "专注点";
-"harnesses.launch.focus.none" = "无";
 "harnesses.launch.working.directory" = "工作目录";
 "harnesses.launch.browse" = "浏览…";
-"harnesses.launch.prompt" = "提示词";
-"harnesses.launch.prompt.placeholder" = "传递给代理的可选提示词…";
 "harnesses.launch.resume" = "恢复上一个会话";
 "harnesses.launch.resume.help" = "继续之前的会话，而不是重新开始。Claude 只会继续此卡片启动的会话，因此新卡片会重新开始；其他供应商则继续工作目录中最近的会话。";
 "harnesses.launch.button" = "启动";
 "harnesses.launch.help" = "在新终端中启动此 harness";
-"harnesses.launch.cancel" = "取消";
 "harnesses.launch.backend" = "后端";
 
 "harnesses.linked.worktrees" = "关联的 Worktree";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "这将从 YNH 卸载 Harness 并永久删除其文件。此操作无法撤销。";
 "harnesses.delete.local.confirm" = "删除 Harness";
 "harnesses.more.actions.help" = "更多操作";
-"harnesses.copy.run.command" = "复制运行命令";
 "harnesses.ynh.documentation" = "YNH 文档";
 
 "harnesses.add.registry.title" = "添加 YNH 注册表";
@@ -1350,10 +1342,8 @@
 "remote.prs.prune.reason.ahead" = "未推送的提交";
 "remote.prs.prune.reason.dirty" = "未提交的更改";
 "remote.prs.prune.remove" = "移除";
-"remote.prs.quick.launch.focus" = "快速启动焦点";
 "remote.prs.run.cancel" = "取消";
 "remote.prs.run.customize" = "自定义";
-"remote.prs.run.focus.item %@" = "运行 %@";
 "remote.prs.run.focus.label" = "焦点";
 "remote.prs.run.focus.none" = "（无 — 即席提示）";
 "remote.prs.run.harness.label" = "Harness";
@@ -1364,11 +1354,8 @@
 "remote.prs.run.profile.label" = "配置文件";
 "remote.prs.run.prompt.label" = "焦点提示";
 "remote.prs.run.refresh.detail" = "从磁盘重新加载 Harness 焦点和配置文件";
-"remote.prs.run.run" = "运行";
-"remote.prs.run.sheet.title" = "使用焦点运行";
 "remote.prs.run.vendor.default" = "Harness 默认";
 "remote.prs.run.vendor.label" = "供应商";
-"remote.prs.run.with.focus" = "使用焦点运行…";
 "remote.prs.set.default.focus" = "设置默认焦点…";
 "remote.prs.show.in.local" = "在本地显示";
 "remote.prs.show.in.remote" = "在远程显示";
@@ -1577,7 +1564,6 @@
 "wheelhouse.work.unavailable" = "工作图不可用（未找到 bd 或运行失败）";
 "wheelhouse.unborn.help" = "从未入席：此席位尚未进行首次会话";
 "wheelhouse.waiting.on %@" = "正在等待 %@";
-"wheelhouse.open.terminal" = "打开终端";
 "wheelhouse.show.terminal" = "显示终端";
 "wheelhouse.status.idle" = "空闲";
 "wheelhouse.working.help" = "工作中：过去 20 分钟内在某个 bead 上签到过，但没有运行自己的终端";
@@ -1632,7 +1618,6 @@
 "wheelhouse.action.close.terminal" = "关闭终端";
 "wheelhouse.action.harness.details" = "Harness 详情…";
 "wheelhouse.action.ask.focus" = "请求专注于";
-"wheelhouse.action.launch.focus" = "带聚焦启动";
 "settings.wheelhouse.enable.tab" = "显示 Wheelhouse 侧边栏标签页";
 "settings.wheelhouse.enable.tab.help" = "添加一个 Wheelhouse 标签页，列出你仓库中每个 Wheelhouse 的席位";
 "settings.wheelhouse.quick.terminal.placement" = "快速终端位置";
@@ -1643,7 +1628,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "当任何人都可以处理时，Wheelhouse 用来分配 bead 的名称。该名称下已就绪的 bead 会显示在你的收件箱中。";
 "settings.wheelhouse.inbox.own.name" = "你自己的收件箱名称";
 "settings.wheelhouse.inbox.own.name.help" = "当 bead 专门属于你时，Wheelhouse 用来分配它们的名称。如果没有，请留空。";
-"wheelhouse.quick.terminal.new" = "新建快速终端";
 "wheelhouse.quick.terminal.title %ld" = "终端 %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "快速终端 %ld（%@）：点击将其带到舞台";
 "wheelhouse.inbox.title" = "收件箱";

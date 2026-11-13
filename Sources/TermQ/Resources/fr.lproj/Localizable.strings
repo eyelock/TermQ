@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Retour au tableau (Échap)";
 "toolbar.move.to" = "Déplacer vers la colonne";
 "toolbar.new.quick" = "Terminal rapide";
-"toolbar.new.quick.help" = "Nouveau terminal rapide (⌘T)";
+"toolbar.new.quick.help" = "Terminal rapide (⌘T)";
 "toolbar.edit" = "Modifier";
 "toolbar.edit.help" = "Modifier les détails du terminal (⌘E)";
 "toolbar.pin" = "Épingler";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Supprimer le terminal";
 "toolbar.add" = "Ajouter";
 "toolbar.add.help" = "Ajouter un nouveau terminal ou colonne";
-"toolbar.open.terminal.app" = "Ouvrir dans Terminal";
 "toolbar.open.terminal.app.help" = "Ouvrir dans Terminal.app";
-"toolbar.new.terminal" = "Nouveau terminal";
 "toolbar.new.column" = "Nouvelle colonne";
 "toolbar.bin.count %lld" = "Corbeille (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Nouveau terminal rapide";
-"menu.new.terminal" = "Nouveau terminal...";
 "menu.new.terminal.dialog" = "Nouveau terminal";
 "menu.new.column" = "Nouvelle colonne";
 "menu.back" = "Retour au tableau";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -626,7 +621,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Actualiser les worktrees";
 "sidebar.worktree.new" = "Nouveau worktree";
-"sidebar.worktree.new.terminal" = "Nouveau Terminal";
+"sidebar.worktree.new.terminal" = "Terminal rapide";
 "sidebar.worktree.terminals.badge.help" = "Cliquez pour des liens rapides pour ouvrir des terminaux";
 "sidebar.worktree.open.in.terminal" = "Ouvrir dans Terminal";
 "sidebar.worktree.reveal.in.finder" = "Afficher dans le Finder";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Définir le harness…";
 "sidebar.worktree.clear.harness" = "Effacer le harness";
 "sidebar.worktree.linked.harness %@" = "Harness : %@";
-"sidebar.worktree.launch.harness %@" = "Lancer %@";
 "sidebar.remove.worktree" = "Supprimer le worktree";
 "sidebar.remove.worktree.title" = "Supprimer le worktree ?";
 "sidebar.remove.worktree.confirm" = "Supprimer";
@@ -736,20 +730,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Lancer le harnais";
-"harnesses.launch.vendor" = "Fournisseur";
+"launch.quick %@" = "Lancement rapide de %@";
+"launch.sheet %@" = "Lancer %@…";
+"launch.sheet.any" = "Lancer le harnais…";
+"launch.sheet.short" = "Lancer…";
+"launch.with.focus" = "Lancer avec Focus";
 "harnesses.launch.vendor.unavailable" = "(non installé)";
 "harnesses.launch.vendor.default" = "Par défaut (%@)";
-"harnesses.launch.focus" = "Focalisation";
-"harnesses.launch.focus.none" = "Aucune";
 "harnesses.launch.working.directory" = "Répertoire de travail";
 "harnesses.launch.browse" = "Parcourir…";
-"harnesses.launch.prompt" = "Invite";
-"harnesses.launch.prompt.placeholder" = "Invite optionnelle à transmettre à l'agent…";
 "harnesses.launch.resume" = "Reprendre la session précédente";
 "harnesses.launch.resume.help" = "Poursuit une session précédente au lieu de repartir de zéro. Claude ne poursuit que la session démarrée par cette carte, donc une nouvelle carte repart de zéro ; les autres fournisseurs poursuivent la session la plus récente dans le répertoire de travail.";
 "harnesses.launch.button" = "Lancer";
 "harnesses.launch.help" = "Lancer ce harnais dans un nouveau terminal";
-"harnesses.launch.cancel" = "Annuler";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktrees liés";
@@ -780,7 +773,7 @@
 
 "common.clear" = "Effacer";
 
-"sidebar.worktree.create.terminal" = "Créer un terminal…";
+"sidebar.worktree.create.terminal" = "Nouveau terminal…";
 
 "sidebar.worktree.copy.pathname" = "Copier comme chemin";
 
@@ -851,7 +844,6 @@
 "harnesses.delete.local.message" = "Cela désinstallera le harness de YNH et supprimera définitivement ses fichiers. Cette action est irréversible.";
 "harnesses.delete.local.confirm" = "Supprimer le harness";
 "harnesses.more.actions.help" = "Plus d'actions";
-"harnesses.copy.run.command" = "Copier la commande d'exécution";
 "harnesses.ynh.documentation" = "Documentation YNH";
 
 "harnesses.add.registry.title" = "Ajouter un registre YNH";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "commits non poussés";
 "remote.prs.prune.reason.dirty" = "modifications non validées";
 "remote.prs.prune.remove" = "Supprimer";
-"remote.prs.quick.launch.focus" = "Lancement rapide du focus";
 "remote.prs.run.cancel" = "Annuler";
 "remote.prs.run.customize" = "Personnaliser";
-"remote.prs.run.focus.item %@" = "Exécuter %@";
 "remote.prs.run.focus.label" = "Focus";
 "remote.prs.run.focus.none" = "(aucun — invite ad hoc)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Invite de focus";
 "remote.prs.run.refresh.detail" = "Recharger les focuses et profils du harness depuis le disque";
-"remote.prs.run.run" = "Exécuter";
-"remote.prs.run.sheet.title" = "Exécuter avec focus";
 "remote.prs.run.vendor.default" = "Par défaut du harness";
 "remote.prs.run.vendor.label" = "Fournisseur";
-"remote.prs.run.with.focus" = "Exécuter avec focus…";
 "remote.prs.set.default.focus" = "Définir le focus par défaut…";
 "remote.prs.show.in.local" = "Afficher en local";
 "remote.prs.show.in.remote" = "Afficher en remote";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "Graphe de travail indisponible (bd introuvable ou en échec)";
 "wheelhouse.unborn.help" = "Jamais occupé : ce poste n’a pas encore eu sa première session";
 "wheelhouse.waiting.on %@" = "en attente de %@";
-"wheelhouse.open.terminal" = "Ouvrir le terminal";
 "wheelhouse.show.terminal" = "Afficher le terminal";
 "wheelhouse.status.idle" = "inactif";
 "wheelhouse.working.help" = "En activité : a pointé sur un bead au cours des 20 dernières minutes, bien qu’aucun terminal ne tourne pour lui";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "Fermer le terminal";
 "wheelhouse.action.harness.details" = "Détails du harness…";
 "wheelhouse.action.ask.focus" = "Demander de se concentrer sur";
-"wheelhouse.action.launch.focus" = "Lancer avec focus";
 "settings.wheelhouse.enable.tab" = "Afficher l’onglet Wheelhouses dans la barre latérale";
 "settings.wheelhouse.enable.tab.help" = "Ajoute un onglet Wheelhouses listant les postes de chaque Wheelhouse de vos dépôts";
 "settings.wheelhouse.quick.terminal.placement" = "Emplacement du terminal rapide";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Le nom auquel un Wheelhouse assigne des beads lorsque n’importe quel humain peut s’en occuper. Les beads prêts pour ce nom apparaissent dans votre boîte de réception.";
 "settings.wheelhouse.inbox.own.name" = "Votre propre nom de boîte de réception";
 "settings.wheelhouse.inbox.own.name.help" = "Le nom auquel un Wheelhouse assigne des beads lorsqu’ils vous sont destinés en particulier. Laissez vide s’il n’y en a pas.";
-"wheelhouse.quick.terminal.new" = "Nouveau terminal rapide";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Terminal rapide %ld pour %@ : cliquez pour le mettre sur la scène";
 "wheelhouse.inbox.title" = "Boîte de réception";

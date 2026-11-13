@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Panoya geri dön (Escape)";
 "toolbar.move.to" = "Sütuna taşı";
 "toolbar.new.quick" = "Hızlı Terminal";
-"toolbar.new.quick.help" = "Yeni hızlı terminal (⌘T)";
+"toolbar.new.quick.help" = "Hızlı Terminal (⌘T)";
 "toolbar.edit" = "Düzenle";
 "toolbar.edit.help" = "Terminal ayrıntılarını düzenle (⌘E)";
 "toolbar.pin" = "Sabitle";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Terminali sil";
 "toolbar.add" = "Ekle";
 "toolbar.add.help" = "Yeni terminal veya sütun ekle";
-"toolbar.open.terminal.app" = "Terminal'de Aç";
 "toolbar.open.terminal.app.help" = "Terminal.app'te aç";
-"toolbar.new.terminal" = "Yeni Terminal";
 "toolbar.new.column" = "Yeni Sütun";
 "toolbar.bin.count %lld" = "Çöp Kutusu (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Yeni Hızlı Terminal";
-"menu.new.terminal" = "Yeni Terminal...";
 "menu.new.terminal.dialog" = "Yeni Terminal";
 "menu.new.column" = "Yeni Sütun";
 "menu.back" = "Panoya Geri Dön";
@@ -154,7 +150,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Çalışma ağaçlarını yenile";
 "sidebar.worktree.new" = "Yeni Çalışma Ağacı";
-"sidebar.worktree.new.terminal" = "Yeni Terminal";
+"sidebar.worktree.new.terminal" = "Hızlı Terminal";
 "sidebar.worktree.terminals.badge.help" = "Terminal açmak için hızlı bağlantılar için tıklayın";
 "sidebar.worktree.open.in.terminal" = "Terminal'de Aç";
 "sidebar.worktree.reveal.in.finder" = "Finder'da Göster";
@@ -639,7 +634,6 @@
 "sidebar.worktree.set.harness" = "Harness ayarla…";
 "sidebar.worktree.clear.harness" = "Harness’i temizle";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Başlat %@";
 "sidebar.remove.worktree" = "Çalışma Ağacını Kaldır";
 "sidebar.remove.worktree.title" = "Çalışma Ağacı Kaldırılsın mı?";
 "sidebar.remove.worktree.confirm" = "Kaldır";
@@ -737,20 +731,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Harness Başlat";
-"harnesses.launch.vendor" = "Sağlayıcı";
+"launch.quick %@" = "Hızlı Başlat %@";
+"launch.sheet %@" = "%@ Başlat…";
+"launch.sheet.any" = "Harness Başlat…";
+"launch.sheet.short" = "Başlat…";
+"launch.with.focus" = "Odakla Başlat";
 "harnesses.launch.vendor.unavailable" = "(yüklü değil)";
 "harnesses.launch.vendor.default" = "Varsayılan (%@)";
-"harnesses.launch.focus" = "Odak";
-"harnesses.launch.focus.none" = "Yok";
 "harnesses.launch.working.directory" = "Çalışma Dizini";
 "harnesses.launch.browse" = "Gözat…";
-"harnesses.launch.prompt" = "İstem";
-"harnesses.launch.prompt.placeholder" = "Ajana iletilecek isteğe bağlı istem…";
 "harnesses.launch.resume" = "Önceki oturuma devam et";
 "harnesses.launch.resume.help" = "Sıfırdan başlamak yerine önceki bir oturuma devam eder. Claude yalnızca bu kartın başlattığı oturuma devam eder, bu nedenle yeni bir kart sıfırdan başlar; diğer sağlayıcılar çalışma dizinindeki en son oturuma devam eder.";
 "harnesses.launch.button" = "Başlat";
 "harnesses.launch.help" = "Bu harness'i yeni terminalde başlat";
-"harnesses.launch.cancel" = "İptal";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Bağlı worktree’ler";
@@ -781,7 +774,7 @@
 
 "common.clear" = "Temizle";
 
-"sidebar.worktree.create.terminal" = "Terminal Oluştur…";
+"sidebar.worktree.create.terminal" = "Yeni Terminal…";
 
 "sidebar.worktree.copy.pathname" = "Yol Adı Olarak Kopyala";
 
@@ -852,7 +845,6 @@
 "harnesses.delete.local.message" = "Bu, harness'i YNH'dan kaldıracak ve dosyalarını kalıcı olarak silecektir. Bu işlem geri alınamaz.";
 "harnesses.delete.local.confirm" = "Harness'i sil";
 "harnesses.more.actions.help" = "Daha fazla işlem";
-"harnesses.copy.run.command" = "Çalıştırma Komutunu Kopyala";
 "harnesses.ynh.documentation" = "YNH Belgeleri";
 
 "harnesses.add.registry.title" = "YNH Kayıt Defteri Ekle";
@@ -1355,10 +1347,8 @@
 "remote.prs.prune.reason.ahead" = "gönderilmemiş commitler";
 "remote.prs.prune.reason.dirty" = "kaydedilmemiş değişiklikler";
 "remote.prs.prune.remove" = "Kaldır";
-"remote.prs.quick.launch.focus" = "Hızlı odak başlatma";
 "remote.prs.run.cancel" = "İptal";
 "remote.prs.run.customize" = "Özelleştir";
-"remote.prs.run.focus.item %@" = "%@ çalıştır";
 "remote.prs.run.focus.label" = "Odak";
 "remote.prs.run.focus.none" = "(hiçbiri — geçici istem)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1369,11 +1359,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Odak istemi";
 "remote.prs.run.refresh.detail" = "Harness odaklarını ve profillerini diskten yeniden yükle";
-"remote.prs.run.run" = "Çalıştır";
-"remote.prs.run.sheet.title" = "Odakla çalıştır";
 "remote.prs.run.vendor.default" = "Harness varsayılanı";
 "remote.prs.run.vendor.label" = "Satıcı";
-"remote.prs.run.with.focus" = "Odakla çalıştır…";
 "remote.prs.set.default.focus" = "Varsayılan odağı ayarla…";
 "remote.prs.show.in.local" = "Yerel olarak göster";
 "remote.prs.show.in.remote" = "Remote'da göster";
@@ -1582,7 +1569,6 @@
 "wheelhouse.work.unavailable" = "İş grafiği kullanılamıyor (bd bulunamadı veya başarısız oldu)";
 "wheelhouse.unborn.help" = "Hiç oturulmadı: bu koltuğun henüz ilk oturumu olmadı";
 "wheelhouse.waiting.on %@" = "%@ bekleniyor";
-"wheelhouse.open.terminal" = "Terminali Aç";
 "wheelhouse.show.terminal" = "Terminali Göster";
 "wheelhouse.status.idle" = "boşta";
 "wheelhouse.working.help" = "Çalışıyor: son 20 dakika içinde bir bead’e giriş yaptı, ancak kendi terminali çalışmıyor";
@@ -1637,7 +1623,6 @@
 "wheelhouse.action.close.terminal" = "Terminali Kapat";
 "wheelhouse.action.harness.details" = "Harness Ayrıntıları…";
 "wheelhouse.action.ask.focus" = "Şuna odaklanmasını iste";
-"wheelhouse.action.launch.focus" = "Odakla başlat";
 "settings.wheelhouse.enable.tab" = "Wheelhouse’lar kenar çubuğu sekmesini göster";
 "settings.wheelhouse.enable.tab.help" = "Depolarınızdaki her Wheelhouse’un koltuklarını listeleyen bir Wheelhouse’lar sekmesi ekler";
 "settings.wheelhouse.quick.terminal.placement" = "Hızlı Terminal yerleşimi";
@@ -1648,7 +1633,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Herhangi bir insan ilgilenebildiğinde bir Wheelhouse’un bead’leri atadığı ad. Bu ad için hazır bead’ler gelen kutunuzda görünür.";
 "settings.wheelhouse.inbox.own.name" = "Kendi gelen kutusu adınız";
 "settings.wheelhouse.inbox.own.name.help" = "Bir Wheelhouse’un bead’ler doğrudan sizin içinse onları atadığı ad. Yoksa boş bırakın.";
-"wheelhouse.quick.terminal.new" = "Yeni Hızlı Terminal";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Hızlı Terminal %ld (%@): sahneye getirmek için tıklayın";
 "wheelhouse.inbox.title" = "Gelen Kutusu";

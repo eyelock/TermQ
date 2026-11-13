@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Vissza a táblához (Escape)";
 "toolbar.move.to" = "Áthelyezés oszlopba";
 "toolbar.new.quick" = "Gyors terminál";
-"toolbar.new.quick.help" = "Új gyors terminál (⌘T)";
+"toolbar.new.quick.help" = "Gyors terminál (⌘T)";
 "toolbar.edit" = "Szerkesztés";
 "toolbar.edit.help" = "Terminál részleteinek szerkesztése (⌘E)";
 "toolbar.pin" = "Rögzítés";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Terminál törlése";
 "toolbar.add" = "Hozzáadás";
 "toolbar.add.help" = "Új terminál vagy oszlop hozzáadása";
-"toolbar.open.terminal.app" = "Megnyitás a Terminálban";
 "toolbar.open.terminal.app.help" = "Megnyitás a Terminal.app-ban";
-"toolbar.new.terminal" = "Új terminál";
 "toolbar.new.column" = "Új oszlop";
 "toolbar.bin.count %lld" = "Kuka (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Új gyors terminál";
-"menu.new.terminal" = "Új terminál...";
 "menu.new.terminal.dialog" = "Új terminál";
 "menu.new.column" = "Új oszlop";
 "menu.back" = "Vissza a táblához";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -626,7 +621,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Munkakönyvtárak frissítése";
 "sidebar.worktree.new" = "Új munkakönyvtár";
-"sidebar.worktree.new.terminal" = "Új Terminal";
+"sidebar.worktree.new.terminal" = "Gyors terminál";
 "sidebar.worktree.terminals.badge.help" = "Kattintson a terminálok megnyitásához szükséges gyorshivatkozásokért";
 "sidebar.worktree.open.in.terminal" = "Megnyitás Terminálban";
 "sidebar.worktree.reveal.in.finder" = "Megjelenítés Finderben";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Harness beállítása…";
 "sidebar.worktree.clear.harness" = "Harness törlése";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Indítás: %@";
 "sidebar.remove.worktree" = "Munkakönyvtár eltávolítása";
 "sidebar.remove.worktree.title" = "Eltávolítja a munkakönyvtárat?";
 "sidebar.remove.worktree.confirm" = "Eltávolítás";
@@ -736,20 +730,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Harness indítása";
-"harnesses.launch.vendor" = "Szállító";
+"launch.quick %@" = "Gyors indítás: %@";
+"launch.sheet %@" = "%@ indítása…";
+"launch.sheet.any" = "Harness indítása…";
+"launch.sheet.short" = "Indítás…";
+"launch.with.focus" = "Indítás fókusszal";
 "harnesses.launch.vendor.unavailable" = "(nincs telepítve)";
 "harnesses.launch.vendor.default" = "Alapértelmezett (%@)";
-"harnesses.launch.focus" = "Fókusz";
-"harnesses.launch.focus.none" = "Nincs";
 "harnesses.launch.working.directory" = "Munkakönyvtár";
 "harnesses.launch.browse" = "Tallózás…";
-"harnesses.launch.prompt" = "Kérdés";
-"harnesses.launch.prompt.placeholder" = "Nem kötelező kérdés az ügynöknek…";
 "harnesses.launch.resume" = "Előző munkamenet folytatása";
 "harnesses.launch.resume.help" = "Egy korábbi munkamenetet folytat az újrakezdés helyett. A Claude csak azt a munkamenetet folytatja, amelyet ez a kártya indított, így egy új kártya elölről kezdi; a többi szolgáltató a munkakönyvtár legutóbbi munkamenetét folytatja.";
 "harnesses.launch.button" = "Indítás";
 "harnesses.launch.help" = "Harness indítása új terminálban";
-"harnesses.launch.cancel" = "Mégse";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Kapcsolódó worktree-k";
@@ -780,7 +773,7 @@
 
 "common.clear" = "Törlés";
 
-"sidebar.worktree.create.terminal" = "Terminal létrehozása…";
+"sidebar.worktree.create.terminal" = "Új terminál…";
 
 "sidebar.worktree.copy.pathname" = "Másolás elérési útként";
 
@@ -851,7 +844,6 @@
 "harnesses.delete.local.message" = "Ez eltávolítja a harnesst a YNH-ból és véglegesen törli a fájljait. Ez a művelet nem vonható vissza.";
 "harnesses.delete.local.confirm" = "Harness törlése";
 "harnesses.more.actions.help" = "További műveletek";
-"harnesses.copy.run.command" = "Futtatási parancs másolása";
 "harnesses.ynh.documentation" = "YNH-dokumentáció";
 
 "harnesses.add.registry.title" = "YNH-beállításjegyzék hozzáadása";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "el nem küldött commit-ok";
 "remote.prs.prune.reason.dirty" = "el nem mentett változtatások";
 "remote.prs.prune.remove" = "Eltávolítás";
-"remote.prs.quick.launch.focus" = "Fókusz gyors indítása";
 "remote.prs.run.cancel" = "Mégse";
 "remote.prs.run.customize" = "Testreszabás";
-"remote.prs.run.focus.item %@" = "%@ futtatása";
 "remote.prs.run.focus.label" = "Fókusz";
 "remote.prs.run.focus.none" = "(nincs — ad hoc parancssor)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Fókusz parancssora";
 "remote.prs.run.refresh.detail" = "Harness fókuszok és profilok újratöltése lemezről";
-"remote.prs.run.run" = "Futtatás";
-"remote.prs.run.sheet.title" = "Futtatás fókusszal";
 "remote.prs.run.vendor.default" = "Harness alapértelmezett";
 "remote.prs.run.vendor.label" = "Szállító";
-"remote.prs.run.with.focus" = "Futtatás fókusszal…";
 "remote.prs.set.default.focus" = "Alapértelmezett fókusz beállítása…";
 "remote.prs.show.in.local" = "Megjelenítés helyileg";
 "remote.prs.show.in.remote" = "Megjelenítés Remote-on";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "A munkagráf nem érhető el (a bd nem található vagy hibázott)";
 "wheelhouse.unborn.help" = "Soha nem foglalt: ennek a helynek még nem volt első munkamenete";
 "wheelhouse.waiting.on %@" = "várakozik: %@";
-"wheelhouse.open.terminal" = "Terminál megnyitása";
 "wheelhouse.show.terminal" = "Terminál megjelenítése";
 "wheelhouse.status.idle" = "tétlen";
 "wheelhouse.working.help" = "Dolgozik: az elmúlt 20 percben bejelentkezett egy beadnél, bár nincs saját futó terminálja";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "Terminál bezárása";
 "wheelhouse.action.harness.details" = "Harness részletei…";
 "wheelhouse.action.ask.focus" = "Kérés a következőre fókuszálásra";
-"wheelhouse.action.launch.focus" = "Indítás fókusszal";
 "settings.wheelhouse.enable.tab" = "Wheelhouse-ok oldalsáv-lapjának megjelenítése";
 "settings.wheelhouse.enable.tab.help" = "Hozzáad egy Wheelhouse-ok lapot, amely felsorolja a tárolóid minden Wheelhouse-ának helyeit";
 "settings.wheelhouse.quick.terminal.placement" = "Gyors terminál elhelyezése";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Az a név, amelyhez a Wheelhouse beadeket rendel, ha bármely ember elvégezheti őket. Az ehhez a névhez tartozó kész beadek megjelennek a postafiókodban.";
 "settings.wheelhouse.inbox.own.name" = "Saját postafiókneved";
 "settings.wheelhouse.inbox.own.name.help" = "Az a név, amelyhez a Wheelhouse beadeket rendel, ha azok kifejezetten neked szólnak. Hagyd üresen, ha nincs.";
-"wheelhouse.quick.terminal.new" = "Új gyors terminál";
 "wheelhouse.quick.terminal.title %ld" = "Terminál %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "%ld. gyors terminál ehhez: %@. Kattints, hogy színpadra hozd";
 "wheelhouse.inbox.title" = "Postafiók";

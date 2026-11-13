@@ -244,7 +244,7 @@ struct WheelhouseStageView: View {
     private func seatCardMenuItems(_ card: TerminalCard) -> some View {
         if let found = store.seat(for: card) {
             WheelhouseSeatActionItems(
-                wheelhouse: found.wheelhouse, seat: found.seat, hasTerminal: true,
+                wheelhouse: found.wheelhouse, seat: found.seat, cardId: card.id,
                 showsShortcuts: stage.focused == card.id, onSeatAction: onSeatAction)
             Divider()
         }
@@ -536,7 +536,7 @@ struct WheelhouseStageView: View {
         Menu {
             Group {
                 WheelhouseSeatActionItems(
-                    wheelhouse: wheelhouse, seat: seat, hasTerminal: true, onSeatAction: onSeatAction)
+                    wheelhouse: wheelhouse, seat: seat, cardId: card.id, onSeatAction: onSeatAction)
                 Divider()
                 zoomMenuItem(card, showsShortcut: false)
             }
@@ -810,12 +810,18 @@ extension WheelhouseStageView {
     }
 }
 
-/// Menu items for a seat: its harness focuses, hand off, and birth. Every
-/// item has its `WheelhouseMenuIcon`.
+/// Menu items for a seat, in the order every launch menu uses: the launch
+/// group (Quick Launch, Launch…, Launch with Focus; or Show Terminal and Ask
+/// to Focus On while it runs), Quick Terminal, the seat's own actions (install,
+/// birth, hand off, close), then Harness Details…. Every item has an icon.
 struct WheelhouseSeatActionItems: View {
     let wheelhouse: Wheelhouse
     let seat: WheelhouseSeat
-    let hasTerminal: Bool
+    /// The seat's card, if it has one.
+    let cardId: UUID?
+    /// Offer Show Terminal for a running seat: only off the stage, where the
+    /// seat isn't already in view.
+    var showsOpen: Bool = false
     var unborn: Bool = false
     /// Whether ynh has the seat's harness; nil while unknown.
     var installed: Bool?
@@ -833,33 +839,83 @@ struct WheelhouseSeatActionItems: View {
         blockedBy.isEmpty ? title : Strings.Wheelhouse.needsFirst(title, blockedBy.joined(separator: ", "))
     }
 
+    private var hasTerminal: Bool { cardId != nil }
+    /// Whether the seat's terminal is live. Read when the menu is built.
+    private var running: Bool {
+        cardId.map { TerminalSessionManager.shared.hasActiveSession(for: $0) } ?? false
+    }
+
+    /// Nothing to launch: running with no focuses where Show Terminal isn't
+    /// offered, or not installed (Install comes first).
+    private var launchGroupIsEmpty: Bool {
+        if running { return !showsOpen && wheelhouse.focuses(for: seat).isEmpty }
+        return installed == false
+    }
+
     var body: some View {
+        if !launchGroupIsEmpty {
+            launchGroup
+            Divider()
+        }
+        Button {
+            onSeatAction(wheelhouse, seat, .quickTerminal)
+        } label: {
+            Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
+        }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.quickTerminal : nil)
+        seatGroup
+        Divider()
+        Button {
+            onSeatAction(wheelhouse, seat, .harnessDetails)
+        } label: {
+            Label(Strings.Wheelhouse.harnessDetails, systemImage: WheelhouseMenuIcon.harnessDetails)
+        }
+        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.harnessDetails : nil)
+    }
+
+    /// A stopped seat: Quick Launch (what a click does), Launch… (the launch
+    /// sheet, to resume or pick a focus) and its focuses. A running one: Show
+    /// Terminal off the stage, and its focuses asked of the live session.
+    @ViewBuilder
+    private var launchGroup: some View {
+        let focuses = wheelhouse.focuses(for: seat).map { focus in
+            LaunchMenuItems.Focus(name: focus.name.capitalized) { onSeatAction(wheelhouse, seat, .focus(focus)) }
+        }
+        if running {
+            if showsOpen {
+                Button {
+                    onSeatAction(wheelhouse, seat, .open)
+                } label: {
+                    Label(Strings.Wheelhouse.showTerminal, systemImage: WheelhouseMenuIcon.showTerminal)
+                }
+            }
+            LaunchMenuItems(name: nil, focuses: focuses, focusTitle: Strings.Wheelhouse.askToFocus)
+        } else if installed != false {
+            LaunchMenuItems(
+                name: seat.name,
+                quickLaunch: { onSeatAction(wheelhouse, seat, .open) },
+                openSheet: { onSeatAction(wheelhouse, seat, .launchDialog) },
+                focuses: focuses)
+        }
+    }
+
+    /// Install or birth while it needs one; hand off and close while it has a
+    /// terminal. Empty for a stopped, installed, born seat.
+    @ViewBuilder
+    private var seatGroup: some View {
         if installed == false {
+            Divider()
             Button {
                 onSeatAction(wheelhouse, seat, .install)
             } label: {
                 Label(withNeeds(Strings.Wheelhouse.install), systemImage: WheelhouseMenuIcon.install)
             }
+        } else if unborn && !running {
             Divider()
-        } else if unborn && !hasTerminal {
             Button {
                 onSeatAction(wheelhouse, seat, .birth)
             } label: {
                 Label(withNeeds(Strings.Wheelhouse.birth), systemImage: WheelhouseMenuIcon.birth)
-            }
-            Divider()
-        }
-        let focuses = wheelhouse.focuses(for: seat)
-        if !focuses.isEmpty {
-            Section(hasTerminal ? Strings.Wheelhouse.askToFocus : Strings.Wheelhouse.launchWithFocus) {
-                ForEach(focuses) { focus in
-                    Button {
-                        onSeatAction(wheelhouse, seat, .focus(focus))
-                    } label: {
-                        Label(focus.name.capitalized, systemImage: WheelhouseMenuIcon.focus(named: focus.name))
-                    }
-                    .help(focus.prompt)
-                }
             }
         }
         if hasTerminal {
@@ -877,18 +933,5 @@ struct WheelhouseSeatActionItems: View {
             .help(Strings.Wheelhouse.smartCloseHelp)
             .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.closeTerminal : nil)
         }
-        Divider()
-        Button {
-            onSeatAction(wheelhouse, seat, .quickTerminal)
-        } label: {
-            Label(Strings.Wheelhouse.newQuickTerminal, systemImage: WheelhouseMenuIcon.quickTerminal)
-        }
-        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.quickTerminal : nil)
-        Button {
-            onSeatAction(wheelhouse, seat, .harnessDetails)
-        } label: {
-            Label(Strings.Wheelhouse.harnessDetails, systemImage: WheelhouseMenuIcon.harnessDetails)
-        }
-        .stageShortcut(showsShortcuts ? WheelhouseStageShortcut.harnessDetails : nil)
     }
 }

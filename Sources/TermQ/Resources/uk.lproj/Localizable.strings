@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Повернутися до дошки (Escape)";
 "toolbar.move.to" = "Перемістити до колонки";
 "toolbar.new.quick" = "Швидкий термінал";
-"toolbar.new.quick.help" = "Новий швидкий термінал (⌘T)";
+"toolbar.new.quick.help" = "Швидкий термінал (⌘T)";
 "toolbar.edit" = "Редагувати";
 "toolbar.edit.help" = "Редагувати деталі терміналу (⌘E)";
 "toolbar.pin" = "Закріпити";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Видалити термінал";
 "toolbar.add" = "Додати";
 "toolbar.add.help" = "Додати новий термінал або колонку";
-"toolbar.open.terminal.app" = "Відкрити в Терміналі";
 "toolbar.open.terminal.app.help" = "Відкрити в Terminal.app";
-"toolbar.new.terminal" = "Новий термінал";
 "toolbar.new.column" = "Нова колонка";
 "toolbar.bin.count %lld" = "Кошик (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Новий швидкий термінал";
-"menu.new.terminal" = "Новий термінал...";
 "menu.new.terminal.dialog" = "Новий термінал";
 "menu.new.column" = "Нова колонка";
 "menu.back" = "Повернутися до дошки";
@@ -154,7 +150,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Оновити робочі дерева";
 "sidebar.worktree.new" = "Нове робоче дерево";
-"sidebar.worktree.new.terminal" = "Новий Terminal";
+"sidebar.worktree.new.terminal" = "Швидкий термінал";
 "sidebar.worktree.terminals.badge.help" = "Натисніть для швидких посилань для відкриття терміналів";
 "sidebar.worktree.open.in.terminal" = "Відкрити в Terminal";
 "sidebar.worktree.reveal.in.finder" = "Показати у Finder";
@@ -639,7 +634,6 @@
 "sidebar.worktree.set.harness" = "Встановити harness…";
 "sidebar.worktree.clear.harness" = "Видалити harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Запустити %@";
 "sidebar.remove.worktree" = "Видалити робоче дерево";
 "sidebar.remove.worktree.title" = "Видалити робоче дерево?";
 "sidebar.remove.worktree.confirm" = "Видалити";
@@ -737,20 +731,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Запустити упряжку";
-"harnesses.launch.vendor" = "Постачальник";
+"launch.quick %@" = "Швидкий запуск %@";
+"launch.sheet %@" = "Запустити %@…";
+"launch.sheet.any" = "Запустити упряжку…";
+"launch.sheet.short" = "Запустити…";
+"launch.with.focus" = "Запустити з фокусом";
 "harnesses.launch.vendor.unavailable" = "(не встановлено)";
 "harnesses.launch.vendor.default" = "За замовчуванням (%@)";
-"harnesses.launch.focus" = "Фокус";
-"harnesses.launch.focus.none" = "Немає";
 "harnesses.launch.working.directory" = "Робочий каталог";
 "harnesses.launch.browse" = "Огляд…";
-"harnesses.launch.prompt" = "Запит";
-"harnesses.launch.prompt.placeholder" = "Необов'язковий запит для агента…";
 "harnesses.launch.resume" = "Відновити попередній сеанс";
 "harnesses.launch.resume.help" = "Продовжує попередній сеанс замість запуску з нуля. Claude продовжує лише сеанс, запущений цією карткою, тому нова картка починає з нуля; інші постачальники продовжують останній сеанс у робочому каталозі.";
 "harnesses.launch.button" = "Запустити";
 "harnesses.launch.help" = "Запустити цю упряжку в новому терміналі";
-"harnesses.launch.cancel" = "Скасувати";
 "harnesses.launch.backend" = "Бекенд";
 
 "harnesses.linked.worktrees" = "Пов’язані worktree";
@@ -781,7 +774,7 @@
 
 "common.clear" = "Очистити";
 
-"sidebar.worktree.create.terminal" = "Створити Terminal…";
+"sidebar.worktree.create.terminal" = "Новий термінал…";
 
 "sidebar.worktree.copy.pathname" = "Копіювати як шлях";
 
@@ -852,7 +845,6 @@
 "harnesses.delete.local.message" = "Це видалить harness з YNH та назавжди видалить його файли. Цю дію не можна скасувати.";
 "harnesses.delete.local.confirm" = "Видалити harness";
 "harnesses.more.actions.help" = "Інші дії";
-"harnesses.copy.run.command" = "Копіювати команду запуску";
 "harnesses.ynh.documentation" = "Документація YNH";
 
 "harnesses.add.registry.title" = "Додати реєстр YNH";
@@ -1355,10 +1347,8 @@
 "remote.prs.prune.reason.ahead" = "невідправлені коміти";
 "remote.prs.prune.reason.dirty" = "незафіксовані зміни";
 "remote.prs.prune.remove" = "Видалити";
-"remote.prs.quick.launch.focus" = "Швидкий запуск фокусу";
 "remote.prs.run.cancel" = "Скасувати";
 "remote.prs.run.customize" = "Налаштувати";
-"remote.prs.run.focus.item %@" = "Запустити %@";
 "remote.prs.run.focus.label" = "Фокус";
 "remote.prs.run.focus.none" = "(немає — нерегулярний запит)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1369,11 +1359,8 @@
 "remote.prs.run.profile.label" = "Профіль";
 "remote.prs.run.prompt.label" = "Запит фокусу";
 "remote.prs.run.refresh.detail" = "Перезавантажити фокуси та профілі Harness з диска";
-"remote.prs.run.run" = "Запустити";
-"remote.prs.run.sheet.title" = "Запустити з фокусом";
 "remote.prs.run.vendor.default" = "За замовчуванням Harness";
 "remote.prs.run.vendor.label" = "Постачальник";
-"remote.prs.run.with.focus" = "Запустити з фокусом…";
 "remote.prs.set.default.focus" = "Встановити стандартний фокус…";
 "remote.prs.show.in.local" = "Показати локально";
 "remote.prs.show.in.remote" = "Показати на Remote";
@@ -1582,7 +1569,6 @@
 "wheelhouse.work.unavailable" = "Граф роботи недоступний (bd не знайдено або сталася помилка)";
 "wheelhouse.unborn.help" = "Ще не зайнято: це місце не мало першої сесії";
 "wheelhouse.waiting.on %@" = "очікує: %@";
-"wheelhouse.open.terminal" = "Відкрити термінал";
 "wheelhouse.show.terminal" = "Показати термінал";
 "wheelhouse.status.idle" = "простоює";
 "wheelhouse.working.help" = "Працює: відзначився на bead за останні 20 хвилин, хоча власний термінал не запущено";
@@ -1637,7 +1623,6 @@
 "wheelhouse.action.close.terminal" = "Закрити термінал";
 "wheelhouse.action.harness.details" = "Відомості про harness…";
 "wheelhouse.action.ask.focus" = "Попросити зосередитися на";
-"wheelhouse.action.launch.focus" = "Запустити з фокусом";
 "settings.wheelhouse.enable.tab" = "Показати вкладку Wheelhouse на бічній панелі";
 "settings.wheelhouse.enable.tab.help" = "Додає вкладку Wheelhouse зі списком місць кожного Wheelhouse у ваших репозиторіях";
 "settings.wheelhouse.quick.terminal.placement" = "Розміщення швидкого термінала";
@@ -1648,7 +1633,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Ім’я, на яке Wheelhouse призначає bead, коли з ними може впоратися будь-яка людина. Готові bead для цього імені з’являються у ваших вхідних.";
 "settings.wheelhouse.inbox.own.name" = "Ваше власне ім’я вхідних";
 "settings.wheelhouse.inbox.own.name.help" = "Ім’я, на яке Wheelhouse призначає bead, коли вони призначені саме вам. Залиште порожнім, якщо його немає.";
-"wheelhouse.quick.terminal.new" = "Новий швидкий термінал";
 "wheelhouse.quick.terminal.title %ld" = "Термінал %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Швидкий термінал %ld для %@: натисніть, щоб вивести його на сцену";
 "wheelhouse.inbox.title" = "Вхідні";

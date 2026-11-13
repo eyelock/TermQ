@@ -84,9 +84,6 @@ extension Strings {
         static func linkedHarness(_ name: String) -> String {
             String(format: localized("sidebar.worktree.linked.harness %@"), name)
         }
-        static func launchHarness(_ name: String) -> String {
-            String(format: localized("sidebar.worktree.launch.harness %@"), name)
-        }
 
         // Remove / delete worktree
         static var removeWorktree: String { localized("sidebar.remove.worktree") }
@@ -392,22 +389,16 @@ extension Strings {
 
         // Launch
         static var launchTitle: String { localized("harnesses.launch.title") }
-        static var launchVendor: String { localized("harnesses.launch.vendor") }
         static var launchVendorUnavailable: String { localized("harnesses.launch.vendor.unavailable") }
         static func launchVendorDefault(_ vendor: String) -> String {
             String(format: localized("harnesses.launch.vendor.default"), vendor)
         }
-        static var launchFocus: String { localized("harnesses.launch.focus") }
-        static var launchFocusNone: String { localized("harnesses.launch.focus.none") }
         static var launchWorkingDirectory: String { localized("harnesses.launch.working.directory") }
         static var launchBrowse: String { localized("harnesses.launch.browse") }
-        static var launchPrompt: String { localized("harnesses.launch.prompt") }
         static var launchResume: String { localized("harnesses.launch.resume") }
         static var launchResumeHelp: String { localized("harnesses.launch.resume.help") }
-        static var launchPromptPlaceholder: String { localized("harnesses.launch.prompt.placeholder") }
         static var launchButton: String { localized("harnesses.launch.button") }
         static var launchHelp: String { localized("harnesses.launch.help") }
-        static var launchCancel: String { localized("harnesses.launch.cancel") }
         static var launchBackend: String { localized("harnesses.launch.backend") }
 
         // Linked worktrees section in detail view
@@ -507,7 +498,6 @@ extension Strings {
         static var deleteLocalMessage: String { localized("harnesses.delete.local.message") }
         static var deleteLocalConfirm: String { localized("harnesses.delete.local.confirm") }
         static var moreActionsHelp: String { localized("harnesses.more.actions.help") }
-        static var copyRunCommand: String { localized("harnesses.copy.run.command") }
         static var exportButton: String { localized("harnesses.export.button") }
         static var ynhDocumentation: String { localized("harnesses.ynh.documentation") }
         static var addMarketplaceTitle: String { localized("harnesses.add.registry.title") }

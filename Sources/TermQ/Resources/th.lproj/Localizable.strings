@@ -81,7 +81,7 @@
 "toolbar.back.help" = "กลับไปที่บอร์ด (Escape)";
 "toolbar.move.to" = "ย้ายไปคอลัมน์";
 "toolbar.new.quick" = "เทอร์มินัลด่วน";
-"toolbar.new.quick.help" = "เทอร์มินัลด่วนใหม่ (⌘T)";
+"toolbar.new.quick.help" = "เทอร์มินัลด่วน (⌘T)";
 "toolbar.edit" = "แก้ไข";
 "toolbar.edit.help" = "แก้ไขรายละเอียดเทอร์มินัล (⌘E)";
 "toolbar.pin" = "ปักหมุด";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "ลบเทอร์มินัล";
 "toolbar.add" = "เพิ่ม";
 "toolbar.add.help" = "เพิ่มเทอร์มินัลหรือคอลัมน์ใหม่";
-"toolbar.open.terminal.app" = "เปิดใน Terminal";
 "toolbar.open.terminal.app.help" = "เปิดใน Terminal.app";
-"toolbar.new.terminal" = "เทอร์มินัลใหม่";
 "toolbar.new.column" = "คอลัมน์ใหม่";
 "toolbar.bin.count %lld" = "ถังขยะ (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "เทอร์มินัลด่วนใหม่";
-"menu.new.terminal" = "เทอร์มินัลใหม่...";
 "menu.new.terminal.dialog" = "เทอร์มินัลใหม่";
 "menu.new.column" = "คอลัมน์ใหม่";
 "menu.back" = "กลับไปที่บอร์ด";
@@ -154,7 +150,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "รีเฟรช worktrees";
 "sidebar.worktree.new" = "Worktree ใหม่";
-"sidebar.worktree.new.terminal" = "Terminal ใหม่";
+"sidebar.worktree.new.terminal" = "เทอร์มินัลด่วน";
 "sidebar.worktree.terminals.badge.help" = "คลิกเพื่อเข้าถึงลิงก์ด่วนสำหรับเปิด Terminal";
 "sidebar.worktree.open.in.terminal" = "เปิดใน Terminal";
 "sidebar.worktree.reveal.in.finder" = "แสดงใน Finder";
@@ -639,7 +634,6 @@
 "sidebar.worktree.set.harness" = "ตั้งค่า harness…";
 "sidebar.worktree.clear.harness" = "ล้าง harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "เปิด %@";
 "sidebar.remove.worktree" = "ลบ Worktree";
 "sidebar.remove.worktree.title" = "ลบ Worktree?";
 "sidebar.remove.worktree.confirm" = "ลบ";
@@ -737,20 +731,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "เปิด Harness";
-"harnesses.launch.vendor" = "ผู้จัดจำหน่าย";
+"launch.quick %@" = "เปิดด่วน %@";
+"launch.sheet %@" = "เปิด %@…";
+"launch.sheet.any" = "เปิด Harness…";
+"launch.sheet.short" = "เปิด…";
+"launch.with.focus" = "เปิดพร้อมโฟกัส";
 "harnesses.launch.vendor.unavailable" = "(ไม่ได้ติดตั้ง)";
 "harnesses.launch.vendor.default" = "ค่าเริ่มต้น (%@)";
-"harnesses.launch.focus" = "โฟกัส";
-"harnesses.launch.focus.none" = "ไม่มี";
 "harnesses.launch.working.directory" = "ไดเรกทอรีทำงาน";
 "harnesses.launch.browse" = "เลือก…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "prompt ที่เป็นตัวเลือกสำหรับ agent…";
 "harnesses.launch.resume" = "เริ่มเซสชันก่อนหน้าต่อ";
 "harnesses.launch.resume.help" = "ดำเนินการต่อจากเซสชันก่อนหน้าแทนการเริ่มใหม่ Claude จะดำเนินการต่อเฉพาะเซสชันที่การ์ดนี้เริ่มไว้ ดังนั้นการ์ดใหม่จะเริ่มใหม่ ส่วนผู้ให้บริการรายอื่นจะดำเนินการต่อจากเซสชันล่าสุดในไดเรกทอรีทำงาน";
 "harnesses.launch.button" = "เปิด";
 "harnesses.launch.help" = "เปิด harness นี้ใน Terminal ใหม่";
-"harnesses.launch.cancel" = "ยกเลิก";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktree ที่เชื่อมโยง";
@@ -781,7 +774,7 @@
 
 "common.clear" = "ล้าง";
 
-"sidebar.worktree.create.terminal" = "สร้าง Terminal…";
+"sidebar.worktree.create.terminal" = "เทอร์มินัลใหม่…";
 
 "sidebar.worktree.copy.pathname" = "คัดลอกเป็นชื่อเส้นทาง";
 
@@ -852,7 +845,6 @@
 "harnesses.delete.local.message" = "การดำเนินการนี้จะถอนการติดตั้ง Harness จาก YNH และลบไฟล์ถาวร ไม่สามารถยกเลิกได้";
 "harnesses.delete.local.confirm" = "ลบ Harness";
 "harnesses.more.actions.help" = "การดำเนินการอื่น ๆ";
-"harnesses.copy.run.command" = "คัดลอกคำสั่งเรียกใช้";
 "harnesses.ynh.documentation" = "เอกสาร YNH";
 
 "harnesses.add.registry.title" = "เพิ่ม YNH Registry";
@@ -1355,10 +1347,8 @@
 "remote.prs.prune.reason.ahead" = "commit ที่ยังไม่ได้พุช";
 "remote.prs.prune.reason.dirty" = "การเปลี่ยนแปลงที่ยังไม่ได้ commit";
 "remote.prs.prune.remove" = "ลบ";
-"remote.prs.quick.launch.focus" = "เปิดโฟกัสด่วน";
 "remote.prs.run.cancel" = "ยกเลิก";
 "remote.prs.run.customize" = "ปรับแต่ง";
-"remote.prs.run.focus.item %@" = "รัน %@";
 "remote.prs.run.focus.label" = "โฟกัส";
 "remote.prs.run.focus.none" = "(ไม่มี — พร้อมต์เฉพาะกิจ)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1369,11 +1359,8 @@
 "remote.prs.run.profile.label" = "โปรไฟล์";
 "remote.prs.run.prompt.label" = "พร้อมต์โฟกัส";
 "remote.prs.run.refresh.detail" = "โหลดโฟกัสและโปรไฟล์ Harness จากดิสก์ใหม่";
-"remote.prs.run.run" = "รัน";
-"remote.prs.run.sheet.title" = "รันพร้อมโฟกัส";
 "remote.prs.run.vendor.default" = "ค่าเริ่มต้น Harness";
 "remote.prs.run.vendor.label" = "ผู้จำหน่าย";
-"remote.prs.run.with.focus" = "รันพร้อมโฟกัส…";
 "remote.prs.set.default.focus" = "ตั้งค่าโฟกัสเริ่มต้น…";
 "remote.prs.show.in.local" = "แสดงในเครื่อง";
 "remote.prs.show.in.remote" = "แสดงบน Remote";
@@ -1582,7 +1569,6 @@
 "wheelhouse.work.unavailable" = "กราฟงานไม่พร้อมใช้งาน (ไม่พบ bd หรือทำงานล้มเหลว)";
 "wheelhouse.unborn.help" = "ยังไม่เคยมีผู้นั่ง: ที่นั่งนี้ยังไม่มีเซสชันแรก";
 "wheelhouse.waiting.on %@" = "กำลังรอ %@";
-"wheelhouse.open.terminal" = "เปิดเทอร์มินัล";
 "wheelhouse.show.terminal" = "แสดงเทอร์มินัล";
 "wheelhouse.status.idle" = "ว่าง";
 "wheelhouse.working.help" = "กำลังทำงาน: เช็กอินกับ bead ภายใน 20 นาทีที่ผ่านมา แม้จะไม่มีเทอร์มินัลของตัวเองทำงานอยู่";
@@ -1637,7 +1623,6 @@
 "wheelhouse.action.close.terminal" = "ปิดเทอร์มินัล";
 "wheelhouse.action.harness.details" = "รายละเอียด Harness…";
 "wheelhouse.action.ask.focus" = "ขอให้โฟกัสที่";
-"wheelhouse.action.launch.focus" = "เปิดใช้งานพร้อมโฟกัส";
 "settings.wheelhouse.enable.tab" = "แสดงแท็บ Wheelhouses ในแถบด้านข้าง";
 "settings.wheelhouse.enable.tab.help" = "เพิ่มแท็บ Wheelhouses ที่แสดงรายการที่นั่งของทุก Wheelhouse ในที่เก็บของคุณ";
 "settings.wheelhouse.quick.terminal.placement" = "ตำแหน่งเทอร์มินัลด่วน";
@@ -1648,7 +1633,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "ชื่อที่ Wheelhouse มอบหมาย bead ให้เมื่อมนุษย์คนใดก็ได้สามารถดำเนินการได้ bead ที่พร้อมสำหรับชื่อนี้จะแสดงในกล่องจดหมายเข้าของคุณ";
 "settings.wheelhouse.inbox.own.name" = "ชื่อกล่องจดหมายเข้าของคุณเอง";
 "settings.wheelhouse.inbox.own.name.help" = "ชื่อที่ Wheelhouse มอบหมาย bead ให้เมื่อเป็นของคุณโดยเฉพาะ เว้นว่างไว้หากไม่มี";
-"wheelhouse.quick.terminal.new" = "เทอร์มินัลด่วนใหม่";
 "wheelhouse.quick.terminal.title %ld" = "เทอร์มินัล %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "เทอร์มินัลด่วน %ld สำหรับ %@: คลิกเพื่อนำขึ้นเวที";
 "wheelhouse.inbox.title" = "กล่องจดหมายเข้า";

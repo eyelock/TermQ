@@ -80,7 +80,7 @@
 "toolbar.back.help" = "Înapoi la tablă (Escape)";
 "toolbar.move.to" = "Mutare în coloană";
 "toolbar.new.quick" = "Terminal rapid";
-"toolbar.new.quick.help" = "Terminal rapid nou (⌘T)";
+"toolbar.new.quick.help" = "Terminal rapid (⌘T)";
 "toolbar.edit" = "Editare";
 "toolbar.edit.help" = "Editare detalii terminal (⌘E)";
 "toolbar.pin" = "Fixare";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "Ștergere terminal";
 "toolbar.add" = "Adăugare";
 "toolbar.add.help" = "Adăugare terminal sau coloană nouă";
-"toolbar.open.terminal.app" = "Deschidere în Terminal";
 "toolbar.open.terminal.app.help" = "Deschidere în Terminal.app";
-"toolbar.new.terminal" = "Terminal nou";
 "toolbar.new.column" = "Coloană nouă";
 "toolbar.bin.count %lld" = "Coș de gunoi (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Terminal rapid nou";
-"menu.new.terminal" = "Terminal nou...";
 "menu.new.terminal.dialog" = "Terminal nou";
 "menu.new.column" = "Coloană nouă";
 "menu.back" = "Înapoi la tablă";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "Reîmprospătează arborii de lucru";
 "sidebar.worktree.new" = "Arbore de lucru nou";
 "sidebar.worktree.new.terminal" = "Terminal rapid";
-"sidebar.worktree.create.terminal" = "Creează Terminal…";
+"sidebar.worktree.create.terminal" = "Terminal nou…";
 "sidebar.worktree.terminals.badge.help" = "Faceți clic pentru linkuri rapide pentru a deschide terminale";
 "sidebar.worktree.open.in.terminal" = "Afișează în Terminal";
 "sidebar.worktree.reveal.in.finder" = "Dezvăluie în Finder";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Setează harness…";
 "sidebar.worktree.clear.harness" = "Eliberează harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Lansează %@";
 "sidebar.remove.worktree" = "Șterge arborele de lucru";
 "sidebar.remove.worktree.title" = "Ștergeți arborele de lucru?";
 "sidebar.remove.worktree.confirm" = "Șterge";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Lansare harness";
-"harnesses.launch.vendor" = "Furnizor";
+"launch.quick %@" = "Lansare rapidă %@";
+"launch.sheet %@" = "Lansare %@…";
+"launch.sheet.any" = "Lansare harness…";
+"launch.sheet.short" = "Lansare…";
+"launch.with.focus" = "Lansare cu focus";
 "harnesses.launch.vendor.unavailable" = "(neinstalat)";
 "harnesses.launch.vendor.default" = "Implicit (%@)";
-"harnesses.launch.focus" = "Focus";
-"harnesses.launch.focus.none" = "Niciunul";
 "harnesses.launch.working.directory" = "Director de lucru";
 "harnesses.launch.browse" = "Răsfoire…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Prompt opțional pentru agent…";
 "harnesses.launch.resume" = "Reia sesiunea anterioară";
 "harnesses.launch.resume.help" = "Continuă o sesiune anterioară în loc să înceapă de la zero. Claude continuă doar sesiunea pornită de acest card, așa că un card nou începe de la zero; ceilalți furnizori continuă cea mai recentă sesiune din directorul de lucru.";
 "harnesses.launch.button" = "Lansare";
 "harnesses.launch.help" = "Lansează acest harness într-un terminal nou";
-"harnesses.launch.cancel" = "Anulare";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktree-uri legate";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Aceasta va dezinstala harness-ul din YNH și va șterge definitiv fișierele sale. Această acțiune nu poate fi anulată.";
 "harnesses.delete.local.confirm" = "Șterge harness";
 "harnesses.more.actions.help" = "Mai multe acțiuni";
-"harnesses.copy.run.command" = "Copiați comanda de rulare";
 "harnesses.ynh.documentation" = "Documentație YNH";
 
 "harnesses.add.registry.title" = "Adăugare registru YNH";
@@ -1348,10 +1340,8 @@
 "remote.prs.prune.reason.ahead" = "commit-uri netrimise";
 "remote.prs.prune.reason.dirty" = "modificări neconfirmate";
 "remote.prs.prune.remove" = "Elimină";
-"remote.prs.quick.launch.focus" = "Lansare rapidă focus";
 "remote.prs.run.cancel" = "Anulează";
 "remote.prs.run.customize" = "Personalizează";
-"remote.prs.run.focus.item %@" = "Rulează %@";
 "remote.prs.run.focus.label" = "Focus";
 "remote.prs.run.focus.none" = "(niciunul — prompt ad hoc)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1362,11 +1352,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Prompt focus";
 "remote.prs.run.refresh.detail" = "Reîncarcă focusurile și profilurile Harness de pe disc";
-"remote.prs.run.run" = "Rulează";
-"remote.prs.run.sheet.title" = "Rulează cu focus";
 "remote.prs.run.vendor.default" = "Implicit Harness";
 "remote.prs.run.vendor.label" = "Furnizor";
-"remote.prs.run.with.focus" = "Rulează cu focus…";
 "remote.prs.set.default.focus" = "Setează focusul implicit…";
 "remote.prs.show.in.local" = "Arată local";
 "remote.prs.show.in.remote" = "Arată pe Remote";
@@ -1575,7 +1562,6 @@
 "wheelhouse.work.unavailable" = "Graful de lucru nu este disponibil (bd nu a fost găsit sau a eșuat)";
 "wheelhouse.unborn.help" = "Niciodată ocupat: acest loc nu a avut încă prima sesiune";
 "wheelhouse.waiting.on %@" = "așteaptă după %@";
-"wheelhouse.open.terminal" = "Deschide terminalul";
 "wheelhouse.show.terminal" = "Arată terminalul";
 "wheelhouse.status.idle" = "inactiv";
 "wheelhouse.working.help" = "Lucrează: a raportat activitate pe un bead în ultimele 20 de minute, deși nu are un terminal propriu pornit";
@@ -1630,7 +1616,6 @@
 "wheelhouse.action.close.terminal" = "Închide terminalul";
 "wheelhouse.action.harness.details" = "Detalii harness…";
 "wheelhouse.action.ask.focus" = "Cere să se concentreze pe";
-"wheelhouse.action.launch.focus" = "Lansează cu focalizare";
 "settings.wheelhouse.enable.tab" = "Afișează fila Wheelhouses în bara laterală";
 "settings.wheelhouse.enable.tab.help" = "Adaugă o filă Wheelhouses care listează locurile fiecărui Wheelhouse din depozitele tale";
 "settings.wheelhouse.quick.terminal.placement" = "Poziționarea terminalului rapid";
@@ -1641,7 +1626,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Numele căruia un Wheelhouse îi atribuie beads atunci când orice om se poate ocupa de ele. Beads gata pentru acest nume apar în căsuța ta de intrare.";
 "settings.wheelhouse.inbox.own.name" = "Propriul tău nume de căsuță de intrare";
 "settings.wheelhouse.inbox.own.name.help" = "Numele căruia un Wheelhouse îi atribuie beads atunci când sunt pentru tine în mod special. Lasă gol dacă nu ai unul.";
-"wheelhouse.quick.terminal.new" = "Terminal rapid nou";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Terminal rapid %ld pentru %@: dă clic pentru a-l aduce pe scenă";
 "wheelhouse.inbox.title" = "Căsuță de intrare";

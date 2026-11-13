@@ -477,21 +477,12 @@ struct WheelhouseSidebarTab: View {
 
     @ViewBuilder
     private func seatMenuItems(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, card: TerminalCard?) -> some View {
-        // Same shape for every seat: open first, then the seat's own actions.
-        Button {
-            onSeatAction?(wheelhouse, seat, .open)
-        } label: {
-            if card == nil {
-                Label(Strings.Wheelhouse.openTerminal, systemImage: WheelhouseMenuIcon.openTerminal)
-            } else {
-                Label(Strings.Wheelhouse.showTerminal, systemImage: WheelhouseMenuIcon.showTerminal)
-            }
-        }
-        Divider()
+        // Same shape for every seat, and the same launch group as every other
+        // launch menu.
         if let onSeatAction {
             let issues = seatIssues(seat, in: wheelhouse)
             WheelhouseSeatActionItems(
-                wheelhouse: wheelhouse, seat: seat, hasTerminal: card != nil,
+                wheelhouse: wheelhouse, seat: seat, cardId: card?.id, showsOpen: true,
                 unborn: store.isUnborn(seat, in: wheelhouse), installed: harnessRepo.isInstalled(name: seat.command),
                 blockedBy: WheelhouseSeatHealth.blockingDelegates(in: issues), onSeatAction: onSeatAction)
             Divider()

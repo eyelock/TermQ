@@ -190,7 +190,9 @@ final class HarnessLaunchCoordinator {
         switch Self.seatOpen(hasCard: existing != nil, running: running, hasFocusOrPrompt: focus != nil || text != nil)
         {
         case .launchNew:
-            launchHarness(config)
+            // Its own card: another terminal at the Wheelhouse root running
+            // the same harness is not the seat.
+            launchHarness(config, reuseExisting: false)
             return seatCard(seat, in: wheelhouse)?.id
         case .startFresh:
             if let existing {
@@ -212,6 +214,27 @@ final class HarnessLaunchCoordinator {
         guard let existing else { return nil }
         boardViewModel.selectCard(existing)
         return existing.id
+    }
+
+    /// Launches a seat from the launch sheet. A seat with a card starts it
+    /// with the sheet's choices this once (fresh unless Resume was ticked);
+    /// one without a card gets a new card.
+    @discardableResult
+    func launchSeat(_ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, config: HarnessLaunchConfig) -> UUID? {
+        guard let existing = seatCard(seat, in: wheelhouse) else {
+            launchHarness(config, reuseExisting: false)
+            return seatCard(seat, in: wheelhouse)?.id
+        }
+        startOnce(existing, with: config)
+        existing.resumeOverrideForNextLaunch = config.resumeSession
+        remakeStoppedPane(existing)
+        boardViewModel.selectCard(existing)
+        return existing.id
+    }
+
+    /// The id of the ynh harness a seat runs.
+    func seatHarnessId(_ seat: WheelhouseSeat) -> String {
+        harnessRepo.harnesses.first { $0.name == seat.command }?.id ?? "local/\(seat.command)"
     }
 
     /// A pane still on the stage from a session that has ended must be made
@@ -330,6 +353,9 @@ final class HarnessLaunchCoordinator {
             return launchSeat(seat, in: wheelhouse, prompt: Self.birthPrompt)
         case .harnessDetails:
             showHarnessDetails(for: seat, in: wheelhouse)
+            return nil
+        case .launchDialog:
+            // Run by ContentView, which owns the launch sheet.
             return nil
         case .install:
             // Run by ContentView, which owns the install progress sheet.

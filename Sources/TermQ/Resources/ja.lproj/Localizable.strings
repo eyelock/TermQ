@@ -80,7 +80,7 @@
 "toolbar.back.help" = "ボードに戻る (Escape)";
 "toolbar.move.to" = "カラムに移動";
 "toolbar.new.quick" = "クイックターミナル";
-"toolbar.new.quick.help" = "新規クイックターミナル (⌘T)";
+"toolbar.new.quick.help" = "クイックターミナル (⌘T)";
 "toolbar.edit" = "編集";
 "toolbar.edit.help" = "ターミナルの詳細を編集 (⌘E)";
 "toolbar.pin" = "ピン留め";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "ターミナルを削除";
 "toolbar.add" = "追加";
 "toolbar.add.help" = "新しいターミナルまたはカラムを追加";
-"toolbar.open.terminal.app" = "ターミナルで開く";
 "toolbar.open.terminal.app.help" = "Terminal.appで開く";
-"toolbar.new.terminal" = "新規ターミナル";
 "toolbar.new.column" = "新規カラム";
 "toolbar.bin.count %lld" = "ゴミ箱 (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "クイック新規ターミナル";
-"menu.new.terminal" = "新規ターミナル...";
 "menu.new.terminal.dialog" = "新規ターミナル";
 "menu.new.column" = "新規カラム";
 "menu.back" = "ボードに戻る";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "ワークツリーを更新";
 "sidebar.worktree.new" = "新しいワークツリー";
 "sidebar.worktree.new.terminal" = "クイックターミナル";
-"sidebar.worktree.create.terminal" = "ターミナルを作成…";
+"sidebar.worktree.create.terminal" = "新規ターミナル…";
 "sidebar.worktree.terminals.badge.help" = "クリックしてターミナルを開くクイックリンクにアクセス";
 "sidebar.worktree.open.in.terminal" = "Terminalで表示";
 "sidebar.worktree.reveal.in.finder" = "Finderで表示";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Harness を設定…";
 "sidebar.worktree.clear.harness" = "Harness をクリア";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "%@ を起動";
 "sidebar.remove.worktree" = "ワークツリーを削除";
 "sidebar.remove.worktree.title" = "ワークツリーを削除しますか？";
 "sidebar.remove.worktree.confirm" = "削除";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "ハーネスを起動";
-"harnesses.launch.vendor" = "ベンダー";
+"launch.quick %@" = "%@をクイック起動";
+"launch.sheet %@" = "%@を起動…";
+"launch.sheet.any" = "ハーネスを起動…";
+"launch.sheet.short" = "起動…";
+"launch.with.focus" = "フォーカス付きで起動";
 "harnesses.launch.vendor.unavailable" = "（未インストール）";
 "harnesses.launch.vendor.default" = "デフォルト (%@)";
-"harnesses.launch.focus" = "フォーカス";
-"harnesses.launch.focus.none" = "なし";
 "harnesses.launch.working.directory" = "作業ディレクトリ";
 "harnesses.launch.browse" = "参照…";
-"harnesses.launch.prompt" = "プロンプト";
-"harnesses.launch.prompt.placeholder" = "エージェントに渡すオプションのプロンプト…";
 "harnesses.launch.resume" = "前回のセッションを再開";
 "harnesses.launch.resume.help" = "最初からやり直す代わりに、以前のセッションを続行します。Claude はこのカードが開始したセッションのみを続行するため、新しいカードは最初から始まります。他のベンダーは作業ディレクトリの最新のセッションを続行します。";
 "harnesses.launch.button" = "起動";
 "harnesses.launch.help" = "新しいターミナルでこのハーネスを起動";
-"harnesses.launch.cancel" = "キャンセル";
 "harnesses.launch.backend" = "バックエンド";
 
 "harnesses.linked.worktrees" = "リンク済み Worktree";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "YNHからHarnessをアンインストールし、ファイルを完全に削除します。この操作は元に戻せません。";
 "harnesses.delete.local.confirm" = "Harnessを削除";
 "harnesses.more.actions.help" = "その他の操作";
-"harnesses.copy.run.command" = "実行コマンドをコピー";
 "harnesses.ynh.documentation" = "YNHドキュメント";
 
 "harnesses.add.registry.title" = "YNH レジストリを追加";
@@ -1348,10 +1340,8 @@
 "remote.prs.prune.reason.ahead" = "未プッシュのcommit";
 "remote.prs.prune.reason.dirty" = "未commit の変更";
 "remote.prs.prune.remove" = "削除";
-"remote.prs.quick.launch.focus" = "フォーカスをクイック起動";
 "remote.prs.run.cancel" = "キャンセル";
 "remote.prs.run.customize" = "カスタマイズ";
-"remote.prs.run.focus.item %@" = "%@を実行";
 "remote.prs.run.focus.label" = "フォーカス";
 "remote.prs.run.focus.none" = "（なし — アドホックプロンプト）";
 "remote.prs.run.harness.label" = "Harness";
@@ -1362,11 +1352,8 @@
 "remote.prs.run.profile.label" = "プロファイル";
 "remote.prs.run.prompt.label" = "フォーカスプロンプト";
 "remote.prs.run.refresh.detail" = "ディスクからHarnessフォーカスとプロファイルを再読み込み";
-"remote.prs.run.run" = "実行";
-"remote.prs.run.sheet.title" = "フォーカスで実行";
 "remote.prs.run.vendor.default" = "Harnessデフォルト";
 "remote.prs.run.vendor.label" = "ベンダー";
-"remote.prs.run.with.focus" = "フォーカスで実行…";
 "remote.prs.set.default.focus" = "デフォルトフォーカスを設定…";
 "remote.prs.show.in.local" = "ローカルに表示";
 "remote.prs.show.in.remote" = "リモートに表示";
@@ -1575,7 +1562,6 @@
 "wheelhouse.work.unavailable" = "作業グラフを利用できません (bd が見つからないか失敗しました)";
 "wheelhouse.unborn.help" = "未着席: この席はまだ最初のセッションを行っていません";
 "wheelhouse.waiting.on %@" = "%@ を待機中";
-"wheelhouse.open.terminal" = "ターミナルを開く";
 "wheelhouse.show.terminal" = "ターミナルを表示";
 "wheelhouse.status.idle" = "アイドル";
 "wheelhouse.working.help" = "作業中: 過去 20 分以内に bead にチェックインしていますが、専用のターミナルは実行されていません";
@@ -1630,7 +1616,6 @@
 "wheelhouse.action.close.terminal" = "ターミナルを閉じる";
 "wheelhouse.action.harness.details" = "ハーネスの詳細…";
 "wheelhouse.action.ask.focus" = "次に集中するよう依頼";
-"wheelhouse.action.launch.focus" = "フォーカス付きで起動";
 "settings.wheelhouse.enable.tab" = "Wheelhouse サイドバータブを表示";
 "settings.wheelhouse.enable.tab.help" = "リポジトリ内のすべての Wheelhouse の席を一覧表示する Wheelhouse タブを追加します";
 "settings.wheelhouse.quick.terminal.placement" = "クイックターミナルの配置";
@@ -1641,7 +1626,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "誰でも対応できる bead を Wheelhouse が割り当てる名前です。この名前宛ての準備完了の bead が受信トレイに表示されます。";
 "settings.wheelhouse.inbox.own.name" = "あなた専用の受信トレイ名";
 "settings.wheelhouse.inbox.own.name.help" = "あなた個人宛ての bead を Wheelhouse が割り当てる名前です。ない場合は空のままにしてください。";
-"wheelhouse.quick.terminal.new" = "新規クイックターミナル";
 "wheelhouse.quick.terminal.title %ld" = "ターミナル %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "クイックターミナル %ld（%@）: クリックしてステージに表示";
 "wheelhouse.inbox.title" = "受信トレイ";
