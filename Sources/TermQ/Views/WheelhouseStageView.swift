@@ -580,7 +580,7 @@ extension WheelhouseStageView {
             focusPolicy: .whenBecomingFocused,
             isFocusedPane: isFocused
         )
-        .id(card.id)
+        .id(stage.paneIdentity(card.id))
     }
 
     private func paneButton(_ symbol: String, help: String, action: @escaping () -> Void) -> some View {

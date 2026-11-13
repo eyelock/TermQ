@@ -143,4 +143,14 @@ final class WheelhouseStageZoomTests: XCTestCase {
         stage.show(second)
         XCTAssertNil(stage.lastRemoved, "the exclusion was for the change that emptied the stage")
     }
+
+    func testARestartGivesThePaneANewIdentitySoItIsMadeAgain() throws {
+        let stage = try makeStage()
+        let card = UUID()
+        let other = UUID()
+        let before = stage.paneIdentity(card)
+        stage.remakePane(card)
+        XCTAssertNotEqual(stage.paneIdentity(card), before)
+        XCTAssertEqual(stage.paneIdentity(other), "\(other)-0", "other panes keep theirs")
+    }
 }
