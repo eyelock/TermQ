@@ -7,6 +7,9 @@ import TermQShared
 /// since the review was asked for, longest first.
 struct ReviewActionsView<RowMenu: View>: View {
     let repositoryPaths: [String]
+    /// The request the selected terminal is working on: its row is
+    /// highlighted and scrolled into view.
+    var focusedRequestId: String?
     /// The context menu for a row, built by the sidebar so TermQ's repositories get
     /// the Remote tab's PR menu.
     @ViewBuilder let rowMenu: (ReviewRequest) -> RowMenu
@@ -95,18 +98,28 @@ struct ReviewActionsView<RowMenu: View>: View {
             message(Strings.Actions.empty, symbol: "checkmark.circle")
         } else {
             TimelineView(.periodic(from: .now, by: 60)) { context in
-                List {
-                    ForEach(ReviewRequests.grouped(shown, now: context.date), id: \.wait) { group in
-                        Section(Strings.Actions.waitTitle(group.wait)) {
-                            ForEach(group.requests) { request in
-                                row(request, now: context.date)
+                ScrollViewReader { proxy in
+                    List {
+                        ForEach(ReviewRequests.grouped(shown, now: context.date), id: \.wait) { group in
+                            Section(Strings.Actions.waitTitle(group.wait)) {
+                                ForEach(group.requests) { request in
+                                    row(request, now: context.date, focused: request.id == focusedRequestId)
+                                }
                             }
                         }
                     }
+                    .listStyle(.sidebar)
+                    // After the rows are laid out, or the scroll does nothing.
+                    .onAppear { Task { @MainActor in scrollToFocused(proxy) } }
+                    .onChange(of: focusedRequestId) { scrollToFocused(proxy) }
                 }
-                .listStyle(.sidebar)
             }
         }
+    }
+
+    private func scrollToFocused(_ proxy: ScrollViewProxy) {
+        guard let id = focusedRequestId, shown.contains(where: { $0.id == id }) else { return }
+        withAnimation { proxy.scrollTo(id, anchor: .center) }
     }
 
     private func open(_ request: ReviewRequest) {
@@ -123,26 +136,28 @@ struct ReviewActionsView<RowMenu: View>: View {
             .background(Color.orange.opacity(0.08))
     }
 
-    private func row(_ request: ReviewRequest, now: Date) -> some View {
-        Button {
+    private func row(_ request: ReviewRequest, now: Date, focused: Bool) -> some View {
+        // On the accent background, secondary text stays readable in white.
+        let secondary = focused ? Color.white.opacity(0.8) : Color.secondary
+        return Button {
             open(request)
         } label: {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 4) {
                     Text(request.repository)
                         .font(.system(size: 10, design: .monospaced))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(secondary)
                         .lineLimit(1)
                     if request.isDraft {
                         Text(Strings.Actions.draft)
                             .font(.system(size: 9, weight: .semibold))
                             .padding(.horizontal, 4)
-                            .background(Capsule().fill(Color.secondary.opacity(0.18)))
+                            .background(Capsule().fill(secondary.opacity(0.18)))
                     }
                     Spacer(minLength: 4)
                     Text(WheelhouseStageView.age(since: request.waitingSince, now: now))
                         .font(.system(size: 10))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(secondary)
                 }
                 Text("#\(request.number) \(request.title)")
                     .font(.system(size: 12))
@@ -150,9 +165,18 @@ struct ReviewActionsView<RowMenu: View>: View {
                 if let author = request.author {
                     Text(author)
                         .font(.system(size: 10))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(secondary)
                 }
             }
+            .foregroundColor(focused ? .white : nil)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            // Drawn in the row, as a sidebar list can ignore row backgrounds.
+            .background(
+                focused
+                    ? RoundedRectangle(cornerRadius: 6).fill(Color.accentColor)
+                        .padding(.horizontal, -6).padding(.vertical, -3)
+                    : nil
+            )
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
