@@ -75,30 +75,39 @@ struct RunWithFocusSheet: View {
         selectedVendorID == defaultVendorTag ? "" : selectedVendorID
     }
 
-    /// Whether the currently selected vendor (or harness default) supports --interactive.
-    private var selectedVendorSupportsInteractive: Bool {
+    /// Whether the vendor the launch will use supports `feature`. With no
+    /// vendor picked and none declared by the harness, ynh falls back to its
+    /// own default, which TermQ can't see; the feature is offered then only
+    /// when every known vendor supports it.
+    private func effectiveVendorSupports(_ feature: KeyPath<Vendor, Bool>) -> Bool {
         let lookupID =
             selectedVendorID == defaultVendorTag
             ? (selectedHarness?.defaultVendor ?? "")
             : selectedVendorID
-        return vendorService.vendors.first { $0.vendorID == lookupID }?.supportsInitialPrompt ?? false
+        return Self.vendor(lookupID, among: vendorService.vendors, supports: feature)
     }
+
+    /// `vendorID` empty means ynh picks the vendor itself: offered only when
+    /// every known vendor supports `feature` (and none when nothing is known).
+    static func vendor(_ vendorID: String, among vendors: [Vendor], supports feature: KeyPath<Vendor, Bool>) -> Bool {
+        if vendorID.isEmpty {
+            return !vendors.isEmpty && vendors.allSatisfy { $0[keyPath: feature] }
+        }
+        return vendors.first { $0.vendorID == vendorID }?[keyPath: feature] ?? false
+    }
+
+    /// Whether the effective vendor supports --interactive.
+    private var selectedVendorSupportsInteractive: Bool { effectiveVendorSupports(\.supportsInitialPrompt) }
 
     /// Whether the launch can continue a previous session: the context
     /// allows it and the effective vendor's CLI can.
-    private var showsResume: Bool {
-        guard context.offersResume else { return false }
-        let lookupID =
-            selectedVendorID == defaultVendorTag
-            ? (selectedHarness?.defaultVendor ?? "")
-            : selectedVendorID
-        return vendorService.vendors.first { $0.vendorID == lookupID }?.supportsResume ?? false
-    }
+    private var showsResume: Bool { context.offersResume && effectiveVendorSupports(\.supportsResume) }
 
-    /// `--interactive` is only passed when it can apply: the vendor supports
-    /// it and there is a focus or prompt to respond to.
-    private var showsInteractive: Bool { selectedVendorSupportsInteractive && hasPromptOrFocus }
-    private var effectiveInteractive: Bool { showsInteractive && isInteractive }
+    /// The toggle shows whenever the vendor supports `--interactive`, so it is
+    /// seen before a focus or prompt is chosen; it is only passed once there
+    /// is a focus or prompt to respond to.
+    private var showsInteractive: Bool { selectedVendorSupportsInteractive }
+    private var effectiveInteractive: Bool { showsInteractive && hasPromptOrFocus && isInteractive }
 
     /// Whether there is something to run interactively (a focus or a prompt).
     private var hasPromptOrFocus: Bool {

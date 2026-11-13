@@ -44,4 +44,36 @@ final class LaunchSheetContextTests: XCTestCase {
         XCTAssertFalse(config.resumeSession)
         XCTAssertEqual(config.command(), "ynh run local/eno --focus wake --interactive")
     }
+
+    // MARK: - Vendor support behind Stay interactive and Resume
+
+    private func vendor(_ id: String, interactive: Bool = true, resume: Bool = true) throws -> Vendor {
+        let json = """
+            {"name":"\(id)","display_name":"\(id)","cli":"\(id)","config_dir":".\(id)","available":true,
+             "supports_initial_prompt":\(interactive),"supports_resume":\(resume)}
+            """
+        return try JSONDecoder().decode(Vendor.self, from: Data(json.utf8))
+    }
+
+    func testAHarnessWithNoVendorStillOffersWhatEveryVendorSupports() throws {
+        let vendors = [try vendor("claude"), try vendor("codex")]
+        XCTAssertTrue(RunWithFocusSheet.vendor("", among: vendors, supports: \.supportsInitialPrompt))
+        XCTAssertTrue(RunWithFocusSheet.vendor("", among: vendors, supports: \.supportsResume))
+    }
+
+    func testAHarnessWithNoVendorHoldsBackWhatSomeVendorLacks() throws {
+        let vendors = [try vendor("claude"), try vendor("old", resume: false)]
+        XCTAssertFalse(RunWithFocusSheet.vendor("", among: vendors, supports: \.supportsResume))
+    }
+
+    func testNothingIsOfferedBeforeVendorsLoad() {
+        XCTAssertFalse(RunWithFocusSheet.vendor("", among: [], supports: \.supportsInitialPrompt))
+    }
+
+    func testANamedVendorIsCheckedOnItsOwn() throws {
+        let vendors = [try vendor("claude"), try vendor("old", interactive: false)]
+        XCTAssertTrue(RunWithFocusSheet.vendor("claude", among: vendors, supports: \.supportsInitialPrompt))
+        XCTAssertFalse(RunWithFocusSheet.vendor("old", among: vendors, supports: \.supportsInitialPrompt))
+        XCTAssertFalse(RunWithFocusSheet.vendor("gone", among: vendors, supports: \.supportsInitialPrompt))
+    }
 }
