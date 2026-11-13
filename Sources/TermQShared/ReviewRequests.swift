@@ -188,3 +188,48 @@ public enum ReviewRequests {
         func callAsFunction(_ text: String) -> Date? { plain.date(from: text) ?? fractional.date(from: text) }
     }
 }
+
+// MARK: - The request a terminal is working on
+
+extension ReviewRequests {
+    /// The request whose code a terminal in `directory` is working on, or nil.
+    ///
+    /// A terminal belongs to a request when a folder in its path is a review
+    /// checkout named for the request's repository and number, or when it runs
+    /// in one of the request's `folders` (its worktree or review checkout) or
+    /// anywhere inside one; the most specific folder wins. This runs on every
+    /// sidebar render, so paths are only standardized, never read from disk.
+    public static func request(
+        workingIn directory: String, among requests: [ReviewRequest], folders: (ReviewRequest) -> [String]
+    ) -> ReviewRequest? {
+        let path = standardized(directory)
+        guard path != "/" else { return nil }
+        let components = URL(fileURLWithPath: path).pathComponents
+        if let named = requests.first(where: { request in components.contains { isReviewCheckout($0, for: request) } })
+        {
+            return named
+        }
+        var best: (request: ReviewRequest, depth: Int)?
+        for request in requests {
+            for folder in folders(request) {
+                let base = standardized(folder)
+                guard base != "/", path == base || path.hasPrefix(base + "/") else { continue }
+                if base.count > best?.depth ?? -1 { best = (request, base.count) }
+            }
+        }
+        return best?.request
+    }
+
+    private static func standardized(_ path: String) -> String {
+        guard !path.isEmpty else { return "/" }
+        return URL(fileURLWithPath: path).standardizedFileURL.path
+    }
+
+    /// Whether `name` is a review checkout folder for `request`:
+    /// `termq-focus--<host>--<owner>--<name>--<branch>--<number>`.
+    static func isReviewCheckout(_ name: String, for request: ReviewRequest) -> Bool {
+        guard ReviewCheckouts.prNumber(fromDirectoryName: name) == request.number else { return false }
+        let repo = "--" + request.repository.replacingOccurrences(of: "/", with: "--") + "--"
+        return name.lowercased().contains(repo.lowercased())
+    }
+}

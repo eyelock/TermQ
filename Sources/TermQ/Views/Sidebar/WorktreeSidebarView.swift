@@ -97,6 +97,7 @@ struct WorktreeSidebarView: View {
             if sidebarMode == .actions {
                 ReviewActionsView(
                     repositoryPaths: viewModel.repositories.map(\.path),
+                    focusedRequestId: focusedAttentionRequestId,
                     rowMenu: { attentionMenu($0) },
                     onRequestsChanged: { await attentionRequestsChanged($0) })
             } else if viewModel.displayedRepositories.isEmpty {

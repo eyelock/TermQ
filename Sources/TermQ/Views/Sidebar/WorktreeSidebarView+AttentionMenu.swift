@@ -31,6 +31,32 @@ extension WorktreeSidebarView {
         }
     }
 
+    /// The request the selected terminal is working on, to highlight it.
+    var focusedAttentionRequestId: String? {
+        guard let directory = boardVM.selectedCard?.workingDirectory else { return nil }
+        return ReviewRequests.request(
+            workingIn: directory, among: reviewRequests.requests, folders: attentionFolders
+        )?.id
+    }
+
+    /// The folders on disk holding `request`'s code: its worktree in one of
+    /// TermQ's repositories, or its review checkout.
+    private func attentionFolders(_ request: ReviewRequest) -> [String] {
+        var folders: [String] = []
+        if let review = reviewClones.checkout(for: request) { folders.append(review.path) }
+        if let path = reviewRequests.termqRepositoryPath(for: request.repository),
+            let repo = viewModel.repositories.first(where: { $0.path == path }),
+            let pr = prService.prsByRepo[path]?.first(where: { $0.number == request.number })
+        {
+            let matches = GitHubPRService.matchPRsToWorktrees(
+                prs: [pr], worktrees: viewModel.worktrees[repo.id] ?? [], stackGraph: viewModel.stacks[repo.id])
+            // Not the main checkout: other worktrees can live inside it, and a
+            // terminal in one of those is not on the main checkout's PR.
+            if let worktree = matches[pr.number], worktree != repo.path { folders.append(worktree) }
+        }
+        return folders
+    }
+
     /// Loads what the menus need and tidies review checkouts. Runs inside the
     /// Attention view's `.task`, so a newer change cancels it.
     func attentionRequestsChanged(_ requests: [ReviewRequest]) async {
