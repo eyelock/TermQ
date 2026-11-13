@@ -13,34 +13,36 @@ extension ContentView {
     }
 
     var seatAction: (Wheelhouse, WheelhouseSeat, WheelhouseSeatAction) -> Void {
-        { wheelhouse, seat, action in
-            if action == .install {
-                installSeat(seat, in: wheelhouse)
-                return
+        { performSeatAction($0, $1, $2) }
+    }
+
+    func performSeatAction(_ wheelhouse: Wheelhouse, _ seat: WheelhouseSeat, _ action: WheelhouseSeatAction) {
+        if action == .install {
+            installSeat(seat, in: wheelhouse)
+            return
+        }
+        if action == .launchDialog {
+            // The sheet starts a seat; a running one is just shown.
+            let running =
+                launchCoordinator.seatCard(seat, in: wheelhouse)
+                .map { TerminalSessionManager.shared.hasActiveSession(for: $0.id) } ?? false
+            if running {
+                performSeatAction(wheelhouse, seat, .open)
+            } else {
+                runWithFocusCardContext = RunWithFocusContext(
+                    seat: seat, in: wheelhouse, harnessId: launchCoordinator.seatHarnessId(seat))
             }
-            if action == .launchDialog {
-                // The sheet starts a seat; a running one is just shown.
-                let running =
-                    launchCoordinator.seatCard(seat, in: wheelhouse)
-                    .map { TerminalSessionManager.shared.hasActiveSession(for: $0.id) } ?? false
-                if running {
-                    seatAction(wheelhouse, seat, .open)
-                } else {
-                    runWithFocusCardContext = RunWithFocusContext(
-                        seat: seat, in: wheelhouse, harnessId: launchCoordinator.seatHarnessId(seat))
-                }
-                return
-            }
-            guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
-            switch action {
-            case .closeTerminal: wheelhouseStage.remove(card)
-            case .quickTerminal:
-                wheelhouseStage.showQuickTerminal(card, seatCard: launchCoordinator.seatCard(seat, in: wheelhouse)?.id)
-            // Sent to a running seat, the stage stays as it is. A seat that
-            // isn't running only starts once its pane is up, so bring it up.
-            case .send where TerminalSessionManager.shared.hasActiveSession(for: card): break
-            default: wheelhouseStage.show(card)
-            }
+            return
+        }
+        guard let card = launchCoordinator.perform(action, seat: seat, in: wheelhouse) else { return }
+        switch action {
+        case .closeTerminal: wheelhouseStage.remove(card)
+        case .quickTerminal:
+            wheelhouseStage.showQuickTerminal(card, seatCard: launchCoordinator.seatCard(seat, in: wheelhouse)?.id)
+        // Sent to a running seat, the stage stays as it is. A seat that
+        // isn't running only starts once its pane is up, so bring it up.
+        case .send where TerminalSessionManager.shared.hasActiveSession(for: card): break
+        default: wheelhouseStage.show(card)
         }
     }
 
