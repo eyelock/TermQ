@@ -1006,6 +1006,7 @@
 "harnesses.quarantine.drop" = "Xóa…";
 "harnesses.group.menu.settings" = "Cài đặt…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Đang tải harness có sẵn…";
 "harnesses.install.git.ref" = "Tham chiếu";
 "harnesses.install.git.ref.placeholder" = "Nhánh, thẻ hoặc SHA commit (tuỳ chọn)";

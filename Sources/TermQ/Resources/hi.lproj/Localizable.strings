@@ -1005,6 +1005,7 @@
 "harnesses.quarantine.drop" = "हटाएं…";
 "harnesses.group.menu.settings" = "सेटिंग्स…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "उपलब्ध harness लोड हो रहे हैं…";
 "harnesses.install.git.ref" = "संदर्भ";
 "harnesses.install.git.ref.placeholder" = "शाखा, टैग या commit SHA (वैकल्पिक)";

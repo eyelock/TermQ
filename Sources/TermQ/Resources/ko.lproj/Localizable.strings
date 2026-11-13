@@ -1004,6 +1004,7 @@
 "harnesses.quarantine.drop" = "제거…";
 "harnesses.group.menu.settings" = "설정…";
 "harnesses.group.registry %@" = "레지스트리: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "사용 가능한 harness 로딩 중…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "브랜치, 태그 또는 커밋 SHA (선택 사항)";

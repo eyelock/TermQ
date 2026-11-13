@@ -999,6 +999,7 @@
 "harnesses.quarantine.drop" = "Удалить…";
 "harnesses.group.menu.settings" = "Настройки…";
 "harnesses.group.registry %@" = "Реестр: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Загрузка доступных harness-ов…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Ветка, тег или SHA коммита (необязательно)";

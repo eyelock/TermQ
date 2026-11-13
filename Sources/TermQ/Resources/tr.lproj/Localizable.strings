@@ -1006,6 +1006,7 @@
 "harnesses.quarantine.drop" = "Kaldır…";
 "harnesses.group.menu.settings" = "Ayarlar…";
 "harnesses.group.registry %@" = "Kayıt Defteri: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Mevcut harness'ler yükleniyor…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Dal, etiket veya commit SHA (isteğe bağlı)";

@@ -1005,6 +1005,7 @@
 "harnesses.quarantine.drop" = "Ukloni…";
 "harnesses.group.menu.settings" = "Postavke…";
 "harnesses.group.registry %@" = "Registar: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Učitavanje dostupnih harness-a…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Grana, oznaka ili commit SHA (neobavezno)";

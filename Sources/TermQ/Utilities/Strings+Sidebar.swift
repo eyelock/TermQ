@@ -195,6 +195,7 @@ extension Strings {
         static var quarantineRestore: String { localized("harnesses.quarantine.restore") }
         static var quarantineDrop: String { localized("harnesses.quarantine.drop") }
         static func groupGitHub(_ org: String) -> String { localized("harnesses.group.github %@", org) }
+        static func groupWheelhouse(_ name: String) -> String { localized("harnesses.group.wheelhouse %@", name) }
         static func groupMarketplace(_ name: String) -> String { localized("harnesses.group.registry %@", name) }
 
         // Detail view

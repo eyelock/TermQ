@@ -999,6 +999,7 @@
 "harnesses.quarantine.drop" = "Verwerfen…";
 "harnesses.group.menu.settings" = "Einstellungen…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Verfügbare Harnesses werden geladen…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Branch, Tag oder Commit-SHA (optional)";

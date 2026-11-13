@@ -999,6 +999,7 @@
 "harnesses.quarantine.drop" = "丢弃…";
 "harnesses.group.menu.settings" = "设置…";
 "harnesses.group.registry %@" = "注册表: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "正在加载可用 Harness…";
 "harnesses.install.git.ref" = "引用";
 "harnesses.install.git.ref.placeholder" = "分支、标签或提交 SHA（可选）";

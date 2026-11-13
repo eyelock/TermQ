@@ -999,6 +999,7 @@
 "harnesses.quarantine.drop" = "Hapus…";
 "harnesses.group.menu.settings" = "Pengaturan…";
 "harnesses.group.registry %@" = "Registri: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Memuat harness yang tersedia…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Cabang, tag, atau commit SHA (opsional)";

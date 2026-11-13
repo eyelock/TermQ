@@ -1004,6 +1004,7 @@
 "harnesses.quarantine.drop" = "Usuń…";
 "harnesses.group.menu.settings" = "Ustawienia…";
 "harnesses.group.registry %@" = "Rejestr: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Wczytywanie dostępnych harnessy…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Gałąź, tag lub SHA commita (opcjonalnie)";

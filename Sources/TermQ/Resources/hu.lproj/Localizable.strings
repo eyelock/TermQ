@@ -1005,6 +1005,7 @@
 "harnesses.quarantine.drop" = "Eltávolítás…";
 "harnesses.group.menu.settings" = "Beállítások…";
 "harnesses.group.registry %@" = "Registry: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Elérhető harness-ek betöltése…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Branch, tag vagy commit SHA (opcionális)";

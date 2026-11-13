@@ -999,6 +999,7 @@
 "harnesses.quarantine.drop" = "Eliminare…";
 "harnesses.group.menu.settings" = "Setări…";
 "harnesses.group.registry %@" = "Registru: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Se încarcă harness-urile disponibile…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Ramură, tag sau SHA commit (opțional)";

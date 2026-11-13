@@ -1005,6 +1005,7 @@
 "harnesses.quarantine.drop" = "הסר…";
 "harnesses.group.menu.settings" = "הגדרות…";
 "harnesses.group.registry %@" = "רשומה: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "טוען harness-ים זמינים…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "ענף, תג או commit SHA (אופציונלי)";

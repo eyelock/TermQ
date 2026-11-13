@@ -1005,6 +1005,7 @@
 "harnesses.quarantine.drop" = "Poista…";
 "harnesses.group.menu.settings" = "Asetukset…";
 "harnesses.group.registry %@" = "Rekisteri: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Ladataan saatavilla olevia harnessia…";
 "harnesses.install.git.ref" = "Viite";
 "harnesses.install.git.ref.placeholder" = "Haara, tagi tai commit-SHA (valinnainen)";
