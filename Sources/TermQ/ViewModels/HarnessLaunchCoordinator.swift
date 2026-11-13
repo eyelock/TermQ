@@ -149,13 +149,33 @@ final class HarnessLaunchCoordinator {
     /// Asks a seat on its first session to run the birth skill.
     static let birthPrompt = "This is your first session in this seat. Use the birth skill."
 
-    /// Opens a Wheelhouse seat and returns its card.
-    ///
-    /// - With no `focus` or `prompt`: selects the seat's card if it has one,
-    ///   else launches its harness (which runs the harness's launch focus).
-    /// - With a `focus` or `prompt` and a running card: types the focus's
-    ///   prompt (or the prompt) into the seat, so the same session acts on it.
-    /// - With a `focus` or `prompt` and no card: launches the harness with it.
+    /// What opening a seat does, from the state of its terminal.
+    enum SeatOpen: Equatable {
+        /// No card yet: launch the harness in a new one, fresh.
+        case launchNew
+        /// A card whose terminal isn't running: start it fresh. A Wheelhouse
+        /// seat that is off starts a new session; resuming is a choice.
+        case startFresh
+        /// Not running, with a focus or prompt: start it with that, fresh.
+        case startWithFocus
+        /// Running, with a focus or prompt: type it into the session.
+        case sendToSession
+        /// Running: focus it, resuming the harness first if only the shell
+        /// is left.
+        case showResumingIfExited
+    }
+
+    nonisolated static func seatOpen(hasCard: Bool, running: Bool, hasFocusOrPrompt: Bool) -> SeatOpen {
+        guard hasCard else { return .launchNew }
+        switch (running, hasFocusOrPrompt) {
+        case (true, true): return .sendToSession
+        case (true, false): return .showResumingIfExited
+        case (false, true): return .startWithFocus
+        case (false, false): return .startFresh
+        }
+    }
+
+    /// Opens a Wheelhouse seat and returns its card. See `SeatOpen`.
     ///
     /// New cards start at the Wheelhouse root, tagged with the Wheelhouse and
     /// the seat so they are found again later.
@@ -164,43 +184,55 @@ final class HarnessLaunchCoordinator {
         _ seat: WheelhouseSeat, in wheelhouse: Wheelhouse, focus: WheelhouseFocus? = nil, prompt: String? = nil
     ) -> UUID? {
         let config = seatLaunchConfig(seat, in: wheelhouse, focus: focus, prompt: prompt)
-        if let existing = seatCard(seat, in: wheelhouse) {
-            let running = TerminalSessionManager.shared.hasActiveSession(for: existing.id)
-            if running, let text = focus?.prompt ?? prompt {
-                // The same session acts on it.
-                send(text, toCard: existing.id)
-            } else if !running, focus != nil || prompt != nil {
-                // Not running: start it with the focus this once, then put the
-                // card's own command back so later opens don't repeat it.
-                startOnce(existing, with: config)
-            } else if running {
-                // The shell may have outlived the harness: open the seat, not
-                // a bare prompt.
-                relaunchIfHarnessExited(existing, seat: seat, in: wheelhouse)
+        let existing = seatCard(seat, in: wheelhouse)
+        let running = existing.map { TerminalSessionManager.shared.hasActiveSession(for: $0.id) } ?? false
+        let text = focus?.prompt ?? prompt
+        switch Self.seatOpen(hasCard: existing != nil, running: running, hasFocusOrPrompt: focus != nil || text != nil)
+        {
+        case .launchNew:
+            launchHarness(config)
+            return seatCard(seat, in: wheelhouse)?.id
+        case .startFresh:
+            if let existing {
+                existing.resumeOverrideForNextLaunch = false
+                remakeStoppedPane(existing)
             }
-            boardViewModel.selectCard(existing)
-            return existing.id
+        case .startWithFocus:
+            // Start it with the focus this once, then put the card's own
+            // command back so later opens don't repeat it.
+            if let existing {
+                startOnce(existing, with: config)
+                remakeStoppedPane(existing)
+            }
+        case .sendToSession:
+            if let existing, let text { send(text, toCard: existing.id) }
+        case .showResumingIfExited:
+            if let existing { resumeIfHarnessExited(existing) }
         }
-        launchHarness(config)
-        return seatCard(seat, in: wheelhouse)?.id
+        guard let existing else { return nil }
+        boardViewModel.selectCard(existing)
+        return existing.id
     }
 
-    /// A seat card whose shell is up but whose harness has exited is closed
-    /// out and the seat launched again, so opening it gives the seat. Nothing
-    /// happens if the human has moved to another pane meanwhile.
-    private func relaunchIfHarnessExited(_ card: TerminalCard, seat: WheelhouseSeat, in wheelhouse: Wheelhouse) {
+    /// A pane still on the stage from a session that has ended must be made
+    /// again, or the new session never starts in it.
+    private func remakeStoppedPane(_ card: TerminalCard) {
+        WheelhouseStage.shared.remakePane(card.id)
+    }
+
+    /// A seat whose shell is up but whose harness has exited is restarted in
+    /// the same card, resuming its last session: the terminal was in use, so
+    /// the conversation carries on. Nothing happens if the harness is still
+    /// running, or the session changed while it was checked.
+    private func resumeIfHarnessExited(_ card: TerminalCard) {
         Task { @MainActor in
-            let stage = WheelhouseStage.shared
-            let closed = await stage.closeOutIfIdle(card, probe: TerminalSessionManager.shared) { stale in
-                guard stage.focused == stale.id else { return }
-                stage.closeOut(stale, board: boardViewModel)
-            }
-            guard closed, card.deletedAt != nil else { return }
-            launchHarness(seatLaunchConfig(seat, in: wheelhouse, focus: nil, prompt: nil), reuseExisting: false)
-            if let fresh = seatCard(seat, in: wheelhouse) {
-                stage.show(fresh.id)
-                boardViewModel.selectCard(fresh)
-            }
+            let probe = TerminalSessionManager.shared
+            let session = probe.sessionStart(for: card.id)
+            let harnessRunning = await probe.isForegroundProgramRunning(for: card)
+            guard harnessRunning == false, card.deletedAt == nil, probe.sessionStart(for: card.id) == session
+            else { return }
+            card.resumeOverrideForNextLaunch = true
+            WheelhouseStage.shared.restart(card, board: boardViewModel)
         }
     }
 
@@ -250,7 +282,7 @@ final class HarnessLaunchCoordinator {
     func restartFresh(_ card: TerminalCard) {
         // One-shot: this restart starts cold; later reopens resume as usual.
         card.resumeOverrideForNextLaunch = false
-        boardViewModel.restartSession(for: card)
+        WheelhouseStage.shared.restart(card, board: boardViewModel)
     }
 
     /// Waits (up to ~30s) for the card's session to start, then restores the

@@ -76,6 +76,25 @@ final class WheelhouseStage: ObservableObject {
     /// Pane weights by slot: a pinned card's own id, or `unpinnedSlot` for
     /// whichever unpinned card is up, so a split survives the visitor changing.
     @Published private(set) var paneWeights: [UUID: CGFloat] = [:]
+
+    /// Bumped per card on a restart. A session restart only takes effect
+    /// when the terminal view is made again, so a pane's identity includes
+    /// this; without it a seat already on the stage never restarts.
+    @Published private(set) var restartGeneration: [UUID: Int] = [:]
+
+    /// The identity of `card`'s pane: new after each `restart`.
+    func paneIdentity(_ card: UUID) -> String { "\(card)-\(restartGeneration[card] ?? 0)" }
+
+    /// Restarts `card`'s session and makes its pane again so it takes effect.
+    func restart(_ card: TerminalCard, board: BoardViewModel = .shared) {
+        board.restartSession(for: card)
+        remakePane(card.id)
+    }
+
+    /// Gives `card`'s pane a new identity, so SwiftUI makes it again.
+    func remakePane(_ card: UUID) {
+        restartGeneration[card, default: 0] += 1
+    }
     nonisolated static let unpinnedSlot = UUID(uuid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xF0, 0x0D))
 
     func slot(for card: UUID) -> UUID { isPinned(card) ? card : Self.unpinnedSlot }
