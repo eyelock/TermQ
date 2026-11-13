@@ -557,17 +557,15 @@ extension HarnessesSidebarTab {
         )
         .tag(harness.id)
         .contextMenu {
-            // Group 1 — Run.
-            Button {
-                onLaunchHarness?(harness)
-            } label: {
-                Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
-            }
+            // Group 1 — Launch. A harness here has no folder of its own, so
+            // there is no Quick Launch: the sheet asks where.
+            LaunchMenuItems(name: harness.name, openSheet: { onLaunchHarness?(harness) })
+            Divider()
             Button {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
             } label: {
-                Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
+                Label(Strings.Wheelhouse.copyCommand, systemImage: "doc.on.clipboard")
             }
 
             Divider()

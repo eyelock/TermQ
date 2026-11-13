@@ -181,7 +181,7 @@ struct HarnessDetailView: View {
                 Button {
                     onLaunch(nil)
                 } label: {
-                    Label(Strings.Harnesses.launchButton, systemImage: "play.fill")
+                    Label(Strings.Launch.sheetShort, systemImage: LaunchMenuIcon.sheet)
                         .font(.system(size: 12, weight: .medium))
                 }
                 .controlSize(.regular)
@@ -573,7 +573,7 @@ extension HarnessDetailView {
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString("ynh run \(harness.id)", forType: .string)
         } label: {
-            Label(Strings.Harnesses.copyRunCommand, systemImage: "doc.on.clipboard")
+            Label(Strings.Wheelhouse.copyCommand, systemImage: "doc.on.clipboard")
         }
 
         Divider()

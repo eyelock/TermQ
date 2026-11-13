@@ -262,12 +262,12 @@ struct TerminalCommands: Commands {
         // command: TermQ is single-window because terminal NSViews can
         // only have one parent.
         CommandGroup(replacing: .newItem) {
-            Button(Strings.Menu.newTerminalQuick) {
+            Button(Strings.Sidebar.newTerminal) {
                 terminalActions?.quickNewTerminal()
             }
             .keyboardShortcut("t", modifiers: .command)
 
-            Button(Strings.Menu.newTerminal) {
+            Button(Strings.Sidebar.createTerminal) {
                 terminalActions?.newTerminalWithDialog()
             }
             .keyboardShortcut("n", modifiers: .command)

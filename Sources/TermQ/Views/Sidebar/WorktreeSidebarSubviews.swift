@@ -58,10 +58,12 @@ struct ForceUpdatePRContext: Identifiable {
 
 // MARK: - Run With Focus Context
 
-/// Origin-agnostic context for the Run-with-Focus sheet. Built either from a
-/// sidebar worktree (creates a new card on launch) or from an existing terminal
-/// card (reused in place). The sheet reads only the primitive fields; the
-/// presenter decides what to do with the produced `HarnessLaunchConfig`.
+/// Origin-agnostic context for the launch sheet, the one dialog every
+/// "Launch …" menu item opens. Built from a sidebar worktree or review
+/// checkout (new card), an existing terminal card (reused in place), a harness
+/// (new card, folder of the user's choosing) or a Wheelhouse seat. The sheet
+/// reads only the primitive fields; the presenter decides what to do with the
+/// produced `HarnessLaunchConfig`.
 struct RunWithFocusContext: Identifiable {
     let id = UUID()
     let workingDirectory: String
@@ -75,9 +77,22 @@ struct RunWithFocusContext: Identifiable {
     let prNumber: Int?
     /// Harness id to preselect (the card's effective harness). `nil` falls back
     /// to the saved run-harness / repo default.
-    let preferredHarnessId: String?
+    var preferredHarnessId: String?
     /// Existing card to reuse in place; `nil` for worktree-origin (new-card).
     let card: TerminalCard?
+    /// The Wheelhouse seat being launched: its harness and folder are fixed.
+    var seat: (wheelhouse: Wheelhouse, seat: WheelhouseSeat)?
+    /// Whether the folder can be changed (a harness launched from anywhere).
+    var choosesDirectory = false
+    /// Whether the terminal backend can be picked for the new card.
+    var choosesBackend = false
+    /// Whether "Resume previous session" is offered (when the vendor can).
+    var offersResume = false
+    /// The vendor to preselect, such as a per-harness override.
+    var vendorOverride: String?
+
+    /// The harness can't be changed: a seat's harness is the seat.
+    var fixesHarness: Bool { seat != nil }
 
     /// Worktree-origin (sidebar) — launches create a new card.
     init(worktree: GitWorktree, repo: ObservableRepository, prNumber: Int?) {
@@ -111,6 +126,35 @@ struct RunWithFocusContext: Identifiable {
         self.prNumber = nil
         self.preferredHarnessId = options.effectiveHarnessId
         self.card = card
+    }
+
+    /// Harness-origin (Harnesses tab, harness page, a worktree's default
+    /// harness) — a new card, in a folder the user can change.
+    init(harnessId: String, workingDirectory: String?, branch: String?, vendorOverride: String?) {
+        self.workingDirectory = workingDirectory ?? NSHomeDirectory()
+        self.branch = branch
+        self.commitHash = nil
+        self.repoPath = nil
+        self.prNumber = nil
+        self.preferredHarnessId = harnessId
+        self.card = nil
+        self.choosesDirectory = true
+        self.choosesBackend = true
+        self.offersResume = true
+        self.vendorOverride = vendorOverride
+    }
+
+    /// Seat-origin (Wheelhouse) — the seat's harness, at the Wheelhouse root.
+    init(seat: WheelhouseSeat, in wheelhouse: Wheelhouse, harnessId: String) {
+        self.workingDirectory = wheelhouse.root
+        self.branch = nil
+        self.commitHash = nil
+        self.repoPath = nil
+        self.prNumber = nil
+        self.preferredHarnessId = harnessId
+        self.card = nil
+        self.seat = (wheelhouse, seat)
+        self.offersResume = true
     }
 }
 

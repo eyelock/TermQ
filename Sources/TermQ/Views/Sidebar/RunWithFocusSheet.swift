@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import TermQCore
 import TermQShared
@@ -5,12 +6,14 @@ import TermQShared
 /// Sentinel — "use harness default vendor, don't pass -v".
 private let defaultVendorTag = "__default__"
 
-/// Sheet for launching a "Run with Focus" harness run on a worktree —
-/// either a PR-linked checkout or a plain local worktree.
+/// The launch sheet: the one dialog every "Launch …" menu item opens, for a
+/// worktree, a PR, a terminal card, a harness or a Wheelhouse seat.
 ///
-/// Presents harness/vendor/focus/profile pickers, a prompt textarea (read-only when a
-/// focus is selected unless Customize is pressed), an optional --interactive toggle,
-/// and a Run action.
+/// Presents harness/vendor/focus/profile pickers, then (where the context
+/// allows) the folder, backend and resume choices, a "Stay interactive"
+/// toggle (on by default, above the prompt so it isn't missed), a prompt
+/// textarea (read-only when a focus is selected unless Customize is pressed)
+/// and a Launch action.
 ///
 /// Invocation rules (§4 of the plan):
 /// - Focus selected + no Customize → `ynh run <h> --focus <name>`
@@ -33,7 +36,13 @@ struct RunWithFocusSheet: View {
     @State private var selectedProfile: String = ""
     @State private var isCustomizing: Bool = false
     @State private var customPrompt: String = ""
-    @State private var isInteractive: Bool = false
+    /// On by default: a focus run that exits when done is the exception.
+    @State private var isInteractive: Bool = true
+    @State private var workingDirectory: String = ""
+    @State private var selectedBackend: TerminalBackend = .direct
+    @State private var resumeSession: Bool = false
+    /// The context's vendor, held until the first harness is chosen.
+    @State private var initialVendor = OneShot<String>()
     @State private var detail: HarnessDetail?
     @State private var isLoadingDetail: Bool = false
 
@@ -75,6 +84,22 @@ struct RunWithFocusSheet: View {
         return vendorService.vendors.first { $0.vendorID == lookupID }?.supportsInitialPrompt ?? false
     }
 
+    /// Whether the launch can continue a previous session: the context
+    /// allows it and the effective vendor's CLI can.
+    private var showsResume: Bool {
+        guard context.offersResume else { return false }
+        let lookupID =
+            selectedVendorID == defaultVendorTag
+            ? (selectedHarness?.defaultVendor ?? "")
+            : selectedVendorID
+        return vendorService.vendors.first { $0.vendorID == lookupID }?.supportsResume ?? false
+    }
+
+    /// `--interactive` is only passed when it can apply: the vendor supports
+    /// it and there is a focus or prompt to respond to.
+    private var showsInteractive: Bool { selectedVendorSupportsInteractive && hasPromptOrFocus }
+    private var effectiveInteractive: Bool { showsInteractive && isInteractive }
+
     /// Whether there is something to run interactively (a focus or a prompt).
     private var hasPromptOrFocus: Bool {
         !selectedFocus.isEmpty || !effectivePromptText.isEmpty
@@ -84,12 +109,14 @@ struct RunWithFocusSheet: View {
         isCustomizing ? customPrompt : (selectedFocus.isEmpty ? customPrompt : focusPrompt)
     }
 
-    /// `#N` for PR-linked runs; the branch (or commit) for plain local worktrees.
+    /// The seat; `#N` for PR-linked runs; the branch (or commit) for plain
+    /// local worktrees; else the harness.
     private var headerSubtitle: String {
+        if let seat = context.seat { return seat.seat.name }
         if let prNumber = context.prNumber {
             return "#\(prNumber)"
         }
-        return context.branch ?? context.commitHash ?? ""
+        return context.branch ?? context.commitHash ?? selectedHarness?.name ?? ""
     }
 
     var body: some View {
@@ -97,7 +124,7 @@ struct RunWithFocusSheet: View {
             // Header
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(Strings.RemotePRs.runSheetTitle)
+                    Text(Strings.Harnesses.launchTitle)
                         .font(.headline)
                     Text(headerSubtitle)
                         .font(.subheadline)
@@ -126,13 +153,17 @@ struct RunWithFocusSheet: View {
                             Text(harness.name).tag(harness.id)
                         }
                     }
+                    // A seat's harness is the seat.
+                    .disabled(context.fixesHarness)
                     .onChange(of: selectedHarnessId) { _, newId in
-                        selectedVendorID = defaultVendorTag
+                        // The context's vendor applies to the harness it opened
+                        // with; picking another harness goes back to its default.
+                        selectedVendorID = initialVendor.take() ?? defaultVendorTag
                         selectedFocus = ""
                         selectedProfile = ""
                         isCustomizing = false
                         customPrompt = ""
-                        isInteractive = false
+                        isInteractive = true
                         loadDetail(for: newId)
                     }
 
@@ -154,12 +185,6 @@ struct RunWithFocusSheet: View {
                                 }
                             }
                             .tag(vendor.vendorID)
-                        }
-                    }
-                    .onChange(of: selectedVendorID) { _, _ in
-                        // Clear interactive if the new vendor doesn't support it
-                        if !selectedVendorSupportsInteractive {
-                            isInteractive = false
                         }
                     }
                 }
@@ -208,6 +233,16 @@ struct RunWithFocusSheet: View {
                     }
                 }
 
+                launchPlaceSections
+
+                // Stay interactive — above the prompt, where it is seen.
+                if showsInteractive {
+                    Section {
+                        Toggle(Strings.RemotePRs.runInteractiveLabel, isOn: $isInteractive)
+                            .help(Strings.RemotePRs.runInteractiveHelp)
+                    }
+                }
+
                 // Prompt + customize
                 Section {
                     HStack(alignment: .top) {
@@ -238,17 +273,6 @@ struct RunWithFocusSheet: View {
                     Text(Strings.RemotePRs.runPromptLabel)
                 }
 
-                // Interactive toggle — only when vendor supports it and there's a prompt/focus
-                if selectedVendorSupportsInteractive && hasPromptOrFocus {
-                    Section {
-                        Toggle(Strings.RemotePRs.runInteractiveLabel, isOn: $isInteractive)
-                        if isInteractive {
-                            Text(Strings.RemotePRs.runInteractiveHelp)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
             }
             .formStyle(.grouped)
 
@@ -271,14 +295,14 @@ struct RunWithFocusSheet: View {
 
                     Spacer()
 
-                    Button(Strings.RemotePRs.runRun) { run() }
+                    Button(Strings.Harnesses.launchButton) { run() }
                         .keyboardShortcut(.defaultAction)
                         .disabled(selectedHarnessId.isEmpty)
                 }
             }
             .padding()
         }
-        .frame(width: 480, height: 560)
+        .frame(width: 520, height: 600)
         .onAppear {
             applyDefaults()
             if vendorService.vendors.isEmpty {
@@ -287,9 +311,67 @@ struct RunWithFocusSheet: View {
         }
     }
 
+    /// Where the new terminal runs, for contexts that let it be chosen.
+    @ViewBuilder
+    private var launchPlaceSections: some View {
+        if context.choosesDirectory {
+            Section {
+                LabeledContent(Strings.Harnesses.launchWorkingDirectory) {
+                    HStack {
+                        TextField("", text: $workingDirectory)
+                            .textFieldStyle(.roundedBorder)
+                            .labelsHidden()
+                            .truncationMode(.head)
+                        Button(Strings.Harnesses.launchBrowse) { chooseDirectory() }
+                    }
+                    .frame(minWidth: 280)
+                }
+            }
+        }
+        if context.choosesBackend {
+            Section {
+                Picker(Strings.Harnesses.launchBackend, selection: $selectedBackend) {
+                    ForEach(TerminalBackend.allCases, id: \.self) { backend in
+                        Text(Self.backendName(backend)).tag(backend)
+                    }
+                }
+            }
+        }
+        if showsResume {
+            Section {
+                Toggle(Strings.Harnesses.launchResume, isOn: $resumeSession)
+                    .help(Strings.Harnesses.launchResumeHelp)
+            }
+        }
+    }
+
+    private static func backendName(_ backend: TerminalBackend) -> String {
+        switch backend {
+        case .direct: return Strings.Editor.backendDirect
+        case .tmuxAttach: return Strings.Editor.backendTmuxAttach
+        case .tmuxControl: return Strings.Editor.backendTmuxControl
+        }
+    }
+
+    private func chooseDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        panel.directoryURL = URL(fileURLWithPath: workingDirectory)
+        Task {
+            if await panel.begin() == .OK, let url = panel.url {
+                workingDirectory = url.path
+            }
+        }
+    }
+
     // MARK: - Helpers
 
     private func applyDefaults() {
+        workingDirectory = context.workingDirectory
+        selectedBackend = settings.backend
+        if let vendor = context.vendorOverride { initialVendor.set(vendor) }
         // Card-origin launches preselect the card's effective harness; both
         // origins then fall back to saved run-harness / worktree / repo default.
         let savedHarness =
@@ -302,7 +384,9 @@ struct RunWithFocusSheet: View {
             harnessRepository.harnesses.contains(where: { $0.id == harnessId || $0.name == harnessId })
         {
             selectedHarnessId = harnessId
-        } else if let first = harnessRepository.harnesses.first {
+        } else if !context.fixesHarness, let first = harnessRepository.harnesses.first {
+            // A seat's harness is fixed: never stand another in for it. With
+            // none chosen, Launch stays disabled.
             selectedHarnessId = first.id
         }
 
@@ -349,8 +433,11 @@ struct RunWithFocusSheet: View {
                 parts.append("\"…\"")
             }
         }
-        if isInteractive {
+        if effectiveInteractive {
             parts.append("--interactive")
+        }
+        if showsResume && resumeSession {
+            parts.append("--resume")
         }
         return parts.joined(separator: " ")
     }
@@ -382,21 +469,35 @@ struct RunWithFocusSheet: View {
             "PR #\($0) in \(Self.repoSlug(from: context.repoPath ?? context.workingDirectory))"
         }
 
-        let config = HarnessLaunchConfig(
+        var config = HarnessLaunchConfig(
             harnessID: harness.id,
             vendorID: effectiveVendorID,
             defaultVendor: harness.defaultVendor,
             focus: effectiveFocus,
             profile: effectiveFocus == nil ? (effectiveProfile.isEmpty ? nil : effectiveProfile) : nil,
-            workingDirectory: context.workingDirectory,
+            workingDirectory: workingDirectory.isEmpty ? context.workingDirectory : workingDirectory,
             prompt: effectivePrompt,
             instructions: instructions,
-            backend: settings.backend,
+            backend: context.choosesBackend ? selectedBackend : settings.backend,
             branch: context.branch,
-            interactive: isInteractive,
-            cardTitle: makeCardTitle(focus: effectiveFocus, profile: effectiveProfile)
+            interactive: effectiveInteractive,
+            cardTitle: cardTitle(focus: effectiveFocus, profile: effectiveProfile),
+            resumeSession: showsResume && resumeSession
         )
+        if let seat = context.seat {
+            config.extraTags = WheelhouseCardMatcher.tags(
+                wheelhouseRoot: seat.wheelhouse.root, seatCommand: seat.seat.command)
+        }
         onLaunch(config)
+    }
+
+    /// A seat's card is named for the seat; a harness launched from anywhere
+    /// keeps the launcher's default title (its branch or harness); the rest
+    /// get `focus: org/repo#N`.
+    private func cardTitle(focus: String?, profile: String) -> String? {
+        if let seat = context.seat { return seat.seat.name }
+        if context.choosesDirectory { return nil }
+        return makeCardTitle(focus: focus, profile: profile)
     }
 
     /// Builds a card title: `focus: org/repo#N` (or `focus: org/repo` without a PR),
@@ -456,5 +557,16 @@ struct RunWithFocusSheet: View {
         let head = str.prefix(half)
         let tail = str.suffix(max - 1 - half)
         return "\(head)…\(tail)"
+    }
+}
+
+/// A value read once: `take()` returns it the first time and nil after.
+/// A class, so taking it inside a view's onChange doesn't need a state write.
+private final class OneShot<Value> {
+    private var value: Value?
+    func set(_ newValue: Value) { value = newValue }
+    func take() -> Value? {
+        defer { value = nil }
+        return value
     }
 }

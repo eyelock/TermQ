@@ -90,12 +90,13 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 ![Context menu — PR checked out](../Images/remote-prs-context-menu-checked-out.png)
 
 **Harness actions (top group):**
-- **Run with Focus…** — opens the full Run with Focus sheet (see §15.5).
-- **Quick Launch Focus ▶** — submenu listing every focus defined in the repository's default harness. Clicking a focus launches immediately without opening the sheet.
+- **Quick Launch ‹harness›** — launches the harness with its defaults, no sheet.
+- **Launch ‹harness›…** — opens the launch sheet (see §15.5).
+- **Launch with Focus ▶** — submenu listing every focus defined in the harness. Clicking a focus launches immediately without opening the sheet.
 
 **Terminal actions:**
 - **Quick Terminal** — opens a bare terminal at the worktree path.
-- **Create Terminal…** — opens the Create Terminal sheet pre-filled with the worktree path.
+- **New Terminal…** — opens the terminal editor pre-filled with the worktree path.
 
 **File actions:**
 - **Reveal in Finder** — opens the worktree directory in Finder.
@@ -120,10 +121,10 @@ Right-click any PR row to see available actions. The menu adapts depending on wh
 ![Context menu — PR not checked out](../Images/remote-prs-context-menu-not-checked-out.png)
 
 **Harness actions:**
-- **Run with Focus…** — launches a harness session against this PR without a permanent checkout. TermQ creates a *review checkout* the first time, then reuses it on subsequent runs (see §15.5).
-- **Quick Launch Focus ▶** — as above; makes the review checkout first if there isn't one.
+- **Launch ‹harness›…** — launches a harness session against this PR without a permanent checkout. TermQ creates a *review checkout* the first time, then reuses it on subsequent runs (see §15.5).
+- **Launch with Focus ▶** — as above; makes the review checkout first if there isn't one.
 
-**Once a review checkout exists**, the menu also has **Quick Terminal**, **Create Terminal…**, **Reveal in Finder**, **Reveal in Terminal**, **Copy Pathname** and **Open In ▶** for it, and **Remove Review Checkout**. Removing one that a terminal is using is refused; one with changes or commits of its own asks first.
+**Once a review checkout exists**, the menu also has **Quick Terminal**, **New Terminal…**, **Reveal in Finder**, **Reveal in Terminal**, **Copy Pathname** and **Open In ▶** for it, and **Remove Review Checkout**. Removing one that a terminal is using is refused; one with changes or commits of its own asks first.
 
 **Remote actions:**
 - **Checkout this PR** — runs `gh pr checkout` to create a permanent linked worktree for the PR's branch, ready to push to. From a review checkout, its changes are carried into the new worktree and the review checkout is removed. It is kept, with a note, if it has commits of its own, changed while being copied, or is open in a terminal.
@@ -134,15 +135,15 @@ If a local worktree already exists for the branch (e.g. you checked it out manua
 
 ---
 
-## 15.5 — Run with Focus
+## 15.5 — Launch…
 
-**Run with Focus** launches a `ynh run` session against a PR, pre-configured with a focus (a named task template defined in your harness).
+**Launch…** opens the launch sheet, the same one every *Launch …* item in TermQ opens, to start a `ynh run` session against a PR, pre-configured with a focus (a named task template defined in your harness).
 
-Open it by right-clicking any PR row — checked out or not — and choosing **Run with Focus…**
+Open it by right-clicking any PR row — checked out or not — and choosing **Launch ‹harness›…**
 
 > **No checkout required:** For PRs that are not checked out locally, TermQ creates a *review checkout* under `~/.termq/focus-worktrees/`: a worktree with a detached HEAD at the PR's head, so no local branch is created. Its name is derived from the PR's remote coordinates, so the same checkout is reused on subsequent runs against the same PR. The harness is always told which PR it is reviewing via a `--instructions` context injection, regardless of which focus or prompt mode is used.
 
-![Run with Focus sheet](../Images/remote-prs-run-with-focus-sheet.png)
+![Launch sheet](../Images/remote-prs-run-with-focus-sheet.png)
 
 ### Pickers
 
@@ -168,7 +169,7 @@ When Customize is active, the command preview shows `--` followed by `"…"` ins
 
 ### Stay interactive
 
-The **Stay interactive after run** toggle appears when the selected vendor supports it. When on, `--interactive` is appended to the `ynh run` command so the agent stays open for follow-up questions after responding to the initial focus.
+The **Stay interactive after run** toggle sits above the prompt and is **on by default**; it appears when the selected vendor supports it and there is a focus or prompt. When on, `--interactive` is appended to the `ynh run` command so the agent stays open for follow-up questions after responding to the initial focus.
 
 ### Command preview
 
@@ -176,7 +177,7 @@ The bar above the action buttons shows the exact `ynh run` command that will be 
 
 ### Running
 
-Click **Run**. TermQ creates a new terminal card and immediately starts the `ynh run` command. The card is titled `focus: org/repo#N` (e.g. `pr-summary: eyelock/TermQ#248`), truncated to 40 characters if needed.
+Click **Launch**. TermQ creates a new terminal card and immediately starts the `ynh run` command. The card is titled `focus: org/repo#N` (e.g. `pr-summary: eyelock/TermQ#248`), truncated to 40 characters if needed.
 
 ![Terminal card with PR title](../Images/remote-prs-card-title.png)
 
@@ -186,7 +187,7 @@ Click **Run**. TermQ creates a new terminal card and immediately starts the `ynh
 
 ## 15.6 — Setting a default focus
 
-A **default focus** pre-selects a specific focus every time you open the Run with Focus sheet for a repository. It is also used by the **Quick Launch Focus** submenu.
+A **default focus** pre-selects a specific focus every time you open the launch sheet for a repository. It is also used by the **Launch with Focus** submenu.
 
 To set it, right-click any checked-out PR row → **Set Default Focus ▶** → choose a focus name.
 
@@ -196,21 +197,21 @@ The submenu label changes to **Default Focus: code-review** (or whatever name yo
 
 ---
 
-## 15.7 — Quick Launch Focus
+## 15.7 — Launch with Focus
 
-Once a default harness and its detail are loaded, the **Quick Launch Focus ▶** submenu lists every focus by name.
+Once a default harness and its detail are loaded, the **Launch with Focus ▶** submenu lists every focus by name.
 
-![Quick Launch Focus submenu](../Images/remote-prs-quick-launch-submenu.png)
+![Launch with Focus submenu](../Images/remote-prs-quick-launch-submenu.png)
 
 Clicking a focus name launches a `ynh run` session immediately — no sheet, no confirmation — using the PR's worktree path and the repo's default harness and vendor. Use this when you run the same focus repeatedly and don't need to change anything.
 
-> **Submenu population:** The submenu is populated from the cached harness detail. TermQ pre-fetches the detail when the PR row first appears, so by the time you right-click the submenu is usually ready. If it appears empty, open **Run with Focus…** once to trigger the detail load, then try again.
+> **Submenu population:** The submenu is populated from the cached harness detail. TermQ pre-fetches the detail when the PR row first appears, so by the time you right-click the submenu is usually ready. If it appears empty, open **Launch ‹harness›…** once to trigger the detail load, then try again.
 
 ---
 
 ## 15.8 — Pruning worktrees
 
-Over time two kinds of worktrees accumulate: checked-out worktrees whose PRs have since closed, and review checkouts created for "Run with Focus" sessions. A single **⊘ Prune…** action (visible in the repo header when either type exists) opens a confirmation sheet that handles both.
+Over time two kinds of worktrees accumulate: checked-out worktrees whose PRs have since closed, and review checkouts created for **Launch…** sessions. A single **⊘ Prune…** action (visible in the repo header when either type exists) opens a confirmation sheet that handles both.
 
 Review checkouts also clear themselves: when the Remote feed loads, TermQ removes those whose PR has closed, that have no changes and that no terminal is using.
 
@@ -239,7 +240,7 @@ The Remote feed is per repository, so a review requested in a repository you rar
 - Requests to a team you're in count too.
 - Each row shows the repository, number and title, author, and how long it has waited. Click it to open the pull request in your browser.
 - Right-click a PR in one of TermQ's repositories for the same menu as the Remote feed (§15.4).
-- Right-click a PR anywhere else for **Run with Focus…** and **Quick Launch Focus ▶** on a review checkout. TermQ makes it from a hidden clone of the repository under `~/.termq/focus-repos/`, so the harness opens on the PR's code knowing which PR it is. **Checkout this PR…** clones the repository to a folder you choose, adds it to TermQ and checks the PR out.
+- Right-click a PR anywhere else for **Launch ‹harness›…** and **Launch with Focus ▶** on a review checkout. TermQ makes it from a hidden clone of the repository under `~/.termq/focus-repos/`, so the harness opens on the PR's code knowing which PR it is. **Checkout this PR…** clones the repository to a folder you choose, adds it to TermQ and checks the PR out.
 - **Only TermQ's repositories** limits the list to repositories you've added to the sidebar.
 - It refreshes when you open it, every five minutes while it's showing, and with the sidebar's refresh button. It shows the first 100 requests, and says so when there are more.
 
@@ -249,9 +250,9 @@ The Remote feed is per repository, so a review requested in a repository you rar
 - The feed is **priority-ordered**: checked-out → review-requested → open non-draft → rest; recency breaks ties within each tier
 - The **feed cap** (default 20) limits how many PRs are shown per repo; tier-1 (checked-out) PRs always appear regardless of the cap
 - **Login is per-repository**: TermQ calls `gh api user` per repo so github.com, GHEC, and on-prem GHE accounts all work simultaneously
-- **Run with Focus** works on any PR — checked out or not, in TermQ's repositories or not. For non-checked-out PRs, TermQ creates a reusable review checkout and always injects PR context so the harness knows which PR it is reviewing
-- **Quick Launch Focus** lets you skip the sheet and launch with a single click once the harness detail is cached
-- The **⟳ refresh button** in the Run with Focus sheet header reloads harness focuses and profiles from disk
+- **Launch…** works on any PR — checked out or not, in TermQ's repositories or not. For non-checked-out PRs, TermQ creates a reusable review checkout and always injects PR context so the harness knows which PR it is reviewing
+- **Launch with Focus** lets you skip the sheet and launch with a single click once the harness detail is cached
+- The **⟳ refresh button** in the launch sheet header reloads harness focuses and profiles from disk
 - **Set Default Focus** pre-selects a focus for a repo so it appears ready each time the sheet opens
 - **Prune…** removes both closed-PR worktrees and ephemeral focus worktrees in a single confirmation sheet
 

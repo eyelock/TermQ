@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Πίσω στον πίνακα (Escape)";
 "toolbar.move.to" = "Μετακίνηση σε στήλη";
 "toolbar.new.quick" = "Γρήγορο τερματικό";
-"toolbar.new.quick.help" = "Νέο γρήγορο τερματικό (⌘T)";
+"toolbar.new.quick.help" = "Γρήγορο τερματικό (⌘T)";
 "toolbar.edit" = "Επεξεργασία";
 "toolbar.edit.help" = "Επεξεργασία λεπτομερειών τερματικού (⌘E)";
 "toolbar.pin" = "Καρφίτσωμα";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Διαγραφή τερματικού";
 "toolbar.add" = "Προσθήκη";
 "toolbar.add.help" = "Προσθήκη νέου τερματικού ή στήλης";
-"toolbar.open.terminal.app" = "Άνοιγμα στο Terminal";
 "toolbar.open.terminal.app.help" = "Άνοιγμα στο Terminal.app";
-"toolbar.new.terminal" = "Νέο τερματικό";
 "toolbar.new.column" = "Νέα στήλη";
 "toolbar.bin.count %lld" = "Κάδος (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Νέο γρήγορο τερματικό";
-"menu.new.terminal" = "Νέο τερματικό...";
 "menu.new.terminal.dialog" = "Νέο τερματικό";
 "menu.new.column" = "Νέα στήλη";
 "menu.back" = "Πίσω στον πίνακα";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktrees.refresh" = "Ανανέωση worktree";
 "sidebar.worktree.new" = "Νέο worktree";
 "sidebar.worktree.new.terminal" = "Γρήγορο Terminal";
-"sidebar.worktree.create.terminal" = "Δημιουργία Terminal…";
+"sidebar.worktree.create.terminal" = "Νέο τερματικό…";
 "sidebar.worktree.terminals.badge.help" = "Κάντε κλικ για γρήγορους συνδέσμους για άνοιγμα τερματικών";
 "sidebar.worktree.open.in.terminal" = "Εμφάνιση στο Terminal";
 "sidebar.worktree.reveal.in.finder" = "Εμφάνιση στο Finder";
@@ -640,7 +635,6 @@
 "sidebar.worktree.set.harness" = "Ορισμός harness…";
 "sidebar.worktree.clear.harness" = "Καθαρισμός harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Εκκίνηση %@";
 "sidebar.remove.worktree" = "Διαγραφή worktree";
 "sidebar.remove.worktree.title" = "Διαγραφή worktree;";
 "sidebar.remove.worktree.confirm" = "Διαγραφή";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Εκκίνηση harness";
-"harnesses.launch.vendor" = "Προμηθευτής";
+"launch.quick %@" = "Γρήγορη εκκίνηση %@";
+"launch.sheet %@" = "Εκκίνηση %@…";
+"launch.sheet.any" = "Εκκίνηση harness…";
+"launch.sheet.short" = "Εκκίνηση…";
+"launch.with.focus" = "Εκκίνηση με εστίαση";
 "harnesses.launch.vendor.unavailable" = "(δεν είναι εγκατεστημένο)";
 "harnesses.launch.vendor.default" = "Προεπιλογή (%@)";
-"harnesses.launch.focus" = "Εστίαση";
-"harnesses.launch.focus.none" = "Κανένα";
 "harnesses.launch.working.directory" = "Κατάλογος εργασίας";
 "harnesses.launch.browse" = "Αναζήτηση…";
-"harnesses.launch.prompt" = "Ερώτημα";
-"harnesses.launch.prompt.placeholder" = "Προαιρετικό ερώτημα για τον agent…";
 "harnesses.launch.resume" = "Συνέχιση προηγούμενης συνεδρίας";
 "harnesses.launch.resume.help" = "Συνεχίζει μια προηγούμενη συνεδρία αντί να ξεκινά από την αρχή. Το Claude συνεχίζει μόνο τη συνεδρία που ξεκίνησε αυτή η κάρτα, επομένως μια νέα κάρτα ξεκινά από την αρχή· οι άλλοι πάροχοι συνεχίζουν την πιο πρόσφατη συνεδρία στον φάκελο εργασίας.";
 "harnesses.launch.button" = "Εκκίνηση";
 "harnesses.launch.help" = "Εκκίνηση αυτού του harness σε νέο τερματικό";
-"harnesses.launch.cancel" = "Ακύρωση";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Συνδεδεμένα worktrees";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Αυτό θα απεγκαταστήσει το harness από το YNH και θα διαγράψει μόνιμα τα αρχεία του. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.";
 "harnesses.delete.local.confirm" = "Διαγραφή harness";
 "harnesses.more.actions.help" = "Περισσότερες ενέργειες";
-"harnesses.copy.run.command" = "Αντιγραφή εντολής εκτέλεσης";
 "harnesses.ynh.documentation" = "Τεκμηρίωση YNH";
 
 "harnesses.add.registry.title" = "Προσθήκη μητρώου YNH";
@@ -1349,10 +1341,8 @@
 "remote.prs.prune.reason.ahead" = "μη αποστελλόμενα commits";
 "remote.prs.prune.reason.dirty" = "αδέσμευτες αλλαγές";
 "remote.prs.prune.remove" = "Αφαίρεση";
-"remote.prs.quick.launch.focus" = "Γρήγορη εκκίνηση εστίασης";
 "remote.prs.run.cancel" = "Ακύρωση";
 "remote.prs.run.customize" = "Προσαρμογή";
-"remote.prs.run.focus.item %@" = "Εκτέλεση %@";
 "remote.prs.run.focus.label" = "Εστίαση";
 "remote.prs.run.focus.none" = "(καμία — ad hoc προτροπή)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1363,11 +1353,8 @@
 "remote.prs.run.profile.label" = "Προφίλ";
 "remote.prs.run.prompt.label" = "Προτροπή εστίασης";
 "remote.prs.run.refresh.detail" = "Επαναφόρτωση εστιάσεων και προφίλ Harness από δίσκο";
-"remote.prs.run.run" = "Εκτέλεση";
-"remote.prs.run.sheet.title" = "Εκτέλεση με εστίαση";
 "remote.prs.run.vendor.default" = "Προεπιλογή Harness";
 "remote.prs.run.vendor.label" = "Πάροχος";
-"remote.prs.run.with.focus" = "Εκτέλεση με εστίαση…";
 "remote.prs.set.default.focus" = "Ορισμός προεπιλεγμένης εστίασης…";
 "remote.prs.show.in.local" = "Εμφάνιση τοπικά";
 "remote.prs.show.in.remote" = "Εμφάνιση στο Remote";
@@ -1576,7 +1563,6 @@
 "wheelhouse.work.unavailable" = "Το γράφημα εργασίας δεν είναι διαθέσιμο (το bd δεν βρέθηκε ή απέτυχε)";
 "wheelhouse.unborn.help" = "Ποτέ δεν καταλήφθηκε: αυτή η θέση δεν είχε ακόμη την πρώτη της συνεδρία";
 "wheelhouse.waiting.on %@" = "αναμένει το %@";
-"wheelhouse.open.terminal" = "Άνοιγμα τερματικού";
 "wheelhouse.show.terminal" = "Εμφάνιση τερματικού";
 "wheelhouse.status.idle" = "αδρανές";
 "wheelhouse.working.help" = "Εργάζεται: έκανε check-in σε ένα bead τα τελευταία 20 λεπτά, αν και δεν εκτελείται δικό του τερματικό";
@@ -1631,7 +1617,6 @@
 "wheelhouse.action.close.terminal" = "Κλείσιμο τερματικού";
 "wheelhouse.action.harness.details" = "Λεπτομέρειες harness…";
 "wheelhouse.action.ask.focus" = "Αίτημα εστίασης σε";
-"wheelhouse.action.launch.focus" = "Εκκίνηση με εστίαση";
 "settings.wheelhouse.enable.tab" = "Εμφάνιση καρτέλας Wheelhouses στην πλαϊνή στήλη";
 "settings.wheelhouse.enable.tab.help" = "Προσθέτει μια καρτέλα Wheelhouses που εμφανίζει τις θέσεις κάθε Wheelhouse στα αποθετήριά σας";
 "settings.wheelhouse.quick.terminal.placement" = "Τοποθέτηση γρήγορου τερματικού";
@@ -1642,7 +1627,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Το όνομα στο οποίο ένα Wheelhouse αναθέτει beads όταν οποιοσδήποτε άνθρωπος μπορεί να τα αναλάβει. Τα έτοιμα beads για αυτό το όνομα εμφανίζονται στα εισερχόμενά σας.";
 "settings.wheelhouse.inbox.own.name" = "Το δικό σας όνομα εισερχομένων";
 "settings.wheelhouse.inbox.own.name.help" = "Το όνομα στο οποίο ένα Wheelhouse αναθέτει beads όταν προορίζονται ειδικά για εσάς. Αφήστε το κενό αν δεν έχετε.";
-"wheelhouse.quick.terminal.new" = "Νέο γρήγορο τερματικό";
 "wheelhouse.quick.terminal.title %ld" = "Τερματικό %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Γρήγορο τερματικό %ld για %@: κάντε κλικ για να το φέρετε στη σκηνή";
 "wheelhouse.inbox.title" = "Εισερχόμενα";

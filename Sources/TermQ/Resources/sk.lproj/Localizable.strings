@@ -80,7 +80,7 @@
 "toolbar.back.help" = "Späť na nástenku (Escape)";
 "toolbar.move.to" = "Presunúť do stĺpca";
 "toolbar.new.quick" = "Rýchly terminál";
-"toolbar.new.quick.help" = "Nový rýchly terminál (⌘T)";
+"toolbar.new.quick.help" = "Rýchly terminál (⌘T)";
 "toolbar.edit" = "Upraviť";
 "toolbar.edit.help" = "Upraviť podrobnosti terminálu (⌘E)";
 "toolbar.pin" = "Pripnúť";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "Zmazať terminál";
 "toolbar.add" = "Pridať";
 "toolbar.add.help" = "Pridať nový terminál alebo stĺpec";
-"toolbar.open.terminal.app" = "Otvoriť v Termináli";
 "toolbar.open.terminal.app.help" = "Otvoriť v Terminal.app";
-"toolbar.new.terminal" = "Nový terminál";
 "toolbar.new.column" = "Nový stĺpec";
 "toolbar.bin.count %lld" = "Kôš (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Nový rýchly terminál";
-"menu.new.terminal" = "Nový terminál...";
 "menu.new.terminal.dialog" = "Nový terminál";
 "menu.new.column" = "Nový stĺpec";
 "menu.back" = "Späť na nástenku";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "Obnoviť pracovné stromy";
 "sidebar.worktree.new" = "Nový pracovný strom";
 "sidebar.worktree.new.terminal" = "Rýchly terminál";
-"sidebar.worktree.create.terminal" = "Vytvoriť terminál…";
+"sidebar.worktree.create.terminal" = "Nový terminál…";
 "sidebar.worktree.terminals.badge.help" = "Kliknite pre rýchle prepojenia na otvorenie terminálov";
 "sidebar.worktree.open.in.terminal" = "Zobraziť v Termináli";
 "sidebar.worktree.reveal.in.finder" = "Zobraziť vo Finderi";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Nastaviť harness…";
 "sidebar.worktree.clear.harness" = "Odstrániť harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Spustiť %@";
 "sidebar.remove.worktree" = "Zmazať pracovný strom";
 "sidebar.remove.worktree.title" = "Zmazať pracovný strom?";
 "sidebar.remove.worktree.confirm" = "Zmazať";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Spustiť postroj";
-"harnesses.launch.vendor" = "Dodávateľ";
+"launch.quick %@" = "Rýchle spustenie %@";
+"launch.sheet %@" = "Spustiť %@…";
+"launch.sheet.any" = "Spustiť postroj…";
+"launch.sheet.short" = "Spustiť…";
+"launch.with.focus" = "Spustiť s fokusom";
 "harnesses.launch.vendor.unavailable" = "(nie je nainštalovaný)";
 "harnesses.launch.vendor.default" = "Predvolený (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Žiadny";
 "harnesses.launch.working.directory" = "Pracovný adresár";
 "harnesses.launch.browse" = "Prehľadávať…";
-"harnesses.launch.prompt" = "Výzva";
-"harnesses.launch.prompt.placeholder" = "Voliteľná výzva pre agenta…";
 "harnesses.launch.resume" = "Obnoviť predchádzajúcu reláciu";
 "harnesses.launch.resume.help" = "Naviaže na predchádzajúcu reláciu namiesto spustenia od začiatku. Claude naviaže iba na reláciu, ktorú spustila táto karta, takže nová karta začína od začiatku; ostatní poskytovatelia naväzujú na poslednú reláciu v pracovnom adresári.";
 "harnesses.launch.button" = "Spustiť";
 "harnesses.launch.help" = "Spustiť tento postroj v novom termináli";
-"harnesses.launch.cancel" = "Zrušiť";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Priradené worktrees";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Tým sa harness odinštaluje z YNH a jeho súbory sa natrvalo vymažú. Túto akciu nie je možné vrátiť.";
 "harnesses.delete.local.confirm" = "Vymazať harness";
 "harnesses.more.actions.help" = "Ďalšie akcie";
-"harnesses.copy.run.command" = "Kopírovať príkaz spustenia";
 "harnesses.ynh.documentation" = "Dokumentácia YNH";
 
 "harnesses.add.registry.title" = "Pridať register YNH";
@@ -1349,10 +1341,8 @@
 "remote.prs.prune.reason.ahead" = "neodoslané commity";
 "remote.prs.prune.reason.dirty" = "nezachytené zmeny";
 "remote.prs.prune.remove" = "Odstrániť";
-"remote.prs.quick.launch.focus" = "Rýchle spustenie fokusu";
 "remote.prs.run.cancel" = "Zrušiť";
 "remote.prs.run.customize" = "Prispôsobiť";
-"remote.prs.run.focus.item %@" = "Spustiť %@";
 "remote.prs.run.focus.label" = "Fokus";
 "remote.prs.run.focus.none" = "(žiadny — ad hoc výzva)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1363,11 +1353,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Výzva fokusu";
 "remote.prs.run.refresh.detail" = "Znova načítať fokusy a profily Harness z disku";
-"remote.prs.run.run" = "Spustiť";
-"remote.prs.run.sheet.title" = "Spustiť s fokusem";
 "remote.prs.run.vendor.default" = "Predvolený Harness";
 "remote.prs.run.vendor.label" = "Dodávateľ";
-"remote.prs.run.with.focus" = "Spustiť s fokusem…";
 "remote.prs.set.default.focus" = "Nastaviť predvolený fokus…";
 "remote.prs.show.in.local" = "Zobraziť lokálne";
 "remote.prs.show.in.remote" = "Zobraziť na Remote";
@@ -1576,7 +1563,6 @@
 "wheelhouse.work.unavailable" = "Graf práce nie je k dispozícii (bd sa nenašiel alebo zlyhal)";
 "wheelhouse.unborn.help" = "Nikdy neobsadené: toto miesto zatiaľ nemalo prvú reláciu";
 "wheelhouse.waiting.on %@" = "čaká na %@";
-"wheelhouse.open.terminal" = "Otvoriť terminál";
 "wheelhouse.show.terminal" = "Zobraziť terminál";
 "wheelhouse.status.idle" = "nečinný";
 "wheelhouse.working.help" = "Pracuje: za posledných 20 minút sa prihlásil pri beade, hoci nemá spustený vlastný terminál";
@@ -1631,7 +1617,6 @@
 "wheelhouse.action.close.terminal" = "Zavrieť terminál";
 "wheelhouse.action.harness.details" = "Podrobnosti harnessu…";
 "wheelhouse.action.ask.focus" = "Požiadať o zameranie na";
-"wheelhouse.action.launch.focus" = "Spustiť so zameraním";
 "settings.wheelhouse.enable.tab" = "Zobraziť kartu Wheelhouses v bočnom paneli";
 "settings.wheelhouse.enable.tab.help" = "Pridá kartu Wheelhouses so zoznamom miest každého Wheelhouse vo vašich repozitároch";
 "settings.wheelhouse.quick.terminal.placement" = "Umiestnenie rýchleho terminálu";
@@ -1642,7 +1627,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Názov, ktorému Wheelhouse priraďuje beady, keď sa ich môže ujať ktorýkoľvek človek. Pripravené beady pre tento názov sa zobrazia vo vašej schránke.";
 "settings.wheelhouse.inbox.own.name" = "Váš vlastný názov schránky";
 "settings.wheelhouse.inbox.own.name.help" = "Názov, ktorému Wheelhouse priraďuje beady, keď sú určené konkrétne vám. Ak žiadny nemáte, nechajte prázdne.";
-"wheelhouse.quick.terminal.new" = "Nový rýchly terminál";
 "wheelhouse.quick.terminal.title %ld" = "Terminál %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Rýchly terminál %ld pre %@: kliknutím ho prenesiete na pódium";
 "wheelhouse.inbox.title" = "Schránka";

@@ -80,7 +80,7 @@
 "toolbar.back.help" = "Kembali ke papan (Escape)";
 "toolbar.move.to" = "Pindah ke kolom";
 "toolbar.new.quick" = "Terminal Cepat";
-"toolbar.new.quick.help" = "Terminal cepat baru (⌘T)";
+"toolbar.new.quick.help" = "Terminal Cepat (⌘T)";
 "toolbar.edit" = "Edit";
 "toolbar.edit.help" = "Edit detail terminal (⌘E)";
 "toolbar.pin" = "Sematkan";
@@ -91,16 +91,12 @@
 "toolbar.delete.help" = "Hapus terminal";
 "toolbar.add" = "Tambah";
 "toolbar.add.help" = "Tambah terminal atau kolom baru";
-"toolbar.open.terminal.app" = "Buka di Terminal";
 "toolbar.open.terminal.app.help" = "Buka di Terminal.app";
-"toolbar.new.terminal" = "Terminal Baru";
 "toolbar.new.column" = "Kolom Baru";
 "toolbar.bin.count %lld" = "Sampah (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Terminal Cepat Baru";
-"menu.new.terminal" = "Terminal Baru...";
 "menu.new.terminal.dialog" = "Terminal Baru";
 "menu.new.column" = "Kolom Baru";
 "menu.back" = "Kembali ke Papan";
@@ -152,7 +148,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktrees.refresh" = "Segarkan worktree";
 "sidebar.worktree.new" = "Worktree Baru";
 "sidebar.worktree.new.terminal" = "Terminal Cepat";
-"sidebar.worktree.create.terminal" = "Buat Terminal…";
+"sidebar.worktree.create.terminal" = "Terminal Baru…";
 "sidebar.worktree.terminals.badge.help" = "Klik untuk tautan cepat membuka terminal";
 "sidebar.worktree.open.in.terminal" = "Tampilkan di Terminal";
 "sidebar.worktree.reveal.in.finder" = "Tampilkan di Finder";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "Atur harness…";
 "sidebar.worktree.clear.harness" = "Hapus harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Jalankan %@";
 "sidebar.remove.worktree" = "Hapus Worktree";
 "sidebar.remove.worktree.title" = "Hapus Worktree?";
 "sidebar.remove.worktree.confirm" = "Hapus";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Jalankan Harness";
-"harnesses.launch.vendor" = "Vendor";
+"launch.quick %@" = "Jalankan Cepat %@";
+"launch.sheet %@" = "Jalankan %@…";
+"launch.sheet.any" = "Jalankan Harness…";
+"launch.sheet.short" = "Jalankan…";
+"launch.with.focus" = "Jalankan dengan Fokus";
 "harnesses.launch.vendor.unavailable" = "(belum terpasang)";
 "harnesses.launch.vendor.default" = "Default (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Tidak ada";
 "harnesses.launch.working.directory" = "Direktori Kerja";
 "harnesses.launch.browse" = "Telusuri…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Prompt opsional untuk diteruskan ke agen…";
 "harnesses.launch.resume" = "Lanjutkan sesi sebelumnya";
 "harnesses.launch.resume.help" = "Melanjutkan sesi sebelumnya alih-alih memulai dari awal. Claude hanya melanjutkan sesi yang dimulai oleh kartu ini, sehingga kartu baru dimulai dari awal; vendor lain melanjutkan sesi terbaru di direktori kerja.";
 "harnesses.launch.button" = "Jalankan";
 "harnesses.launch.help" = "Jalankan harness ini di terminal baru";
-"harnesses.launch.cancel" = "Batal";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktree tertaut";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "Ini akan menghapus instalasi harness dari YNH dan menghapus file-filenya secara permanen. Tindakan ini tidak dapat dibatalkan.";
 "harnesses.delete.local.confirm" = "Hapus Harness";
 "harnesses.more.actions.help" = "Tindakan lainnya";
-"harnesses.copy.run.command" = "Salin perintah jalankan";
 "harnesses.ynh.documentation" = "Dokumentasi YNH";
 
 "harnesses.add.registry.title" = "Tambah Registry YNH";
@@ -1349,10 +1341,8 @@
 "remote.prs.prune.reason.ahead" = "commit yang belum di-push";
 "remote.prs.prune.reason.dirty" = "perubahan yang belum di-commit";
 "remote.prs.prune.remove" = "Hapus";
-"remote.prs.quick.launch.focus" = "Peluncuran Fokus Cepat";
 "remote.prs.run.cancel" = "Batal";
 "remote.prs.run.customize" = "Sesuaikan";
-"remote.prs.run.focus.item %@" = "Jalankan %@";
 "remote.prs.run.focus.label" = "Fokus";
 "remote.prs.run.focus.none" = "(tidak ada — prompt ad-hoc)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1363,11 +1353,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Prompt fokus";
 "remote.prs.run.refresh.detail" = "Muat ulang fokus dan profil Harness dari disk";
-"remote.prs.run.run" = "Jalankan";
-"remote.prs.run.sheet.title" = "Jalankan dengan Fokus";
 "remote.prs.run.vendor.default" = "Default Harness";
 "remote.prs.run.vendor.label" = "Vendor";
-"remote.prs.run.with.focus" = "Jalankan dengan Fokus…";
 "remote.prs.set.default.focus" = "Tetapkan Fokus Default…";
 "remote.prs.show.in.local" = "Tampilkan Secara Lokal";
 "remote.prs.show.in.remote" = "Tampilkan di Remote";
@@ -1576,7 +1563,6 @@
 "wheelhouse.work.unavailable" = "Grafik kerja tidak tersedia (bd tidak ditemukan atau gagal)";
 "wheelhouse.unborn.help" = "Belum pernah diduduki: kursi ini belum memiliki sesi pertama";
 "wheelhouse.waiting.on %@" = "menunggu %@";
-"wheelhouse.open.terminal" = "Buka Terminal";
 "wheelhouse.show.terminal" = "Tampilkan Terminal";
 "wheelhouse.status.idle" = "siaga";
 "wheelhouse.working.help" = "Bekerja: sudah check-in pada sebuah bead dalam 20 menit terakhir, meski tidak ada terminal miliknya yang berjalan";
@@ -1631,7 +1617,6 @@
 "wheelhouse.action.close.terminal" = "Tutup Terminal";
 "wheelhouse.action.harness.details" = "Detail Harness…";
 "wheelhouse.action.ask.focus" = "Minta untuk fokus pada";
-"wheelhouse.action.launch.focus" = "Luncurkan dengan fokus";
 "settings.wheelhouse.enable.tab" = "Tampilkan tab Wheelhouse di bilah sisi";
 "settings.wheelhouse.enable.tab.help" = "Menambahkan tab Wheelhouse yang mencantumkan kursi setiap Wheelhouse di repositori Anda";
 "settings.wheelhouse.quick.terminal.placement" = "Penempatan Terminal Cepat";
@@ -1642,7 +1627,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Nama tempat Wheelhouse menugaskan bead ketika manusia mana pun dapat menanganinya. Bead yang siap untuk nama ini muncul di kotak masuk Anda.";
 "settings.wheelhouse.inbox.own.name" = "Nama kotak masuk Anda sendiri";
 "settings.wheelhouse.inbox.own.name.help" = "Nama tempat Wheelhouse menugaskan bead ketika bead tersebut khusus untuk Anda. Kosongkan jika tidak ada.";
-"wheelhouse.quick.terminal.new" = "Terminal Cepat Baru";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Terminal Cepat %ld untuk %@: klik untuk membawanya ke panggung";
 "wheelhouse.inbox.title" = "Kotak Masuk";

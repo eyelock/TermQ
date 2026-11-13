@@ -81,7 +81,7 @@
 "toolbar.back.help" = "חזרה ללוח (Escape)";
 "toolbar.move.to" = "העברה לעמודה";
 "toolbar.new.quick" = "מסוף מהיר";
-"toolbar.new.quick.help" = "מסוף מהיר חדש (⌘T)";
+"toolbar.new.quick.help" = "מסוף מהיר (⌘T)";
 "toolbar.edit" = "עריכה";
 "toolbar.edit.help" = "עריכת פרטי מסוף (⌘E)";
 "toolbar.pin" = "הצמדה";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "מחיקת מסוף";
 "toolbar.add" = "הוספה";
 "toolbar.add.help" = "הוספת מסוף או עמודה חדשים";
-"toolbar.open.terminal.app" = "פתיחה ב-Terminal";
 "toolbar.open.terminal.app.help" = "פתיחה ב-Terminal.app";
-"toolbar.new.terminal" = "מסוף חדש";
 "toolbar.new.column" = "עמודה חדשה";
 "toolbar.bin.count %lld" = "פח (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "מסוף מהיר חדש";
-"menu.new.terminal" = "מסוף חדש...";
 "menu.new.terminal.dialog" = "מסוף חדש";
 "menu.new.column" = "עמודה חדשה";
 "menu.back" = "חזרה ללוח";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -626,7 +621,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "רענן עצי עבודה";
 "sidebar.worktree.new" = "עץ עבודה חדש";
-"sidebar.worktree.new.terminal" = "Terminal חדש";
+"sidebar.worktree.new.terminal" = "מסוף מהיר";
 "sidebar.worktree.terminals.badge.help" = "לחץ לקישורים מהירים לפתיחת מסופים";
 "sidebar.worktree.open.in.terminal" = "פתח ב-Terminal";
 "sidebar.worktree.reveal.in.finder" = "חשוף ב-Finder";
@@ -638,7 +633,6 @@
 "sidebar.worktree.set.harness" = "הגדרת harness…";
 "sidebar.worktree.clear.harness" = "ניקוי harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "הפעל %@";
 "sidebar.remove.worktree" = "הסר עץ עבודה";
 "sidebar.remove.worktree.title" = "הסר עץ עבודה?";
 "sidebar.remove.worktree.confirm" = "הסר";
@@ -736,20 +730,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "הפעל Harness";
-"harnesses.launch.vendor" = "ספק";
+"launch.quick %@" = "הפעלה מהירה של %@";
+"launch.sheet %@" = "הפעל %@…";
+"launch.sheet.any" = "הפעל Harness…";
+"launch.sheet.short" = "הפעל…";
+"launch.with.focus" = "הפעל עם מיקוד";
 "harnesses.launch.vendor.unavailable" = "(לא מותקן)";
 "harnesses.launch.vendor.default" = "ברירת מחדל (%@)";
-"harnesses.launch.focus" = "מוקד";
-"harnesses.launch.focus.none" = "אין";
 "harnesses.launch.working.directory" = "ספריית עבודה";
 "harnesses.launch.browse" = "עיין…";
-"harnesses.launch.prompt" = "פרומפט";
-"harnesses.launch.prompt.placeholder" = "פרומפט אופציונלי לסוכן…";
 "harnesses.launch.resume" = "המשך את ההפעלה הקודמת";
 "harnesses.launch.resume.help" = "ממשיך הפעלה קודמת במקום להתחיל מחדש. Claude ממשיך רק את ההפעלה שהכרטיס הזה התחיל, ולכן כרטיס חדש מתחיל מחדש; ספקים אחרים ממשיכים את ההפעלה האחרונה בתיקיית העבודה.";
 "harnesses.launch.button" = "הפעל";
 "harnesses.launch.help" = "הפעל harness זה במסוף חדש";
-"harnesses.launch.cancel" = "ביטול";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktrees מקושרים";
@@ -780,7 +773,7 @@
 
 "common.clear" = "נקה";
 
-"sidebar.worktree.create.terminal" = "צור Terminal…";
+"sidebar.worktree.create.terminal" = "מסוף חדש…";
 
 "sidebar.worktree.copy.pathname" = "העתק כנתיב";
 
@@ -851,7 +844,6 @@
 "harnesses.delete.local.message" = "פעולה זו תסיר את ה-harness מ-YNH ותמחק לצמיתות את קבציו. לא ניתן לבטל פעולה זו.";
 "harnesses.delete.local.confirm" = "מחק harness";
 "harnesses.more.actions.help" = "פעולות נוספות";
-"harnesses.copy.run.command" = "העתק פקודת הפעלה";
 "harnesses.ynh.documentation" = "תיעוד YNH";
 
 "harnesses.add.registry.title" = "הוסף רישום YNH";
@@ -1355,10 +1347,8 @@
 "remote.prs.prune.reason.ahead" = "commits שלא נדחפו";
 "remote.prs.prune.reason.dirty" = "שינויים שלא הוכנסו";
 "remote.prs.prune.remove" = "הסר";
-"remote.prs.quick.launch.focus" = "הפעלה מהירה של מיקוד";
 "remote.prs.run.cancel" = "ביטול";
 "remote.prs.run.customize" = "התאמה אישית";
-"remote.prs.run.focus.item %@" = "הפעל %@";
 "remote.prs.run.focus.label" = "מיקוד";
 "remote.prs.run.focus.none" = "(ללא — הנחייה אד-הוק)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1369,11 +1359,8 @@
 "remote.prs.run.profile.label" = "פרופיל";
 "remote.prs.run.prompt.label" = "הנחיית מיקוד";
 "remote.prs.run.refresh.detail" = "טען מחדש את מיקודי ופרופילי Harness מהדיסק";
-"remote.prs.run.run" = "הפעל";
-"remote.prs.run.sheet.title" = "הפעל עם מיקוד";
 "remote.prs.run.vendor.default" = "ברירת מחדל של Harness";
 "remote.prs.run.vendor.label" = "ספק";
-"remote.prs.run.with.focus" = "הפעל עם מיקוד…";
 "remote.prs.set.default.focus" = "הגדר מיקוד ברירת מחדל…";
 "remote.prs.show.in.local" = "הצג מקומית";
 "remote.prs.show.in.remote" = "הצג ב-Remote";
@@ -1582,7 +1569,6 @@
 "wheelhouse.work.unavailable" = "גרף העבודה אינו זמין (bd לא נמצא או נכשל)";
 "wheelhouse.unborn.help" = "מעולם לא איויש: במושב הזה עדיין לא הייתה הסשן הראשון";
 "wheelhouse.waiting.on %@" = "ממתין ל-%@";
-"wheelhouse.open.terminal" = "פתח טרמינל";
 "wheelhouse.show.terminal" = "הצג טרמינל";
 "wheelhouse.status.idle" = "לא פעיל";
 "wheelhouse.working.help" = "עובד: נרשם בנוכחות על bead ב-20 הדקות האחרונות, אף שאין לו טרמינל משלו שרץ";
@@ -1637,7 +1623,6 @@
 "wheelhouse.action.close.terminal" = "סגור טרמינל";
 "wheelhouse.action.harness.details" = "פרטי Harness…";
 "wheelhouse.action.ask.focus" = "בקש להתמקד ב";
-"wheelhouse.action.launch.focus" = "הפעל עם מיקוד";
 "settings.wheelhouse.enable.tab" = "הצג את לשונית Wheelhouses בסרגל הצד";
 "settings.wheelhouse.enable.tab.help" = "מוסיף לשונית Wheelhouses שמפרטת את המושבים של כל Wheelhouse במאגרים שלך";
 "settings.wheelhouse.quick.terminal.placement" = "מיקום טרמינל מהיר";
@@ -1648,7 +1633,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "השם שאליו Wheelhouse מקצה beads כשכל אדם יכול לטפל בהם. beads מוכנים עבור שם זה מופיעים בתיבת הדואר הנכנס שלך.";
 "settings.wheelhouse.inbox.own.name" = "שם תיבת הדואר הנכנס שלך";
 "settings.wheelhouse.inbox.own.name.help" = "השם שאליו Wheelhouse מקצה beads כשהם מיועדים לך במיוחד. השאר ריק אם אין לך כזה.";
-"wheelhouse.quick.terminal.new" = "טרמינל מהיר חדש";
 "wheelhouse.quick.terminal.title %ld" = "טרמינל %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "טרמינל מהיר %ld עבור %@: לחץ כדי להביא אותו לבמה";
 "wheelhouse.inbox.title" = "דואר נכנס";

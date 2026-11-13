@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Nazaj na tablo (Escape)";
 "toolbar.move.to" = "Premakni v stolpec";
 "toolbar.new.quick" = "Hitri terminal";
-"toolbar.new.quick.help" = "Nov hitri terminal (⌘T)";
+"toolbar.new.quick.help" = "Hitri terminal (⌘T)";
 "toolbar.edit" = "Uredi";
 "toolbar.edit.help" = "Uredi podrobnosti terminala (⌘E)";
 "toolbar.pin" = "Pripni";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Izbriši terminal";
 "toolbar.add" = "Dodaj";
 "toolbar.add.help" = "Dodaj nov terminal ali stolpec";
-"toolbar.open.terminal.app" = "Odpri v Terminalu";
 "toolbar.open.terminal.app.help" = "Odpri v Terminal.app";
-"toolbar.new.terminal" = "Nov terminal";
 "toolbar.new.column" = "Nov stolpec";
 "toolbar.bin.count %lld" = "Koš (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Nov hitri terminal";
-"menu.new.terminal" = "Nov terminal...";
 "menu.new.terminal.dialog" = "Nov terminal";
 "menu.new.column" = "Nov stolpec";
 "menu.back" = "Nazaj na tablo";
@@ -154,7 +150,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Osveži delovne kopije";
 "sidebar.worktree.new" = "Nova delovna kopija";
-"sidebar.worktree.new.terminal" = "Nov Terminal";
+"sidebar.worktree.new.terminal" = "Hitri terminal";
 "sidebar.worktree.terminals.badge.help" = "Kliknite za hitre povezave za odpiranje terminalov";
 "sidebar.worktree.open.in.terminal" = "Odpri v Terminalu";
 "sidebar.worktree.reveal.in.finder" = "Pokaži v Finderju";
@@ -639,7 +634,6 @@
 "sidebar.worktree.set.harness" = "Nastavi harness…";
 "sidebar.worktree.clear.harness" = "Odstrani harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Zaženi %@";
 "sidebar.remove.worktree" = "Odstrani delovno kopijo";
 "sidebar.remove.worktree.title" = "Odstrani delovno kopijo?";
 "sidebar.remove.worktree.confirm" = "Odstrani";
@@ -737,20 +731,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Zaženi harness";
-"harnesses.launch.vendor" = "Dobavitelj";
+"launch.quick %@" = "Hitri zagon %@";
+"launch.sheet %@" = "Zaženi %@…";
+"launch.sheet.any" = "Zaženi harness…";
+"launch.sheet.short" = "Zaženi…";
+"launch.with.focus" = "Zaženi s fokusom";
 "harnesses.launch.vendor.unavailable" = "(ni nameščen)";
 "harnesses.launch.vendor.default" = "Privzeto (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Brez";
 "harnesses.launch.working.directory" = "Delovna mapa";
 "harnesses.launch.browse" = "Brskaj…";
-"harnesses.launch.prompt" = "Poziv";
-"harnesses.launch.prompt.placeholder" = "Neobvezni poziv za agenta…";
 "harnesses.launch.resume" = "Nadaljuj prejšnjo sejo";
 "harnesses.launch.resume.help" = "Nadaljuje prejšnjo sejo namesto začetka znova. Claude nadaljuje samo sejo, ki jo je začela ta kartica, zato nova kartica začne znova; drugi ponudniki nadaljujejo zadnjo sejo v delovnem imeniku.";
 "harnesses.launch.button" = "Zaženi";
 "harnesses.launch.help" = "Zaženi ta harness v novem terminalu";
-"harnesses.launch.cancel" = "Prekliči";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Povezani worktreei";
@@ -781,7 +774,7 @@
 
 "common.clear" = "Počisti";
 
-"sidebar.worktree.create.terminal" = "Ustvari Terminal…";
+"sidebar.worktree.create.terminal" = "Nov terminal…";
 
 "sidebar.worktree.copy.pathname" = "Kopiraj kot pot";
 
@@ -852,7 +845,6 @@
 "harnesses.delete.local.message" = "S tem boste odstranili harness iz YNH in trajno izbrisali njegove datoteke. Te dejanje ni mogoče razveljaviti.";
 "harnesses.delete.local.confirm" = "Izbriši harness";
 "harnesses.more.actions.help" = "Več dejanj";
-"harnesses.copy.run.command" = "Kopiraj ukaz za zagon";
 "harnesses.ynh.documentation" = "Dokumentacija YNH";
 
 "harnesses.add.registry.title" = "Dodaj register YNH";
@@ -1356,10 +1348,8 @@
 "remote.prs.prune.reason.ahead" = "neposredovani commiti";
 "remote.prs.prune.reason.dirty" = "neshranjene spremembe";
 "remote.prs.prune.remove" = "Odstrani";
-"remote.prs.quick.launch.focus" = "Hitri zagon fokusa";
 "remote.prs.run.cancel" = "Prekliči";
 "remote.prs.run.customize" = "Prilagodi";
-"remote.prs.run.focus.item %@" = "Zaženi %@";
 "remote.prs.run.focus.label" = "Fokus";
 "remote.prs.run.focus.none" = "(brez — ad hoc poziv)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1370,11 +1360,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Poziv fokusa";
 "remote.prs.run.refresh.detail" = "Znova naloži fokuse in profile Harness z diska";
-"remote.prs.run.run" = "Zaženi";
-"remote.prs.run.sheet.title" = "Zaženi s fokusom";
 "remote.prs.run.vendor.default" = "Privzeti Harness";
 "remote.prs.run.vendor.label" = "Dobavitelj";
-"remote.prs.run.with.focus" = "Zaženi s fokusom…";
 "remote.prs.set.default.focus" = "Nastavi privzeti fokus…";
 "remote.prs.show.in.local" = "Prikaži lokalno";
 "remote.prs.show.in.remote" = "Prikaži na Remote";
@@ -1583,7 +1570,6 @@
 "wheelhouse.work.unavailable" = "Graf dela ni na voljo (bd ni bil najden ali je spodletel)";
 "wheelhouse.unborn.help" = "Nikoli zasedeno: to mesto še ni imelo prve seje";
 "wheelhouse.waiting.on %@" = "čaka na %@";
-"wheelhouse.open.terminal" = "Odpri terminal";
 "wheelhouse.show.terminal" = "Pokaži terminal";
 "wheelhouse.status.idle" = "nedejaven";
 "wheelhouse.working.help" = "Dela: se je v zadnjih 20 minutah javil pri beadu, čeprav nima zagnanega lastnega terminala";
@@ -1638,7 +1624,6 @@
 "wheelhouse.action.close.terminal" = "Zapri terminal";
 "wheelhouse.action.harness.details" = "Podrobnosti harnessa…";
 "wheelhouse.action.ask.focus" = "Prosi, naj se osredotoči na";
-"wheelhouse.action.launch.focus" = "Zaženi s fokusom";
 "settings.wheelhouse.enable.tab" = "Pokaži zavihek Wheelhouses v stranski vrstici";
 "settings.wheelhouse.enable.tab.help" = "Doda zavihek Wheelhouses s seznamom mest vsakega Wheelhousa v vaših repozitorijih";
 "settings.wheelhouse.quick.terminal.placement" = "Postavitev hitrega terminala";
@@ -1649,7 +1634,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Ime, kateremu Wheelhouse dodeli beade, kadar jih lahko prevzame kateri koli človek. Pripravljeni beadi za to ime se prikažejo v vašem nabiralniku.";
 "settings.wheelhouse.inbox.own.name" = "Vaše lastno ime nabiralnika";
 "settings.wheelhouse.inbox.own.name.help" = "Ime, kateremu Wheelhouse dodeli beade, kadar so namenjeni prav vam. Pustite prazno, če ga nimate.";
-"wheelhouse.quick.terminal.new" = "Nov hitri terminal";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Hitri terminal %ld za %@: kliknite, da ga prinesete na oder";
 "wheelhouse.inbox.title" = "Nabiralnik";

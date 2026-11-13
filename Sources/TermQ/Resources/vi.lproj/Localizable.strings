@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Quay lại bảng (Escape)";
 "toolbar.move.to" = "Di chuyển đến cột";
 "toolbar.new.quick" = "Terminal nhanh";
-"toolbar.new.quick.help" = "Terminal nhanh mới (⌘T)";
+"toolbar.new.quick.help" = "Terminal nhanh (⌘T)";
 "toolbar.edit" = "Sửa";
 "toolbar.edit.help" = "Sửa chi tiết terminal (⌘E)";
 "toolbar.pin" = "Ghim";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Xóa terminal";
 "toolbar.add" = "Thêm";
 "toolbar.add.help" = "Thêm terminal hoặc cột mới";
-"toolbar.open.terminal.app" = "Mở trong Terminal";
 "toolbar.open.terminal.app.help" = "Mở trong Terminal.app";
-"toolbar.new.terminal" = "Terminal mới";
 "toolbar.new.column" = "Cột mới";
 "toolbar.bin.count %lld" = "Thùng rác (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Terminal nhanh mới";
-"menu.new.terminal" = "Terminal mới...";
 "menu.new.terminal.dialog" = "Terminal mới";
 "menu.new.column" = "Cột mới";
 "menu.back" = "Quay lại bảng";
@@ -154,7 +150,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Làm mới worktrees";
 "sidebar.worktree.new" = "Worktree mới";
-"sidebar.worktree.new.terminal" = "Terminal mới";
+"sidebar.worktree.new.terminal" = "Terminal nhanh";
 "sidebar.worktree.terminals.badge.help" = "Nhấp để truy cập liên kết nhanh mở terminal";
 "sidebar.worktree.open.in.terminal" = "Mở trong Terminal";
 "sidebar.worktree.reveal.in.finder" = "Hiện trong Finder";
@@ -639,7 +634,6 @@
 "sidebar.worktree.set.harness" = "Đặt harness…";
 "sidebar.worktree.clear.harness" = "Xóa harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Khởi chạy %@";
 "sidebar.remove.worktree" = "Xóa Worktree";
 "sidebar.remove.worktree.title" = "Xóa Worktree?";
 "sidebar.remove.worktree.confirm" = "Xóa";
@@ -737,20 +731,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Khởi chạy Harness";
-"harnesses.launch.vendor" = "Nhà cung cấp";
+"launch.quick %@" = "Khởi chạy nhanh %@";
+"launch.sheet %@" = "Khởi chạy %@…";
+"launch.sheet.any" = "Khởi chạy Harness…";
+"launch.sheet.short" = "Khởi chạy…";
+"launch.with.focus" = "Khởi chạy với Tiêu điểm";
 "harnesses.launch.vendor.unavailable" = "(chưa cài đặt)";
 "harnesses.launch.vendor.default" = "Mặc định (%@)";
-"harnesses.launch.focus" = "Tiêu điểm";
-"harnesses.launch.focus.none" = "Không có";
 "harnesses.launch.working.directory" = "Thư mục làm việc";
 "harnesses.launch.browse" = "Duyệt…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Prompt tùy chọn truyền cho agent…";
 "harnesses.launch.resume" = "Tiếp tục phiên trước";
 "harnesses.launch.resume.help" = "Tiếp tục phiên trước đó thay vì bắt đầu lại từ đầu. Claude chỉ tiếp tục phiên mà thẻ này đã bắt đầu, nên thẻ mới sẽ bắt đầu lại từ đầu; các nhà cung cấp khác tiếp tục phiên gần nhất trong thư mục làm việc.";
 "harnesses.launch.button" = "Khởi chạy";
 "harnesses.launch.help" = "Khởi chạy harness này trong terminal mới";
-"harnesses.launch.cancel" = "Hủy";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Worktree đã liên kết";
@@ -781,7 +774,7 @@
 
 "common.clear" = "Xóa";
 
-"sidebar.worktree.create.terminal" = "Tạo Terminal…";
+"sidebar.worktree.create.terminal" = "Terminal mới…";
 
 "sidebar.worktree.copy.pathname" = "Sao chép dưới dạng đường dẫn";
 
@@ -852,7 +845,6 @@
 "harnesses.delete.local.message" = "Thao tác này sẽ gỡ cài đặt Harness khỏi YNH và xóa vĩnh viễn các tệp của nó. Không thể hoàn tác hành động này.";
 "harnesses.delete.local.confirm" = "Xóa Harness";
 "harnesses.more.actions.help" = "Thêm hành động";
-"harnesses.copy.run.command" = "Sao chép lệnh chạy";
 "harnesses.ynh.documentation" = "Tài liệu YNH";
 
 "harnesses.add.registry.title" = "Thêm sổ đăng ký YNH";
@@ -1357,10 +1349,8 @@
 "remote.prs.prune.reason.ahead" = "commit chưa đẩy";
 "remote.prs.prune.reason.dirty" = "thay đổi chưa commit";
 "remote.prs.prune.remove" = "Xóa";
-"remote.prs.quick.launch.focus" = "Khởi chạy tiêu điểm nhanh";
 "remote.prs.run.cancel" = "Hủy";
 "remote.prs.run.customize" = "Tùy chỉnh";
-"remote.prs.run.focus.item %@" = "Chạy %@";
 "remote.prs.run.focus.label" = "Tiêu điểm";
 "remote.prs.run.focus.none" = "(không có — lời nhắc đột xuất)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1371,11 +1361,8 @@
 "remote.prs.run.profile.label" = "Hồ sơ";
 "remote.prs.run.prompt.label" = "Lời nhắc tiêu điểm";
 "remote.prs.run.refresh.detail" = "Tải lại tiêu điểm và hồ sơ Harness từ đĩa";
-"remote.prs.run.run" = "Chạy";
-"remote.prs.run.sheet.title" = "Chạy với tiêu điểm";
 "remote.prs.run.vendor.default" = "Mặc định Harness";
 "remote.prs.run.vendor.label" = "Nhà cung cấp";
-"remote.prs.run.with.focus" = "Chạy với tiêu điểm…";
 "remote.prs.set.default.focus" = "Đặt tiêu điểm mặc định…";
 "remote.prs.show.in.local" = "Hiển thị cục bộ";
 "remote.prs.show.in.remote" = "Hiển thị trên Remote";
@@ -1584,7 +1571,6 @@
 "wheelhouse.work.unavailable" = "Đồ thị công việc không khả dụng (không tìm thấy bd hoặc bd thất bại)";
 "wheelhouse.unborn.help" = "Chưa từng có người ngồi: ghế này chưa có phiên đầu tiên";
 "wheelhouse.waiting.on %@" = "đang chờ %@";
-"wheelhouse.open.terminal" = "Mở terminal";
 "wheelhouse.show.terminal" = "Hiện terminal";
 "wheelhouse.status.idle" = "nhàn rỗi";
 "wheelhouse.working.help" = "Đang làm việc: đã báo cáo trên một bead trong 20 phút qua, dù không có terminal riêng đang chạy";
@@ -1639,7 +1625,6 @@
 "wheelhouse.action.close.terminal" = "Đóng terminal";
 "wheelhouse.action.harness.details" = "Chi tiết harness…";
 "wheelhouse.action.ask.focus" = "Yêu cầu tập trung vào";
-"wheelhouse.action.launch.focus" = "Khởi chạy với tập trung";
 "settings.wheelhouse.enable.tab" = "Hiện tab Wheelhouse trên thanh bên";
 "settings.wheelhouse.enable.tab.help" = "Thêm tab Wheelhouse liệt kê các ghế của mọi Wheelhouse trong kho lưu trữ của bạn";
 "settings.wheelhouse.quick.terminal.placement" = "Vị trí Terminal nhanh";
@@ -1650,7 +1635,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Tên mà Wheelhouse giao bead khi bất kỳ người nào cũng có thể xử lý. Các bead sẵn sàng cho tên này xuất hiện trong hộp thư đến của bạn.";
 "settings.wheelhouse.inbox.own.name" = "Tên hộp thư đến riêng của bạn";
 "settings.wheelhouse.inbox.own.name.help" = "Tên mà Wheelhouse giao bead khi chúng dành riêng cho bạn. Để trống nếu bạn không có.";
-"wheelhouse.quick.terminal.new" = "Terminal nhanh mới";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Terminal nhanh %ld cho %@: nhấp để đưa lên sân khấu";
 "wheelhouse.inbox.title" = "Hộp thư đến";

@@ -291,32 +291,14 @@ struct StackBranchEntryRow: View {
         }
         .font(.caption)
         .contextMenu {
-            // Launch <Harness> / Run with Focus…
-            if let launchHarness = actions.launchHarness {
-                Button {
-                    launchHarness.action()
-                } label: {
-                    Label(Strings.Sidebar.launchHarness(launchHarness.name), systemImage: "play.fill")
-                }
-            }
-            if let onRunWithFocus = actions.runWithFocus {
-                Button {
-                    onRunWithFocus()
-                } label: {
-                    Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-                }
-            }
-            if !actions.quickLaunchFocuses.isEmpty {
-                Menu(Strings.RemotePRs.quickLaunchFocus) {
-                    ForEach(actions.quickLaunchFocuses, id: \.name) { focus in
-                        Button(Strings.RemotePRs.runFocusItem(focus.name)) {
-                            focus.action()
-                        }
-                    }
-                }
-            }
+            // Quick Launch / Launch… / Launch with Focus
+            LaunchMenuItems(
+                name: actions.launchHarness?.name,
+                quickLaunch: actions.launchHarness?.action,
+                openSheet: actions.runWithFocus,
+                focuses: actions.quickLaunchFocuses.map { LaunchMenuItems.Focus(name: $0.name, action: $0.action) })
 
-            // Quick Terminal / Create Terminal…
+            // Quick Terminal / New Terminal…
             if actions.quickTerminal != nil || actions.createTerminal != nil {
                 Divider()
             }
@@ -324,14 +306,14 @@ struct StackBranchEntryRow: View {
                 Button {
                     onQuickTerminal()
                 } label: {
-                    Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+                    Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
                 }
             }
             if let onCreateTerminal = actions.createTerminal {
                 Button {
                     onCreateTerminal()
                 } label: {
-                    Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+                    Label(Strings.Sidebar.createTerminal, systemImage: LaunchMenuIcon.newTerminal)
                 }
             }
 

@@ -3,13 +3,14 @@ import XCTest
 
 @testable import TermQ
 
-/// Every Wheelhouse menu icon is a real SF Symbol, and the stage shortcuts
+/// Every Wheelhouse and launch menu icon is a real SF Symbol, and the stage shortcuts
 /// don't collide.
 final class WheelhouseMenuIconTests: XCTestCase {
     private let all = [
-        WheelhouseMenuIcon.openTerminal, WheelhouseMenuIcon.showTerminal, WheelhouseMenuIcon.birth,
+        LaunchMenuIcon.quickLaunch, LaunchMenuIcon.sheet, LaunchMenuIcon.focus, LaunchMenuIcon.quickTerminal,
+        LaunchMenuIcon.newTerminal, WheelhouseMenuIcon.showTerminal, WheelhouseMenuIcon.birth,
         WheelhouseMenuIcon.wakeFocus, WheelhouseMenuIcon.focus, WheelhouseMenuIcon.handoff,
-        WheelhouseMenuIcon.closeTerminal, WheelhouseMenuIcon.quickTerminal, WheelhouseMenuIcon.harnessDetails,
+        WheelhouseMenuIcon.closeTerminal, WheelhouseMenuIcon.harnessDetails,
         WheelhouseMenuIcon.pin, WheelhouseMenuIcon.pinned, WheelhouseMenuIcon.copy,
         WheelhouseMenuIcon.revealInFinder, WheelhouseMenuIcon.sendToSeat, WheelhouseMenuIcon.comment,
         WheelhouseMenuIcon.closeBead, WheelhouseMenuIcon.openLink, WheelhouseMenuIcon.wheelhouse,

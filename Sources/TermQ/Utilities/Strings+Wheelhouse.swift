@@ -25,7 +25,6 @@ extension Strings {
         static var workUnavailable: String { localized("wheelhouse.work.unavailable") }
         static var unbornHelp: String { localized("wheelhouse.unborn.help") }
         static func waitingOn(_ pr: String) -> String { localized("wheelhouse.waiting.on %@", pr) }
-        static var openTerminal: String { localized("wheelhouse.open.terminal") }
         static var showTerminal: String { localized("wheelhouse.show.terminal") }
         static var statusIdle: String { localized("wheelhouse.status.idle") }
         static var workingHelp: String { localized("wheelhouse.working.help") }
@@ -97,7 +96,6 @@ extension Strings {
         static var closeTerminal: String { localized("wheelhouse.action.close.terminal") }
         static var harnessDetails: String { localized("wheelhouse.action.harness.details") }
         static var askToFocus: String { localized("wheelhouse.action.ask.focus") }
-        static var launchWithFocus: String { localized("wheelhouse.action.launch.focus") }
 
         // Group headers and their hints
         static func groupLabel(_ group: WheelhouseGroup) -> String {
@@ -139,7 +137,6 @@ extension Strings {
         }
 
         // Quick Terminals
-        static var newQuickTerminal: String { localized("wheelhouse.quick.terminal.new") }
         static func quickTerminalTitle(_ number: Int) -> String {
             localized("wheelhouse.quick.terminal.title %ld", number)
         }

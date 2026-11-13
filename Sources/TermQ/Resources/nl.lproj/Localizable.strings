@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Terug naar bord (Escape)";
 "toolbar.move.to" = "Verplaats naar kolom";
 "toolbar.new.quick" = "Snelle terminal";
-"toolbar.new.quick.help" = "Nieuwe snelle terminal (⌘T)";
+"toolbar.new.quick.help" = "Snelle terminal (⌘T)";
 "toolbar.edit" = "Wijzig";
 "toolbar.edit.help" = "Wijzig terminaldetails (⌘E)";
 "toolbar.pin" = "Vastzetten";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Verwijder terminal";
 "toolbar.add" = "Voeg toe";
 "toolbar.add.help" = "Voeg nieuwe terminal of kolom toe";
-"toolbar.open.terminal.app" = "Open in Terminal";
 "toolbar.open.terminal.app.help" = "Open in Terminal.app";
-"toolbar.new.terminal" = "Nieuwe terminal";
 "toolbar.new.column" = "Nieuwe kolom";
 "toolbar.bin.count %lld" = "Prullenbak (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Nieuwe snelle terminal";
-"menu.new.terminal" = "Nieuwe terminal...";
 "menu.new.terminal.dialog" = "Nieuwe terminal";
 "menu.new.column" = "Nieuwe kolom";
 "menu.back" = "Terug naar bord";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Worktrees vernieuwen";
 "sidebar.worktree.new" = "Nieuwe worktree";
-"sidebar.worktree.new.terminal" = "Nieuw Terminal";
+"sidebar.worktree.new.terminal" = "Snelle terminal";
 "sidebar.worktree.terminals.badge.help" = "Klik voor snelle koppelingen om terminals te openen";
 "sidebar.worktree.open.in.terminal" = "Openen in Terminal";
 "sidebar.worktree.reveal.in.finder" = "Tonen in Finder";
@@ -637,7 +632,6 @@
 "sidebar.worktree.set.harness" = "Harness instellen…";
 "sidebar.worktree.clear.harness" = "Harness wissen";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Worktree verwijderen";
 "sidebar.remove.worktree.title" = "Worktree verwijderen?";
 "sidebar.remove.worktree.confirm" = "Verwijder";
@@ -735,20 +729,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Harness starten";
-"harnesses.launch.vendor" = "Leverancier";
+"launch.quick %@" = "Snel starten: %@";
+"launch.sheet %@" = "%@ starten…";
+"launch.sheet.any" = "Harness starten…";
+"launch.sheet.short" = "Starten…";
+"launch.with.focus" = "Starten met focus";
 "harnesses.launch.vendor.unavailable" = "(niet geïnstalleerd)";
 "harnesses.launch.vendor.default" = "Standaard (%@)";
-"harnesses.launch.focus" = "Focus";
-"harnesses.launch.focus.none" = "Geen";
 "harnesses.launch.working.directory" = "Werkmap";
 "harnesses.launch.browse" = "Bladeren…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Optionele prompt voor de agent…";
 "harnesses.launch.resume" = "Vorige sessie hervatten";
 "harnesses.launch.resume.help" = "Zet een eerdere sessie voort in plaats van opnieuw te beginnen. Claude zet alleen de sessie voort die deze kaart heeft gestart, dus een nieuwe kaart begint opnieuw; andere leveranciers zetten de meest recente sessie in de werkmap voort.";
 "harnesses.launch.button" = "Starten";
 "harnesses.launch.help" = "Deze harness starten in een nieuwe terminal";
-"harnesses.launch.cancel" = "Annuleren";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Gekoppelde worktrees";
@@ -779,7 +772,7 @@
 
 "common.clear" = "Wissen";
 
-"sidebar.worktree.create.terminal" = "Terminal aanmaken…";
+"sidebar.worktree.create.terminal" = "Nieuwe terminal…";
 
 "sidebar.worktree.copy.pathname" = "Kopiëren als padnaam";
 
@@ -850,7 +843,6 @@
 "harnesses.delete.local.message" = "Hiermee wordt de harness verwijderd uit YNH en worden de bestanden permanent gewist. Deze actie kan niet ongedaan worden gemaakt.";
 "harnesses.delete.local.confirm" = "Harness verwijderen";
 "harnesses.more.actions.help" = "Meer acties";
-"harnesses.copy.run.command" = "Opdracht kopiëren";
 "harnesses.ynh.documentation" = "YNH-documentatie";
 
 "harnesses.add.registry.title" = "YNH-register toevoegen";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "niet-gepushte commits";
 "remote.prs.prune.reason.dirty" = "niet-gecommitte wijzigingen";
 "remote.prs.prune.remove" = "Verwijderen";
-"remote.prs.quick.launch.focus" = "Focus snel starten";
 "remote.prs.run.cancel" = "Annuleren";
 "remote.prs.run.customize" = "Aanpassen";
-"remote.prs.run.focus.item %@" = "%@ uitvoeren";
 "remote.prs.run.focus.label" = "Focus";
 "remote.prs.run.focus.none" = "(geen — ad-hocprompt)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "Profiel";
 "remote.prs.run.prompt.label" = "Focusprompt";
 "remote.prs.run.refresh.detail" = "Harness-focuses en -profielen opnieuw laden van schijf";
-"remote.prs.run.run" = "Uitvoeren";
-"remote.prs.run.sheet.title" = "Uitvoeren met focus";
 "remote.prs.run.vendor.default" = "Harness-standaard";
 "remote.prs.run.vendor.label" = "Leverancier";
-"remote.prs.run.with.focus" = "Uitvoeren met focus…";
 "remote.prs.set.default.focus" = "Standaardfocus instellen…";
 "remote.prs.show.in.local" = "Lokaal tonen";
 "remote.prs.show.in.remote" = "Op remote tonen";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "Werkgrafiek niet beschikbaar (bd niet gevonden of mislukt)";
 "wheelhouse.unborn.help" = "Nooit bezet: deze plek heeft nog geen eerste sessie gehad";
 "wheelhouse.waiting.on %@" = "wacht op %@";
-"wheelhouse.open.terminal" = "Terminal openen";
 "wheelhouse.show.terminal" = "Terminal tonen";
 "wheelhouse.status.idle" = "inactief";
 "wheelhouse.working.help" = "Aan het werk: heeft de afgelopen 20 minuten ingecheckt bij een bead, maar heeft geen eigen terminal draaien";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "Terminal sluiten";
 "wheelhouse.action.harness.details" = "Harness-details…";
 "wheelhouse.action.ask.focus" = "Vragen te focussen op";
-"wheelhouse.action.launch.focus" = "Starten met focus";
 "settings.wheelhouse.enable.tab" = "Wheelhouses-tabblad in de navigatiekolom tonen";
 "settings.wheelhouse.enable.tab.help" = "Voegt een Wheelhouses-tabblad toe met de plekken van elk Wheelhouse in je repositories";
 "settings.wheelhouse.quick.terminal.placement" = "Plaatsing van snelle terminal";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "De naam waaraan een Wheelhouse beads toewijst wanneer elk mens ze kan oppakken. Klare beads voor deze naam verschijnen in je inbox.";
 "settings.wheelhouse.inbox.own.name" = "Je eigen inboxnaam";
 "settings.wheelhouse.inbox.own.name.help" = "De naam waaraan een Wheelhouse beads toewijst wanneer ze specifiek voor jou zijn. Laat leeg als je er geen hebt.";
-"wheelhouse.quick.terminal.new" = "Nieuwe snelle terminal";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Snelle terminal %ld voor %@: klik om hem op het podium te brengen";
 "wheelhouse.inbox.title" = "Inbox";

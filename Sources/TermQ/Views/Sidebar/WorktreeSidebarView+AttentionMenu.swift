@@ -58,21 +58,17 @@ extension WorktreeSidebarView {
         let ghPath = readyGhPath
 
         if review != nil || ghPath != nil {
-            Button {
-                Task { await reviewInHarness(request, quickLaunch: nil) }
-            } label: {
-                Label(Strings.RemotePRs.runWithFocus, systemImage: "eye")
-            }
-            // A harness is remembered per repository once Run with Focus has used it.
-            if let harnessId, !focuses.isEmpty {
-                Menu(Strings.RemotePRs.quickLaunchFocus) {
-                    ForEach(focuses, id: \.self) { focusName in
-                        Button(Strings.RemotePRs.runFocusItem(focusName)) {
+            // A harness is remembered per repository once Launch… has used it.
+            LaunchMenuItems(
+                name: harnessId.map(harnessDisplayName),
+                openSheet: { Task { await reviewInHarness(request, quickLaunch: nil) } },
+                focuses: harnessId.map { harnessId in
+                    focuses.map { focusName in
+                        LaunchMenuItems.Focus(name: focusName) {
                             Task { await reviewInHarness(request, quickLaunch: (focusName, harnessId)) }
                         }
                     }
-                }
-            }
+                } ?? [])
             Divider()
         }
 
@@ -80,12 +76,12 @@ extension WorktreeSidebarView {
             Button {
                 boardVM.newTerminal(at: review.path, branch: nil, repoName: request.repository)
             } label: {
-                Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+                Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
             }
             Button {
                 boardVM.addTerminal(workingDirectory: review.path, branch: nil, repoName: request.repository)
             } label: {
-                Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+                Label(Strings.Sidebar.createTerminal, systemImage: LaunchMenuIcon.newTerminal)
             }
             Divider()
             worktreeRevealMenuItems(review)

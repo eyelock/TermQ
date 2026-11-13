@@ -401,11 +401,10 @@ struct WorktreeSidebarView: View {
             repoLabel(repo)
                 .contextMenu {
                     if let harnessName = ynhPersistence.repoDefaultHarness(for: repo.path) {
-                        Button {
-                            onLaunchHarness?(harnessName, repo.path, nil)
-                        } label: {
-                            Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
-                        }
+                        LaunchMenuItems(
+                            name: harnessName,
+                            quickLaunch: { onAutoLaunchHarness?(harnessName, repo.path, nil) },
+                            openSheet: { onLaunchHarness?(harnessName, repo.path, nil) })
                         Divider()
                     }
 
@@ -745,13 +744,13 @@ extension WorktreeSidebarView {
         Button {
             boardVM.newTerminal(at: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
-            Label(Strings.Sidebar.newTerminal, systemImage: "terminal")
+            Label(Strings.Sidebar.newTerminal, systemImage: LaunchMenuIcon.quickTerminal)
         }
         Button {
             boardVM.addTerminal(
                 workingDirectory: worktree.path, branch: worktree.branch, repoName: orgRepoName(repoPath: repo.path))
         } label: {
-            Label(Strings.Sidebar.createTerminal, systemImage: "plus.rectangle")
+            Label(Strings.Sidebar.createTerminal, systemImage: LaunchMenuIcon.newTerminal)
         }
 
         Divider()
@@ -792,18 +791,7 @@ extension WorktreeSidebarView {
 
     @ViewBuilder
     func worktreeContextMenu(_ worktree: GitWorktree, repo: ObservableRepository) -> some View {
-        let effectiveHarness =
-            ynhPersistence.harness(for: worktree.path) ?? ynhPersistence.repoDefaultHarness(for: repo.path)
-
-        // Group 0: Harness actions
-        if let harnessName = effectiveHarness {
-            Button {
-                onLaunchHarness?(harnessName, worktree.path, worktree.branch)
-            } label: {
-                Label(Strings.Sidebar.launchHarness(harnessName), systemImage: "play.fill")
-            }
-        }
-        // Groups 0b–2 are shared with the stack group-header menu (delegated to the
+        // Groups 0–2 (launch, terminals, reveal) are shared with the stack group-header menu (delegated to the
         // anchoring worktree) — one implementation, two menus.
         worktreeConvenienceMenuItems(worktree, repo: repo)
 

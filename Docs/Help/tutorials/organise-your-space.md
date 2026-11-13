@@ -72,7 +72,7 @@ TermQ is designed to be keyboard-driven once you know it. The shortcuts you'll u
 | Action | Shortcut |
 |---|---|
 | New terminal (with dialog) | ⌘N |
-| Quick new terminal (same column/dir) | ⌘T |
+| Quick Terminal (same column/dir) | ⌘T |
 | New column | ⌘⇧N |
 | Command palette | ⌘K |
 | Back to board | ⌘B |

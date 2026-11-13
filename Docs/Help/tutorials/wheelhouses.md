@@ -81,9 +81,14 @@ A bell counts even from the pane you're in — on a busy stage you may not be lo
 
 ## 6 — Asking a seat to do something
 
+**Clicking a seat** in the sidebar does what its terminal's state calls for: a seat that isn't running **starts fresh** (a new session, not the last one resumed); a seat whose shell is up but whose harness has exited **resumes** its last session in the same terminal; a running seat is **shown**.
+
 Right-click a seat (in the sidebar or the tab bar) for its actions:
 
-- **Its focuses** — the prompts its harness defines, such as *wake*, *design* or *verify*, each with its own icon. On a running seat the prompt is typed into its session; otherwise the seat starts with that focus.
+- **Quick Launch ‹seat›** — what a click does.
+- **Launch ‹seat›…** — the launch sheet, for a stopped seat: tick **Resume previous session** to carry on its last conversation, or pick a focus or write a prompt. **Stay interactive** is on by default.
+- **Launch with Focus ▸** — the prompts its harness defines, such as *wake*, *design* or *verify*, each with its own icon; the seat starts with that focus. On a running seat this is **Ask to Focus On ▸**, and the prompt is typed into its session.
+- **Quick Terminal** (**⌘T**) — see §7.
 - **Hand Off** — asks the seat to take a beat and hand off: it writes its own notes for its next session.
 - **Close Terminal** (**⌘⌫**) — as the pane's **✕**: a running seat leaves the stage, a stopped one is closed.
 - **Harness Details…** (**⌘I**) — the seat's harness, to read or edit. Changes apply on the seat's next session. While it runs, the page walks you through it: **① Ask it to Hand Off**, and once it has written its notes, **② Restart** — it wakes fresh on the edited harness and picks up from its own notes.
@@ -98,7 +103,7 @@ The shortcuts act on the focused seat, and show beside the items in its right-cl
 
 ## 7 — Quick Terminals
 
-Sometimes you want a plain shell where a seat is working, without starting the seat. Right-click a seat and choose **New Quick Terminal** (or press **⌘T** on the stage): a shell opens in the seat's current folder (or the Wheelhouse's, when the seat hasn't said where it is).
+Sometimes you want a plain shell where a seat is working, without starting the seat. Right-click a seat and choose **Quick Terminal** (or press **⌘T** on the stage): a shell opens in the seat's current folder (or the Wheelhouse's, when the seat hasn't said where it is).
 
 Where it opens is a setting, Settings › **Wheelhouses** › **Quick Terminal placement**:
 

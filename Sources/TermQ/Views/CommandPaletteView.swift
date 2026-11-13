@@ -30,7 +30,7 @@ struct CommandPaletteView: View {
 
         var title: String {
             switch self {
-            case .newTerminal: return Strings.CommandPalette.newTerminal
+            case .newTerminal: return Strings.Sidebar.newTerminal
             case .newColumn: return Strings.CommandPalette.newColumn
             case .toggleZoom: return Strings.CommandPalette.toggleZoom
             case .toggleSearch: return Strings.CommandPalette.findInTerminal
@@ -43,7 +43,7 @@ struct CommandPaletteView: View {
 
         var icon: String {
             switch self {
-            case .newTerminal: return "plus.rectangle"
+            case .newTerminal: return LaunchMenuIcon.quickTerminal
             case .newColumn: return "rectangle.split.3x1"
             case .toggleZoom: return "arrow.up.left.and.arrow.down.right"
             case .toggleSearch: return "magnifyingglass"

@@ -13,7 +13,6 @@ extension Strings {
         }
 
         // MARK: - Worktree context menu additions
-        static var runWithFocus: String { localized("remote.prs.run.with.focus") }
         static var openPROnRemote: String { localized("remote.prs.open.pr.on.remote") }
         static var showInRemote: String { localized("remote.prs.show.in.remote") }
         static var showInLocal: String { localized("remote.prs.show.in.local") }
@@ -78,7 +77,6 @@ extension Strings {
 
         // MARK: - Run with Focus sheet
         static var runLoadingDetail: String { localized("remote.prs.run.loading.detail") }
-        static var runSheetTitle: String { localized("remote.prs.run.sheet.title") }
         static var runHarnessLabel: String { localized("remote.prs.run.harness.label") }
         static var runVendorLabel: String { localized("remote.prs.run.vendor.label") }
         static var runVendorDefault: String { localized("remote.prs.run.vendor.default") }
@@ -88,7 +86,6 @@ extension Strings {
         static var runProfileHarnessDefault: String { localized("remote.prs.run.profile.default") }
         static var runPromptLabel: String { localized("remote.prs.run.prompt.label") }
         static var runCustomize: String { localized("remote.prs.run.customize") }
-        static var runRun: String { localized("remote.prs.run.run") }
         static var runCancel: String { localized("remote.prs.run.cancel") }
         static var runInteractiveLabel: String { localized("remote.prs.run.interactive.label") }
         static var runInteractiveHelp: String { localized("remote.prs.run.interactive.help") }
@@ -96,10 +93,6 @@ extension Strings {
 
         // MARK: - PR row context menu additions
         static var copyBranchName: String { localized("remote.prs.copy.branch.name") }
-        static var quickLaunchFocus: String { localized("remote.prs.quick.launch.focus") }
-        static func runFocusItem(_ name: String) -> String {
-            String(format: localized("remote.prs.run.focus.item %@"), name)
-        }
         static var setDefaultFocus: String { localized("remote.prs.set.default.focus") }
         static func defaultFocusSet(_ name: String) -> String {
             String(format: localized("remote.prs.default.focus.set %@"), name)

@@ -305,6 +305,9 @@ enum WheelhouseQuickTerminalPlacement: String, CaseIterable, Sendable {
 enum WheelhouseSeatAction: Equatable {
     /// Open the seat: its terminal if it has one, else a launch.
     case open
+    /// Open the launch sheet for the seat, to choose a fresh start or a
+    /// resume, a focus or a prompt. Handled by `ContentView`.
+    case launchDialog
     /// Run one of the seat's harness focuses.
     case focus(WheelhouseFocus)
     /// Ask the seat to take a beat and hand off.

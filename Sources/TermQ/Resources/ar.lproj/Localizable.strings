@@ -81,7 +81,7 @@
 "toolbar.back.help" = "العودة إلى اللوحة (Escape)";
 "toolbar.move.to" = "نقل إلى عمود";
 "toolbar.new.quick" = "طرفية سريعة";
-"toolbar.new.quick.help" = "طرفية سريعة جديدة (⌘T)";
+"toolbar.new.quick.help" = "طرفية سريعة (⌘T)";
 "toolbar.edit" = "تعديل";
 "toolbar.edit.help" = "تعديل تفاصيل الطرفية (⌘E)";
 "toolbar.pin" = "تثبيت";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "حذف الطرفية";
 "toolbar.add" = "إضافة";
 "toolbar.add.help" = "إضافة طرفية أو عمود جديد";
-"toolbar.open.terminal.app" = "فتح في Terminal";
 "toolbar.open.terminal.app.help" = "فتح في Terminal.app";
-"toolbar.new.terminal" = "طرفية جديدة";
 "toolbar.new.column" = "عمود جديد";
 "toolbar.bin.count %lld" = "سلة المحذوفات (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "طرفية سريعة جديدة";
-"menu.new.terminal" = "طرفية جديدة...";
 "menu.new.terminal.dialog" = "طرفية جديدة";
 "menu.new.column" = "عمود جديد";
 "menu.back" = "العودة إلى اللوحة";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -627,7 +622,7 @@
 "sidebar.worktrees.refresh" = "تحديث بيئات العمل";
 "sidebar.worktree.new" = "بيئة عمل جديدة";
 "sidebar.worktree.new.terminal" = "طرفية سريعة";
-"sidebar.worktree.create.terminal" = "إنشاء طرفية…";
+"sidebar.worktree.create.terminal" = "طرفية جديدة…";
 "sidebar.worktree.terminals.badge.help" = "انقر للحصول على روابط سريعة لفتح الطرفيات";
 "sidebar.worktree.open.in.terminal" = "إظهار في Terminal";
 "sidebar.worktree.reveal.in.finder" = "الكشف في Finder";
@@ -640,7 +635,6 @@
 "sidebar.worktree.set.harness" = "تعيين harness…";
 "sidebar.worktree.clear.harness" = "مسح harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "تشغيل %@";
 "sidebar.remove.worktree" = "حذف بيئة العمل";
 "sidebar.remove.worktree.title" = "حذف بيئة العمل؟";
 "sidebar.remove.worktree.confirm" = "حذف";
@@ -746,20 +740,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "تشغيل الطوق";
-"harnesses.launch.vendor" = "المورّد";
+"launch.quick %@" = "تشغيل سريع %@";
+"launch.sheet %@" = "تشغيل %@…";
+"launch.sheet.any" = "تشغيل الطوق…";
+"launch.sheet.short" = "تشغيل…";
+"launch.with.focus" = "تشغيل مع التركيز";
 "harnesses.launch.vendor.unavailable" = "(غير مثبّت)";
 "harnesses.launch.vendor.default" = "الافتراضي (%@)";
-"harnesses.launch.focus" = "التركيز";
-"harnesses.launch.focus.none" = "لا شيء";
 "harnesses.launch.working.directory" = "دليل العمل";
 "harnesses.launch.browse" = "تصفّح…";
-"harnesses.launch.prompt" = "موجّه الأوامر";
-"harnesses.launch.prompt.placeholder" = "موجّه اختياري لإرساله إلى الوكيل…";
 "harnesses.launch.resume" = "استئناف الجلسة السابقة";
 "harnesses.launch.resume.help" = "يتابع جلسة سابقة بدلاً من البدء من جديد. يتابع Claude فقط الجلسة التي بدأتها هذه البطاقة، لذا تبدأ البطاقة الجديدة من جديد؛ أما الموردون الآخرون فيتابعون أحدث جلسة في مجلد العمل.";
 "harnesses.launch.button" = "تشغيل";
 "harnesses.launch.help" = "تشغيل هذا الطوق في طرفية جديدة";
-"harnesses.launch.cancel" = "إلغاء";
 "harnesses.launch.backend" = "الواجهة الخلفية";
 
 "harnesses.linked.worktrees" = "Worktrees المرتبطة";
@@ -845,7 +838,6 @@
 "harnesses.delete.local.message" = "سيؤدي ذلك إلى إلغاء تثبيت Harness من YNH وحذف ملفاته نهائياً. لا يمكن التراجع عن هذا الإجراء.";
 "harnesses.delete.local.confirm" = "حذف Harness";
 "harnesses.more.actions.help" = "إجراءات أخرى";
-"harnesses.copy.run.command" = "نسخ أمر التشغيل";
 "harnesses.ynh.documentation" = "توثيق YNH";
 
 "harnesses.add.registry.title" = "إضافة سجل YNH";
@@ -1349,10 +1341,8 @@
 "remote.prs.prune.reason.ahead" = "إيداعات غير مرفوعة";
 "remote.prs.prune.reason.dirty" = "تغييرات غير موافق عليها";
 "remote.prs.prune.remove" = "إزالة";
-"remote.prs.quick.launch.focus" = "تشغيل سريع للتركيز";
 "remote.prs.run.cancel" = "إلغاء";
 "remote.prs.run.customize" = "تخصيص";
-"remote.prs.run.focus.item %@" = "تشغيل %@";
 "remote.prs.run.focus.label" = "التركيز";
 "remote.prs.run.focus.none" = "(لا شيء — موجِّه مخصَّص)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1363,11 +1353,8 @@
 "remote.prs.run.profile.label" = "الملف الشخصي";
 "remote.prs.run.prompt.label" = "موجِّه التركيز";
 "remote.prs.run.refresh.detail" = "إعادة تحميل تركيزات وملفات Harness من القرص";
-"remote.prs.run.run" = "تشغيل";
-"remote.prs.run.sheet.title" = "التشغيل مع التركيز";
 "remote.prs.run.vendor.default" = "افتراضي Harness";
 "remote.prs.run.vendor.label" = "المورِّد";
-"remote.prs.run.with.focus" = "التشغيل مع التركيز…";
 "remote.prs.set.default.focus" = "تعيين التركيز الافتراضي…";
 "remote.prs.show.in.local" = "عرض محلياً";
 "remote.prs.show.in.remote" = "عرض على Remote";
@@ -1576,7 +1563,6 @@
 "wheelhouse.work.unavailable" = "مخطط العمل غير متاح (لم يتم العثور على bd أو فشل)";
 "wheelhouse.unborn.help" = "لم يُشغَل أبدًا: لم تُجرَ في هذا المقعد جلسته الأولى بعد";
 "wheelhouse.waiting.on %@" = "في انتظار %@";
-"wheelhouse.open.terminal" = "فتح الطرفية";
 "wheelhouse.show.terminal" = "إظهار الطرفية";
 "wheelhouse.status.idle" = "خامل";
 "wheelhouse.working.help" = "يعمل: سجّل حضوره على bead خلال آخر 20 دقيقة، رغم عدم وجود طرفية خاصة به قيد التشغيل";
@@ -1631,7 +1617,6 @@
 "wheelhouse.action.close.terminal" = "إغلاق الطرفية";
 "wheelhouse.action.harness.details" = "تفاصيل Harness…";
 "wheelhouse.action.ask.focus" = "اطلب التركيز على";
-"wheelhouse.action.launch.focus" = "تشغيل مع التركيز";
 "settings.wheelhouse.enable.tab" = "إظهار تبويب Wheelhouses في الشريط الجانبي";
 "settings.wheelhouse.enable.tab.help" = "يضيف تبويب Wheelhouses يسرد مقاعد كل Wheelhouse في مستودعاتك";
 "settings.wheelhouse.quick.terminal.placement" = "موضع الطرفية السريعة";
@@ -1642,7 +1627,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "الاسم الذي يسند إليه Wheelhouse عناصر bead عندما يستطيع أي شخص التعامل معها. تظهر عناصر bead الجاهزة لهذا الاسم في بريدك الوارد.";
 "settings.wheelhouse.inbox.own.name" = "اسم بريدك الوارد الخاص";
 "settings.wheelhouse.inbox.own.name.help" = "الاسم الذي يسند إليه Wheelhouse عناصر bead عندما تكون موجهة إليك تحديدًا. اتركه فارغًا إن لم يكن لديك اسم.";
-"wheelhouse.quick.terminal.new" = "طرفية سريعة جديدة";
 "wheelhouse.quick.terminal.title %ld" = "الطرفية %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "الطرفية السريعة %ld لـ %@: انقر لإحضارها إلى المسرح";
 "wheelhouse.inbox.title" = "البريد الوارد";

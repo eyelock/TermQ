@@ -81,7 +81,7 @@
 "toolbar.back.help" = "Tilbake til tavlen (Escape)";
 "toolbar.move.to" = "Flytt til kolonne";
 "toolbar.new.quick" = "Hurtigterminal";
-"toolbar.new.quick.help" = "Ny hurtigterminal (⌘T)";
+"toolbar.new.quick.help" = "Hurtigterminal (⌘T)";
 "toolbar.edit" = "Rediger";
 "toolbar.edit.help" = "Rediger terminaldetaljer (⌘E)";
 "toolbar.pin" = "Fest";
@@ -92,16 +92,12 @@
 "toolbar.delete.help" = "Slett terminal";
 "toolbar.add" = "Legg til";
 "toolbar.add.help" = "Legg til ny terminal eller kolonne";
-"toolbar.open.terminal.app" = "Åpne i Terminal";
 "toolbar.open.terminal.app.help" = "Åpne i Terminal.app";
-"toolbar.new.terminal" = "Ny terminal";
 "toolbar.new.column" = "Ny kolonne";
 "toolbar.bin.count %lld" = "Papirkurv (%lld)";
 
 // MARK: - Menu Commands
 "menu.help" = "TermQ Help";
-"menu.new.terminal.quick" = "Ny hurtigterminal";
-"menu.new.terminal" = "Ny terminal...";
 "menu.new.terminal.dialog" = "Ny terminal";
 "menu.new.column" = "Ny kolonne";
 "menu.back" = "Tilbake til tavlen";
@@ -153,7 +149,6 @@
 
 
 // MARK: - Command Palette
-"command.palette.new.terminal" = "New Terminal";
 "command.palette.new.column" = "New Column";
 "command.palette.toggle.zoom" = "Toggle Zoom Mode";
 "command.palette.find" = "Find in Terminal";
@@ -625,7 +620,7 @@
 "sidebar.worktree.main.badge" = "main";
 "sidebar.worktrees.refresh" = "Oppdater worktrees";
 "sidebar.worktree.new" = "Ny worktree";
-"sidebar.worktree.new.terminal" = "Nytt Terminal";
+"sidebar.worktree.new.terminal" = "Hurtigterminal";
 "sidebar.worktree.terminals.badge.help" = "Klikk for hurtiglenker for å åpne terminaler";
 "sidebar.worktree.open.in.terminal" = "Åpne i Terminal";
 "sidebar.worktree.reveal.in.finder" = "Vis i Finder";
@@ -637,7 +632,6 @@
 "sidebar.worktree.set.harness" = "Angi harness…";
 "sidebar.worktree.clear.harness" = "Fjern harness";
 "sidebar.worktree.linked.harness %@" = "Harness: %@";
-"sidebar.worktree.launch.harness %@" = "Start %@";
 "sidebar.remove.worktree" = "Fjern worktree";
 "sidebar.remove.worktree.title" = "Fjerne worktree?";
 "sidebar.remove.worktree.confirm" = "Fjern";
@@ -735,20 +729,19 @@
 
 // Harnesses — launch
 "harnesses.launch.title" = "Start harness";
-"harnesses.launch.vendor" = "Leverandør";
+"launch.quick %@" = "Hurtigstart %@";
+"launch.sheet %@" = "Start %@…";
+"launch.sheet.any" = "Start harness…";
+"launch.sheet.short" = "Start…";
+"launch.with.focus" = "Start med fokus";
 "harnesses.launch.vendor.unavailable" = "(ikke installert)";
 "harnesses.launch.vendor.default" = "Standard (%@)";
-"harnesses.launch.focus" = "Fokus";
-"harnesses.launch.focus.none" = "Ingen";
 "harnesses.launch.working.directory" = "Arbeidsmappe";
 "harnesses.launch.browse" = "Bla gjennom…";
-"harnesses.launch.prompt" = "Prompt";
-"harnesses.launch.prompt.placeholder" = "Valgfri prompt til agenten…";
 "harnesses.launch.resume" = "Gjenoppta forrige økt";
 "harnesses.launch.resume.help" = "Fortsetter en tidligere økt i stedet for å starte på nytt. Claude fortsetter bare økten dette kortet startet, så et nytt kort starter på nytt; andre leverandører fortsetter den siste økten i arbeidsmappen.";
 "harnesses.launch.button" = "Start";
 "harnesses.launch.help" = "Start denne harness i en ny terminal";
-"harnesses.launch.cancel" = "Avbryt";
 "harnesses.launch.backend" = "Backend";
 
 "harnesses.linked.worktrees" = "Tilknyttede worktrees";
@@ -779,7 +772,7 @@
 
 "common.clear" = "Tøm";
 
-"sidebar.worktree.create.terminal" = "Opprett Terminal…";
+"sidebar.worktree.create.terminal" = "Ny terminal…";
 
 "sidebar.worktree.copy.pathname" = "Kopier som filsti";
 
@@ -850,7 +843,6 @@
 "harnesses.delete.local.message" = "Dette avinstallerer harness fra YNH og sletter filene permanent. Denne handlingen kan ikke angres.";
 "harnesses.delete.local.confirm" = "Slett harness";
 "harnesses.more.actions.help" = "Flere handlinger";
-"harnesses.copy.run.command" = "Kopier kjørekommando";
 "harnesses.ynh.documentation" = "YNH-dokumentasjon";
 
 "harnesses.add.registry.title" = "Legg til YNH-register";
@@ -1354,10 +1346,8 @@
 "remote.prs.prune.reason.ahead" = "upushede commits";
 "remote.prs.prune.reason.dirty" = "ikke-committede endringer";
 "remote.prs.prune.remove" = "Fjern";
-"remote.prs.quick.launch.focus" = "Hurtigstart fokus";
 "remote.prs.run.cancel" = "Avbryt";
 "remote.prs.run.customize" = "Tilpass";
-"remote.prs.run.focus.item %@" = "Kjør %@";
 "remote.prs.run.focus.label" = "Fokus";
 "remote.prs.run.focus.none" = "(ingen — ad hoc-prompt)";
 "remote.prs.run.harness.label" = "Harness";
@@ -1368,11 +1358,8 @@
 "remote.prs.run.profile.label" = "Profil";
 "remote.prs.run.prompt.label" = "Fokusprompt";
 "remote.prs.run.refresh.detail" = "Last inn harness-fokus og -profiler fra disk på nytt";
-"remote.prs.run.run" = "Kjør";
-"remote.prs.run.sheet.title" = "Kjør med fokus";
 "remote.prs.run.vendor.default" = "Harness-standard";
 "remote.prs.run.vendor.label" = "Leverandør";
-"remote.prs.run.with.focus" = "Kjør med fokus…";
 "remote.prs.set.default.focus" = "Angi standardfokus…";
 "remote.prs.show.in.local" = "Vis lokalt";
 "remote.prs.show.in.remote" = "Vis på remote";
@@ -1581,7 +1568,6 @@
 "wheelhouse.work.unavailable" = "Arbeidsgrafen er utilgjengelig (bd ble ikke funnet eller feilet)";
 "wheelhouse.unborn.help" = "Aldri besatt: denne plassen har ikke hatt sin første økt";
 "wheelhouse.waiting.on %@" = "venter på %@";
-"wheelhouse.open.terminal" = "Åpne terminal";
 "wheelhouse.show.terminal" = "Vis terminal";
 "wheelhouse.status.idle" = "inaktiv";
 "wheelhouse.working.help" = "Jobber: har sjekket inn på en bead de siste 20 minuttene, selv om den ikke har noen egen terminal i gang";
@@ -1636,7 +1622,6 @@
 "wheelhouse.action.close.terminal" = "Lukk terminal";
 "wheelhouse.action.harness.details" = "Harness-detaljer…";
 "wheelhouse.action.ask.focus" = "Be den fokusere på";
-"wheelhouse.action.launch.focus" = "Start med fokus";
 "settings.wheelhouse.enable.tab" = "Vis Wheelhouses-fanen i sidefeltet";
 "settings.wheelhouse.enable.tab.help" = "Legger til en Wheelhouses-fane som viser plassene i hvert Wheelhouse i repositoriene dine";
 "settings.wheelhouse.quick.terminal.placement" = "Plassering av hurtigterminal";
@@ -1647,7 +1632,6 @@
 "settings.wheelhouse.inbox.human.name.help" = "Navnet et Wheelhouse tildeler beads til når ethvert menneske kan ta dem. Klare beads for dette navnet vises i innboksen din.";
 "settings.wheelhouse.inbox.own.name" = "Ditt eget innboksnavn";
 "settings.wheelhouse.inbox.own.name.help" = "Navnet et Wheelhouse tildeler beads til når de er til deg spesielt. La stå tomt hvis du ikke har noe.";
-"wheelhouse.quick.terminal.new" = "Ny hurtigterminal";
 "wheelhouse.quick.terminal.title %ld" = "Terminal %ld";
 "wheelhouse.quick.terminal.help %ld %@" = "Hurtigterminal %ld for %@: klikk for å hente den frem på scenen";
 "wheelhouse.inbox.title" = "Innboks";
