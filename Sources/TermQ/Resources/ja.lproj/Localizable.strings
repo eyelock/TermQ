@@ -1007,6 +1007,7 @@
 "harnesses.quarantine.drop" = "削除…";
 "harnesses.group.menu.settings" = "設定…";
 "harnesses.group.registry %@" = "レジストリ: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "利用可能なハーネスを読み込み中…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "ブランチ、タグ、またはコミットSHA（任意）";

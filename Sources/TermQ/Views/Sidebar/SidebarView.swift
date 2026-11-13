@@ -101,7 +101,8 @@ struct SidebarView: View {
                     quarantinedEntries: quarantinedEntries,
                     onRestoreQuarantine: onRestoreQuarantine,
                     onDropQuarantine: onDropQuarantine,
-                    activeHarnessId: activeHarnessId
+                    activeHarnessId: activeHarnessId,
+                    wheelhouseRoots: worktreeViewModel.repositories.map(\.path)
                 )
             case .marketplaces where showHarnessesTab:
                 MarketplaceSidebarTab(

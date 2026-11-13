@@ -1007,6 +1007,7 @@
 "harnesses.quarantine.drop" = "Odebrat…";
 "harnesses.group.menu.settings" = "Nastavení…";
 "harnesses.group.registry %@" = "Registr: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Načítání dostupných harnesů…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Větev, tag nebo SHA commitu (volitelné)";

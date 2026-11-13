@@ -1014,6 +1014,7 @@
 "harnesses.quarantine.drop" = "Видалити…";
 "harnesses.group.menu.settings" = "Налаштування…";
 "harnesses.group.registry %@" = "Реєстр: %@";
+"harnesses.group.wheelhouse %@" = "Wheelhouse: %@";
 "harnesses.install.browsing" = "Завантаження доступних harness-ів…";
 "harnesses.install.git.ref" = "Ref";
 "harnesses.install.git.ref.placeholder" = "Гілка, тег або SHA коміту (необов'язково)";
