@@ -116,14 +116,15 @@ public enum WheelhouseWork {
         candidates.first { FileManager.default.isExecutableFile(atPath: $0) }
     }
 
-    /// Runs `bd list --status in_progress --json` in `root`. Returns nil when
-    /// `bd` is missing or fails; never throws.
+    /// Runs `bd --readonly list --status in_progress --json` in `root`. Returns
+    /// nil when `bd` is missing, fails or outlasts `WheelhousePoll.readTimeout`;
+    /// never throws.
     public static func fetchInProgress(root: String) async -> [String: [WheelhouseBead]]? {
         guard let bd = findBd() else { return nil }
         guard
             let result = try? await StackProcessRunner.run(
-                bd, ["list", "--status", "in_progress", "--json"], cwd: root,
-                env: ["NO_COLOR": "1"]),
+                bd, WheelhousePoll.readArguments(["list", "--status", "in_progress", "--json"]), cwd: root,
+                env: ["NO_COLOR": "1"], timeout: WheelhousePoll.readTimeout, terminateOnCancel: true),
             result.exitCode == 0
         else { return nil }
         return parseInProgress(Data(result.stdout.utf8))

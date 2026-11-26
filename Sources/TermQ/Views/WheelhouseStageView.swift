@@ -412,7 +412,7 @@ struct WheelhouseStageView: View {
                 items: inboxItems,
                 unavailable: !store.inboxUnavailable.isDisjoint(with: store.wheelhouses.map(\.root)),
                 refreshing: store.isRefreshingWork,
-                onRefresh: { store.refreshWork() },
+                onRefresh: { store.refreshWork(force: true) },
                 onClose: { stage.remove(WheelhouseStage.inboxEntry) },
                 onSeatAction: onSeatAction,
                 onRespond: { root, item, response in await store.respond(response, to: item, root: root) })

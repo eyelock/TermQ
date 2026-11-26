@@ -82,9 +82,10 @@ struct WheelhouseSidebarTab: View {
         }
         .task {
             while !Task.isCancelled {
-                try? await Task.sleep(for: WheelhouseStore.workRefreshInterval)
+                // Longer while bd is slow: every read waits on the seats' lock.
+                try? await Task.sleep(for: .seconds(store.workPollInterval))
                 guard !Task.isCancelled else { return }
-                store.refreshWork()
+                store.refreshWork(force: true)
                 // Commits made in a terminal show up without leaving the app.
                 store.refreshDelegateIssues()
             }
@@ -142,7 +143,7 @@ struct WheelhouseSidebarTab: View {
             .foregroundColor(.secondary)
             .help(Strings.Wheelhouse.addWheelhouse)
             Button {
-                store.refresh(roots: roots)
+                store.refresh(roots: roots, forceWork: true)
             } label: {
                 Image(systemName: "arrow.clockwise")
             }
@@ -672,10 +673,10 @@ struct WheelhouseTabSettingToggle: View {
                 prompt: Text(WheelhouseInbox.defaultHumanName)
             )
             .help(Strings.Settings.Wheelhouse.inboxHumanNameHelp)
-            .onSubmit { WheelhouseStore.shared.refreshWork() }
+            .onSubmit { WheelhouseStore.shared.refreshWork(force: true) }
             TextField(Strings.Settings.Wheelhouse.inboxOwnName, text: $ownName)
                 .help(Strings.Settings.Wheelhouse.inboxOwnNameHelp)
-                .onSubmit { WheelhouseStore.shared.refreshWork() }
+                .onSubmit { WheelhouseStore.shared.refreshWork(force: true) }
         }
     }
 }

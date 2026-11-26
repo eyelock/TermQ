@@ -10,8 +10,11 @@ import TermQShared
 final class WheelhouseStore: ObservableObject {
     static let shared = WheelhouseStore()
 
-    /// How often the work graph is re-read while someone is looking.
-    static let workRefreshInterval: Duration = .seconds(60)
+    /// The wait before the next timed read of the work graph: the base
+    /// interval while `bd` answers promptly, longer while it is slow.
+    private(set) var workPollInterval: TimeInterval = WheelhousePoll.baseInterval
+    /// When the last round of work reads finished.
+    private(set) var lastWorkRead: Date?
 
     @Published private(set) var wheelhouses: [Wheelhouse] = []
 
@@ -59,8 +62,13 @@ final class WheelhouseStore: ObservableObject {
     private var workTask: Task<Void, Never>?
     private var identityTask: Task<Void, Never>?
     private var identityChecked: Set<String> = []
+    /// A forced work read asked for while a round was running.
+    private var forcedWorkPending = false
 
-    func refresh(roots: [String]) {
+    /// Re-discovers the Wheelhouses in `roots`. The work graph is re-read
+    /// only when it is stale, or with `forceWork`: this runs whenever the app
+    /// comes to the front, and every `bd` read waits on the seats' lock.
+    func refresh(roots: [String], forceWork: Bool = false) {
         refreshTask?.cancel()
         isLoading = true
         refreshTask = Task { [weak self] in
@@ -68,10 +76,12 @@ final class WheelhouseStore: ObservableObject {
                 WheelhouseLoader.discover(roots: roots)
             }.value
             guard !Task.isCancelled, let self else { return }
+            // A Wheelhouse that wasn't there before has never been read.
+            let rootsChanged = Set(discovery.wheelhouses.map(\.root)) != Set(self.wheelhouses.map(\.root))
             self.wheelhouses = discovery.wheelhouses
             self.failures = discovery.failures
             self.isLoading = false
-            self.refreshWork()
+            self.refreshWork(force: forceWork || rootsChanged)
             self.refreshIdentities()
             self.refreshDelegateIssues()
         }
@@ -179,39 +189,67 @@ final class WheelhouseStore: ObservableObject {
     }
 
     /// Re-reads every Wheelhouse's in-progress beads and the human's inbox.
-    func refreshWork() {
-        workTask?.cancel()
+    ///
+    /// One round at a time: while a round runs, a new request is not started
+    /// beside it, so `bd` calls never pile up behind the seats' lock. A forced
+    /// request that arrives then runs once the round ends, since the round
+    /// read the graph before whatever the request is about. Without `force`,
+    /// a round runs only when the last one is stale. A read that fails keeps
+    /// the last good data for that Wheelhouse, marked unavailable.
+    func refreshWork(force: Bool = false) {
+        guard !isRefreshingWork else {
+            if force { forcedWorkPending = true }
+            return
+        }
+        guard force || WheelhousePoll.isStale(lastRead: lastWorkRead) else { return }
         let roots = wheelhouses.map(\.root)
         let assignees = Self.inboxAssignees()
+        let previousWork = work
+        let previousInbox = inbox
         isRefreshingWork = true
         workTask = Task { [weak self] in
+            let started = Date()
             var results: [String: [String: [WheelhouseBead]]] = [:]
             var unavailable: Set<String> = []
             var inbox: [String: [WheelhouseInboxItem]] = [:]
             var inboxUnavailable: Set<String> = []
             for root in roots {
-                if Task.isCancelled { return }
                 if let beads = await WheelhouseWork.fetchInProgress(root: root) {
                     results[root] = beads
                 } else {
                     unavailable.insert(root)
+                    results[root] = previousWork[root]
+                    // bd is busy or broken here: don't queue another read on it.
+                    inboxUnavailable.insert(root)
+                    inbox[root] = previousInbox[root]
+                    continue
                 }
                 if let items = await WheelhouseInbox.fetch(root: root, assignees: assignees) {
                     inbox[root] = items
                 } else {
                     inboxUnavailable.insert(root)
+                    inbox[root] = previousInbox[root]
                 }
             }
-            guard !Task.isCancelled, let self else { return }
+            guard let self else { return }
+            let took = Date().timeIntervalSince(started)
+            let failed = !unavailable.isEmpty || !inboxUnavailable.isEmpty
+            self.workPollInterval = WheelhousePoll.nextInterval(
+                after: self.workPollInterval, roundTook: took, failed: failed)
             let beads = results.values.reduce(0) { $0 + $1.values.reduce(0) { $0 + $1.count } }
             TermQLogger.ui.debug(
-                "wheelhouse work: roots=\(roots.count) read=\(results.count)"
-                    + " unavailable=\(unavailable.count) beads=\(beads)")
+                "wheelhouse work: roots=\(roots.count) unavailable=\(unavailable.count) beads=\(beads)"
+                    + " took=\(Int(took))s next=\(Int(self.workPollInterval))s")
             self.work = results
             self.workUnavailable = unavailable
             self.inbox = inbox
             self.inboxUnavailable = inboxUnavailable
+            self.lastWorkRead = Date()
             self.isRefreshingWork = false
+            if self.forcedWorkPending {
+                self.forcedWorkPending = false
+                self.refreshWork(force: true)
+            }
         }
     }
 
@@ -226,7 +264,7 @@ final class WheelhouseStore: ObservableObject {
             // A closed bead leaves at once; the re-read below confirms it.
             if case .close = response { inbox[root]?.removeAll { $0.id == item.id } }
         }
-        refreshWork()
+        refreshWork(force: true)
         return failure
     }
 
