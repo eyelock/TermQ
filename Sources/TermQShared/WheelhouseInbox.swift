@@ -123,7 +123,7 @@ public enum WheelhouseInbox {
     }
 
     /// Reads the inbox for `assignees` in `root`. Nil when `bd` is missing or
-    /// any read fails; never throws.
+    /// any read fails or outlasts `WheelhousePoll.readTimeout`; never throws.
     public static func fetch(root: String, assignees: [String]) async -> [WheelhouseInboxItem]? {
         guard !assignees.isEmpty else { return [] }
         guard let bd = WheelhouseWork.findBd() else { return nil }
@@ -131,7 +131,8 @@ public enum WheelhouseInbox {
         for assignee in assignees {
             guard
                 let result = try? await StackProcessRunner.run(
-                    bd, ["ready", "--assignee", assignee, "--json"], cwd: root, env: ["NO_COLOR": "1"]),
+                    bd, WheelhousePoll.readArguments(["ready", "--assignee", assignee, "--json"]), cwd: root,
+                    env: ["NO_COLOR": "1"], timeout: WheelhousePoll.readTimeout, terminateOnCancel: true),
                 result.exitCode == 0,
                 let items = parse(Data(result.stdout.utf8), assignee: assignee)
             else { return nil }
